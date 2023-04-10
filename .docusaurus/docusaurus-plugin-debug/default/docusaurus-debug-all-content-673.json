@@ -884,8 +884,8 @@
             {
               "unversionedId": "0x-swap-api/guides/swap-tokens-with-0x-swap-api",
               "id": "0x-swap-api/guides/swap-tokens-with-0x-swap-api",
-              "title": "Swap Tokens with 0x Swap API",
-              "description": "This article will guide you through plugging into Swap API and programmatically executing a trade.",
+              "title": "Swap Tokens with Swap API",
+              "description": "Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API.",
               "source": "@site/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api.md",
               "sourceDirName": "0x-swap-api/guides",
               "slug": "/0x-swap-api/guides/swap-tokens-with-0x-swap-api",
@@ -898,7 +898,7 @@
               "frontMatter": {
                 "sidebar_label": "Swap Tokens with Swap API",
                 "sidebar_position": 1,
-                "description": "This article will guide you through plugging into Swap API and programmatically executing a trade."
+                "description": "Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API."
               },
               "sidebar": "docSidebar",
               "previous": {
@@ -1268,8 +1268,7 @@
               "frontMatter": {
                 "sidebar_label": "Welcome",
                 "sidebar_position": 1,
-                "description": "This is your launchpad to learn about 0x - Trusted exchange infrastructure for the internet",
-                "slug": "/"
+                "description": "This is your launchpad to learn about 0x - Trusted exchange infrastructure for the internet"
               },
               "sidebar": "docSidebar",
               "next": {
@@ -1828,12 +1827,12 @@
               "id": "tx-relay-api/introduction",
               "title": "Introduction",
               "description": "Tx Relay is in Closed Beta - highly subject to change",
-              "source": "@site/docs/tx-relay-api/introduction.md",
+              "source": "@site/docs/tx-relay-api/introduction.mdx",
               "sourceDirName": "tx-relay-api",
               "slug": "/tx-relay-api/introduction",
               "permalink": "/docs/tx-relay-api/introduction",
               "draft": false,
-              "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/tx-relay-api/introduction.md",
+              "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/tx-relay-api/introduction.mdx",
               "tags": [],
               "version": "current",
               "sidebarPosition": 1,

@@ -44,7 +44,7 @@ export default [
   },
   {
     path: '/docs/',
-    component: ComponentCreator('/docs/', 'b28'),
+    component: ComponentCreator('/docs/', 'f41'),
     routes: [
       {
         path: '/docs/',
@@ -468,7 +468,7 @@ export default [
       },
       {
         path: '/docs/tx-relay-api/introduction',
-        component: ComponentCreator('/docs/tx-relay-api/introduction', '6aa'),
+        component: ComponentCreator('/docs/tx-relay-api/introduction', 'b59'),
         exact: true,
         sidebar: "docSidebar"
       },

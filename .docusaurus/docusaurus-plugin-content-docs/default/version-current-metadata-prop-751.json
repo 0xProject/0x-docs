@@ -724,8 +724,8 @@
     },
     "0x-swap-api/guides/swap-tokens-with-0x-swap-api": {
       "id": "0x-swap-api/guides/swap-tokens-with-0x-swap-api",
-      "title": "Swap Tokens with 0x Swap API",
-      "description": "This article will guide you through plugging into Swap API and programmatically executing a trade.",
+      "title": "Swap Tokens with Swap API",
+      "description": "Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API.",
       "sidebar": "docSidebar"
     },
     "0x-swap-api/guides/troubleshooting-swap-api": {

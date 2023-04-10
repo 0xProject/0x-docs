@@ -16,10 +16,12 @@ In its role as a DEX aggregator, the 0x API integrates both on- and off-chain li
 
 If integrators request a standard quote from the 0x API, part or all of their quote may be sourced via the **RFQ** system.  In this system, the 0x API aggregates quotes from professional market makers, alongside quotes from AMMs. If the market-maker quotes are more competitive than AMM quotes, they may be included in the final price shown to the end-user. The end-user’s liquidity is ultimately provided by a combination of AMMs and professional market makers. _Everything happens under-the-hood!_
 
+![RFQ Diagram](/img/market-makers/rfq-diagram.png)
+
 
 ## Trusted Takers
 
-RFQ orders contain a [`takerAddress` query parameter](../../developer-resources/faqs-and-troubleshooting.md#how-does-takeraddress-help-with-catching-issues). When an order containing this parameter gets hashed and signed by two counterparties, it is exclusive to those two counterparties.\
+RFQ orders contain a [`takerAddress` query parameter](../../developer-resources/faqs-and-troubleshooting.md#how-does-takeraddress-help-with-catching-issues). When an order containing this parameter gets hashed and signed by two counterparties, it is exclusive to those two counterparties.
 
 
 ## Dedicated Makers
