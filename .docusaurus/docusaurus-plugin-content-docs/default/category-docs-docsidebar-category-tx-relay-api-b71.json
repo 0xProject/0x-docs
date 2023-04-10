@@ -1,0 +1,15 @@
+{
+  "title": "Tx Relay API",
+  "slug": "/category/tx-relay-api",
+  "permalink": "/docs/category/tx-relay-api",
+  "navigation": {
+    "previous": {
+      "title": "Price Impact Protection",
+      "permalink": "/docs/0x-swap-api/advanced-topics/price-impact-protection"
+    },
+    "next": {
+      "title": "Introduction",
+      "permalink": "/docs/tx-relay-api/introduction"
+    }
+  }
+}

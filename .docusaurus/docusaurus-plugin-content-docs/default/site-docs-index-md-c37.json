@@ -1,0 +1,24 @@
+{
+  "unversionedId": "index",
+  "id": "index",
+  "title": "Overview",
+  "description": "Overview",
+  "source": "@site/docs/index.md",
+  "sourceDirName": ".",
+  "slug": "/overview",
+  "permalink": "/docs/overview",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/index.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Overview",
+    "description": "Overview",
+    "slug": "overview"
+  },
+  "sidebar": "docSidebar",
+  "next": {
+    "title": "Introduction",
+    "permalink": "/docs/category/introduction"
+  }
+}

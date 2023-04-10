@@ -11,11 +11,11 @@ Atomically swapped means the entire trade - the Maker’s asset going to the Tak
 
 ### Automatic Market Maker (AMM)
 
-An Automatic Market Maker (AMM) is the protocol that  provides liquidity to the exchange it operates in through automated trading.\
-\
-These protocols use smart contracts to define the price of digital assets and provide liquidity. Here, the protocol pools liquidity into smart contracts. In essence, users are not technically trading against counterparties – instead, they are trading against the liquidity locked inside smart contracts. These smart contracts are often called liquidity pools.\
-\
-Examples of AMMs include Uniswap, Sushiswap, Curve, Balancer, Bancor, and many others. \
+An Automatic Market Maker (AMM) is the protocol that  provides liquidity to the exchange it operates in through automated trading.
+
+These protocols use smart contracts to define the price of digital assets and provide liquidity. Here, the protocol pools liquidity into smart contracts. In essence, users are not technically trading against counterparties – instead, they are trading against the liquidity locked inside smart contracts. These smart contracts are often called liquidity pools.
+
+Examples of AMMs include Uniswap, Sushiswap, Curve, Balancer, Bancor, and many others. 
 
 
 ### **Buys and Sells**

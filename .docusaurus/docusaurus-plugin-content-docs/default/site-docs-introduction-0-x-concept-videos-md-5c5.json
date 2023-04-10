@@ -1,0 +1,29 @@
+{
+  "unversionedId": "introduction/0x-concept-videos",
+  "id": "introduction/0x-concept-videos",
+  "title": "0x Concept Videos",
+  "description": "This page contains a shortlist of videos that showcase notable features of the 0x tech stack",
+  "source": "@site/docs/introduction/0x-concept-videos.md",
+  "sourceDirName": "introduction",
+  "slug": "/introduction/0x-concept-videos",
+  "permalink": "/docs/introduction/0x-concept-videos",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/introduction/0x-concept-videos.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_label": "0x Concept Videos",
+    "sidebar_position": 4,
+    "description": "This page contains a shortlist of videos that showcase notable features of the 0x tech stack"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Guides",
+    "permalink": "/docs/introduction/guides"
+  },
+  "next": {
+    "title": "Community",
+    "permalink": "/docs/introduction/community"
+  }
+}

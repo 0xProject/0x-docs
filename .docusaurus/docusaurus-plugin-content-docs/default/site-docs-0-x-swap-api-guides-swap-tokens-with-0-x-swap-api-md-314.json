@@ -1,0 +1,28 @@
+{
+  "unversionedId": "0x-swap-api/guides/swap-tokens-with-0x-swap-api",
+  "id": "0x-swap-api/guides/swap-tokens-with-0x-swap-api",
+  "title": "Swap Tokens with 0x Swap API",
+  "description": "This article will guide you through plugging into Swap API and programmatically executing a trade.",
+  "source": "@site/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api.md",
+  "sourceDirName": "0x-swap-api/guides",
+  "slug": "/0x-swap-api/guides/swap-tokens-with-0x-swap-api",
+  "permalink": "/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_label": "Swap Tokens with Swap API",
+    "sidebar_position": 1,
+    "description": "This article will guide you through plugging into Swap API and programmatically executing a trade."
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Guides"
+  },
+  "next": {
+    "title": "How to Build a Token Swap DApp",
+    "permalink": "/docs/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "unversionedId": "index",
+  "id": "index",
+  "title": "Welcome",
+  "description": "This is your launchpad to learn about 0x - Trusted exchange infrastructure for the internet",
+  "source": "@site/docs/index.mdx",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/docs/",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/index.mdx",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_label": "Welcome",
+    "sidebar_position": 1,
+    "description": "This is your launchpad to learn about 0x - Trusted exchange infrastructure for the internet",
+    "slug": "/"
+  },
+  "sidebar": "docSidebar",
+  "next": {
+    "title": "Introduction",
+    "permalink": "/docs/category/introduction"
+  }
+}

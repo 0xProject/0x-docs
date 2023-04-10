@@ -12,14 +12,14 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://docs.0x.org',
+  url: 'https://0x.org',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/docs',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'jlin27', // Usually your GitHub org/user name.
+  organizationName: '0xProject', // Usually your GitHub org/user name.
   projectName: '0x-docs', // Usually your repo name.
 
   onBrokenLinks: 'ignore',
@@ -47,7 +47,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/0xProject/0x-docs/tree/main/docs',
         },
         blog: false,
         theme: {
@@ -61,8 +61,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 
     ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/0x-social-card.jpg',
       navbar: {
         title: 'Docs',
         logo: {
@@ -71,9 +70,14 @@ const config = {
         },
         items: [
           {
-            href: 'https://github.com/0xProject',
-            label: 'GitHub',
-            position: 'right',
+            href: "https://discord.com/invite/official0x",
+            className: "header-discord-link",
+            position: "right",
+          },
+          {
+            href: "https://twitter.com/0xproject",
+            className: "header-twitter-link",
+            position: "right",
           },
         ],
       },
@@ -86,12 +90,49 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'APIs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Swap API',
+                to: '/0x-swap-api',
               },
+              {
+                label: 'Tx Relay API',
+                to: '/tx-relay-api',
+              },
+              {
+                label: 'Orderbook API',
+                to: '/0x-orderbook-api',
+              },
+            ],
+          },
+          {
+            title: 'Developers',
+            items: [
+              {
+                label: 'Login/Sign Up',
+                to: 'https://www.0x.org/',
+              },
+              {
+                label: 'Content Hub',
+                to: 'https://www.0x.org/content-hub',
+              },
+              {
+                label: 'FAQs & Troubleshooting',
+                to: '/developer-resources/faqs-and-troubleshooting',
+              },
+              {
+                label: '0x System Status',
+                to: 'https://status.0x.org/',
+              },
+              {
+                label: 'Goerli Faucet',
+                to: 'https://goerlifaucet.com/',
+              },
+              {
+                label: 'Gwei Calculator',
+                to:  'https://www.alchemy.com/gwei-calculator',
+              }
             ],
           },
           {
@@ -103,7 +144,7 @@ const config = {
               },
               {
                 label: 'Discord',
-                href: 'https://discord.com/invite/d3FTX3M',
+                href: 'https://discord.com/invite/official0x',
               },
               {
                 label: 'Twitter',

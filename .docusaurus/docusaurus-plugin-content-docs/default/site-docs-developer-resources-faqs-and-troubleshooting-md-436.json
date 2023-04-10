@@ -1,0 +1,29 @@
+{
+  "unversionedId": "developer-resources/faqs-and-troubleshooting",
+  "id": "developer-resources/faqs-and-troubleshooting",
+  "title": "🤔 FAQs & Troubleshooting",
+  "description": "FAQs & Troubleshooting",
+  "source": "@site/docs/developer-resources/faqs-and-troubleshooting.md",
+  "sourceDirName": "developer-resources",
+  "slug": "/developer-resources/faqs-and-troubleshooting",
+  "permalink": "/docs/developer-resources/faqs-and-troubleshooting",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/developer-resources/faqs-and-troubleshooting.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_label": "FAQs & Troubleshooting",
+    "sidebar_position": 2,
+    "description": "FAQs & Troubleshooting"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Glossary",
+    "permalink": "/docs/developer-resources/glossary"
+  },
+  "next": {
+    "title": "Contract Addresses",
+    "permalink": "/docs/developer-resources/contract-addresses"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "unversionedId": "0x-orderbook-api/introduction",
+  "id": "0x-orderbook-api/introduction",
+  "title": "Introduction",
+  "description": "0x API hosts an Orderbook of 0x Limit Orders that anyone can provide liquidity to or take liquidity from.",
+  "source": "@site/docs/0x-orderbook-api/introduction.md",
+  "sourceDirName": "0x-orderbook-api",
+  "slug": "/0x-orderbook-api/introduction",
+  "permalink": "/docs/0x-orderbook-api/introduction",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-orderbook-api/introduction.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_label": "Introduction",
+    "sidebar_position": 1,
+    "description": "0x API hosts an Orderbook of 0x Limit Orders that anyone can provide liquidity to or take liquidity from."
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Orderbook API",
+    "permalink": "/docs/category/orderbook-api"
+  },
+  "next": {
+    "title": "API References"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "unversionedId": "0x-swap-api/api-references/get-swap-v1-price",
+  "id": "0x-swap-api/api-references/get-swap-v1-price",
+  "title": "GET /swap/v1/price",
+  "description": "Learn how to use GET /swap/v1/price",
+  "source": "@site/docs/0x-swap-api/api-references/get-swap-v1-price.md",
+  "sourceDirName": "0x-swap-api/api-references",
+  "slug": "/0x-swap-api/api-references/get-swap-v1-price",
+  "permalink": "/docs/0x-swap-api/api-references/get-swap-v1-price",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-swap-api/api-references/get-swap-v1-price.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_label": "GET /swap/v1/price",
+    "sidebar_position": 3,
+    "description": "Learn how to use GET /swap/v1/price"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "GET /swap/v1/quote",
+    "permalink": "/docs/0x-swap-api/api-references/get-swap-v1-quote"
+  },
+  "next": {
+    "title": "GET /swap/v1/sources",
+    "permalink": "/docs/0x-swap-api/api-references/get-swap-v1-sources"
+  }
+}

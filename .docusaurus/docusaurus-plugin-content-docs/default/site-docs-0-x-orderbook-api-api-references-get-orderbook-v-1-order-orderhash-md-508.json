@@ -1,0 +1,29 @@
+{
+  "unversionedId": "0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash",
+  "id": "0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash",
+  "title": "GET /orderbook/v1/order/:orderHash:",
+  "description": "Learn how to use GET /orderbook/v1/order/orderHash",
+  "source": "@site/docs/0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash.md",
+  "sourceDirName": "0x-orderbook-api/api-references",
+  "slug": "/0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash",
+  "permalink": "/docs/0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "sidebar_label": "GET /orderbook/v1/order/orderHash",
+    "sidebar_position": 6,
+    "description": "Learn how to use GET /orderbook/v1/order/orderHash"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "POST /orderbook/v1/orders",
+    "permalink": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-orders"
+  },
+  "next": {
+    "title": "POST /orderbook/v1/order_config",
+    "permalink": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-order_config"
+  }
+}

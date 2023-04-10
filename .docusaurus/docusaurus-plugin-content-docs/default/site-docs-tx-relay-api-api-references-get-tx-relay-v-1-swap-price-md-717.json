@@ -1,0 +1,29 @@
+{
+  "unversionedId": "tx-relay-api/api-references/get-tx-relay-v1-swap-price",
+  "id": "tx-relay-api/api-references/get-tx-relay-v1-swap-price",
+  "title": "GET /tx-relay/v1/swap/price",
+  "description": "Learn how to use GET /tx-relay/v1/swap/price",
+  "source": "@site/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price.md",
+  "sourceDirName": "tx-relay-api/api-references",
+  "slug": "/tx-relay-api/api-references/get-tx-relay-v1-swap-price",
+  "permalink": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_label": "GET /tx-relay/v1/swap/price",
+    "sidebar_position": 2,
+    "description": "Learn how to use GET /tx-relay/v1/swap/price"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Overview",
+    "permalink": "/docs/tx-relay-api/api-references/overview"
+  },
+  "next": {
+    "title": "GET /tx-relay/v1/swap/quote",
+    "permalink": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-quote"
+  }
+}
