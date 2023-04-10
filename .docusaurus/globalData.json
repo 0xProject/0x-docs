@@ -1,0 +1,388 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/docs/",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/docs/",
+          "mainDocId": "index",
+          "docs": [
+            {
+              "id": "0x-limit-orders/docs/introduction",
+              "path": "/docs/0x-limit-orders/docs/introduction",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/docs/limit-order-structure",
+              "path": "/docs/0x-limit-orders/docs/limit-order-structure",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/docs/monitoring-0x-limit-orders",
+              "path": "/docs/0x-limit-orders/docs/monitoring-0x-limit-orders",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/guides/cancel-a-limit-order",
+              "path": "/docs/0x-limit-orders/guides/cancel-a-limit-order",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/guides/create-a-limit-order",
+              "path": "/docs/0x-limit-orders/guides/create-a-limit-order",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/guides/fill-a-limit-order",
+              "path": "/docs/0x-limit-orders/guides/fill-a-limit-order",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/guides/limit-order-status",
+              "path": "/docs/0x-limit-orders/guides/limit-order-status",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-limit-orders/guides/working-in-the-testnet",
+              "path": "/docs/0x-limit-orders/guides/working-in-the-testnet",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/get-orderbook-v1",
+              "path": "/docs/0x-orderbook-api/api-references/get-orderbook-v1",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/get-orderbook-v1-fee_recipients.md",
+              "path": "/docs/0x-orderbook-api/api-references/get-orderbook-v1-fee_recipients.md",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash",
+              "path": "/docs/0x-orderbook-api/api-references/get-orderbook-v1-order-orderhash",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/get-orderbook-v1-orders",
+              "path": "/docs/0x-orderbook-api/api-references/get-orderbook-v1-orders",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/overview",
+              "path": "/docs/0x-orderbook-api/api-references/overview",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/post-orderbook-v1-order",
+              "path": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-order",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/post-orderbook-v1-order_config",
+              "path": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-order_config",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/post-orderbook-v1-orders",
+              "path": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-orders",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/api-references/websocket-api",
+              "path": "/docs/0x-orderbook-api/api-references/websocket-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/connection-limit",
+              "path": "/docs/0x-orderbook-api/connection-limit",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/introduction",
+              "path": "/docs/0x-orderbook-api/introduction",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-orderbook-api/rate-limiting",
+              "path": "/docs/0x-orderbook-api/rate-limiting",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/advanced-topics/how-to-set-your-token-allowances",
+              "path": "/docs/0x-swap-api/advanced-topics/how-to-set-your-token-allowances",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/advanced-topics/price-impact-protection",
+              "path": "/docs/0x-swap-api/advanced-topics/price-impact-protection",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/advanced-topics/rate-limiting",
+              "path": "/docs/0x-swap-api/advanced-topics/rate-limiting",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/advanced-topics/slippage-protection",
+              "path": "/docs/0x-swap-api/advanced-topics/slippage-protection",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/api-references/get-swap-v1-price",
+              "path": "/docs/0x-swap-api/api-references/get-swap-v1-price",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/api-references/get-swap-v1-quote",
+              "path": "/docs/0x-swap-api/api-references/get-swap-v1-quote",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/api-references/get-swap-v1-sources",
+              "path": "/docs/0x-swap-api/api-references/get-swap-v1-sources",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/api-references/overview",
+              "path": "/docs/0x-swap-api/api-references/overview",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api",
+              "path": "/docs/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api",
+              "path": "/docs/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/guides/swap-tokens-with-0x-swap-api",
+              "path": "/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/guides/troubleshooting-swap-api",
+              "path": "/docs/0x-swap-api/guides/troubleshooting-swap-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts",
+              "path": "/docs/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/guides/working-in-the-testnet",
+              "path": "/docs/0x-swap-api/guides/working-in-the-testnet",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "0x-swap-api/introduction",
+              "path": "/docs/0x-swap-api/introduction",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/0x-legal-guide",
+              "path": "/docs/developer-resources/0x-legal-guide",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/audits",
+              "path": "/docs/developer-resources/audits",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/bounties",
+              "path": "/docs/developer-resources/bounties",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/contract-addresses",
+              "path": "/docs/developer-resources/contract-addresses",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/faqs-and-troubleshooting",
+              "path": "/docs/developer-resources/faqs-and-troubleshooting",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/glossary",
+              "path": "/docs/developer-resources/glossary",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/how-to-get-0x-and-matcha-data",
+              "path": "/docs/developer-resources/how-to-get-0x-and-matcha-data",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "developer-resources/white-paper",
+              "path": "/docs/developer-resources/white-paper",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "index",
+              "path": "/docs/",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "introduction/0x-cheat-sheet",
+              "path": "/docs/introduction/0x-cheat-sheet",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "introduction/0x-concept-videos",
+              "path": "/docs/introduction/0x-concept-videos",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "introduction/community",
+              "path": "/docs/introduction/community",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "introduction/guides",
+              "path": "/docs/introduction/guides",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "introduction/introduction-to-0x",
+              "path": "/docs/introduction/introduction-to-0x",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/docs/introduction",
+              "path": "/docs/market-makers/docs/introduction",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/docs/providing-amm-liquidity-to-swap-api",
+              "path": "/docs/market-makers/docs/providing-amm-liquidity-to-swap-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/docs/providing-rfq-liquidity-to-swap-api",
+              "path": "/docs/market-makers/docs/providing-rfq-liquidity-to-swap-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/docs/rfq-order-structure",
+              "path": "/docs/market-makers/docs/rfq-order-structure",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/guides/generating-0x-order-hashes",
+              "path": "/docs/market-makers/guides/generating-0x-order-hashes",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/guides/python-rfq-orders-code-examples",
+              "path": "/docs/market-makers/guides/python-rfq-orders-code-examples",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "market-makers/guides/signing-0x-orders",
+              "path": "/docs/market-makers/guides/signing-0x-orders",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/api-references/get-tx-relay-v1-swap-price",
+              "path": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/api-references/get-tx-relay-v1-swap-quote",
+              "path": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-quote",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md",
+              "path": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/api-references/get-tx-relay-v1-swap-submit",
+              "path": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-submit",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/api-references/overview",
+              "path": "/docs/tx-relay-api/api-references/overview",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/development-status",
+              "path": "/docs/tx-relay-api/development-status",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/gasless-approvals-token-list",
+              "path": "/docs/tx-relay-api/gasless-approvals-token-list",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/introduction",
+              "path": "/docs/tx-relay-api/introduction",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "tx-relay-api/tx-relay-faq",
+              "path": "/docs/tx-relay-api/tx-relay-faq",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/introduction",
+              "path": "/docs/category/introduction",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/swap-api",
+              "path": "/docs/category/swap-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/tx-relay-api",
+              "path": "/docs/category/tx-relay-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/orderbook-api",
+              "path": "/docs/category/orderbook-api",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/limit-order-advanced-traders",
+              "path": "/docs/category/limit-order-advanced-traders",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/market-makers",
+              "path": "/docs/category/market-makers",
+              "sidebar": "docSidebar"
+            },
+            {
+              "id": "/category/developer-resources",
+              "path": "/docs/category/developer-resources",
+              "sidebar": "docSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "docSidebar": {
+              "link": {
+                "path": "/docs/",
+                "label": "index"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

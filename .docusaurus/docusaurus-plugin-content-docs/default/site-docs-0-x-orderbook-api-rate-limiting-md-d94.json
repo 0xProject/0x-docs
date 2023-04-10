@@ -1,0 +1,29 @@
+{
+  "unversionedId": "0x-orderbook-api/rate-limiting",
+  "id": "0x-orderbook-api/rate-limiting",
+  "title": "Rate Limiting",
+  "description": "Rate Limiting",
+  "source": "@site/docs/0x-orderbook-api/rate-limiting.md",
+  "sourceDirName": "0x-orderbook-api",
+  "slug": "/0x-orderbook-api/rate-limiting",
+  "permalink": "/docs/0x-orderbook-api/rate-limiting",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-orderbook-api/rate-limiting.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_label": "Rate Limiting",
+    "sidebar_position": 2,
+    "description": "Rate Limiting"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Websocket API",
+    "permalink": "/docs/0x-orderbook-api/api-references/websocket-api"
+  },
+  "next": {
+    "title": "Connection Limit",
+    "permalink": "/docs/0x-orderbook-api/connection-limit"
+  }
+}

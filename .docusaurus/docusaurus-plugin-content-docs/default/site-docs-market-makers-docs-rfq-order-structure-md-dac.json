@@ -1,0 +1,29 @@
+{
+  "unversionedId": "market-makers/docs/rfq-order-structure",
+  "id": "market-makers/docs/rfq-order-structure",
+  "title": "RFQ Order Structure",
+  "description": "RFQ Order Structure",
+  "source": "@site/docs/market-makers/docs/rfq-order-structure.md",
+  "sourceDirName": "market-makers/docs",
+  "slug": "/market-makers/docs/rfq-order-structure",
+  "permalink": "/docs/market-makers/docs/rfq-order-structure",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/market-makers/docs/rfq-order-structure.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_label": "RFQ Order Structure",
+    "sidebar_position": 2,
+    "description": "RFQ Order Structure"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/market-makers/docs/introduction"
+  },
+  "next": {
+    "title": "Providing RFQ liquidity to Swap API",
+    "permalink": "/docs/market-makers/docs/providing-rfq-liquidity-to-swap-api"
+  }
+}

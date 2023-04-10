@@ -1,0 +1,29 @@
+{
+  "unversionedId": "introduction/community",
+  "id": "introduction/community",
+  "title": "Community",
+  "description": "One of the most important aspects of 0x is the community! We look forward to seeing you in one of our active developer communities below",
+  "source": "@site/docs/introduction/community.md",
+  "sourceDirName": "introduction",
+  "slug": "/introduction/community",
+  "permalink": "/docs/introduction/community",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/introduction/community.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "sidebar_label": "Community",
+    "sidebar_position": 5,
+    "description": "One of the most important aspects of 0x is the community! We look forward to seeing you in one of our active developer communities below"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "0x Concept Videos",
+    "permalink": "/docs/introduction/0x-concept-videos"
+  },
+  "next": {
+    "title": "0x Cheat Sheet",
+    "permalink": "/docs/introduction/0x-cheat-sheet"
+  }
+}

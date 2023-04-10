@@ -1,0 +1,28 @@
+{
+  "unversionedId": "0x-swap-api/introduction",
+  "id": "0x-swap-api/introduction",
+  "title": "Introduction",
+  "description": "An introduction to how the 0x Swap API works and the resources included this section",
+  "source": "@site/docs/0x-swap-api/introduction.md",
+  "sourceDirName": "0x-swap-api",
+  "slug": "/0x-swap-api/introduction",
+  "permalink": "/docs/0x-swap-api/introduction",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-swap-api/introduction.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_label": "Introduction",
+    "sidebar_position": 1,
+    "description": "An introduction to how the 0x Swap API works and the resources included this section"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Swap API",
+    "permalink": "/docs/category/swap-api"
+  },
+  "next": {
+    "title": "API References"
+  }
+}

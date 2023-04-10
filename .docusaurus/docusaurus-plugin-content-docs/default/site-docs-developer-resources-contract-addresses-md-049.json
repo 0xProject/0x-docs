@@ -1,0 +1,29 @@
+{
+  "unversionedId": "developer-resources/contract-addresses",
+  "id": "developer-resources/contract-addresses",
+  "title": "📃 Contract Addresses",
+  "description": "A list of commonly used 0x protocol contract addresses",
+  "source": "@site/docs/developer-resources/contract-addresses.md",
+  "sourceDirName": "developer-resources",
+  "slug": "/developer-resources/contract-addresses",
+  "permalink": "/docs/developer-resources/contract-addresses",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/developer-resources/contract-addresses.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_label": "Contract Addresses",
+    "sidebar_position": 3,
+    "description": "A list of commonly used 0x protocol contract addresses"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "FAQs & Troubleshooting",
+    "permalink": "/docs/developer-resources/faqs-and-troubleshooting"
+  },
+  "next": {
+    "title": "How to Get 0x and Matcha Data",
+    "permalink": "/docs/developer-resources/how-to-get-0x-and-matcha-data"
+  }
+}

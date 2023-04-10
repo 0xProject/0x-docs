@@ -1,0 +1,29 @@
+{
+  "unversionedId": "0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts",
+  "id": "0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts",
+  "title": "Use 0x API Liquidity in Your Smart Contracts",
+  "description": "Use 0x API Liquidity in Your Smart Contracts",
+  "source": "@site/docs/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts.md",
+  "sourceDirName": "0x-swap-api/guides",
+  "slug": "/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts",
+  "permalink": "/docs/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_label": "Use 0x API Liquidity in Your Smart Contracts",
+    "sidebar_position": 3,
+    "description": "Use 0x API Liquidity in Your Smart Contracts"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "How to Build a Token Swap DApp",
+    "permalink": "/docs/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api"
+  },
+  "next": {
+    "title": "Accessing RFQ liquidity on 0x API",
+    "permalink": "/docs/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api"
+  }
+}

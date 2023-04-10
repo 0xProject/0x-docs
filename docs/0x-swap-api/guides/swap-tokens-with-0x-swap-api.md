@@ -1,18 +1,30 @@
 ---
 sidebar_label: Swap Tokens with Swap API
 sidebar_position: 1
-description: This article will guide you through plugging into Swap API and programmatically executing a trade.
+description: Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API. 
 ---
 
-# Swap Tokens with 0x Swap API
+# Swap Tokens with Swap API
 
-The examples in this article are for Ethereum mainnet. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for other blockchains.
+The examples in this guide are for Ethereum mainnet. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for other blockchains.
 
 [Swap API](/0x-swap-api/introduction) is the recommended way of interacting with 0x protocol for retail trade. Under the hood, the API performs three tasks:
 
 * Queries prices of ERC20 assets from multiple decentralized exchanges and market makers
 * Aggregates the liquidity from the queried sources to provide the best price possible
 * Returns the trade in a format that can be easily executed using the Web3 library of your choice
+
+If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox!
+
+<div>
+<iframe height="300"
+  width="100%;"
+  scrolling="no" title="Example using Swap API on the Goerli testnet" src="https://codepen.io/0xProject/embed/preview/abVJYra?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/0xProject/pen/abVJYra">
+  Example using Swap API on the Goerli testnet</a> by 0xProject (<a href="https://codepen.io/0xProject">@0xProject</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+</div>
 
 ### Swap Tokens in 3 simple steps
 

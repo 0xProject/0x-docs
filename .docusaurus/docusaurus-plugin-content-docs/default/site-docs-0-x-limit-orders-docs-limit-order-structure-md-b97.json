@@ -1,0 +1,29 @@
+{
+  "unversionedId": "0x-limit-orders/docs/limit-order-structure",
+  "id": "0x-limit-orders/docs/limit-order-structure",
+  "title": "Limit Order Structure",
+  "description": "Learn about 0x Limit Order Structure, why, and how to use it",
+  "source": "@site/docs/0x-limit-orders/docs/limit-order-structure.md",
+  "sourceDirName": "0x-limit-orders/docs",
+  "slug": "/0x-limit-orders/docs/limit-order-structure",
+  "permalink": "/docs/0x-limit-orders/docs/limit-order-structure",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-limit-orders/docs/limit-order-structure.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_label": "Limit Order Structure",
+    "sidebar_position": 2,
+    "description": "Learn about 0x Limit Order Structure, why, and how to use it"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/0x-limit-orders/docs/introduction"
+  },
+  "next": {
+    "title": "Monitoring 0x Limit Orders",
+    "permalink": "/docs/0x-limit-orders/docs/monitoring-0x-limit-orders"
+  }
+}

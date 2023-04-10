@@ -79,6 +79,9 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 - [Goerli Faucet](https://goerlifaucet.com/)
 - [Goerli POW Faucet](https://goerli-faucet.pk910.de/)
+- [Sepolia Faucet](https://sepoliafaucet.com/)
+- [Mumbai Faucet](https://mumbaifaucet.com/)
+- [Gwei Calculator](https://www.alchemy.com/gwei-calculator)
 - [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
     - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
 - Also see our [Working in Testnet Guide](/0x-limit-orders/guides/working-in-the-testnet)

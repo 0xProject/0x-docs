@@ -1,0 +1,29 @@
+{
+  "unversionedId": "0x-orderbook-api/api-references/post-orderbook-v1-order",
+  "id": "0x-orderbook-api/api-references/post-orderbook-v1-order",
+  "title": "POST /orderbook/v1/order",
+  "description": "Learn how to use POST /orderbook/v1/order",
+  "source": "@site/docs/0x-orderbook-api/api-references/post-orderbook-v1-order.md",
+  "sourceDirName": "0x-orderbook-api/api-references",
+  "slug": "/0x-orderbook-api/api-references/post-orderbook-v1-order",
+  "permalink": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-order",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-orderbook-api/api-references/post-orderbook-v1-order.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_label": "POST /orderbook/v1/order",
+    "sidebar_position": 4,
+    "description": "Learn how to use POST /orderbook/v1/order"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "GET /orderbook/v1/orders",
+    "permalink": "/docs/0x-orderbook-api/api-references/get-orderbook-v1-orders"
+  },
+  "next": {
+    "title": "POST /orderbook/v1/orders",
+    "permalink": "/docs/0x-orderbook-api/api-references/post-orderbook-v1-orders"
+  }
+}

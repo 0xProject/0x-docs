@@ -1,0 +1,15 @@
+{
+  "title": "Introduction",
+  "slug": "/category/introduction",
+  "permalink": "/docs/category/introduction",
+  "navigation": {
+    "previous": {
+      "title": "Welcome",
+      "permalink": "/docs/"
+    },
+    "next": {
+      "title": "Introduction to 0x",
+      "permalink": "/docs/introduction/introduction-to-0x"
+    }
+  }
+}

@@ -6,30 +6,24 @@ description: An introduction to how the 0x Swap API works and the resources incl
 
 # Introduction
 
-:::info
-
-This API is intended for public use. If you are an integrator who needs access higher rate limits, please fill out the [0x API Taker Integration Request Form.](https://www.0x.org/#contact)
-
-:::
 
 ## What is Swap API?
 
-Swap API is a professional-grade DEX aggregation and smart order routing REST API that runs on HTTP. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains.
+Swap API is a professional-grade DEX aggregation and smart order routing REST API that runs on HTTP. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. 
 
-:::tip
+![Swap API UI/UX](/img/introduction/swap-api-ui.svg)
 
-📍 **New to Swap API?** Watch this video on [🛠 Building Token Swaps with 0x API](https://www.youtube.com/watch?v=APXjSGLaoRw\&list=PLXzKMXK2aHh5oYMSL2stEUhgzgdbb58uV\&index=16). It provides overview of how the Swap API works, how to use it, and project ideas.
-
-:::
+Power crypto trading in your application with a single API integration that unlocks thousands of tokens. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains.
 
 ## Why use Swap API?
 
-0x Swap API watches out for your users and is easy for developers. &#x20;
+0x Swap API watches out for your users and is easy for developers. 
 
 * By default, it has **built-in user-protection features**, including:
   * [Slippage Protection](https://docs.0x.org/0x-api-swap/advanced-topics/slippage-protection) which **protects** users **against MEV-attacks**
   * [Price Impact Protection](advanced-topics/price-impact-protection.md) which **protects** users **from getting rekt** by illiquid markets
-* 0x collects limited [trade surplus](../developer-resources/faqs-and-troubleshooting.md) (read more [here](../developer-resources/faqs-and-troubleshooting.md#if-the-difference-between-the-quoted-price-and-the-executed-price-is-positive-what-happens-to-the-fu)).&#x20;
+* Best execution wiht the lowest reverts
+* Exclusive built-in [RFQ liquidity](market-makers/docs/introduction.md) which is competetive with AMMs and comes with the added benefit of zero slippage and guarnteed MEV protection
 * It is **easy-to-use!** For example, you can easily find the best price to buy DAI with WETH with this request
 
 :::tip

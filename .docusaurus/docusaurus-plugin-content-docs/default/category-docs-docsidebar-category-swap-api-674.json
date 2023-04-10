@@ -1,0 +1,15 @@
+{
+  "title": "Swap API",
+  "slug": "/category/swap-api",
+  "permalink": "/docs/category/swap-api",
+  "navigation": {
+    "previous": {
+      "title": "0x Cheat Sheet",
+      "permalink": "/docs/introduction/0x-cheat-sheet"
+    },
+    "next": {
+      "title": "Introduction",
+      "permalink": "/docs/0x-swap-api/introduction"
+    }
+  }
+}

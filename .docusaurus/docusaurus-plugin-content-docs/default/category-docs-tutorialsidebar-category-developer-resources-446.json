@@ -1,0 +1,16 @@
+{
+  "title": "Developer Resources",
+  "description": "List of 0x Developer Resources",
+  "slug": "/category/developer-resources",
+  "permalink": "/docs/category/developer-resources",
+  "navigation": {
+    "previous": {
+      "title": "Python RFQ Orders Code Examples",
+      "permalink": "/docs/market-makers/guides/python-rfq-orders-code-examples"
+    },
+    "next": {
+      "title": "Glossary",
+      "permalink": "/docs/developer-resources/glossary"
+    }
+  }
+}

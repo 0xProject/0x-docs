@@ -1,0 +1,29 @@
+{
+  "unversionedId": "tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md",
+  "id": "tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md",
+  "title": "GET /tx-relay/v1/swap/status/:trade-hash",
+  "description": "Learn how to use GET /tx-relay/v1/swap/status/:trade-hash",
+  "source": "@site/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md.md",
+  "sourceDirName": "tx-relay-api/api-references",
+  "slug": "/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md",
+  "permalink": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_label": "GET /tx-relay/v1/swap/status/:trade-hash",
+    "sidebar_position": 4,
+    "description": "Learn how to use GET /tx-relay/v1/swap/status/:trade-hash"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "GET /tx-relay/v1/swap/submit",
+    "permalink": "/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-submit"
+  },
+  "next": {
+    "title": "Tx Relay FAQ",
+    "permalink": "/docs/tx-relay-api/tx-relay-faq"
+  }
+}

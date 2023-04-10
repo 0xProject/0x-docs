@@ -1,0 +1,28 @@
+{
+  "unversionedId": "0x-swap-api/advanced-topics/rate-limiting",
+  "id": "0x-swap-api/advanced-topics/rate-limiting",
+  "title": "Rate Limiting",
+  "description": "Rate Limiting",
+  "source": "@site/docs/0x-swap-api/advanced-topics/rate-limiting.md",
+  "sourceDirName": "0x-swap-api/advanced-topics",
+  "slug": "/0x-swap-api/advanced-topics/rate-limiting",
+  "permalink": "/docs/0x-swap-api/advanced-topics/rate-limiting",
+  "draft": false,
+  "editUrl": "https://github.com/0xProject/0x-docs/tree/main/docs/docs/0x-swap-api/advanced-topics/rate-limiting.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_label": "Rate Limiting",
+    "sidebar_position": 1,
+    "description": "Rate Limiting"
+  },
+  "sidebar": "docSidebar",
+  "previous": {
+    "title": "Advanced Topics"
+  },
+  "next": {
+    "title": "How to Set Your Token Allowances",
+    "permalink": "/docs/0x-swap-api/advanced-topics/how-to-set-your-token-allowances"
+  }
+}
