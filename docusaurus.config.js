@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: '0x',
-  staticDirectories: ['public', 'static'],
+  staticDirectories: ['public', 'static', 'docs'],
   tagline: 'Connecting developers to web3 markets',
   favicon: 'img/favicon.ico',
 
