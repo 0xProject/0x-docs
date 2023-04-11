@@ -1,6 +1,0 @@
-{
-    "rewrites": [
-      { "source": "/docs-beta", "destination": "https://0x-docs-one.vercel.app/docs-beta" },
-      { "source": "/docs-beta/:path*", "destination": "https://0x-docs-one.vercel.app/docs-beta/:path*" }
-    ]
-  }
