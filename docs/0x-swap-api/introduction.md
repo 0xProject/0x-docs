@@ -20,7 +20,7 @@ Power crypto trading in your application with a single API integration that unlo
 0x Swap API watches out for your users and is easy for developers. 
 
 * By default, it has **built-in user-protection features**, including:
-  * [Slippage Protection](https://docs.0x.org/0x-api-swap/advanced-topics/slippage-protection) which **protects** users **against MEV-attacks**
+  * [Slippage Protection](advanced-topics/slippage-protection.md) which **protects** users **against MEV-attacks**
   * [Price Impact Protection](advanced-topics/price-impact-protection.md) which **protects** users **from getting rekt** by illiquid markets
 * Best execution wiht the lowest reverts
 * Exclusive built-in [RFQ liquidity](market-makers/docs/introduction.md) which is competetive with AMMs and comes with the added benefit of zero slippage and guarnteed MEV protection
@@ -76,7 +76,7 @@ This section contains the following docs and guides
 #### Guides
 
 * [Swap Tokens with 0x Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api)
-* [How to Build a Token Swap dApp with 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api)
+* [How to Build a Token Swap DApp with 0x API](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
 * [Use 0x API Liquidity in Your Smart Contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts)
 * [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project)
 * [Working in the Testnet](/0x-limit-orders/guides/working-in-the-testnet)
