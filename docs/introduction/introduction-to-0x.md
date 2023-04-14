@@ -19,36 +19,34 @@ Prefer to watch a video instead? Jump to[ 0x Concept Videos](0x-concept-videos.m
 
 0x's professional-grade APIs are built on the [0x Protocol](https://protocol.0x.org/en/latest/), a set of secure, audited smart contracts. Applications building on these tools are part of the 0x Ecosystem. 
 
-The diagram below shows an overview of the 0x Ecosystem, which includes applications who supply liquidity (**[Makers](/introduction/introduction-to-0x#supply-aka-makers)**), applications who demand liquidity (**[Takers](introduction/introduction-to-0x#demand-aka-takers)**). 
+![0x tech stack](/img/introduction/0x-tech-stack.png)
 
-<!-- TODO Update image -->
+The diagram below shows an overview of the 0x Ecosystem, which includes applications who supply liquidity (**[Makers](/introduction/introduction-to-0x#supply-aka-makers)**), applications who demand liquidity (**[Takers](introduction/introduction-to-0x#demand-aka-takers)**). 
 
 ![0x is an open-source, decentralized exchange infrastructure that enables the exchange of tokenized assets on multiple blockchains.](/img/introduction/0x-ecosystem.png)
 
 
 ### Makers and Takers
 
-Within the 0x ecosystem, there are two sides - Makers and Takers:
+Within the 0x Ecosystem, there are two sides - Makers and Takers:
 
 #### **Supply (aka Makers)**
 
-This is the entity who creates 0x orders and _provides liquidity_ into the system for the Demand side (Takers) to consume. 0x aggregates liquidity from multiple sources including:
+This is the entity who creates [0x orders](/introduction/0x-cheat-sheet#0x-order-types) and _provides liquidity_ into the system for the Demand side (Takers) to consume. 0x aggregates liquidity from multiple sources including:
 
 * On-chain liquidity - DEXs, AMMs (e.g. Uniswap, Curve, Bancor)
 * Off-chain liquidity - Professional Market Makers, 0x's Open Orderbook network
 * _Relevant Docs:_
-<!-- TODO Add links -->
-  * Market Makers - Professional Market Making With Limit Orders
-  * 0x Orderbook API - Sharing Limit Orders
-  * Limit Orders (Advanced Traders) - Filling and Managing Limit Orders
+  * [Market Makers](/market-makers/docs/introduction) - Professional Market Making With Limit Orders
+  * [Orderbook API](/0x-orderbook-api/introduction) - Sharing Limit Orders
+  * [Limit Orders (Advanced Traders)()](/0x-limit-orders/docs/introduction) - Filling and Managing Limit Orders
 
 #### **Demand (aka Takers)**
 
 This is the entity who wants the Maker's asset. The Takers agree to trade their asset for the Maker's asset; in other words, they _consume the 0x liquidity_. Examples include projects such as MetaMask, Coinbase, and dydx.
 
 * _Relevant Docs:_
-<!-- TODO Add links -->
-  *  Swap API - The most efficient liquidity aggregator for ERC20 tokens through a single API.
+  *  [Swap API](/0x-swap-api/introduction) - The most efficient liquidity aggregator for ERC20 tokens through a single API.
 
 
 ## How does 0x work?
