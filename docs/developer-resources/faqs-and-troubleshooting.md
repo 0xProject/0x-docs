@@ -94,7 +94,8 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 <summary>Is there a fee to use Swap API?</summary>
 
-No, the Swap API is free to use and is intended for public use. If you are an integrator who needs access higher rate limits, please fill out [Swap API Taker Integration Request Form](https://www.0x.org/#contact) to apply for a custom enterprise API endpoint.
+The Swap API is public and free to use. If you are an integrator who needs access higher rate limits, please check out our [entrprise option](https://0x.org/pricing).
+
 
 </details>
 

@@ -7,7 +7,7 @@ description: One of the most important aspects of 0x is the community! We look f
 
 # Community
 
-Join our bustling 0x developer communities to contribute 💻, learn 🧠, and get your questions answered :thinking:!
+Join our bustling 0x developer communities to contribute 💻, learn 🧠, and get your questions answered!
 
 * [Questions tagged '0x' on Stack Exchange](https://ethereum.stackexchange.com/questions/tagged/0x)
 * [Discord](https://discord.com/invite/d3FTX3M)
