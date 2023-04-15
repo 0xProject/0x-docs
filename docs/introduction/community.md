@@ -1,6 +1,6 @@
 ---
 sidebar_label: Community
-sidebar_position: 5
+sidebar_position: 4
 description: One of the most important aspects of 0x is the community! We look forward to seeing you in one of our active developer communities below
 ---
 

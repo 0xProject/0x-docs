@@ -1,6 +1,6 @@
 ---
 sidebar_label: 0x Cheat Sheet
-sidebar_position: 6 
+sidebar_position: 5 
 description: A collection of commonly used addresses, endpoints, and values across 0x products.
 ---
 

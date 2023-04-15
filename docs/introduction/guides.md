@@ -1,10 +1,12 @@
 ---
 sidebar_label: Guides
-sidebar_position: 3
+sidebar_position: 2
 description: This page lists the most popular guides to get started building with 0x based on your use case
 ---
 
 # Guides
+
+This page lists the most popular guides to get started building with 0x based on your use case
 
 ### **Swap Tokens with Swap API**
 Easily implement ERC20 liquidity aggregation into your dApp.
