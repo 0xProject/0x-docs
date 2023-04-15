@@ -24,6 +24,12 @@ Slippage Protection incorporates slippage forecasts into 0x API’s smart order 
 
 Slippage Protection is currently supported on Ethereum for the most active trading pairs (ETH-USDC, ETH-DAI, ETH-USDT, ETH-WBTC, WETH-USDC, WETH-DAI, WETH-USDT, WETH-WBTC).
 
+:::tip
+
+Interested to learn more about MEV-aware design? Watch
+this [talk on MEV-aware DEX design](https://www.youtube.com/watch?v=rcCdiKcE81Q) and this [roundtable on MEV and how teams are solving for MEV](https://www.youtube.com/watch?v=mehuqinCk1o).
+:::
+
 ### What is the best executed price?
 
 The best executed price is the price users receive that’s inclusive of gas fees and slippage after taking into account all possible liquidity paths. This is an important distinction because many DeFi applications today show quoted prices which may be drastically different from the executed price.

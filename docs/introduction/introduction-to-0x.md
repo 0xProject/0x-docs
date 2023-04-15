@@ -1,6 +1,6 @@
 ---
 sidebar_label: Introduction to 0x
-sidebar_position: 2
+sidebar_position: 1
 description: This is your launchpad to learn about 0x - Trusted exchange infrastructure for the internet
 ---
 
@@ -8,7 +8,7 @@ description: This is your launchpad to learn about 0x - Trusted exchange infrast
 
 :::tip
 
-Prefer to watch a video instead? Jump to[ 0x Concept Videos](0x-concept-videos.md).
+Prefer to watch a video instead? Jump to [0x Concept Videos](0x-concept-videos.md).
 
 :::
 
