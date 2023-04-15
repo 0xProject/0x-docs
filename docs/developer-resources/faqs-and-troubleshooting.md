@@ -116,7 +116,7 @@ This applies to all 0x APIs, including Tx Relay API and Swap API.
 
 <summary>Is there a fee to use Swap API?</summary>
 
-The Swap API is public and free to use. If you are an integrator who needs access higher rate limits, please check out our [entrprise option](https://0x.org/pricing).
+The Swap API is public and free to use; however, if you are an integrator who needs access higher rate limits, please check out our [enterprise option](https://0x.org/pricing).
 
 
 </details>
