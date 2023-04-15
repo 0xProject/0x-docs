@@ -8,14 +8,15 @@ description: FAQs & Troubleshooting
 **Categories**
 
 * [🧰 Troubleshooting](faqs-and-troubleshooting.md#-troubleshooting)
+* [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 * [🔄 Swap API](faqs-and-troubleshooting.md#-swap-api)
-  * 📜 [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
-  * 💻 [Parmeter Questions](faqs-and-troubleshooting.md#-parameter-questions)
-  * 🏆 [Best Practices](faqs-and-troubleshooting.md#-best-practices)
+  * [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
+  * [Parmeter Questions](faqs-and-troubleshooting.md#-parameter-questions)
+  * [Best Practices](faqs-and-troubleshooting.md#-best-practices)
 * [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
 * [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
 
-## 🧰 **Troubleshooting**
+## 🧰 Troubleshooting
 
 <details>
 
@@ -71,7 +72,28 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 </details>
 
-## 🔄 **Swap API**
+## 💻 0x Dashboard
+
+<details>
+
+<summary>Can we provide several email addresses for each person that will need to access it on our side, or does it have to be one email for the whole team?</summary>
+
+For now we only support one user per team account, but we will add support for multiple users in the coming weeks.
+
+</details>
+
+<details>
+
+<summary>My project integrated with 0x API before the [0x Dashboard](https://dashboard.0x.org/) was created. Will any existing 0x integrations break with this update?</summary>
+
+If you have an API key, the key will remain the same (unless you change it). The API key you are currently using will continue to work as long as you create an account in the 0x Dashabord and have an API key; otherwise, will get an error in the API response.
+
+This applies to all 0x APIs, including Tx Relay API and Swap API.  
+
+</details>
+
+
+## 🔄 Swap API
 
 <details>
 
@@ -88,7 +110,7 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 </details>
 
-### 📜 **About Swap API**
+### About Swap API
 
 <details>
 
@@ -204,8 +226,7 @@ If you would like to trade a custom token, you will need to create the liquidity
 </details>
 
 
-### 💻 **Parameter Questions**
-
+### Parameter Questions
 <details>
 
 <summary>Why does the value of the <code>to</code> field in the <code>/swap/quote</code> response vary?</summary>
@@ -299,7 +320,7 @@ Developers can also surface this information in their UI so users can see the po
 
 </details>
 
-### 🏆 **Best Practices**
+### Best Practices
 
 <details>
 
@@ -366,7 +387,7 @@ We recommend referring to [tokenlist.org](https://tokenlists.org/), specifically
 
 </details>
 
-## 🌐 **Protocol**
+## 🌐 Protocol
 
 <details>
 
