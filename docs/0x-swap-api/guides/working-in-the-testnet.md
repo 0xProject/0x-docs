@@ -1,6 +1,6 @@
 ---
 sidebar_label: Working in the Testnet
-sidebar_position: 6
+sidebar_position: 3
 description: Learn about working in the testnet
 ---
 

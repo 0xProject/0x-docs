@@ -1,6 +1,6 @@
 ---
 sidebar_label: Accessing RFQ liquidity on 0x API
-sidebar_position: 4
+sidebar_position: 5
 description: This guide discusses what RFQ liquidity is, how it works, and how your project can apply to access it
 ---
 
