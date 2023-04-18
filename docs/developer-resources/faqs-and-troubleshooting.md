@@ -221,7 +221,7 @@ A hosted Swap API for the Goerli testnet is available at https://goerli.api.0x.o
 
 To view the currently supported sources on Goerli refer to https://goerli.api.0x.org/swap/v1/sources. At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3`. The token you want to use for testing must have liquidity on at least one of these sources.
 
-In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is ETH <> UNI deployed by Uniswap on Goerli.
+In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is WETH < > UNI deployed by Uniswap on Goerli.
  
 Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information. 
 
