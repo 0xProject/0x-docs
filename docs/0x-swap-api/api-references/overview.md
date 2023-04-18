@@ -33,6 +33,14 @@ Learn more about the different endpoints of Swap API:
 * [GET /swap/v1/price](/0x-swap-api/api-references/get-swap-v1-price) - `/price` is nearly identical to `/quote,` but with a few key differences. /price does not return a transaction that can be submitted on-chain; it simply provides us the same information. Think of it as the "read-only" version of `/quote`.
 * [GET /swap/v1/source](/0x-swap-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for the chain.
 
+
+## Authentication
+
+0x authenticates your API requests using your account’s API keys. Once you’re set up, ensure that you specify your key with the `0x-api-key` header parameter in your requests.
+
+You can create, access or revoke your API keys via the **[0x Dashboard](https://dashboard.0x.org)**.
+
+
 ## Versioning
 
 Each 0x HTTP API `path` is versioned independently using URI versioning. The format is: `https://api.0x.org/<path>/<version>/<endpoint>`.
