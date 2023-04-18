@@ -70,6 +70,11 @@ const config = {
         },
         items: [
           {
+            href: "https://dashboard.0x.org/",
+            label: 'Create Account',
+            position: "left",
+          },
+          {
             href: "https://discord.com/invite/official0x",
             className: "header-discord-link",
             position: "right",
@@ -86,6 +91,11 @@ const config = {
           hideable: true,
         },
       },
+      announcementBar: {
+        id: 'announcementBar', // Increment on change
+        content: `📣 After May 8, 2023, all API requests without an API key will return an error. Visit <a target="_blank" rel="noopener noreferrer" href="https://dashboard.0x.org">0x Dashboard</a> to get your API key.`,
+        backgroundColor: '#A2FFC1',
+      },        
       footer: {
         style: 'dark',
         links: [
@@ -111,7 +121,7 @@ const config = {
             items: [
               {
                 label: 'Login/Sign Up',
-                to: 'https://www.0x.org/',
+                to: 'https://dashboard.0x.org/',
               },
               {
                 label: 'Content Hub',

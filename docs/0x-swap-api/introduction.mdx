@@ -37,13 +37,21 @@ Power crypto trading in your application with a single API integration that unlo
 
 **Try it out** 
 
-Click to see a live price response for selling WETH -> DAI
+👉 Run this curl request to see a live quote response for selling WETH -> DAI, excluding Kyber as a source:
 <br></br>
 
-👉 curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: 57b28c7c-3bea-4367-be35-34f15013317c'
+
+```curl
+curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: 35aa607c-1e98-4404-ad87-4bed10a538ae'
+```
+
 <br></br>
 The response that is returned back is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap.
 
+<br></br>
+<br></br>
+
+**Note:** This request uses a test API key that should not be used in production. 
 
 :::
 
