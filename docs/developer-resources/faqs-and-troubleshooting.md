@@ -11,6 +11,7 @@ description: FAQs & Troubleshooting
 * [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 * [🔄 Swap API](faqs-and-troubleshooting.md#-swap-api)
   * [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
+  * [Working in the Testnet](faqs-and-troubleshooting.md#-working-in-the-testnet)
   * [Parmeter Questions](faqs-and-troubleshooting.md#-parameter-questions)
   * [Best Practices](faqs-and-troubleshooting.md#-best-practices)
 * [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
@@ -84,7 +85,7 @@ For now we only support one user per team account, but we will add support for m
 
 <details>
 
-<summary>My project integrated with 0x API before the [0x Dashboard](https://dashboard.0x.org/) was created. Will any existing 0x integrations break with this update?</summary>
+<summary>My project integrated with 0x API before the 0x Dashboard (https://dashboard.0x.org/) was created. Will any existing 0x integrations break with this update?</summary>
 
 If you have an API key, the key will remain the same (unless you change it). The API key you are currently using will continue to work as long as you create an account in the 0x Dashabord and have an API key; otherwise, will get an error in the API response.
 
@@ -94,21 +95,6 @@ This applies to all 0x APIs, including Tx Relay API and Swap API.
 
 
 ## 🔄 Swap API
-
-<details>
-
-<summary>Where can I get testnet funds? </summary>
-
-- [Goerli Faucet](https://goerlifaucet.com/)
-- [Goerli POW Faucet](https://goerli-faucet.pk910.de/)
-- [Sepolia Faucet](https://sepoliafaucet.com/)
-- [Mumbai Faucet](https://mumbaifaucet.com/)
-- [Gwei Calculator](https://www.alchemy.com/gwei-calculator)
-- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
-    - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
-- Also see our [Working in Testnet Guide](/0x-limit-orders/guides/working-in-the-testnet)
-
-</details>
 
 ### About Swap API
 
@@ -222,6 +208,37 @@ This model ensures that we can continue to invest into long-term growth of our p
 <summary>Is it possible to use the Swap API to trade custom ERC20 tokens or altcoins?</summary>
 
 If you would like to trade a custom token, you will need to create the liquidity either by using 0x limit orders or by creating a Liquidity Pool for your token on one of the various AMM sources that the API sources from, such as Uniswap, SushiSwap, or Curve. Learn more about creating limit order: [https://docs.0x.org/protocol/docs/exchange-proxy/features/nativeorders#limit-orders](https://docs.0x.org/protocol/docs/exchange-proxy/features/nativeorders#limit-orders)
+
+</details>
+
+## Working in the Testnet
+
+<details>
+
+<summary>I'm building on a testnet, but have issues with certain liquidity pairs. Are there certain pairs I should test when building on a testnet? </summary>
+
+A hosted Swap API for the Goerli testnet is available at https://goerli.api.0x.org/ which offers a subset of DEX sources available on Ethereum mainnet.
+
+To view the currently supported sources on Goerli refer to https://goerli.api.0x.org/swap/v1/sources. At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3`. The token you want to use for testing must have liquidity on at least one of these sources.
+
+Note that for some sources, we've noticed that only certain pairs are deployed. For example, at the time of writing, Uniswap has only deployed a WETH < > UNI pool.
+ 
+Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet)
+
+</details>
+
+<details>
+
+<summary>Where can I get testnet funds? </summary>
+
+- [Goerli Faucet](https://goerlifaucet.com/)
+- [Goerli POW Faucet](https://goerli-faucet.pk910.de/)
+- [Sepolia Faucet](https://sepoliafaucet.com/)
+- [Mumbai Faucet](https://mumbaifaucet.com/)
+- [Gwei Calculator](https://www.alchemy.com/gwei-calculator)
+- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
+    - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
+- Also see our [Working in Testnet Guide](/0x-swap-api/guides/working-in-the-testnet)
 
 </details>
 
