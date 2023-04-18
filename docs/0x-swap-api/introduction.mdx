@@ -40,7 +40,7 @@ Power crypto trading in your application with a single API integration that unlo
 Click to see a live price response for selling WETH -> DAI
 <br></br>
 
-👉 [https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=1000000000000000000](https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=100000000000000000)
+👉 curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: 57b28c7c-3bea-4367-be35-34f15013317c'
 <br></br>
 The response that is returned back is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap.
 
@@ -63,6 +63,10 @@ Under the hood, the API performs a series of tasks:
 
 
 ## Get Started
+
+:::info
+To create an account, and get your live API keys, visit the **[0x Dashboard](https://dashboard.0x.org/)**.
+:::
 
 This section contains the following docs and guides
 
