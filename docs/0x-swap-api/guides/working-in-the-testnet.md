@@ -10,7 +10,8 @@ Swap API and 0x Protocol can be accessed on the Goerli testnet, or by forking Et
 
 This page includes:
 
-* [API and tokens available on Goerli](/0x-swap-api/guides/working-in-the-testnet#using-swap-api-on-)
+* [Using Swap API on Goerli](/0x-swap-api/guides/working-in-the-testnet#using-swap-api-on-goerli)
+* [Tokens Available on Goerli](/0x-swap-api/guides/working-in-the-testnet#tokens-available-on-goerli)
 * [Getting Testnet Funds](/0x-swap-api/guides/working-in-the-testnet#getting-testnet-funds)
 * [Code Example - Performing a Swap on Goerli](/0x-swap-api/guides/working-in-the-testnet#code-example---performing-a-swap-on-)
 * [Forking Mainnet Ethereum](/0x-swap-api/guides/working-in-the-testnet#forking-mainnet-ethereum)
@@ -20,14 +21,19 @@ This page includes:
 
 A hosted 0x API for the Goerli testnet is available at [https://goerli.api.0x.org/](https://goerli.api.0x.org/) which offers a subset of DEX sources available on Ethereum mainnet.
 
-To view the currently supported sources on Goerli refer to [https://goerli.api.0x.org/swap/v1/sources](https://goerli.api.0x.org/swap/v1/sources). At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` The token you want to use for testing must have liquidity on at least one of these sources.
+To view the currently supported sources on Goerli refer to [https://goerli.api.0x.org/swap/v1/sources](https://goerli.api.0x.org/swap/v1/sources). 
 
-Note that for some sources, we've noticed that only certain pairs are deployed. For example, at the time of writing, Uniswap has only deployed a WETH < > UNI pool.
+At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. 
 
-#### Example tokens available on Goerli
+#### Token Pairs Available on Goerli
+
+In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is `WETH <> UNI` deployed by Uniswap on Goerli.
+
+##### Example tokens available on Goerli
 
 | Symbol | Address                                                                                                                    |
 | ------ | -------------------------------------------------------------------------------------------------------------------------- |
+| UNI    | [0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984](https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984)        |
 | WETH   | [0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6](https://goerli.etherscan.io/token/0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6) |
 | DAI    | [0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E](https://goerli.etherscan.io/token/0xe68104d83e647b7c1c15a91a8d8aad21a51b3b3e) |
 | USDC   | [0x5FfbaC75EFc9547FBc822166feD19B05Cd5890bb](https://goerli.etherscan.io/token/0x5ffbac75efc9547fbc822166fed19b05cd5890bb) |

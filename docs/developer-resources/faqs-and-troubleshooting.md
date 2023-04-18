@@ -199,7 +199,7 @@ In summary, 0x Labs will only recoup the surplus when our product is able to cre
 This model ensures that we can continue to invest into long-term growth of our products and continue to provide our integrators and end users the best experience.
 <br/>
 
-**🔑 Interested to get an API key? [Please fill out the request form.](https://www.0x.org/#contact)**
+**🔑 Interested to get an API key? Get live API keys, create and manage your apps from the [0x Dashboard](https://dashboard.0x.org)**. 
 
 </details>
 
@@ -221,9 +221,9 @@ A hosted Swap API for the Goerli testnet is available at https://goerli.api.0x.o
 
 To view the currently supported sources on Goerli refer to https://goerli.api.0x.org/swap/v1/sources. At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3`. The token you want to use for testing must have liquidity on at least one of these sources.
 
-Note that for some sources, we've noticed that only certain pairs are deployed. For example, at the time of writing, Uniswap has only deployed a WETH < > UNI pool.
+In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is WETH < > UNI deployed by Uniswap on Goerli.
  
-Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet)
+Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information. 
 
 </details>
 
@@ -474,8 +474,7 @@ require(success, "Swap not filled");
 
 <summary>My project would like to integrate the Swap API. How can I contact the 0x team?</summary>
 
-We appreciate your interest in consuming liquidity from the 0x API. Please fill out [this form](https://www.0x.org/#contact) for us to  to learn more about application and how you use the 0x API. Our team will review and reach out to you.
-
+We appreciate your interest to integrate with 0x. [Check out our enterprise options](https://0x.org/pricing) and [contact our team](https://www.0x.org/#contact) for us to learn more about application and how you plan to use 0s. Our team will review and reach out to you.
 </details>
 
 <details>
