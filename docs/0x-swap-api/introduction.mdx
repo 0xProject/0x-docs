@@ -47,9 +47,22 @@ curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sel
 ```
 
 <br></br>
-The response that is returned back is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap.
+ 
+You will receive a response that looks like this: 
 
-<br></br>
+```json
+{
+    "chainId": 1,
+    "price": "1969.101",
+    "guaranteedPrice": "1949.40999",
+    "estimatedPriceImpact": "0",
+    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    "data": "0xd9627...
+    ...
+}
+```
+ This is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap. Read more about the parameters [here](/0x-swap-api/api-references/get-swap-v1-quote).
+
 <br></br>
 
 **Note:** This request uses a test API key that should not be used in production. Create an account and get your live API keys to access the Swap API from **[0x Dashboard](https://dashboard.0x.org/)**. 
