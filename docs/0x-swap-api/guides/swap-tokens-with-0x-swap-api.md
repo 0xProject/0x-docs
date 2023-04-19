@@ -6,6 +6,10 @@ description: Learn how to use the Swap API to access the most efficient liquidit
 
 # Swap Tokens with Swap API
 
+:::info
+After May 8, 2023, all API requests without an API key will return an error. The code examples below may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
+:::
+
 The examples in this guide are for Ethereum mainnet. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for other blockchains.
 
 [Swap API](/0x-swap-api/introduction) is the recommended way of interacting with 0x protocol for retail trade. Under the hood, the API performs three tasks:
