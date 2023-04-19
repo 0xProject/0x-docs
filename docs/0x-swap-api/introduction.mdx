@@ -41,7 +41,8 @@ Power crypto trading in your application with a single API integration that unlo
 <br></br>
 
 
-```curl
+```bash
+// Replace API key in the header with your own key from https://dashboard.0x.org/
 curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: 35aa607c-1e98-4404-ad87-4bed10a538ae'
 ```
 
@@ -51,15 +52,17 @@ The response that is returned back is a valid unsigned Ethereum transaction that
 <br></br>
 <br></br>
 
-**Note:** This request uses a test API key that should not be used in production. 
+**Note:** This request uses a test API key that should not be used in production. Create an account and get your live API keys to access the Swap API from **[0x Dashboard](https://dashboard.0x.org/)**. 
 
 :::
 
 
 ## How does it work?
 
+Swap API is a professional-grade DEX aggregation and smart order routing API. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains
 
-![Swap API is a professional-grade DEX aggregation and smart order routing API. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains.](/img/introduction/swap-api-diagram.png)
+
+![Swap API Diagram](/img/introduction/swap-api-diagram.png)
 
 Under the hood, the API performs a series of tasks:
 
