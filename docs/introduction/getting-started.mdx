@@ -12,9 +12,12 @@ To create a account on the [0x Dashboard](https://dashboard.0x.org/apps), click 
 
 ```mdx-code-block
 import SignUpImg from '/static/img/introduction/0x-dashboard-sign-up.png';
+
+<center>
+    <img src={SignUpImg} width="70%"/>
+</center>
 ```
 
-<img src={SignUpImg} width="50%" class="center"/>
 
 
 ## 2. Create a Team
@@ -23,16 +26,19 @@ Once verified, you'll be prompted to create a team on 0x. Decide on a team name 
 
 ```mdx-code-block
 import CreateTeam from '/static/img/introduction/0x-dashboard-create-team.png';
+
+<center>
+    <img src={CreateTeam} width="70%" />
+</center>
 ```
 
-<img src={CreateTeam} width="50%" class="center"/>
 
 ## 3. Tour the Dashboard
 
 ### 3.1 Test API Key
 Once you've created a team, you'll be taken to the [0x Dashboard](https://dashboard.0x.org/) where you can create and mange live API keys, find build resources, and raise support requests. 
 
-To find a list of all supported by 0x, check out the [0x Cheat Sheet](https://0x.org/docs/introduction/0x-cheat-sheet).
+To find a list of all supported networks by 0x, check out the [0x Cheat Sheet](https://0x.org/docs/introduction/0x-cheat-sheet).
 
 Your dashboard comes with a Test API key you can use to make sample requests. 
 Give it a try by plugging it into the curl request and running that from your CLI to see a live Swap API quote request: 
@@ -48,19 +54,27 @@ Click **Create an app** to get a live API key that has access to multiple 0x pro
 
 ```mdx-code-block
 import CreateApp from '/static/img/introduction/0x-dashboard-create-an-app.png';
+
+<center>
+    <img src={CreateApp} width="50%"/>
+</center>
 ```
 
-<img src={CreateApp} width="25%" class="center"/>
+<br></br>
 
 From the pop-up, enter your app's name and which 0x products (0x Swap API, Orderbook API) should be enabled for this API key, then click **Continue**. 
 
-**Note:** You will be able to update the 0x products this key can unlock after the app has been created.  
+**Note:** You will still be able to update the 0x products this key can unlock even after the app has been created.  
 
 ```mdx-code-block
 import CreateAppScreen from '/static/img/introduction/0x-dashboard-create-app-screen.png';
+
+<center>
+    <img src={CreateAppScreen} width="70%"/>
+
+</center>
 ```
 
-<img src={CreateAppScreen} width="40%" class="center"/>
 
 ### 3.3 Add 0x Explorer Tag
 
@@ -69,27 +83,33 @@ In the next screen, you can add a unique tag that can be used to identify transa
 
 0x Explorer provides data about ERC-20 transactions routed through 0x API. It’s a reliable and transparent tool to help developers and users verify transactions and analyze on-chain activity in an easy and low-friction way.
 
-[Learn more about the 0x Explorer Tag](/docs/developer-resources/0x-explorer-tag-guide).
+[Learn more about 0x Explorer Tags](/docs/developer-resources/0x-explorer-tag-guide).
 
 You can skip for now and add a tag later. 
 
 ```mdx-code-block
 import ExplorerTag from '/static/img/introduction/0x-dashboard-0x-explorer-tag.png';
+
+<center>
+   <img src={ExplorerTag} width="70%"/>
+</center>
 ```
 
-<img src={ExplorerTag} width="50%" class="center"/>
 
 ### 3.4 Reveal Your API Key
 
 On the final screen, click the eye to reveal your API key! This key is unique and tied to your app. Do not share it. 
 
-This key will allow you to authenticate requests on 0x. Remembmer to specify the key in your requests vai the `0x-api-key` header paramter:
+This key will allow you to authenticate requests on 0x. Remember to specify the key in your requests vai the `0x-api-key` header paramter:
 
 ```mdx-code-block
 import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-key.png';
+
+<center>
+   <img src={DashboardCopyAPIKey} width="70%"/>
+</center>
 ```
 
-<img src={DashboardCopyAPIKey} width="50%" class="center"/>
 
 ## 4. Manage Your App
 
@@ -97,29 +117,35 @@ From the main dashboard screen, you can see all the apps you have created:
 
 ```mdx-code-block
 import DashboardHome from '/static/img/introduction/0x-dashboard-home.png';
+
+<center>
+   <img src={DashboardHome} width="100%"/>
+</center>
 ```
 
-<img src={DashboardCopyAPIKey} width="50%" class="center"/>
 
 <br></br>
 <br></br>
 
-You can see specifics about an App by click on it.
+Click on an App to open up details about it. 
 
 ```mdx-code-block
 import DashboardDemoApp from '/static/img/introduction/0x-dashboard-demo-app-annotated.png';
+
+<center>
+   <img src={DashboardDemoApp} width="100%" class="center"/>
+</center>
 ```
 
-<img src={DashboardDemoApp} width="80%" class="center"/>
 
-For each Demo App, you can:
+For each Demo App, you can see the following (labels above correspond to list below):
 
 1. See which 0x products are enabled - Swap API, Orderbook API.
 2. From **API Key**, see the API key associated with this app and **Rotate the API Key**. From **Settings**, change the 0x products enabled for this app. Set or update your **0x Explorer Tag**. Change the **App Name**.
 3. If you have set up an **0x Explorer Tag**, you can view your on-chain data and transactions related to this app. 
 4. View **build resources**. 
 
-## 4. Manage Your Account
+## 5. Manage Your Account
 
 You can find additional settings to manage your account from **Your Account** in the top-right corner. 
 - **Settings** - You can see your full name, team name, and account email, as well as change your password. 
@@ -128,11 +154,11 @@ You can find additional settings to manage your account from **Your Account** in
 - **Help** - Need help? Check out our commonly asked questions and help center.
 - **0x Explorer** - If you have a [0x Explorer](https://explorer.0x.org/apps) tag setup, easily analyze your app's on-chain activity and transactions. [Learn more about the 0x Explorer Tag](/docs/developer-resources/0x-explorer-tag-guide).
 
-## 5. Start Building
+## 6. Start Building
 Now that you have a live API key, dive into our building resources and start building!
 
 - **[🔄 Swap API](/0x-swap-api/introduction)**
-    - Add crypto trading in your application with Swap API. Access 100+ exchanges and thousands of tokens with a single API.
+   - Easily add crypto trading into your app with a single API. Access 100+ exchanges and thousands of tokens with the Swap API. 
 - **[⛽ Tx Relay API](/tx-relay-api/introduction)**
     - Simplify defi with end-to-end gasless infrastructure
 - **[📖 Orderbook API](0x-orderbook-api/introduction)**
