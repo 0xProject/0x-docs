@@ -1,7 +1,7 @@
 ---
 sidebar_label: Overview
 sidebar_position: 1
-description: Learn how to use the 0x Swap API, the most efficient liquidity for web3 tokens through a single API. 
+description: Learn how to use the Swap API, the most efficient liquidity for web3 tokens through a single API. 
 ---
 
 # API References

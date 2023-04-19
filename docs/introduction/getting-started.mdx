@@ -7,7 +7,7 @@ description: Create an 0x account, get a live API key, and start building!
 # Getting Started
 
 ## 1. Create a 0x Account
-To create a account on the [0x Dashboard](https://dashboard.0x.org/apps), click **Sign Up**, enter your name, email address and password, and click **Continue**
+To create an account on the [0x Dashboard](https://dashboard.0x.org/apps), click **Sign Up**, enter your name, email address and password, and click **Continue**
 
 
 ```mdx-code-block
@@ -18,7 +18,7 @@ import SignUpImg from '/static/img/introduction/0x-dashboard-sign-up.png';
 
 
 ## 2. Create a Team
-Once verified, you'll be prompted to create a team on 0x. Decide on a team name and select the type of project you are building. You can share this account with your teammates
+Once verified, you'll be prompted to create a team on 0x. Decide on a team name and select the type of project you are building. You can share this account with your teammates.
 
 
 ```mdx-code-block
@@ -30,9 +30,9 @@ import CreateTeam from '/static/img/introduction/0x-dashboard-create-team.png';
 ## 3. Tour the Dashboard
 
 ### 3.1 Test API Key
-Once you've created a team, you'll be taken to the [0x Dashboard](https://dashboard.0x.org/) where you can create and mange live API keys, find build resources, and raise support requests. 
+Once you've created a team, you'll be taken to the [0x Dashboard](https://dashboard.0x.org/) where you can create and manage live API keys, find build resources, and raise support requests. 
 
-To find a list of all supported by 0x, check out the [0x Cheat Sheet](https://0x.org/docs/introduction/0x-cheat-sheet).
+To find a list of all networks supported by 0x, check out the [0x Cheat Sheet](https://0x.org/docs/introduction/0x-cheat-sheet).
 
 Your dashboard comes with a Test API key you can use to make sample requests. 
 Give it a try by plugging it into the curl request and running that from your CLI to see a live Swap API quote request: 
@@ -52,7 +52,7 @@ import CreateApp from '/static/img/introduction/0x-dashboard-create-an-app.png';
 
 <img src={CreateApp} width="25%" class="center"/>
 
-From the pop-up, enter your app's name and which 0x products (0x Swap API, Orderbook API) should be enabled for this API key, then click **Continue**. 
+From the pop-up, enter your app's name and which 0x products (Swap API, Orderbook API) should be enabled for this API key, then click **Continue**. 
 
 **Note:** You will be able to update the 0x products this key can unlock after the app has been created.  
 
@@ -65,7 +65,7 @@ import CreateAppScreen from '/static/img/introduction/0x-dashboard-create-app-sc
 ### 3.3 Add 0x Explorer Tag
 
 
-In the next screen, you can add a unique tag that can be used to identify transaction data from your app on [0x Explorer](https://explorer.0x.org/apps). 
+In the next screen, you can add a unique tag that can be used to identify transaction data from your app on [0x Explorer](https://explorer.0x.org/apps). You may use the same tag for all your apps, or create a separate one for each.
 
 0x Explorer provides data about ERC-20 transactions routed through 0x API. It’s a reliable and transparent tool to help developers and users verify transactions and analyze on-chain activity in an easy and low-friction way.
 
@@ -81,9 +81,9 @@ import ExplorerTag from '/static/img/introduction/0x-dashboard-0x-explorer-tag.p
 
 ### 3.4 Reveal Your API Key
 
-On the final screen, click the eye to reveal your API key! This key is unique and tied to your app. Do not share it. 
+On the final screen, copy your API key! This key is unique and tied to your app. Do not share it. You can also create additional API keys for the app if you need them.
 
-This key will allow you to authenticate requests on 0x. Remembmer to specify the key in your requests vai the `0x-api-key` header paramter:
+Your API keys will allow you to authenticate requests on 0x. Remembmer to specify the key in your requests vai the `0x-api-key` header paramter:
 
 ```mdx-code-block
 import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-key.png';
@@ -99,7 +99,7 @@ From the main dashboard screen, you can see all the apps you have created:
 import DashboardHome from '/static/img/introduction/0x-dashboard-home.png';
 ```
 
-<img src={DashboardCopyAPIKey} width="50%" class="center"/>
+<img src={DashboardHome} width="50%" class="center"/>
 
 <br></br>
 <br></br>
@@ -112,14 +112,14 @@ import DashboardDemoApp from '/static/img/introduction/0x-dashboard-demo-app-ann
 
 <img src={DashboardDemoApp} width="80%" class="center"/>
 
-For each Demo App, you can:
+For each App, you can:
 
 1. See which 0x products are enabled - Swap API, Orderbook API.
-2. From **API Key**, see the API key associated with this app and **Rotate the API Key**. From **Settings**, change the 0x products enabled for this app. Set or update your **0x Explorer Tag**. Change the **App Name**.
+2. From **API Keys**, see the API keys associated with this app and **create or delete keys**. From **Settings**, change the 0x products enabled for this app. Set your **0x Explorer Tag**. Change the **App Name**.
 3. If you have set up an **0x Explorer Tag**, you can view your on-chain data and transactions related to this app. 
 4. View **build resources**. 
 
-## 4. Manage Your Account
+## 5. Manage Your Account
 
 You can find additional settings to manage your account from **Your Account** in the top-right corner. 
 - **Settings** - You can see your full name, team name, and account email, as well as change your password. 

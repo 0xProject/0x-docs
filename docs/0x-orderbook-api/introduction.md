@@ -19,7 +19,7 @@ In previous versions of 0x API prior to 0x v4, this functionality was exposed by
 ## Get Started
 
 :::info
-To create an account, and get your live API keys to access the 0x Orderbook API, visit the **[0x Dashboard](https://dashboard.0x.org/)**.
+To create an account, and get your live API keys to access the Orderbook API, visit the **[0x Dashboard](https://dashboard.0x.org/)**.
 :::
 
 This section contains the following docs and guides
