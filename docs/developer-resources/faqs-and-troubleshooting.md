@@ -12,7 +12,7 @@ description: FAQs & Troubleshooting
 * [🔄 Swap API](faqs-and-troubleshooting.md#-swap-api)
   * [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
   * [Working in the Testnet](faqs-and-troubleshooting.md#-working-in-the-testnet)
-  * [Parmeter Questions](faqs-and-troubleshooting.md#-parameter-questions)
+  * [Parameter Questions](faqs-and-troubleshooting.md#-parameter-questions)
   * [Best Practices](faqs-and-troubleshooting.md#-best-practices)
 * [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
 * [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
@@ -77,7 +77,7 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 <details>
 
-<summary>Can we provide several email addresses for each person that will need to access it on our side, or does it have to be one email for the whole team?</summary>
+<summary>Does the 0x Dashboard support having multiple user accounts for our team?</summary>
 
 For now we only support one user per team account, but we will add support for multiple users in the coming weeks.
 
@@ -85,7 +85,7 @@ For now we only support one user per team account, but we will add support for m
 
 <details>
 
-<summary>My project integrated with 0x API before the 0x Dashboard (https://dashboard.0x.org/) was created. Will any existing 0x integrations break with this update?</summary>
+<summary>My project integrated with 0x API before the 0x Dashboard was created. Will any existing 0x integrations break with this update?</summary>
 
 If you have an API key, the key will remain the same (unless you change it). The API key you are currently using will continue to work as long as you create an account in the 0x Dashabord and have an API key; otherwise, will get an error in the API response.
 
@@ -93,6 +93,13 @@ This applies to all 0x APIs, including Tx Relay API and Swap API.
 
 </details>
 
+<details>
+
+<summary>What is an App?</summary>
+
+An app is a self-contained unit for each individual application that you’re building. You can set up multiple apps, each with its unique API keys and configurations on the [0x Dashboard](https://dashboard.0x.org/).
+
+</details>
 
 ## 🔄 Swap API
 
@@ -468,13 +475,13 @@ require(success, "Swap not filled");
 
 </details>
 
-## 📬 Contact the 0x Team
+## 🏗 Building with 0x
 
 <details>
 
-<summary>My project would like to integrate the Swap API. How can I contact the 0x team?</summary>
+<summary>My project would like to integrate with 0x. How can I contact the 0x team?</summary>
 
-We appreciate your interest to integrate with 0x. [Check out our enterprise options](https://0x.org/pricing) and [contact our team](https://www.0x.org/#contact) for us to learn more about application and how you plan to use 0s. Our team will review and reach out to you.
+We appreciate your interest in building with our APIs. To get an API key and start building for free, please create an account on the [0x Dashboard](https://dashboard.0x.org/). You may also [check out our enterprise options](https://0x.org/pricing) and [contact our team](https://www.0x.org/#contact) for more custom needs. Our team will review and respond to you.
 </details>
 
 <details>

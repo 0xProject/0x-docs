@@ -85,6 +85,7 @@ const sidebars = {
         "developer-resources/bounties",
         "developer-resources/0x-legal-guide",
         "developer-resources/white-paper",
+        "developer-resources/0x-explorer-tag-guide",
       ],
       collapsible: true,
       collapsed: false,
