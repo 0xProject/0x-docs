@@ -18,19 +18,21 @@ Add a 0x Explorer Tag to your app on the 0x Dashboard to access on-chain transac
 
 You may use the same tag for all your apps to ensure that data from your apps is aggregated under one name, or use a different tag for each app, to split them on 0x Explorer.
 
-### **Submitting a** 0x Explorer Tag
+🔎[Read more about the 0x Explorer](https://blog.0x.org/introducing-0x-explorer/). 
+
+### Submitting a 0x Explorer Tag
 
 When you submit a tag for your app via the 0x Dashboard, our team will review the submission to ensure it meets the necessary requirements. Once approved, we will tag live transactions from your app(s) with your selected name, and you will be able to view the tagged transaction data publicly on the 0x Explorer website. Please allow up to 7 business days before your transactions are tagged on 0x Explorer.
 
 To ensure that your app submission is appropriate and approved to be displayed on 0x Explorer, please follow the guidelines below:
 
-**App Name:**
+#### App Name Requirements:
 
 - Must not contain trademarks, service marks, or other intellectual property owned by others.
 - Must be unique and not already in use on the 0x Explorer.
 - Must not contain any profane or offensive language.
 
-<!-- **Logo:**
+#### Logo Requirements:
 
 - Must be a *400 x 400 pixel* SVG
 - Must only use the name, logo, or trademark you own or otherwise have obtained the right to use.
@@ -41,6 +43,6 @@ To ensure that your app submission is appropriate and approved to be displayed o
 
 The 0x team reserves the right to reject the submission if it doesn’t comply with our terms of service. -->
 
-### **How the 0x Explorer Tag Works**
+### How the 0x Explorer Tag Works
 
-When you add a tag to an app, we include an `affiliateAddresss` in the call data of the transactions for that app before submitting them on-chain. This enables us to attribute the correct transactions to your app and provide you with analytics on 0x Explorer.
+When you add a tag to an app, we include an [`affiliateAddresss`](/0x-swap-api/api-references/get-swap-v1-quote#request) in the call data of the transactions for that app before submitting them on-chain. This enables us to attribute the correct transactions to your app and provide you with analytics on 0x Explorer.
