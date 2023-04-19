@@ -21,16 +21,23 @@ If you prefer diving into code, see how the following steps are implemented in t
   width="100%;"
   scrolling="no" title="Example using Swap API on the Goerli testnet" src="https://codepen.io/0xProject/embed/preview/abVJYra?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href="https://codepen.io/0xProject/pen/abVJYra">
-  Example using Swap API on the Goerli testnet</a> by 0xProject (<a href="https://codepen.io/0xProject">@0xProject</a>)
+  Example using Swap API on the Goerli testnet</a> by 0x(<a href="https://codepen.io/0xProject">@0xProject</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 </div>
 
 ### Swap Tokens in 3 simple steps
 
+0. Get a 0x API key
 1. (If needed) Set token allowance
 2. Fetch a swap quote
 3. Send the transaction to the network
+
+## 0. Get a 0x API key
+
+If you are are creating an application on mainnet, you will need to [create a 0x account](https://dashboard.0x.org/apps) and get a live API key. See the guide here. 
+
+API keys are not required for testnets. See all 0x-deployed blockchains [here](/introduction/0x-cheat-sheet).
 
 ## 1. Set a Token Allowance
 
@@ -59,11 +66,13 @@ const params = {
     buyToken: 'WETH',
     // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     sellAmount: '100000000000000000000',
-}
+};
+
+const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 
 const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
-);
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers }
+); // Using the global fetch() method. Learn more https://developer.mozilla.org/en-US/docs/Web/API/fetch
 
 console.log(await response.json());
 ```
@@ -105,9 +114,11 @@ const params = {
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 };
 
+const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
 // The response will now include a more accurate `gas` field.
 const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers }
 );
 ```
 
@@ -158,6 +169,8 @@ const params = {
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 }
 
+const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
 // Set up a DAI allowance on the 0x contract if needed.
 const dai = new web3.eth.Contract(ERC20_ABI, DAI_ADDRESS);
 const currentAllowance = new BigNumber(
@@ -171,8 +184,9 @@ if (currentAllowance.isLessThan(params.sellAmount)) {
 
 // Fetch the swap quote.
 const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers }
 );
+
 
 // Perform the swap.
 await web3.eth.sendTransaction(await response.json());
@@ -191,9 +205,11 @@ const params = {
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 }
 
+const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
 // Fetch the swap quote.
 const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers }
 );
 
 // Perform the swap.
@@ -214,9 +230,11 @@ const params = {
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 }
 
+const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
 // Fetch the swap quote.
 const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers }
 );
 
 // Perform the swap.
