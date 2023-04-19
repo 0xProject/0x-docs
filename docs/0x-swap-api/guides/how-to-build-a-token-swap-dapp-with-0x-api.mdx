@@ -6,10 +6,6 @@ description: An end-to-end tutorial that shows you how to build a token swapping
 
 # How to Build a Token Swap DApp
 
-:::info
-📣 After May 8, 2023, all API requests without an API key will return an error. The code examples below may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
-:::
-
 Learn how to build a token swapping DApp (a simple [Matcha.xyz](https://matcha.xyz/)) using the [Swap API](/0x-swap-api/introduction) This dApp aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user to the user.
 
 ---
@@ -38,7 +34,7 @@ Video tutorial version here:
 
 ## Prerequisites
 To prepare for the rest of this tutorial, you need to have:
-- [Create a 0x account with a live API key](https://dashboard.0x.org/apps)
+- [Create a 0x account and get a live API key](https://dashboard.0x.org/apps)
 -   `npm` (`npx`) version 8.5.5
 -   `node` version 16.13.1
 - [MetaMask](https://metamask.io/download/)
@@ -54,7 +50,11 @@ Now let's get started building our swap dapp!
 
 ## Part 1. Walk-through Starter Code
 
-The first thing you'll need to do is to clone the project starter code. We will be building on this starter UI to add in token trading functionality.  
+The first thing you'll need to do is to clone the project starter code. We will be building on this starter UI to add in token trading functionality. 
+
+:::info
+📣 After May 8, 2023, all API requests without an API key will return an error. Legacy code examples may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
+:::
 
 ```
 git clone git clone https://github.com/0xProject/swap-demo-tutorial/tree/main/swap-demo-tutorial-part-1
@@ -565,9 +565,12 @@ const params = {
     buyToken: currentTrade.to.address,
     sellAmount: amount,
   }
+
+  const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
   // Fetch the swap price.
   const response = await fetch(
-    `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`
+    `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`, { headers }
     );
 ...
 }
@@ -633,9 +636,11 @@ async function getQuote(account){
     takerAddress: account,
   }
 
+  const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
   // Fetch the swap quote.
   const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, {headers}
     );
   
   swapQuoteJSON = await response.json();
