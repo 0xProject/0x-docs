@@ -364,7 +364,7 @@ Our rate limits exists because we want to encourage anyone using our infra to ac
 
 <details>
 
-<summary>I am building a DEX app using 0x API. Can I charge my users a trading fee/commission fee/transaction fee when using the 0x API? </summary>
+<summary>I am building a DEX app using Swap API. Can I charge my users a trading fee/commission fee/transaction fee when using the Swap API? </summary>
 
 **TL;DR** You have full flexibility on the fees you collect on your trades.
 <br/>

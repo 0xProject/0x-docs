@@ -71,7 +71,7 @@ const config = {
         items: [
           {
             href: "https://dashboard.0x.org/",
-            label: 'Create Account',
+            label: 'Dashboard',
             position: "left",
           },
           {
