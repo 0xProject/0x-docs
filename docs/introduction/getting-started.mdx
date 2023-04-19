@@ -1,0 +1,145 @@
+---
+sidebar_label: Getting Started
+sidebar_position: 2
+description: Create an 0x account, get a live API key, and start building!
+---
+
+# Getting Started
+
+## 1. Create a 0x Account
+To create a account on the [0x Dashboard](https://dashboard.0x.org/apps), click **Sign Up**, enter your name, email address and password, and click **Continue**
+
+
+```mdx-code-block
+import SignUpImg from '/static/img/introduction/0x-dashboard-sign-up.png';
+```
+
+<img src={SignUpImg} width="50%" class="center"/>
+
+
+## 2. Create a Team
+Once verified, you'll be prompted to create a team on 0x. Decide on a team name and select the type of project you are building. You can share this account with your teammates
+
+
+```mdx-code-block
+import CreateTeam from '/static/img/introduction/0x-dashboard-create-team.png';
+```
+
+<img src={CreateTeam} width="50%" class="center"/>
+
+## 3. Tour the Dashboard
+
+### 3.1 Test API Key
+Once you've created a team, you'll be taken to the [0x Dashboard](https://dashboard.0x.org/) where you can create and mange live API keys, find build resources, and raise support requests. 
+
+To find a list of all supported by 0x, check out the [0x Cheat Sheet](https://0x.org/docs/introduction/0x-cheat-sheet).
+
+Your dashboard comes with a Test API key you can use to make sample requests. 
+Give it a try by plugging it into the curl request and running that from your CLI to see a live Swap API quote request: 
+
+
+```bash
+// Replace the API key in the header with your sample key
+curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: [api-key]'
+```
+### 3.2 Create an App
+
+Click **Create an app** to get a live API key that has access to multiple 0x products. 
+
+```mdx-code-block
+import CreateApp from '/static/img/introduction/0x-dashboard-create-an-app.png';
+```
+
+<img src={CreateApp} width="25%" class="center"/>
+
+From the pop-up, enter your app's name and which 0x products (0x Swap API, Orderbook API) should be enabled for this API key, then click **Continue**. 
+
+**Note:** You will be able to update the 0x products this key can unlock after the app has been created.  
+
+```mdx-code-block
+import CreateAppScreen from '/static/img/introduction/0x-dashboard-create-app-screen.png';
+```
+
+<img src={CreateAppScreen} width="40%" class="center"/>
+
+### 3.3 Add 0x Explorer Tag
+
+
+In the next screen, you can add a unique tag that can be used to identify transaction data from your app on [0x Explorer](https://explorer.0x.org/apps). 
+
+0x Explorer provides data about ERC-20 transactions routed through 0x API. It’s a reliable and transparent tool to help developers and users verify transactions and analyze on-chain activity in an easy and low-friction way.[Learn more about 0x Explorer](https://blog.0x.org/introducing-0x-explorer/).
+
+You can skip for now and add a tag later. 
+
+```mdx-code-block
+import ExplorerTag from '/static/img/introduction/0x-dashboard-0x-explorer-tag.png';
+```
+
+<img src={ExplorerTag} width="50%" class="center"/>
+
+### 3.4 Reveal Your API Key
+
+On the final screen, click the eye to reveal your API key! This key is unique and tied to your app. Do not share it. 
+
+This key will allow you to authenticate requests on 0x. Remembmer to specify the key in your requests vai the `0x-api-key` header paramter:
+
+```mdx-code-block
+import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-key.png';
+```
+
+<img src={DashboardCopyAPIKey} width="50%" class="center"/>
+
+## 4. Manage Your App
+
+From the main dashboard screen, you can see all the apps you have created: 
+
+```mdx-code-block
+import DashboardHome from '/static/img/introduction/0x-dashboard-home.png';
+```
+
+<img src={DashboardCopyAPIKey} width="50%" class="center"/>
+
+<br></br>
+<br></br>
+
+You can see specifics about an App by click on it.
+
+```mdx-code-block
+import DashboardDemoApp from '/static/img/introduction/0x-dashboard-demo-app-annotated.png';
+```
+
+<img src={DashboardDemoApp} width="80%" class="center"/>
+
+For each Demo App, you can:
+
+1. See which 0x products are enabled - Swap API, Orderbook API.
+2. From **API Key**, see the API key associated with this app and **Rotate the API Key**. From **Settings**, change the 0x products enabled for this app. Set or update your **0x Explorer Tag**. Change the **App Name**.
+3. If you have set up an **0x Explorer Tag**, you can view your on-chain data and transactions related to this app. 
+4. View **build resources**. 
+
+## 4. Manage Your Account
+
+You can find additional settings to manage your account from **Your Account** in the top-right corner. 
+- **Settings** - You can see your full name, team name, and account email, as well as change your password. 
+- **Contact Support** - Have a question? Reach out to our dev support team. 
+- **Docs** - Jump into our [developer docs](https://0x.org/docs) and start building
+- **Help** - Need help? Check out our commonly asked questions and help center.
+- **0x Explorer** - If you have a [0x Explorer](https://explorer.0x.org/apps) tag setup, easily analyze your app's on-chain activity and transactions. [Learn more about 0x Explorer](https://blog.0x.org/introducing-0x-explorer/).
+
+## 5. Start Building
+Now that you have a live API key, dive into our building resources and start building!
+
+- **[🔄 Swap API](/0x-swap-api/introduction)**
+    - Add crypto trading in your application with Swap API. Access 100+ exchanges and thousands of tokens with a single API.
+- **[⛽ Tx Relay API](/tx-relay-api/introduction)**
+    - Simplify defi with end-to-end gasless infrastructure
+- **[📖 Orderbook API](0x-orderbook-api/introduction)**
+    - Add limit orders in your applications
+- **[📝 0x Limit Orders (Advanced Traders)](/0x-limit-orders/docs/introduction)**
+    - Learn how to fill and manage 0x Limit Orders
+- **[🏛️ Market Makers](/market-makers/docs/introduction)**
+    - Resources for Professional Market Makers providing RFQ and AMM liquidity
+- **[📚 Dev Resources](/category/developer-resources)**
+    - Glossary, FAQs & Troubleshooting, Audits, Bounties, Legal Guide, White Paper
+
+
