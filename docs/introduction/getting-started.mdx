@@ -98,9 +98,7 @@ import ExplorerTag from '/static/img/introduction/0x-dashboard-0x-explorer-tag.p
 
 ### 3.4 Reveal Your API Key
 
-On the final screen, click the eye to reveal your API key! This key is unique and tied to your app. Do not share it. 
-
-This key will allow you to authenticate requests on 0x. Remember to specify the key in your requests vai the `0x-api-key` header paramter:
+On the final screen, click the eye to reveal your API key! This key is unique and tied to your app. **Do not share it**. 
 
 ```mdx-code-block
 import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-key.png';
@@ -108,6 +106,16 @@ import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-
 <center>
    <img src={DashboardCopyAPIKey} width="70%"/>
 </center>
+```
+<br></br>
+
+This key will allow you to authenticate requests on 0x. Remember to specify the key in your requests vai the `0x-api-key` header parameter:
+
+<br></br>
+
+```bash
+// Replace the API key in the header with your sample key
+curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: [api-key]'
 ```
 
 
@@ -133,21 +141,32 @@ Click on an App to open up details about it.
 import DashboardDemoApp from '/static/img/introduction/0x-dashboard-demo-app-annotated.png';
 
 <center>
-   <img src={DashboardDemoApp} width="100%" class="center"/>
+   <img src={DashboardDemoApp} width="100%"/>
 </center>
 ```
 
 
 For each Demo App, you can see the following (labels above correspond to list below):
 
-1. See which 0x products are enabled - Swap API, Orderbook API.
-2. From **API Key**, see the API key associated with this app and **Rotate the API Key**. From **Settings**, change the 0x products enabled for this app. Set or update your **0x Explorer Tag**. Change the **App Name**.
-3. If you have set up an **0x Explorer Tag**, you can view your on-chain data and transactions related to this app. 
-4. View **build resources**. 
+1. See which **0x products are enabled for your API key** - Swap API and/or Orderbook API.
+2. From **API Key**, **see all the API keys** associated with this app and **Rotate the API Key**.
+3. From **Settings**, change the 0x products enabled for this app. Set or update your **0x Explorer Tag**. Change the **App Name**.
+4. If you have set up an **0x Explorer Tag**, you can view your on-chain data and transactions related to this app. 
+5. Use your API key to makek a live [Swap API quote request](/0x-swap-api/api-references/get-swap-v1-quote). 
+6. View **build resources**. 
 
 ## 5. Manage Your Account
 
-You can find additional settings to manage your account from **Your Account** in the top-right corner. 
+You can find additional settings to manage your account from **Your Account Avatar** in the top-right corner. 
+
+```mdx-code-block
+import AccountSettings from '/static/img/introduction/0x-dashboard-settings.png';
+
+<center>
+   <img src={AccountSettings} width="40%"/>
+</center>
+```
+
 - **Settings** - You can see your full name, team name, and account email, as well as change your password. 
 - **Contact Support** - Have a question? Reach out to our dev support team. 
 - **Docs** - Jump into our [developer docs](https://0x.org/docs) and start building
