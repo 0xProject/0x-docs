@@ -93,7 +93,7 @@ const config = {
       },
       announcementBar: {
         id: 'announcementBar', // Increment on change
-        content: `📣 After May 8, 2023, all API requests without an API key will return an error. Visit <a target="_blank" rel="noopener noreferrer" href="https://dashboard.0x.org">0x Dashboard</a> to get your API key.`,
+        content: `📣 Starting in June 2023, all API requests without an API key will return an error. Visit <a target="_blank" rel="noopener noreferrer" href="https://dashboard.0x.org">0x Dashboard</a> to get your API key.`,
         backgroundColor: '#A2FFC1',
       },        
       footer: {
