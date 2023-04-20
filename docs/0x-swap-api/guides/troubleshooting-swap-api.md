@@ -8,7 +8,7 @@ description: Addressing common issues that come up with Swap API.
 # Troubleshooting Swap API
 
 :::info
-📣 After May 8, 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
+📣 Starting in June 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
 :::
 
 ## Swap Requirements
