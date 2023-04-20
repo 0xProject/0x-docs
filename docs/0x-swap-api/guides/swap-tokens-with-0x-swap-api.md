@@ -1,21 +1,26 @@
 ---
-sidebar_label: Swap Tokens with Swap API
+sidebar_label: How to Use Swap API
 sidebar_position: 1
 description: Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API. 
 ---
 
-# Swap Tokens with Swap API
+# How to Use Swap API
 
 :::info
 After May 8, 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
 :::
 
+This guide covers the steps required to use [Swap API](/0x-swap-api/introduction). If you are looking for and end-to-end tutorial that shows how to implement the Swap API in a deployable DApp, check out [How to Build a Token Swap DApp](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api).
+
+## About Swap API
 
 [Swap API](/0x-swap-api/introduction) is the recommended way of interacting with 0x protocol for retail trade. Under the hood, the API performs three tasks:
 
 * Queries prices of ERC20 assets from multiple decentralized exchanges and market makers
 * Aggregates the liquidity from the queried sources to provide the best price possible
 * Returns the trade in a format that can be easily executed using the Web3 library of your choice
+
+## Code Sandbox
 
 If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox! Otherwise, continue on as we go through the steps needed to use Swap API. 
 
@@ -30,7 +35,7 @@ If you prefer diving into code, see how the following steps are implemented in t
 </iframe>
 </div>
 
-### Swap Tokens in 3 simple steps
+## Swap Tokens in 3 Simple Steps
 
 0. Get a 0x API key
 1. (If needed) Set token allowance
@@ -261,8 +266,7 @@ The `slippagePercentage` parameter determines the difference between the `price`
 
 ## Starter projects
 
-* The [0x API starter project](https://github.com/0xProject/0x-api-starter-guide-code) has a direct swap example that you can play around with at no cost by using a Ganache instance forked from Ethereum mainnet.[\
-  ](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_0x\_api\_swap.ts)
+* The [0x API starter project](https://github.com/0xProject/0x-api-starter-guide-code) has a direct swap example that you can play around with at no cost by using a Ganache instance forked from Ethereum mainnet.
 * [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_0x\_api\_swap.ts) - A runnable example of how to fill a 0x quote that can be run on Ropsten or Ganache.
 * [How to Build a Token Swap Dapp With 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - A full end-to-end guide on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x /swap API endpoint. This DEX aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
 

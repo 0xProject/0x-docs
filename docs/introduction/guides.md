@@ -9,9 +9,9 @@ description: This page lists the most popular guides to get started building wit
 This page lists the most popular guides to get started building with 0x based on your use case
 
 ### **Swap Tokens with Swap API**
-Easily implement ERC20 liquidity aggregation into your dApp.
+Easily add liquidity aggregation into your app with a single API. Access 100+ exchanges and thousands of tokens with the Swap API.
 
-* [Swap Tokens with the Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api) - This guide will teach you how to programmatically execute a ERC20 token trade.
+* [How to Use Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api) - This guide will teach you how to programmatically execute a ERC20 token trade.
 * [How to Build a Token Swap dApp with 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - Written and [video](https://www.youtube.com/watch?v=tVvZ1ivp4X0) content on how to build a token swapping dapp (a simple [Matcha.xyz](https://www.matcha.xyz/)) using the Swap API. This dApp aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
 * [Use 0x API Liquidity in Your Smart Contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts) - This guide will teach you how to consume 0x API swap quotes from inside a smart contract.
 * [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project) - A runnable example of how to fill a 0x quote that can be run on Ropsten or Ganache.
