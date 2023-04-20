@@ -6,7 +6,10 @@ description: Learn how to use the Swap API to access the most efficient liquidit
 
 # Swap Tokens with Swap API
 
-The examples in this guide are for Ethereum mainnet. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for other blockchains.
+:::info
+After May 8, 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
+:::
+
 
 [Swap API](/0x-swap-api/introduction) is the recommended way of interacting with 0x protocol for retail trade. Under the hood, the API performs three tasks:
 
@@ -14,7 +17,8 @@ The examples in this guide are for Ethereum mainnet. Refer to the [0x Cheat Shee
 * Aggregates the liquidity from the queried sources to provide the best price possible
 * Returns the trade in a format that can be easily executed using the Web3 library of your choice
 
-If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox!
+If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox! Otherwise, continue on as we go through the steps needed to use Swap API. 
+
 
 <div>
 <iframe height="300"
@@ -35,9 +39,7 @@ If you prefer diving into code, see how the following steps are implemented in t
 
 ## 0. Get a 0x API key
 
-If you are are creating an application on mainnet, you will need to [create a 0x account](https://dashboard.0x.org/apps) and get a live API key. See the guide here. 
-
-API keys are not required for testnets. See all 0x-deployed blockchains [here](/introduction/0x-cheat-sheet).
+If you are are creating an application on mainnet, you will need to [create a 0x account](https://dashboard.0x.org/apps) and get a live API key. See the [guide here](/introduction/getting-started) to get setup. 
 
 ## 1. Set a Token Allowance
 
@@ -54,6 +56,10 @@ When setting the token allowance, make sure to provide enough allowance for the 
 For implementation details, see [How to Set Your Token Allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)
 
 ## 2. Fetch a Swap Quote
+
+:::tip
+The examples in this guide are for Ethereum mainnet `https://api.0x.org/`. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for all other 0x supported blockchains.
+:::
 
 Once the token allowance has been set, say you would like to sell 100 DAI for WETH. We encode the trade parameters and fetch the swap quote as follows:
 
@@ -156,7 +162,7 @@ These examples illustrate how the response payload from 0x API’s `swap` endpoi
 
 This is the most common use pattern for swapping tokens –– selling a fixed amount of an ERC20 token. Because ERC20 tokens cannot be attached to contract calls the way ETH can, the taker must approve the 0x Exchange Proxy (`0xdef1c0ded9bec7f1a1670819833240f027b25eff`) to transfer their DAI prior to executing the swap.
 
-```java
+```javascript
 const ZERO_EX_ADDRESS = '0xdef1c0ded9bec7f1a1670819833240f027b25eff';
 const DAI_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 

@@ -8,7 +8,7 @@ description: An introduction to how the Swap API works and the resources include
 
 :::tip
 
-Prefer to watch a video instead? Jump to [0x Concept Videos](0x-concept-videos.md).
+Prefer to watch a video instead? Jump to [0x Concept Videos](/introduction/0x-concept-videos).
 
 :::
 
@@ -29,7 +29,7 @@ Swap API watches out for your users and is easy for developers.
 * By default, it has **built-in user-protection features**, including:
   * [Slippage Protection](advanced-topics/slippage-protection.md) which **protects** users **against MEV-attacks**
   * [Price Impact Protection](advanced-topics/price-impact-protection.md) which **protects** users **from getting rekt** by illiquid markets
-* Best execution wiht the lowest reverts
+* Best execution with the lowest reverts
 * Exclusive built-in [RFQ liquidity](market-makers/docs/introduction.md) which is competetive with AMMs and comes with the added benefit of zero slippage and guarnteed MEV protection
 * It is **easy-to-use!** For example, you can easily find the best price to buy DAI with WETH with this request
 
@@ -41,25 +41,41 @@ Swap API watches out for your users and is easy for developers.
 <br></br>
 
 
-```curl
+```bash
+// Replace API key in the header with your own key from https://dashboard.0x.org/
 curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: 35aa607c-1e98-4404-ad87-4bed10a538ae'
 ```
 
 <br></br>
-The response that is returned back is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap.
+ 
+You will receive a response that looks like this: 
+
+```json
+{
+    "chainId": 1,
+    "price": "1969.101",
+    "guaranteedPrice": "1949.40999",
+    "estimatedPriceImpact": "0",
+    "to": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    "data": "0xd9627...
+    ...
+}
+```
+ This is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap. Read more about the parameters [here](/0x-swap-api/api-references/get-swap-v1-quote).
 
 <br></br>
-<br></br>
 
-**Note:** This request uses a test API key that should not be used in production. 
+**Note:** This request uses a test API key that should not be used in production. Create an account and get your live API keys to access the Swap API from **[0x Dashboard](https://dashboard.0x.org/)**. 
 
 :::
 
 
 ## How does it work?
 
+Swap API is a professional-grade DEX aggregation and smart order routing API. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains
 
-![Swap API is a professional-grade DEX aggregation and smart order routing API. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains.](/img/introduction/swap-api-diagram.png)
+
+![Swap API Diagram](/img/introduction/swap-api-diagram.png)
 
 Under the hood, the API performs a series of tasks:
 
@@ -80,8 +96,9 @@ This section contains the following docs and guides
 
 #### Guides
 
+
 * [Swap Tokens with Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api)
-* [How to Build a Token Swap DApp with 0x API](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
+* [How to Build a Token Swap DApp with Swap API](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
 * [Use 0x API Liquidity in Your Smart Contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts)
 * [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project)
 * [Working in the Testnet](/0x-limit-orders/guides/working-in-the-testnet)
