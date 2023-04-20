@@ -25,13 +25,13 @@ description: This page contains a shortlist of videos that showcase notable feat
 
 ## 🛠️ Tutorial: How to use Swap API
 
-**New to 0x Swap API?** Watch this video which covers an overview of how the Swap API works, how to use it, and project ideas.
+**New to Swap API?** Watch this video which covers an overview of how the Swap API works, how to use it, and project ideas.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/APXjSGLaoRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## 🛠️ Tutorial: Build a Token Swap Dapp With 0x API
 
-An end-to-end tutorial on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x Swap API. This app aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
+An end-to-end tutorial on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the Swap API. This app aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
 
 Written version [here](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api). This tutorial is part of a larger [Road to Web3 series](https://docs.alchemy.com/docs/welcome-to-the-road-to-web3).
 

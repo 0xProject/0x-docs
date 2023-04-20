@@ -109,9 +109,9 @@ An app is a self-contained unit for each individual application that you’re bu
 
 <summary>Is there a fee to use Swap API?</summary>
 
-The Swap API is public and free to use; however, if you are an integrator who needs access higher rate limits, please check out our [enterprise option](https://0x.org/pricing).
+The Swap API has a free tier that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, if you are an integrator who needs to access higher rate limits or a more custom solution, please check out our [enterprise options](https://0x.org/pricing). 
 
-
+Also see our section on ["trade surplus"](faqs-and-troubleshooting.md#if-the-difference-between-the-quoted-price-and-the-executed-price-is-positive-what-happens-to-the-fu).
 </details>
 
 <details>
