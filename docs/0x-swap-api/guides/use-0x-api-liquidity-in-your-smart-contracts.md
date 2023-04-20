@@ -1,11 +1,11 @@
 ---
-sidebar_label: Use 0x API Liquidity in Your Smart Contracts
+sidebar_label: Use Swap API Liquidity in Your Smart Contracts
 sidebar_position: 4
-description: Use 0x API Liquidity in Your Smart Contracts
+description: Use Swap API Liquidity in Your Smart Contracts
 ---
 
 
-# Use 0x API Liquidity in Your Smart Contracts
+# Use Swap API Liquidity in Your Smart Contracts
 
 :::info
 📣 Starting in June 2023, all API requests without an API key will return an error. Legacy code examples below may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
@@ -13,12 +13,12 @@ description: Use 0x API Liquidity in Your Smart Contracts
 
 ## Overview
 
-After you complete this guide, you will have a smart contract that swaps WETH for DAI, powered by 0x API.
+After you complete this guide, you will have a smart contract that swaps WETH for DAI, powered by Swap API.
 
 In the example, we will:
 
 1. Deposit WETH into our contract.
-2. Fetch a quote to sell WETH for DAI from 0x-API.
+2. Fetch a quote to sell WETH for DAI from Swap API.
 3. Fill that quote through our contract, converting its WETH into DAI.
 
 ## Set up the project
@@ -56,7 +56,8 @@ In this function we:
 2. Execute the ERC20->ERC20 swap.
 3. Transfer any leftover ETH (protocol fee refunds) to the sender.
 
-```solidity
+<!-- Solidity code. Using js for highlighting -->
+```js
 // Swaps ERC20->ERC20 tokens held by this contract using a 0x-API quote.
 function fillQuote(
     // The `sellTokenAddress` field from the API response.
@@ -95,7 +96,8 @@ function fillQuote(
 
 Since the contract will sell its own balance of a token when executing a swap, it needs to hold a balance of that token beforehand. In this example, we will be selling WETH, which can easily be minted from ETH. So the contract has a deposit function that accepts ETH and wraps it into WETH.
 
-```solidity
+<!-- Solidity code. Using js for highlighting -->
+```js
 // Transfer ETH into this contract and wrap it into WETH.
 function depositETH()
     external
@@ -109,7 +111,8 @@ function depositETH()
 
 Certain quotes require a protocol fee, in ETH, to be attached to the swap call. But it's possible that by the time the transaction is mind, the swap will end up not needing to pay the protocol fee. In these cases, the protocol fee would be refunded to the taker, which is in this case is the `SimpleTokenSwap` contract. So it's important that your contract be able to receive this ETH through either a payable `fallback()` or `receive()` function (in solidity 0.6+).
 
-```solidity
+<!-- Solidity code. Using js for highlighting -->
+```js
 // Payable fallback to allow this contract to receive protocol fee refunds.
 receive() external payable {}
 ```
