@@ -115,7 +115,7 @@ Note the `to` field is the contract address to send call `data` to. This is the 
 
 ### Specify a Taker Address for Your Swaps
 
-The `takerAddress` field is the address that will be performing the trade. While technically optional, we recommend providing this parameter if possible so that the API can more accurately estimate the gas required for the swap transaction. Note that this currently only works with non-contract addresses. Read more on how [adding the `takerAddress` helps catch issues](developer-resources/faqs-and-troubleshooting#-troubleshooting).
+The `takerAddress` field is the address that will be performing the trade. While technically optional, we recommend providing this parameter if possible so that the API can more accurately estimate the gas required for the swap transaction. Note that this currently only works with non-contract addresses. Read more on how [adding the `takerAddress` helps catch issues](/developer-resources/faqs-and-troubleshooting#-troubleshooting).
 
 ```javascript
 const params = {
