@@ -104,15 +104,15 @@ const config = {
             items: [
               {
                 label: 'Swap API',
-                to: '/0x-swap-api',
+                to: '/category/swap-api',
               },
               {
                 label: 'Tx Relay API',
-                to: '/tx-relay-api',
+                to: '/category/tx-relay-api',
               },
               {
                 label: 'Orderbook API',
-                to: '/0x-orderbook-api',
+                to: '/category/orderbook-api',
               },
             ],
           },
