@@ -17,7 +17,13 @@ Prefer to watch a video instead? Jump to [0x Concept Videos](/introduction/0x-co
 Swap API is a professional-grade DEX aggregation and smart order routing REST API that runs on HTTP. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. 
 
 
-![Swap API UI/UX](/img/introduction/swap-api-ui.svg)
+```mdx-code-block
+import SwapAPIUI from '/static/img/introduction/swap-api-ui.svg';
+
+<center>
+   <img src={SwapAPIUI}/>
+</center>
+```
 
 
 Power crypto trading in your application with a single API integration that unlocks thousands of tokens. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains.
@@ -74,16 +80,27 @@ You will receive a response that looks like this:
 
 Swap API is a professional-grade DEX aggregation and smart order routing API. Using the API, developers can easily and reliably tap into aggregated multi-chain DEX liquidity. Swap API finds the best executed price across 70+ liquidity sources, both public (AMMs) and private (professional market makers), across a growing number of blockchains
 
+Below is a high-level diagram showing how Swap API works under the hood:
+
 
 ![Swap API Diagram](/img/introduction/swap-api-diagram.png)
 
-Under the hood, the API performs a series of tasks:
+1. Retail Trader Requests a quote
+2. Swap API simultaneously (a) retrieves quote from AMM and (b) requests quotes from Market Makers
+3. Market Makers responds with signed quote at their discretion
+4. Swap API aggregates the quotes it has received and compares the prices, taking into account [slippage](/0x-swap-api/advanced-topics/slippage-protection) and [price impact](/0x-swap-api/advanced-topics/price-impact-protection). It returns the best price to the Retail Trader.
+5. If the Retail Trader likes the quote, the Retail Trader signs the order. Swap API sends the signed order to the blockchain to be settled by the 0x Protocol. 
+
+For more details about how 0x orders are executed, check out [How does 0x work?](/introduction/introduction-to-0x#how-does-0x-work).
+
+
+Under the hood, Swap API performs a series of tasks:
 
 * **Queries prices** from multiple DEXs and market makers and **aggregates the liquidity** from the queried sources to provide the best price possible. Think of how Google flights aggregates  flight prices for a certain time and date to help you find the best price, `/swap` similarly helps you find the best price across DeFi liquidity sources.
 * Swap API’s **smart order routing** algorithm splits up your transaction across different sources to maximize the overall return on your swap. Read more about smart order routing [here](https://medium.com/@merklejerk/0x-apis-smart-order-routing-7af0195515e5).
-* Swap API's **[Slippage Protection](https://blog.0x.org/slippage-protection-for-0x-api/)** enables developers to surface more reliable quotes and consistently deliver the best executed price to users.
-* Swap API's **[Price Impact Protection](https://blog.0x.org/0x-swap-api-price-impact-protection/)** calculates price impact estimates, and allows developers to easily notify users if insufficient liquidity may negatively affect the price.
-* 0x API's responses are returned in a format that can be **easily executed using the Web3 library of your choice**. 
+* Swap API's **[Slippage Protection](/)** enables developers to surface more reliable quotes and consistently deliver the best executed price to users.
+* Swap API's **[Price Impact Protection](/0x-swap-api/advanced-topics/slippage-protection)** calculates price impact estimates, and allows developers to easily notify users if insufficient liquidity may negatively affect the price.
+* The response returned by Swap API is a valid unsigned Ethereum transaction that can be submitted directly to an Ethereum node.  **[Easily execute using the transaction using the web3 library of your choice](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-send-the-transaction-to-the-network)**. 
 
 
 ## Get Started
@@ -92,7 +109,7 @@ Under the hood, the API performs a series of tasks:
 To create an account, and get your live API keys to access the Swap API, visit the **[0x Dashboard](https://dashboard.0x.org/)**.
 :::
 
-This section contains the following docs and guides
+Now that you're familar with what Swap API offers, read [How to Use Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api) to get started or choose one of the resources below. 
 
 #### Guides
 
