@@ -31,7 +31,7 @@ If your 0x quote is reverting, besides the standard revert issues related to ETH
 * The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#slippage-tolerance) for how to handle this.
 * Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#fee-on-transfer-tokens) for how to handle this
 
-For more details on addressing common issues, read [Troubleshooting](./0x-swap-api/guides/troubleshooting-swap-).
+For more details on addressing common issues, read [Troubleshooting](/0x-swap-api/guides/troubleshooting-swap-api).
 
 </details>
 
@@ -214,7 +214,7 @@ This model ensures that we can continue to invest into long-term growth of our p
 
 <summary>Is it possible to use the Swap API to trade custom ERC20 tokens or altcoins?</summary>
 
-If you would like to trade a custom token, you will need to create the liquidity either by using 0x limit orders or by creating a Liquidity Pool for your token on one of the various AMM sources that the API sources from, such as Uniswap, SushiSwap, or Curve. Learn more about creating limit order: [https://docs.0x.org/protocol/docs/exchange-proxy/features/nativeorders#limit-orders](https://docs.0x.org/protocol/docs/exchange-proxy/features/nativeorders#limit-orders)
+If you would like to trade a custom token, you will need to create the liquidity either by using 0x limit orders or by creating a Liquidity Pool for your token on one of the various AMM sources that the API sources from, such as Uniswap, SushiSwap, or Curve. Learn more about creating limit order: http://localhost:3000/docs/0x-limit-orders/guides/create-a-limit-order
 
 </details>
 

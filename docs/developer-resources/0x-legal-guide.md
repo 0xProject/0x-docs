@@ -11,7 +11,7 @@ The wide variety of projects that can be built integrating 0x means that there a
 
 _The information below is not legal advice. This is general legal information intended as a resource to the 0x ecosystem. To understand how this information may impact your project specifically, hire a good lawyer._
 
-How all of the laws intersect with the exchange of crypto assets possible through 0x is still an evolving issue and demands careful consideration. For additional resources, check out the [0x Legal Library](broken-reference) that contains links to important cases, statements from regulators, and other legal commentary specific to the crypto asset industry.
+How all of the laws intersect with the exchange of crypto assets possible through 0x is still an evolving issue and demands careful consideration.
 
 ## United States
 
@@ -121,7 +121,7 @@ For now, let's assume we are dealing with a token that meets the definition of a
 
 Since issuing its initial guidance in 2013, FinCEN has clarified these definitions in subsequent "Administrative Rulings." In [one of these administrative rulings](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R001.pdf), FinCEN clarified that a person who exchanges virtual currency for their own account as not as a business service to third parties is considered a user and not an exchanger. In [another ruling](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R002.pdf), FinCEN stated "\[t]he production and distribution of software, in and of itself, does not constitute acceptance and transmission of value, even if the purpose of the software is to facilitate the sale of virtual currency. "
 
-For teams developing on 0x, there is a strong argument that the definition of exchanger does not apply to someone who does not take custody of another person's virtual currency. As explained thoughtfully in [this report](https://coincenter.org/files/2017-05/report-bsa-crypto-token1.pdf) from Coin Center:
+For teams developing on 0x, there is a strong argument that the definition of exchanger does not apply to someone who does not take custody of another person's virtual currency. As explained thoughtfully in [this report](https://www.coincenter.org/aml-kyc-tokens/) from Coin Center: 
 
 _"A non-custodial exchange is probably not an exchanger or a money transmitter. If, like Craigslist or any other online classified advertising service, the business merely helps individual buyers and sellers find and communicate with each other, then it is never “accepting and transmitting” tokens or bitcoins for its users, nor is it “buying or selling” tokens or bitcoins. It may be commonly understood as an exchange because it deals in exchange-related information (e.g. order-books, offers, acceptances, communications between buyers and sellers) but it, as a company, is never doing the actual currency conversion or handling the actual tokens or money; that all happens peer-to-peer. Another way to characterize what these companies do is: development of a web-based software tool (e.g. a website) that facilitates peer-to-peer exchange. As we discussed earlier, FinCEN’s Software and Investment Ruling describes mere software development and distribution as outside the scope of BSA regulation."_
 
@@ -188,7 +188,7 @@ _Important Howey Test Cases_
 * [What can the EtherDelta settlement tell us about how decentralized exchanges are regulated?](https://coincenter.org/entry/what-can-the-etherdelta-settlement-tell-us-about-how-decentralized-exchanges-are-regulated) by Peter Van Valkenburgh - Coin Center (Nov. 8, 2018)
 * [Securities Law & Crypto - Unqualified Opinions #14](https://messari.substack.com/p/securities-law-and-crypto-unqualified) by Katherine Wu - Messari (Oct. 11, 2018)
 * [Securities Regulations and Initial Coin Offerings: A Legal Primer](https://fas.org/sgp/crs/misc/R45301.pdf) by Jay B. Sykes - Congressional Research Service (Aug. 31, 2018)
-* [Framework for Securities Regulation of Cryptocurrencies (v2)](https://coincenter.org/files/securities-cryptocurrency-framework-v2.1.pdf) by Peter Van Valkenburgh - Coin Center (Aug. 10, 2018)
+* [Framework for Securities Regulation of Cryptocurrencies (v2)](https://www.coincenter.org/framework-for-securities-regulation-of-cryptocurrencies/) by Peter Van Valkenburgh - Coin Center (Aug. 10, 2018)
 * [Principles for Clarifying SEC Jurisdiction over Cryptocurrencies and ICOs](https://coincenter.org/entry/principles-for-clarifying-sec-jurisdiction-over-cryptocurrencies-and-icos) by Peter Van Valkenburgh - Coin Center (May 24, 2018)
 * [Regulation of Token Sales](https://youtu.be/tz8t5OTc7R0) {video} - Coin Center (Oct. 24, 2017)
 
@@ -250,7 +250,7 @@ _Important Howey Test Cases_
   * Comprehensive guidance from FinCEN on the application of the Bank Secrecy Act to various crypto asset business models, including those involved in decentralized exchange.
 * [Prepared Remarks of FinCEN Director Kenneth A. Blanco](https://www.fincen.gov/news/speeches/prepared-remarks-fincen-director-kenneth-blanco-delivered-2018-chicago-kent-block) (Aug. 9, 2018)
   * Speech summarizing FinCEN's approach to virtual currency.
-* [Department of Treasury Letter to Senator Ron Wyden](https://coincenter.org/files/2018-03/fincen-ico-letter-march-2018-coin-center.pdf) (Feb. 13, 2018)
+* [Department of Treasury Letter to Senator Ron Wyden](https://coincenter.org/) (Feb. 13, 2018)
 * FinCEN Administrative Rulings
   * [Application of FinCEN’s Regulations to a Virtual Currency Trading Platform](https://www.fincen.gov/sites/default/files/administrative\_ruling/FIN-2014-R011.pdf) (Oct. 29, 2014)
     * Traditional centralized exchange model involving matching buyers and sellers directly constitutes money transmission despite argument that the exchange does not sit in the middle of a transaction.
@@ -267,5 +267,5 @@ _Important Howey Test Cases_
 
 #### Commentary & Analysis
 
-* [Electronic Cash, Decentralized Exchange, and the Constitution](https://coincenter.org/files/e-cash-dex-constitution.pdf) by Peter Van Valkenburgh - Coin Center (March 2019)
+* [Electronic Cash, Decentralized Exchange, and the Constitution](https://www.coincenter.org/electronic-cash-decentralized-exchange-and-the-constitution/) by Peter Van Valkenburgh - Coin Center (March 2019)
 * [The Bank Secrecy Act, Cryptocurrencies and New Tokens: What is Known and What Remains Ambiguous](https://coincenter.org/files/2017-05/report-bsa-crypto-token1.pdf) by Peter Van Valkenburgh - Coin Center (May 2017)

@@ -21,7 +21,7 @@ Prefer to watch a video instead? Jump to [0x Concept Videos](0x-concept-videos.m
 
 ![0x tech stack](/img/introduction/0x-tech-stack.png)
 
-The diagram below shows an overview of the 0x Ecosystem, which includes applications who supply liquidity (**[Makers](/introduction/introduction-to-0x#supply-aka-makers)**), applications who demand liquidity (**[Takers](introduction/introduction-to-0x#demand-aka-takers)**). 
+The diagram below shows an overview of the 0x Ecosystem, which includes applications who supply liquidity (**[Makers](/introduction/introduction-to-0x#supply-aka-makers)**), applications who demand liquidity (**[Takers](/introduction/introduction-to-0x#demand-aka-takers)**). 
 
 ![0x is an open-source, decentralized exchange infrastructure that enables the exchange of tokenized assets on multiple blockchains.](/img/introduction/0x-ecosystem.png)
 

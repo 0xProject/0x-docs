@@ -10,7 +10,7 @@ Submit a signed order.
 
 ## Request
 
-A [signed order](../../0x-swap-api/api-references/#signed-order).
+A [signed order](/0x-swap-api/api-references/overview#signed-order).
 
 ## Response
 
