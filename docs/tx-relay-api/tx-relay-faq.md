@@ -70,7 +70,7 @@ Please set `checkApproval` to `true` only when necessary.
 
 <summary>My user is doing a swap and needs an approval - are these separate transactions? Do I need 2 signatures?</summary>
 
-Gasless approvals and gasless swaps are distinct transactions and they each require a signature. However, you may elect to create a front-end experience wherein it appears to the user that they are signing only 1 transaction.
+Although gasless approvals and gasless swap are bundled in the same transaction, they each require a signature for the corresponding EIP-712 object. However, you may elect to create a front-end experience wherein it appears to the user that they are signing only 1 transaction.
 
 </details>
 

@@ -19,8 +19,7 @@ curl '<https://api.0x.org/tx-relay/v1/swap/status/0xd114c77249bb3a137634afeba1ea
 
 ```json
 {
-    "transactions": { hash: string; timestamp: number /* unix ms */ }[]; // trade transactions
-    "approvalTransactions": { hash: string; timestamp: number /* unix ms */ }[]; // approval transactions; the field will not be present if it's not a gasless approval trade
+    "transactions": { hash: string; timestamp: number /* unix ms */ }[];
     // For pending, expect no transactions.
     // For successful transactions (i.e. "succeeded"/"confirmed), expect just the mined transaction.
     // For failed transactions, there may be 0 (failed before submission) to multiple transactions (transaction reverted).
@@ -59,10 +58,6 @@ enum JobFailureReason {
     "transactions": [{
         "hash": "0x...",
         "timestamp": 1624290253193
-    }],
-    "approvalTransactions": [{
-       "hash": "0x...",
-       "timestamp": 1624290253183
     }]
 }
 

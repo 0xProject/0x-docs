@@ -10,7 +10,7 @@ Fillable quotes are obtained by submitting a GET request to `/tx-relay/v1/swap/q
 
 #### **Example Request**
 
-The request parameters are the same as `[/price](<https://www.notion.so/0x-Tx-Relay-Partner-Hub-2f0074ebe816409b958ab013da13c570>)` except with an extra field `checkApproval`:
+The request parameters are the same as [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) except with an extra field `checkApproval`:
 
 ```bash
 curl '<https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellAmount=100000000&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&takerAddress=0x9016Cc2122b52fF5d9937c0c1422B78d7e81CeEa&priceImpactProtectionPercentage=0.95&feeType=volume&feeSellTokenPercentage=0.1&feeRecipient=0x70A9f34F9b34C64957b9c401A97BfeD35b95049e>' \\
@@ -31,7 +31,7 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
 
 ```json
 {
-    "liquidityAvailable": false,
+    "liquidityAvailable": false
 }
 ```
 
@@ -46,8 +46,11 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
   "buyTokenAddress": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
   "sellAmount": "100000000",
   "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-	"allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
-  "sources": [{"name":"0x","proportion":"0"},{"name":"Uniswap","proportion":"0"},{"name":"Uniswap_V2","proportion":"1"}],
+  "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+  "sources": [
+      { "name": "Uniswap_V3", "proportion": "0.87" },
+      { "name": "Balancer", "proportion" : "0.13" }
+  ],
 	"fees": {
 		// same as the response in /price. Redacted here
 	},
@@ -57,8 +60,8 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
     "eip712": {
       "types": {
 	      "EIP712Domain": [
-			    {
-	          "name": "name",
+          {
+            "name": "name",
             "type": "string"
           },
           {
@@ -74,48 +77,48 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
             "type": "address"
           }
         ],
-			  "MetaTransactionData": [
-			    {
-			      "type": "address",
-			      "name": "signer"
-			    },
-			    {
-			      "type": "address",
-			      "name": "sender"
-			    },
-			    {
-			      "type": "uint256",
-			      "name": "minGasPrice"
-			    },
-			    {
-			      "type": "uint256",
-			      "name": "maxGasPrice"
-			    },
-			    {
-			      "type": "uint256",
-			      "name": "expirationTimeSeconds"
-			    },
-			    {
-			      "type": "uint256",
-			      "name": "salt"
-			    },
-			    {
-			      "type": "bytes",
-			      "name": "callData"
-			    },
-			    {
-			      "type": "uint256",
-			      "name": "value"
-			    },
-			    {
-			      "type": "address",
-			      "name": "feeToken"
-			    },
-			    {
-			      "type": "uint256",
-			      "name": "feeAmount"
-			    }
-			  ]
+        "MetaTransactionData": [
+          {
+            "type": "address",
+            "name": "signer"
+          },
+          {
+            "type": "address",
+            "name": "sender"
+          },
+          {
+            "type": "uint256",
+            "name": "minGasPrice"
+          },
+          {
+            "type": "uint256",
+            "name": "maxGasPrice"
+          },
+          {
+            "type": "uint256",
+            "name": "expirationTimeSeconds"
+          },
+          {
+            "type": "uint256",
+            "name": "salt"
+          },
+          {
+            "type": "bytes",
+            "name": "callData"
+          },
+          {
+            "type": "uint256",
+            "name": "value"
+          },
+          {
+            "type": "address",
+            "name": "feeToken"
+          },
+          {
+            "type": "uint256",
+            "name": "feeAmount"
+          }
+        ]
       },
       "domain": {
         "name": "ZeroEx",
@@ -127,21 +130,21 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
       "message": {
         "signer": "0x9016cc2122b52ff5d9937c0c1422b78d7e81ceea",
         "sender": "0x0000000000000000000000000000000000000000",
-		    "minGasPrice": "1",
-	      "maxGasPrice": "4294967296",
+        "minGasPrice": "1",
+        "maxGasPrice": "4294967296",
         "expirationTimeSeconds": "9990868679",
         "salt": "32606650794224190000000000000000000000000000000000000000000000000000000000000",
         "callData": "0x415565b00000000000000000000000007ceb23fd6bc0.....",
-				"value": "0",
-	      "feeToken": "0x0000000000000000000000000000000000000000",
+        "value": "0",
+        "feeToken": "0x0000000000000000000000000000000000000000",
         "feeAmount": "0"
       }
     }
-	},
+  },
   "approval": {
     "isRequired": true,
     "isGaslessAvailable": true,
-	  "type": "permit",
+    "type": "permit",
 		"hash": "0x9d5435a70c77ffc36b1dd5d2f05ce5edcb1d0f52e2e134c3ad957b421deae194",
     "eip712": {
       "types": {
@@ -154,10 +157,10 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
             "name": "version",
             "type": "string"
           },
-					{
-						"name": "chainId",
-						"type": "uint256",
-					},
+          {
+            "name": "chainId",
+            "type": "uint256",
+          },
           {
             "name": "verifyingContract",
             "type": "address"
@@ -188,9 +191,9 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
       },
       "primaryType": "Permit",
       "domain": {
-	      "name": "USD Coin",
+        "name": "USD Coin",
         "version": "2",
-	      "chainId": 1,
+        "chainId": 1,
         "verifyingContract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
       },
       "message": {
@@ -207,7 +210,7 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
 
 **Example Meta-Transaction V2 Response**
 
-For meta-transaction v2 response, all fields are the same as [the meta-transaction response](https://www.notion.so/0x-Tx-Relay-Partner-Hub-2f0074ebe816409b958ab013da13c570) except for `trade` field. More specifically, the following fields are different:
+For meta-transaction v2 response, all fields are the same as the meta-transaction response except for `trade` field. More specifically, the following fields are different:
 
 * `trade.eip712.types`: New types`MetaTransactionDataV2` and `MetaTransactionFeeData` instead of `MetaTransactionData`
 * `trade.eip712.primaryType`: `MetaTransactionDataV2` instead of `MetaTransactionData`
@@ -223,7 +226,7 @@ For meta-transaction v2 response, all fields are the same as [the meta-transacti
     "eip712": {
       "types": {
 	      "EIP712Domain": [
-			    {
+          {
 	          "name": "name",
             "type": "string"
           },
@@ -240,9 +243,9 @@ For meta-transaction v2 response, all fields are the same as [the meta-transacti
             "type": "address"
           }
         ],
-				// different type compared with meta-transaction response
+        // different type compared with meta-transaction response
         "MetaTransactionDataV2": [
-	        {
+          {
             "type": "address",
             "name": "signer"
           },
@@ -270,8 +273,8 @@ For meta-transaction v2 response, all fields are the same as [the meta-transacti
             "type": "MetaTransactionFeeData[]",
             "name": "fees"
           }
-	      ],
-				// different type compared with meta-transaction response
+        ],
+        // different type compared with meta-transaction response
 	      "MetaTransactionFeeData": [
 	        {
             "type": "address",
@@ -289,36 +292,36 @@ For meta-transaction v2 response, all fields are the same as [the meta-transacti
         "chainId": 1,
         "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
       },
-			// different primary type compared with meta-transaction response
+      // different primary type compared with meta-transaction response
       "primaryType": "MetaTransactionDataV2",
-			// different message with meta-transaction response
+      // different message with meta-transaction response
       "message": {
         "signer": "0x9016cc2122b52ff5d9937c0c1422b78d7e81ceea",
         "sender": "0x0000000000000000000000000000000000000000",
         "expirationTimeSeconds": "9990868679",
         "salt": "32606650794224190000000000000000000000000000000000000000000000000000000000000",
         "callData": "0x415565b00000000000000000000000007ceb23fd6bc0.....",
-	      "feeToken": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+        "feeToken": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
         "fees": [
-            {
-                "recipient": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
-                "amount": "10"
-            },
-            {
-                "recipient": "0x5fd625230def5303c82f0d1d491041e042f2ad22",
-                "amount": "15"
-            }
+          {
+              "recipient": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+              "amount": "10"
+          },
+          {
+              "recipient": "0x5fd625230def5303c82f0d1d491041e042f2ad22",
+              "amount": "15"
+          }
         ]
       }
     }
-	},
+  },
   ...
 }
 ```
 
 **Example OTC Response**
 
-Similarly, for otc response, all fields are the same as [the meta-transaction response](https://www.notion.so/0x-Tx-Relay-Partner-Hub-2f0074ebe816409b958ab013da13c570) except for `trade` field. More specifically, the following fields are different:
+Similarly, for otc response, all fields are the same as the meta-transaction response except for `trade` field. More specifically, the following fields are different:
 
 * `trade.eip712.types`: New type `OtcOrder` instead of `MetaTransactionData`
 * `trade.eip712.primaryType`: `MetaTransactionDataV2` instead of `MetaTransactionData`
@@ -334,7 +337,7 @@ Similarly, for otc response, all fields are the same as [the meta-transaction re
     "eip712": {
       "types": {
 	      "EIP712Domain": [
-			    {
+          {
 	          "name": "name",
             "type": "string"
           },
@@ -351,9 +354,9 @@ Similarly, for otc response, all fields are the same as [the meta-transaction re
             "type": "address"
           }
         ],
-				// different type compared with meta-transaction response
+        // different type compared with meta-transaction response
         "OtcOrder": [
-	        {
+          {
             "type": "address",
             "name": "makerToken"
           },
@@ -377,7 +380,7 @@ Similarly, for otc response, all fields are the same as [the meta-transaction re
             "type": "address",
             "name": "taker"
           },
-                    { 
+          { 
             "type": "address",
             "name": "txOrigin"
           },
@@ -385,7 +388,7 @@ Similarly, for otc response, all fields are the same as [the meta-transaction re
             "type": "uint256",
             "name": "expiryAndNonce"
           }
-	      ]
+        ]
       },
       "domain": {
         "name": "ZeroEx",
@@ -393,27 +396,27 @@ Similarly, for otc response, all fields are the same as [the meta-transaction re
         "chainId": 1,
         "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
       },
-			// different primary type compared with meta-transaction response
+      // different primary type compared with meta-transaction response
       "primaryType": "OtcOrder",
-			// different message with meta-transaction response
+      // different message with meta-transaction response
       "message": {
         "makerToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
         "takerToken": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
         "makerAmount": "110969436",
         "takerAmount": "100000000000000000000",
         "maker": "0x876c...",
-	      "taker": "0x4ea7...",
-				"txOrigin": "0xc65...",
+        "taker": "0x4ea7...",
+        "txOrigin": "0xc65...",
         "expiryAndNonce": "1054164..."
       }
     }
-	},
+  },
   ...
 }
 ```
 
 * `liquidityAvailable`: Used to validate that liquidity is available from a given source. This would always be present.
-* The rest of the fields would only be present if `liquidityAvailable` is `true`. Fields that have been explained previously in `[/price](<https://www.notion.so/0x-Tx-Relay-Partner-Hub-2f0074ebe816409b958ab013da13c570>)` are not included again here.
+* The rest of the fields would only be present if `liquidityAvailable` is `true`. Fields that have been explained previously in [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) are not included again here.
 * `trade`: This is the “trade” object which contains the necessary information to process a trade
   * `type`: `metatransaction` | `metatransaction_v2` | `otc`
   * `hash`: The hash for the trade according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.
