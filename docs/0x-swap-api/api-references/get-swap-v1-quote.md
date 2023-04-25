@@ -248,7 +248,7 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=10000000
 
 ### Excluding liquidity sources
 
-Supply a comma delimited list of liquidty source names to exclude them from the aggregator logic. See [here](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-sources) for a full list of sources.
+Supply a comma delimited list of liquidty source names to exclude them from the aggregator logic. See [here](/0x-swap-api/api-references/get-swap-v1-sources) for a full list of sources.
 
 #### Request
 
