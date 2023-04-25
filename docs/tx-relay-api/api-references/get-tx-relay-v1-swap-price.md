@@ -52,35 +52,35 @@ curl '<https://api.0x.org/tx-relay/v1/swap/price?buyToken=0x0d500B1d8E8eF31E21C9
 
 ```json
 {
-    "liquidityAvailable": true,
-    "price": "391.1643362",
-    "estimatedPriceImpact": "5",
-    "buyTokenAddress": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-    "buyAmount": "391164336200000000000",
-    "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-    "sellAmount": "100000000",
-    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
-    "sources": [
-      { "name": "Uniswap_V3", "proportion": "0.87" },
-      { "name": "Balancer", "proportion" : "0.13" }
-    ],
-		"fees": {
-			"integratorFee": {
-				"feeType": "volume",
-        "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-        "feeAmount": "10000"
-      },
-			"zeroExFee": {
-        "feeType": "volume",
-        "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-        "feeAmount": "100"
-			},
-			"gasFee": {
-				"feeType": "gas",
-				"feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-				"feeAmount": "1"
-			}
-		}
+  "liquidityAvailable": true,
+  "price": "391.1643362",
+  "estimatedPriceImpact": "5",
+  "buyTokenAddress": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+  "buyAmount": "391164336200000000000",
+  "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+  "sellAmount": "100000000",
+  "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+  "sources": [
+    { "name": "Uniswap_V3", "proportion": "0.87" },
+    { "name": "Balancer", "proportion" : "0.13" }
+  ],
+  "fees": {
+    "integratorFee": {
+      "feeType": "volume",
+      "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "feeAmount": "10000"
+    },
+    "zeroExFee": {
+      "feeType": "volume",
+      "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "feeAmount": "100"
+    },
+    "gasFee": {
+      "feeType": "gas",
+      "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "feeAmount": "1"
+    }
+  }
 }
 ```
 
