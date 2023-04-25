@@ -27,7 +27,10 @@ Tx Relay API is supported on Mainnet and Polygon
 
 ## Signed Orders are Settled by 0x Protocol Smart Contracts
 
-Once signed orders hit the blockchain, they are settled by 0x Protocol smart contracts. For meta-transaction orders, they are settled by the contract `MetaTransactionsFeature` and filled by the `execteMetaTransaction` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol).
+Once signed orders hit the blockchain, they are settled by 0x Protocol smart contracts:
+* For meta-transaction orders, they are settled by the contract `MetaTransactionsFeature` and filled by the `execteMetaTransaction` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol).
+* For meta-transaction v2 orders (currently in development in tx relay API), they are settled by the contract `MetaTransactionsFeatureV2` and filled by the `executeMetaTransactionV2` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol).
+* For otc order (currently in development in tx relay API), they are settled by the contract `OtcOrdersFeature` and filled by the `fillTakerSignedOtcOrderForEth` or `fillTakerSignedOtcOrder` functions, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol).
 
 ## Technical Appendix
 
@@ -55,7 +58,7 @@ const domain = {
 
 For `types` and `primaryTypes`, it will depend on the message format.
 
-*   For `MetaTransactionData` (click the caret to expand)
+*   For `MetaTransactionData`
 
     ```jsx
     const primaryType = "MetaTransactionData";
@@ -122,7 +125,7 @@ For `types` and `primaryTypes`, it will depend on the message format.
       ]
     };
     ```
-*   For `MetaTransactionDataV2` (currently in development; click the caret to expand)
+*   For `MetaTransactionDataV2`
 
     ```jsx
     const primaryType = "MetaTransactionDataV2";
@@ -187,7 +190,7 @@ For `types` and `primaryTypes`, it will depend on the message format.
         ]
       };
     ```
-*   For `OtcOrder` (currently in development; click the caret to expand)
+*   For `OtcOrder`
 
     ```jsx
     const primaryType = "OtcOrder";
@@ -253,10 +256,11 @@ You could / should verify that the hash we provide in our request matches the me
 
 For the `trade.hash` field:
 
-* verify that the `meta-transaction` hashes to the `trade.hash`
-* `getMetaTransactionHash`[https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol#L204](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol#L204)
+* If it's a meta-transaction, verify that the `meta-transaction` hashes to the `trade.hash`: `getMetaTransactionHash` [link](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol#L202)
+* If it's a meta-transaction v2, verify that the `meta-transaction v2` hashes to the `trade.hash`: `getMetaTransactionV2Hash`[link](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol#L192)
+* It it's an otc, verify that `otc` hashes to the `trade.hash`: `getOtcOrderHash` [link](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol#L454)
 
 If you need to call these functions on the 0x smart contracts to validate your code, you may need:
 
-* The ABI:[https://github.com/0xProject/protocol/blob/d738eede0e15d4120b18bb3f88b8aba986a3f774/packages/contract-artifacts/artifacts/IZeroEx.json](https://github.com/0xProject/protocol/blob/d738eede0e15d4120b18bb3f88b8aba986a3f774/packages/contract-artifacts/artifacts/IZeroEx.json)
-* The Contract address (depends on the chain):[https://docs.0x.org/introduction/0x-cheat-sheet#exchange-proxy-addresses](https://docs.0x.org/introduction/0x-cheat-sheet#exchange-proxy-addresses)
+* The ABI: [https://github.com/0xProject/protocol/blob/development/packages/contract-artifacts/artifacts/IZeroEx.json](https://github.com/0xProject/protocol/blob/development/packages/contract-artifacts/artifacts/IZeroEx.json)
+* The Contract address (depends on the chain): [https://docs.0x.org/introduction/0x-cheat-sheet#exchange-proxy-addresses](https://docs.0x.org/introduction/0x-cheat-sheet#exchange-proxy-addresses)
