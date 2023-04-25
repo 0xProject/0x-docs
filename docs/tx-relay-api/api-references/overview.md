@@ -13,7 +13,7 @@ There are currently four endpoints involved in a tx relay transaction:
 * [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price)
 * [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote)
 * [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/get-tx-relay-v1-swap-submit)
-* [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.)
+* [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md)
 
 
 Tx Relay API is supported on Mainnet and Polygon

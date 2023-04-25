@@ -15,9 +15,9 @@ We are currently on v4 of the 0x protocol
 ### 0x API Endpoints
 
 * Ethereum (Mainnet): [https://api.0x.org/](https://api.0x.org/)
-* Ethereum (Goerli): [https://goerli.api.0x.org/](https://goerli.api.0x.org/)  &#x20;
+* Ethereum (Goerli): [https://goerli.api.0x.org/](https://goerli.api.0x.org/)
 * Polygon: [https://polygon.api.0x.org/](https://polygon.api.0x.org/)
-* Polygon (Mumbai): [https://mumbai.api.0x.org](https://polygon.api.0x.org/)/
+* Polygon (Mumbai): [https://mumbai.api.0x.org](https://polygon.api.0x.org/)
 * Binance Smart Chain: [https://bsc.api.0x.org/](https://bsc.api.0x.org/)
 * Optimism: [https://optimism.api.0x.org/](https://optimism.api.0x.org/)
 * Fantom: [https://fantom.api.0x.org/](https://fantom.api.0x.org/)

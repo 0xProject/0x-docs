@@ -27,10 +27,10 @@ This section contains the following docs and guides
 
 **API References**
 
-* [Overview](/0x-orderbook-api/api-references/)
+* [Overview](/0x-orderbook-api/api-references/overview)
 * [GET /orderbook/v1/order](api-references/get-orderbook-v1.md)
-* [GET /orderbook/v1/orders](api-references/get-orderbook-v1-orders.md "mention")
-* [post-orderbook-v1-order.md](api-references/post-orderbook-v1-order.md "mention")
+* [GET /orderbook/v1/orders](api-references/get-orderbook-v1-orders.md
+* [post-orderbook-v1-order.md](api-references/post-orderbook-v1-order.md )
 * [post-orderbook-v1-orders.md](api-references/post-orderbook-v1-orders.md "mention")
 * [get-orderbook-v1-order-orderhash.md](api-references/get-orderbook-v1-order-orderhash.md "mention")
 * [post-orderbook-v1-order\_config.md](api-references/post-orderbook-v1-order\_config.md "mention")

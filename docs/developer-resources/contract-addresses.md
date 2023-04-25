@@ -6,6 +6,8 @@ description: A list of commonly used 0x protocol contract addresses
 
 # 📃 Contract Addresses
 
+This page contains a list of some notable 0x Protocol contract addresses. Note that integrators of the 0x APIs typically do not have to interact with these smart contracts, the exception being the Exchange Proxy contract which you typically have to give a [token allowance to](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances). 
+
 For JavaScript/TypeScript developers, we publish the [@0x/contract-addresses](https://www.npmjs.com/package/@0x/contract-addresses) package to NPM with all these addresses.
 
 You can find the full list of addresses here: [https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json](https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json)
@@ -108,18 +110,18 @@ You can find the full list of addresses here: [https://github.com/0xProject/prot
 
 ### Ropsten Testnet (Chain ID: 3)
 
-* Exchange: [0xfb2dd2a1366de37f7241c83d47da58fd503e2c64](https://ropsten.etherscan.io/address/0xfb2dd2a1366de37f7241c83d47da58fd503e2c64)
-* ERC20Proxy: [0xb1408f4c245a23c31b98d2c626777d4c0d766caa](https://ropsten.etherscan.io/address/0xb1408f4c245a23c31b98d2c626777d4c0d766caa)
-* ERC721Proxy: [0xe654aac058bfbf9f83fcaee7793311dd82f6ddb4](https://ropsten.etherscan.io/address/0xe654aac058bfbf9f83fcaee7793311dd82f6ddb4)
-* Forwarder: [0x2127a60bedfba1c01857b09b8f24094049c48493](https://ropsten.etherscan.io/address/0x2127a60bedfba1c01857b09b8f24094049c48493)
-* CoordinatorRegistry: [0x403cc23e88c17c4652fb904784d1af640a6722d9](https://ropsten.etherscan.io/address/0x403cc23e88c17c4652fb904784d1af640a6722d9)
-* Coordinator: [0x6ff734d96104965c9c1b0108f83abc46e6e501df](https://ropsten.etherscan.io/address/0x6ff734d96104965c9c1b0108f83abc46e6e501df)
-* MultiAssetProxy: [0xab8fbd189c569ccdee3a4d929bb7f557be4028f6](https://ropsten.etherscan.io/address/0xab8fbd189c569ccdee3a4d929bb7f557be4028f6)
-* StaticCallProxy: [0xe1b97e47aa3796276033a5341e884d2ba46b6ac1](https://ropsten.etherscan.io/address/0xe1b97e47aa3796276033a5341e884d2ba46b6ac1)
-* ERC1155Proxy: [0x19bb6caa3bc34d39e5a23cedfa3e6c7e7f3c931d](https://ropsten.etherscan.io/address/0x19bb6caa3bc34d39e5a23cedfa3e6c7e7f3c931d)
-* DevUtils: [0x161793cdca4ff9e766a706c2c49c36ac1340bbcd](https://ropsten.etherscan.io/address/0x161793cdca4ff9e766a706c2c49c36ac1340bbcd)
-* Staking: [0xfaabcee42ab6b9c649794ac6c133711071897ee9](https://ropsten.etherscan.io/address/0xfaabcee42ab6b9c649794ac6c133711071897ee9)
-* Broker: [0x4Aa817C6f383C8e8aE77301d18Ce48efb16Fd2BE](https://ropsten.etherscan.io/address/0x4Aa817C6f383C8e8aE77301d18Ce48efb16Fd2BE)
+* Exchange: 0xfb2dd2a1366de37f7241c83d47da58fd503e2c64
+* ERC20Proxy: 0xb1408f4c245a23c31b98d2c626777d4c0d766caa
+* ERC721Proxy: 0xe654aac058bfbf9f83fcaee7793311dd82f6ddb4
+* Forwarder: 0x2127a60bedfba1c01857b09b8f24094049c48493
+* CoordinatorRegistry: 0x403cc23e88c17c4652fb904784d1af640a6722d9
+* Coordinator: 0x6ff734d96104965c9c1b0108f83abc46e6e501df
+* MultiAssetProxy: 0xab8fbd189c569ccdee3a4d929bb7f557be4028f6
+* StaticCallProxy: 0xe1b97e47aa3796276033a5341e884d2ba46b6ac1
+* ERC1155Proxy: 0x19bb6caa3bc34d39e5a23cedfa3e6c7e7f3c931d
+* DevUtils: 0x161793cdca4ff9e766a706c2c49c36ac1340bbcd
+* Staking: 0xfaabcee42ab6b9c649794ac6c133711071897ee9
+* Broker: 0x4Aa817C6f383C8e8aE77301d18Ce48efb16Fd2BE
 
 ## Miscellaneous
 

@@ -46,8 +46,8 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/0xProject/0x-docs/tree/main/docs',
+          //editUrl:
+            // 'https://github.com/0xProject/0x-docs/blob/main/docs',
         },
         blog: false,
         theme: {
