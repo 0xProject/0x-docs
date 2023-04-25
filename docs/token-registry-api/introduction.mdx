@@ -1,0 +1,38 @@
+---
+sidebar_label: Introduction
+sidebar_position: 1
+description: Token Registry API
+---
+
+# Introduction
+
+:::info
+Token Registry API is in Open Beta - highly subject to change.
+:::
+
+### Overview
+
+Token registry API is designed to make the on-chain trading more smoothly by having all the crucial token properties in one place. It is one of the most comprehensive token lists on the market with close to 4 million tokens across 8 chains. Not only does it have comprehensive token information, but also includes many advanced properties like whether a token is a fee-on-transfer token or is permit enabled
+
+### The Problem
+
+Currently, when developers want to build an on-chain trading function, they normally need to create a token list with all the crucial information like token symbol, logo and so on. However, it might not easy to get all the information from one consolidated source, and developers need to aggregate all the necessary information from multiple sources, which slows down the integration time and increases the maintenance cost. At the same time, many products on the market like token lists might be outdated, so it is easy to give users inaccurate information.
+
+### The Solution
+
+<!-- ![Tx Relay UI](/img/tx-relay-api/tx-relay-ui.png) -->
+
+Token registry API is a solution that addresses the token information fragmentation and inconsistency, and it is intended to help speed up the token swap functionality integration process. We aggregate information from over xx difference sources, and refresh the data every xx minutes to make sure the token information is comprehensive and updated. We also develop many detection algorithm internally for advanced properties like fee-on-transfer and permit functions
+
+### The use cases of Token Registry API
+
+* Fetch all the relevant information of a given token address
+* Retrieve all the relevant tokens based on a token symbol or name
+* Block certain tokens from trading based on accredited block lists
+* Provide warnings on certain tokens based on token listing criteria
+
+
+### Learn More
+
+ * [Token Registry API FAQ](/token-registry-api/token-registry-faq)
+
