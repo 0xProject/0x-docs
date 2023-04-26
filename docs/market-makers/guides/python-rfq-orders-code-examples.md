@@ -10,7 +10,8 @@ Learn how to create, hash, sign, fill, get state, and cancel 0x V4 RFQ orders us
 
 
 **[Click here to see the full gist](https://gist.github.com/PirosB3/8141b51fbb307bca265866ef1cef564f)**
-<img src="/img/market-makers/python-gist.png" alt="" data-size="original"></img>
+
+![Python Code Example Gist](/img/market-makers/python-gist.png)
 
 
 

@@ -32,19 +32,17 @@ In addition to the 0x API configuration identifying trusted takers, it also cont
 If you represent a trading firm that would like to add liquidity to the 0x ecosystem via the RFQ system, please get in touch here: [0x RFQ Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE\_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform?usp=sf\_link)
 :::
 
-##
 
-### **Firm Quotes**
+### Firm Quotes
 
 The firm quote resource is hosted at [`/swap/v1/quote`](/0x-swap-api/api-references/get-swap-v1-quote) and responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
 
 In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must include the query parameter `intentOnFilling=true` (in addition to the aforementioned `0x-api-key` and non-null `takerAddress`).
 
-### **Indicative Pricing**
+### Indicative Pricing
 
 The indicative pricing resource is hosted at [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) and responds with pricing information, but that response does not contain a full 0x order, so it does not constitute a legitimate transaction that can be submitted to the Ethereum network.  This resource can be used by price feeds and other applications that do not intend to submit an actual transaction.
 
-****
 
 ## Quote Validation
 
@@ -69,9 +67,9 @@ Therefore, if a Swap API client intends to access RFQ liquidity, it's important 
 
 Checkout our [Guides](/introduction/guides) for RFQT and RFQM Market Makers on how to create, hash, sign, fill, get state, and cancel 0x V4 RFQ orders
 
-* [Generating 0x Order Hashes](../guides/generating-0x-order-hashes.md)
-* [Signing 0x Orders](../guides/signing-0x-orders.md)
-* [Python RFQ Orders Code Examples ](../guides/0x-v4-rfq-orders-code-examples-with-python.md)
+* [Generating 0x Order Hashes](/market-makers/guides/generating-0x-order-hashes)
+* [Signing 0x Orders](/market-makers/guides/signing-0x-orders)
+* [Python RFQ Orders Code Examples ](/market-makers/guides/python-rfq-orders-code-examples)
 * [Fill ERC20 RFQ order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_erc20\_rfq\_order.ts)
 * [Fill ERC20 RFQ order with maker order signer](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_erc20\_rfq\_order\_with\_maker\_order\_signer.ts)
 * [Subscribe to RFQ order fill events](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_erc20\_limit\_order.ts)

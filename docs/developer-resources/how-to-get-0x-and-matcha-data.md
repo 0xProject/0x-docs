@@ -97,7 +97,7 @@ _For those looking for an GraphQL API to stream the data._
 Do you believe that the truth can only be found in the blockchain?
 
 * If you don't have a data pipeline yet - our [event scraper](https://github.com/0xProject/0x-event-pipeline) is open source and only requires an RPC endpoint and a Postgres DB (Contributions are also welcome).
-* If you already have a blockchain data ETL already, with the full copy of data processed into relational databases - our [folder](https://github.com/duneanalytics/abstractions/tree/master/ethereum/zeroex) under DuneAnalytics' collaborative repo will be the best reference.
+* If you already have a blockchain data ETL already, with the full copy of data processed into relational databases - our [folder](https://github.com/duneanalytics/spellbook/tree/main/models/zeroex) under DuneAnalytics' collaborative repo will be the best reference.
 
 Feel free to reach out to [jorge@0xproject.com](mailto:jorge@0xproject.com) (@ktl\_xv) for any questions!
 
