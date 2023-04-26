@@ -51,15 +51,15 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
       { "name": "Uniswap_V3", "proportion": "0.87" },
       { "name": "Balancer", "proportion" : "0.13" }
   ],
-	"fees": {
-		// same as the response in /price. Redacted here
-	},
+  "fees": {
+    // same as the response in /price. Redacted here
+  },
   "trade": {
     "type": "metatransaction",
     "hash": "0xde5a11983edd012047dd3107532f007a73ae488bfb354f35b8a40580e2a775a1",
     "eip712": {
       "types": {
-	      "EIP712Domain": [
+        "EIP712Domain": [
           {
             "name": "name",
             "type": "string"
@@ -145,7 +145,7 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
     "isRequired": true,
     "isGaslessAvailable": true,
     "type": "permit",
-		"hash": "0x9d5435a70c77ffc36b1dd5d2f05ce5edcb1d0f52e2e134c3ad957b421deae194",
+    "hash": "0x9d5435a70c77ffc36b1dd5d2f05ce5edcb1d0f52e2e134c3ad957b421deae194",
     "eip712": {
       "types": {
         "EIP712Domain": [
@@ -225,7 +225,7 @@ For meta-transaction v2 response, all fields are the same as the meta-transactio
     "hash": "0xde5a11983edd012047dd3107532f007a73ae488bfb354f35b8a40580e2a775a1",
     "eip712": {
       "types": {
-	      "EIP712Domain": [
+        "EIP712Domain": [
           {
 	          "name": "name",
             "type": "string"
@@ -275,7 +275,7 @@ For meta-transaction v2 response, all fields are the same as the meta-transactio
           }
         ],
         // different type compared with meta-transaction response
-	      "MetaTransactionFeeData": [
+        "MetaTransactionFeeData": [
 	        {
             "type": "address",
             "name": "recipient"
@@ -336,7 +336,7 @@ Similarly, for otc response, all fields are the same as the meta-transaction res
     "hash": "0x12345...",
     "eip712": {
       "types": {
-	      "EIP712Domain": [
+        "EIP712Domain": [
           {
 	          "name": "name",
             "type": "string"

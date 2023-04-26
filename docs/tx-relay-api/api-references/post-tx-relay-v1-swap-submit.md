@@ -1,10 +1,10 @@
 ---
-sidebar_label: GET /tx-relay/v1/swap/submit
+sidebar_label: POST /tx-relay/v1/swap/submit
 sidebar_position: 3
-description: Learn how to use GET /tx-relay/v1/swap/submit
+description: Learn how to use POST /tx-relay/v1/swap/submit
 ---
 
-# GET /tx-relay/v1/swap/submit
+# POST /tx-relay/v1/swap/submit
 
 If your user accepts the quote and wants to trade, you do a `POST` to `/tx-relay/v1/swap/submit`.
 
