@@ -16,7 +16,7 @@ If you are interested to try the Tx Relay Sandbox, please fill out this form: ht
 :::
 
 
-You can utilize your existing API key to access the Tx Relay Sandbox - please see the [API References](/tx-relay-api/api-references) for more details.
+You can utilize your existing API key to access the Tx Relay Sandbox - please see the [API References](/tx-relay-api/api-references/overview) for more details.
 
 The Sandbox release allows you to test:
 

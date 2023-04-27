@@ -10,10 +10,8 @@ description: 0x API hosts an Orderbook of 0x Limit Orders that anyone can provid
 
 **The 0x API is the liquidity and data endpoint for DeFi**. It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests for your application and your users.
 
-While the 0x Labs Team hosts a version of the 0x API (subject to the [0x Terms of Service](https://0x.org/terms)), all the code is open source and available at the [0x-API GitHub repo](https://github.com/0xProject/0x-api). If you run into a problem, don't hesitate to [open an issue](https://github.com/0xProject/0x-api/issues).
+We offer hosted versions for different Ethereum networks. Requests for more networks, and questions/feedback in general should be directed at our [Discord](https://discordapp.com/invite/d3FTX3M).
 
-We offer hosted versions for different Ethereum networks. Requests for more networks, and questions/feedback in general should be directed at our [Discord](https://discordapp.com/invite/d3FTX3M).\
-\
 0x API has an Orderbook on the following chains:
 
 | Network             | Endpoint                                                   |

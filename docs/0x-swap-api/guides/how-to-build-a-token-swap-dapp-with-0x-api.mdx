@@ -17,7 +17,7 @@ It's more than likely that it uses a [liquidity aggregator](https://docs.0x.org/
 
 In this tutorial, we will learn how to use the **[Swap API](/0x-swap-api/introduction)** which allows users to **fetch available quotes across the liquidity supply** and uses [smart order routing](https://blog.0xproject.com/0x-apis-smart-order-routing-7af0195515e5) to split up a transaction across decentralized exchange networks to be **filled with the lowest slippage** possible while minimizing transaction costs.
 
-This is the same endpoint that is behind swaps in major wallets and exchanges such as MetaMask, Coinbase wallet, Zapper, and [many more](https://blog.0x.org/0x-ecosystem-update-18/).
+This is the same endpoint that is behind swaps in major wallets and exchanges such as MetaMask, Coinbase wallet, Zapper, and [many more](https://0x.org/docs/introduction/introduction-to-0x#the-0x-ecosystem).
 
 Note that we won’t need to write any smart contracts to find and settle the trade! Instead, the Swap API allows web3 developers to easily tap into the 0x Protocol smart contracts which takes care of all the logic used to settle a trade, allowing web developers to focus on building the best trade experience. 
 
@@ -341,7 +341,7 @@ Now your app should look like this when a user clicks "SELECT A TOKEN" and the m
 ![select token modal](/img/0x-swap-api/select-token-modal.png)
 
 :::info
-You won’t find ETH in this list because it’s not actually an ERC20 token. Needs to be wrapped, WETH. [Learn more about WETH](https://weth.io/). Some apps have a curated list rather than showing all options. 
+You won’t find ETH in this list because it’s not actually an ERC20 token. Needs to be wrapped, WETH. [Learn more about WETH](https://cointelegraph.com/news/what-is-wrapped-ethereum-weth-and-how-does-it-work). Some apps have a curated list rather than showing all options. 
 :::
 
 
@@ -491,7 +491,7 @@ document.getElementById("from_amount").onblur = getPrice;
 
 **/price vs /quote Endpoints**
 
-Now we need to create a function called `getPrice()`. Inside, we will be calling the [GET /swap/v1/price endpoint](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-price). 
+Now we need to create a function called `getPrice()`. Inside, we will be calling the [GET /swap/v1/price endpoint](/0x-swap-api/api-references/get-swap-v1-price). 
 
 
 `/price`  is nearly identical to `/quote`, but with a few key differences. `/price` does not return a transaction that can be submitted on-chain; it simply provides us the same information. Think of it as the "read-only" version of `/quote"`.  
@@ -502,7 +502,7 @@ So if we **ping `/quote` too much** when we really are just asking for a price a
 Here is an example of a GET HTTP `/price` request. The call is almost identical to `/quote`:  `https://api.0x.org/swap/v1/price?sellToken=ETH&buyToken=DAI&sellAmount=1000000000000000000`
 
 :::tip
-This API endpoint is using the Ethereum (mainnet) as indicated by `https://api.0x.org`. Here is a list of [all API endpoints for the supported networks](0x-swap-api/api-references/overview#introduction).
+This API endpoint is using the Ethereum (mainnet) as indicated by `https://api.0x.org`. Here is a list of [all API endpoints for 0x supported networks](/0x-swap-api/api-references/overview).
 :::
 
 To use this in our `index.js`, we need to import the [qs module](https://www.npmjs.com/package/qs). Add the require statement at the top of the file:
@@ -684,11 +684,11 @@ All ERC20 tokens are required to implement the [approve(address  spender, uint25
 
 It returns a boolean value indicating whether the operation succeeded.
 
-Read more about setting token allowances [here](https://docs.0x.org/0x-api-swap/advanced-topics/how-to-set-your-token-allowances). 
+Read more about setting token allowances [here](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances). 
 
 As seen in [approve(address  spender, uint256  amount)](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20#IERC20-approve-address-uint256-) function above, in order to call the token allowance, we need a couple of things:
 * **spender address**- This will be the 0x Exchange Proxy Smart Contract address. We can get this from the JSON response as the `allowanceTarget` parameter returned in our `/quote ` query
-* **amount** - How much allowance do we want to give the contract? In this case, I will demo with the max amount (`maxApproval`) possible; however, I highly recommend setting only what you need if possible. Check out [this example](https://docs.0x.org/0x-api-swap/guides/swap-tokens-with-0x-api#examples) here for how to implement that (*hint, weekly challenge, hint)*
+* **amount** - How much allowance do we want to give the contract? In this case, I will demo with the max amount (`maxApproval`) possible; however, I highly recommend setting only what you need if possible. Check out [this example](/0x-swap-api/guides/swap-tokens-with-0x-swap-api) here for how to implement that (*hint, weekly challenge, hint)*
 * **caller** - The user's MetaMask account will be the caller address (aka takerAddress)
 
 **Build trySwap()**

@@ -8,7 +8,7 @@ description: Learn about viewing & distributing 0x Limit Orders
 
 ### Viewing & Distributing 0x Limit Orders
 
-0x Limit Orders can be submitted to the [0x Orderbook](/0x-orderbook-api/). The following request-endpoint combinations are commonly used to view and distribute 0x Limit Orders via the 0x API.
+0x Limit Orders can be submitted to the [0x Orderbook](/0x-orderbook-api/introduction). The following request-endpoint combinations are commonly used to view and distribute 0x Limit Orders via the 0x API.
 
 * [GET /orderbook/v1/](https://0x.org/docs/api#get-orderbookv1)
   * Retrieves the orderbook for a given asset pair

@@ -12,7 +12,7 @@ Topics covered on this page include:
 * [How is price impact different from slippage?](/0x-swap-api/advanced-topics/price-impact-protection#how-is-price-impact-different-from-slippage-)
 * [How is price impact calculated?](/0x-swap-api/advanced-topics/price-impact-protection#how-is-price-impact-calculated-)
 * [How does Price Impact Protection work?](/0x-swap-api/advanced-topics/price-impact-protection#how-does-price-impact-protection-work-)
-* [How do I setup Price Impact Protection when using the Swap API?](0/0x-swap-api/advanced-topics/price-impact-protection#how-do-i-setup-price-impact-protection-when-using-the-swap-api-)
+* [How do I setup Price Impact Protection when using the Swap API?](/0x-swap-api/advanced-topics/price-impact-protection#how-do-i-setup-price-impact-protection-when-using-the-swap-api-)
 * [Do you have recommendations for how to display price impact to end-users in a dApp UI?](/0x-swap-api/advanced-topics/price-impact-protection#do-you-have-recommendations-for-how-to-display-price-impact-to-end-users-in-a-dapp-ui)
 * [Read More](/0x-swap-api/advanced-topics/price-impact-protection#read-more)
 

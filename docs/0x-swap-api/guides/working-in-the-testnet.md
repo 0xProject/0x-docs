@@ -72,10 +72,10 @@ _Instructions to use the CodePen:_
 
 Refer to [@0x/contract-addresses](https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json#L44-L85) to find the addresses of the latest deployment on Goerli and then follow our limit order related guides below, using the Goerli contract addresses, and chain id 5.
 
-* [Create a Limit Order](create-a-limit-order.md)
-* [Cancel a Limit Order](cancel-a-limit-order.md)
-* [Fill a Limit Order](fill-a-limit-order.md)
-* [Limit Order Status](limit-order-status.md)
+* [Create a Limit Order](/0x-limit-orders/guides/create-a-limit-order)
+* [Cancel a Limit Order](/0x-limit-orders/guidescancel-a-limit-order)
+* [Fill a Limit Order](/0x-limit-orders/guidesfill-a-limit-order)
+* [Limit Order Status](/0x-limit-orders/guideslimit-order-status)
 
 ### Forking mainnet Ethereum
 
