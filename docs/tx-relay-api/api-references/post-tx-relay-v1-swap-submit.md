@@ -74,7 +74,6 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 
 More information on signing 0x orders is available [here](https://docs.0x.org/market-makers/guides/signing-0x-orders).
 
-
 ### Status Code
 
 * `201` if successful
