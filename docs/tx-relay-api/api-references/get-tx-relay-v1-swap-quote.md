@@ -6,11 +6,21 @@ description: Learn how to use GET /tx-relay/v1/swap/quote
 
 # GET /tx-relay/v1/swap/quote
 
-Fillable quotes are obtained by submitting a GET request to `/tx-relay/v1/swap/quote`
+Submit a GET request to `/tx-relay/v1/swap/quote` to obtain a fillable quote.
 
-#### **Example Request**
+## Request
 
+### Request Params
 The request parameters are the same as [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) except with an extra field `checkApproval`:
+
+| **Query Params** | **Description**                                                                                                                                                                                                                                                                     |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `checkApproval`  | \[optional] Whether to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Default to `false` if not provided. Setting it to `true` would require more processing and computation on our end so it would have worse performance. |
+                
+
+
+### Example Request
+
 
 ```bash
 curl '<https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellAmount=100000000&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&takerAddress=0x9016Cc2122b52fF5d9937c0c1422B78d7e81CeEa&priceImpactProtectionPercentage=0.95&feeType=volume&feeSellTokenPercentage=0.1&feeRecipient=0x70A9f34F9b34C64957b9c401A97BfeD35b95049e>' \\
@@ -19,7 +29,19 @@ curl '<https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C9
 
 * `checkApproval`: \[optional] Whether to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Default to `false` if not provided. Setting it to `true` would require more processing and computation on our end so it would have worse performance.
 
-#### Example Response
+## Response
+
+### Response Params
+
+| **Query Params**                                                                                                                                                                                                                                | **Description**                                                                                                                                            |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `liquidityAvailable`                                                                                                                                                                                                                            | Used to validate that liquidity is available from a given source. This would always be present.                                                            |
+| The rest of the fields would only be present if `liquidityAvailable` is `true`. Fields that have been explained previously in [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) are not included again here. |                                                                                                                                                            |
+| `trade`                                                                                                                                                                                                                                         | This is the “trade” object which contains the necessary information to process a trade<br></br>&ensp;&ensp;- `type`: `metatransaction` or `metatransaction_v2` or `otc`<br></br>&ensp;&ensp;- `hash`: The hash for the trade according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.<br></br>&ensp;&ensp;- `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).<br></br>&ensp;&ensp;- Note: Please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on the `type` field and we would add more types in the future.                                                                    |
+|`approval`   |This is the “approval” object which contains the necessary information to process a gasless approval, if requested via `checkApproval` and is available.<br></br>&ensp;&ensp;- `type`: `permit` or `executeMetaTransaction::approve`<br></br>&ensp;&ensp;- `hash`: The hash for the approval according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.<br></br>&ensp;&ensp;- `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).<br></br>&ensp;&ensp;- Note: Please don’t assume particular shapes of `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as they will change based on the `type` field.
+
+
+### Example Responses
 
 The response will initially be of type `metatransaction`. There are two new types `metatransaction_v2` and `otc` currently under development and will be available in the near future.
 
@@ -27,7 +49,7 @@ Thus, please don’t assume particular shapes of `trade.eip712.types`, `trade.ei
 
 Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as there are different types of gasless approval standards.
 
-**Liquidity Unavailable Response**
+### Liquidity Unavailable Response
 
 ```json
 {
@@ -35,7 +57,7 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
 }
 ```
 
-**Example Meta-Transaction Response**
+### Example Meta-Transaction Response
 
 ```json
 {
@@ -208,7 +230,7 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
 }
 ```
 
-**Example Meta-Transaction V2 Response**
+### Example Meta-Transaction V2 Response
 
 For meta-transaction v2 response, all fields are the same as the meta-transaction response except for `trade` field. More specifically, the following fields are different:
 
@@ -319,7 +341,7 @@ For meta-transaction v2 response, all fields are the same as the meta-transactio
 }
 ```
 
-**Example OTC Response**
+### Example OTC Response
 
 Similarly, for otc response, all fields are the same as the meta-transaction response except for `trade` field. More specifically, the following fields are different:
 
@@ -415,20 +437,8 @@ Similarly, for otc response, all fields are the same as the meta-transaction res
 }
 ```
 
-* `liquidityAvailable`: Used to validate that liquidity is available from a given source. This would always be present.
-* The rest of the fields would only be present if `liquidityAvailable` is `true`. Fields that have been explained previously in [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) are not included again here.
-* `trade`: This is the “trade” object which contains the necessary information to process a trade
-  * `type`: `metatransaction` | `metatransaction_v2` | `otc`
-  * `hash`: The hash for the trade according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.
-  * `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).
-    * Note: Please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on the `type` field and we would add more types in the future.
-* `approval`: This is the “approval” object which contains the necessary information to process a gasless approval, if requested via `checkApproval` and is available.
-  * `type`: `permit` | `executeMetaTransaction::approve`
-  * `hash`: The hash for the approval according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.
-  * `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).
-    * Note: Please don’t assume particular shapes of `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as they will change based on the `type` field.
 
-### Status Code
+## Status Code
 * `200` if successful.
 * `400`:
   * If `sellAmount` / `buyAmount` provided is too small to execute or cover the cost.

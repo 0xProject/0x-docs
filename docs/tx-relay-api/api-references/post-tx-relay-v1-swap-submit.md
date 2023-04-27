@@ -6,9 +6,9 @@ description: Learn how to use POST /tx-relay/v1/swap/submit
 
 # POST /tx-relay/v1/swap/submit
 
-If your user accepts the quote and wants to trade, you do a `POST` to `/tx-relay/v1/swap/submit`.
+If your user accepts the quote and wants to trade, `POST` to `/tx-relay/v1/swap/submit` to submit the trade.
 
-### Gasless Approvals
+## Gasless Approvals
 
 If a token supports gasless approvals, a meta-transaction / otc may be submitted along with an approval object. You will be able to tell if the sell token is supported by gasless approvals by checking the response of `/quote` and looking for
 
@@ -18,9 +18,7 @@ approval.isRequired // whether an approval is required for the trade
 approval.isGaslessAvailable // whether gasless approval is available for the sell token
 ```
 
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`
-
-object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
 
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
 
@@ -32,11 +30,11 @@ The `approval.eip712` object will present the correct ordering, but make sure th
 
 If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
 
-### Trade
+## Trade
 
 Similar to gasless approval, to submit a trade, you must have your user sign `trade.eip712` object returned at the time of the `/quote`. All the instructions & caveats are the same as previous section.
 
-#### **Example Request**
+### Example Request
 
 ```bash
 curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key: <API_KEY>' --header '0x-chain-id: 137' --data '{
@@ -63,7 +61,7 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 }'
 ```
 
-#### **Example Response**
+### Example Response
 
 ```json
 {
@@ -74,7 +72,7 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 
 More information on signing 0x orders is available [here](https://docs.0x.org/market-makers/guides/signing-0x-orders).
 
-### Status Code
+## Status Code
 
 * `201` if successful
 * `400`:
@@ -87,7 +85,7 @@ More information on signing 0x orders is available [here](https://docs.0x.org/ma
 * `500` if there is an internal server error.
 
 
-### Note
+## Note
 
 * If you're using `go-ethereum`, for `domain`, make sure you order the fields in the exact same order as specified in https://eips.ethereum.org/EIPS/eip-712 since `go-ethereum` does not enforce ordering. Also, make sure you skipped fields that are absent.
 ```

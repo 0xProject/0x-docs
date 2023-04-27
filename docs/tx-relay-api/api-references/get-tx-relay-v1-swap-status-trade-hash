@@ -6,7 +6,7 @@ description: Learn how to use GET /tx-relay/v1/swap/status/:trade-hash
 
 # GET /tx-relay/v1/swap/status/:trade-hash
 
-To check the status of a trade, you submit a GET request to `/tx-relay/v1/swap/status/:trade-hash`.
+Submit a GET request to `/tx-relay/v1/swap/status/:trade-hash` to check the status of a trade.
 
 #### Example **Request**
 
