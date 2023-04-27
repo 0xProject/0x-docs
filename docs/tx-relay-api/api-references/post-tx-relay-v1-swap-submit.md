@@ -74,8 +74,20 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 
 More information on signing 0x orders is available [here](https://docs.0x.org/market-makers/guides/signing-0x-orders).
 
+### Status Code
 
-### Trade
+* `201` if successful
+* `400`:
+  * If the trade is too close to expiration time.
+  * If the signature in the payload is invalid.
+  * If the balance / allowance of the taker is less than the trade amount.
+  * (`otc` only) If the trade has been outstanding for too long.
+  * (`otc` only) If the balance / allowance of the market maker selected to settle the trade is less than the trade amount (very unlikely).
+* `429` if there is already a trade associated with a taker address and a taker token that's not been settled by our relayers yet. For example, if `address A` already has a `USDC -> WETH` trade submitted and it has not settled yet, then a subsequent `/submit` call with `address A` and `USDC -> *` trade will fail with `429`. The taker is, however, allowed to submit other trades with a different taker token.
+* `500` if there is an internal server error.
+
+
+### Note
 
 * If you're using `go-ethereum`, for `domain`, make sure you order the fields in the exact same order as specified in https://eips.ethereum.org/EIPS/eip-712 since `go-ethereum` does not enforce ordering. Also, make sure you skipped fields that are absent.
 ```

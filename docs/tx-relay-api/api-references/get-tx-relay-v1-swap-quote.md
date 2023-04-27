@@ -427,3 +427,10 @@ Similarly, for otc response, all fields are the same as the meta-transaction res
   * `hash`: The hash for the approval according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.
   * `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).
     * Note: Please don’t assume particular shapes of `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as they will change based on the `type` field.
+
+### Status Code
+* `200` if successful.
+* `400`:
+  * If `sellAmount` / `buyAmount` provided is too small to execute or cover the cost.
+  * If the actual price impact exceeds `priceImpactProtectionPercentage` supplied in the query param when the API _**is able to calculate price impact**_. The endpoint would not return `400` when it's not able to calculate price impact even though `priceImpactProtectionPercentage` is supplied.
+* `500` if there is an internal server error.

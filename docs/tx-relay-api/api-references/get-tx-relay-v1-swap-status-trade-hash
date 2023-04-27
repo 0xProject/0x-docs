@@ -105,3 +105,9 @@ switch (reason) {
 ```
 
 to avoid unintended errors.
+
+### Status Code
+
+* `200` if successful.
+* `404` if the trade hash cannot be found.
+* `500` if there is an internal server error.

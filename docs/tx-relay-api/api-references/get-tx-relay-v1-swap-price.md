@@ -117,3 +117,10 @@ curl '<https://api.0x.org/tx-relay/v1/swap/price?buyToken=0x0d500B1d8E8eF31E21C9
       * If otc order type is chosen, this would be `buyToken` if the trade direction is `sell` and `sellToken` if the trade direction is `buy`. 
     * `feeAmount`: The amount of `feeToken` to be charged as gas fee.
     * `billingType`: The method that gas compensation is transferred. It can be either `on-chain`, `off-chain` or `liquidity`. Please reach out to us if you'd like more details on the billing types.
+
+### Status Code
+* `200` if successful.
+* `400`:
+  * If `sellAmount` / `buyAmount` provided is too small to execute or cover the cost.
+  * If the actual price impact exceeds `priceImpactProtectionPercentage` supplied in the query param when the API _**is able to calculate price impact**_. The endpoint would not return `400` when it's not able to calculate price impact even though `priceImpactProtectionPercentage` is supplied.
+* `500` if there is an internal server error.
