@@ -13,10 +13,17 @@ Prefer to watch a video instead? Jump to [0x Concept Videos](0x-concept-videos.m
 :::
 
 
+## What is 0x?
+
+0x is developers’ one-stop shop to build financial products on crypto rails. 0x empowers hundreds of developers with essential web3 tools to enable faster trading, better prices and superior UX. Our suite of APIs has processed over 52 million transactions and $125B in volume from more than 6 million users trading on apps like Coinbase Wallet, Robinhood Wallet, Metamask, Zerion, Zapper, and more.
+
+:::tip
+### ELI5 0x (Explain 0x like I'm 5 Years Old)
+0x is like a big playground where people can trade different things like toys, candy, and stickers. But instead of toys and candy, they trade digital things like cryptocurrencies. There are two types of people in this playground: the ones who bring things to trade (we call them Makers) and the ones who want to trade for those things (we call them Takers). 0x helps these people find each other and make trades in a safe and fair way. It's like having a grown-up watching over the playground to make sure everyone is playing nicely. 
+:::
+
 ## The 0x Ecosystem
-
-0x is a trusted exchange infrastructure for the internet that has enabled over $180B in tokenized value flow through all major blockchains. Developers can use 0x to add flexible, multi-chain exchange functionality into their applications and create new markets for all tokenized assets, including cryptocurrencies, DeFi tokens, and NFTs. 
-
+### 0x Tech Stack
 0x's professional-grade APIs are built on the [0x Protocol](https://protocol.0x.org/en/latest/), a set of secure, audited smart contracts. Applications building on these tools are part of the 0x Ecosystem. 
 
 ![0x tech stack](/img/introduction/0x-tech-stack.png)
@@ -30,7 +37,7 @@ The diagram below shows an overview of the 0x Ecosystem, which includes applicat
 
 Within the 0x Ecosystem, there are two sides - Makers and Takers:
 
-#### **Supply (aka Makers)**
+#### Supply (aka Makers)
 
 This is the entity who creates [0x orders](/introduction/0x-cheat-sheet#0x-order-types) and _provides liquidity_ into the system for the Demand side (Takers) to consume. 0x aggregates liquidity from multiple sources including:
 
@@ -41,7 +48,7 @@ This is the entity who creates [0x orders](/introduction/0x-cheat-sheet#0x-order
   * [Orderbook API](/0x-orderbook-api/introduction) - Sharing Limit Orders
   * [Limit Orders (Advanced Traders)()](/0x-limit-orders/docs/introduction) - Filling and Managing Limit Orders
 
-#### **Demand (aka Takers)**
+#### Demand (aka Takers)
 
 This is the entity who wants the Maker's asset. The Takers agree to trade their asset for the Maker's asset; in other words, they _consume the 0x liquidity_. Examples include projects such as MetaMask, Coinbase, and dydx.
 

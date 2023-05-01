@@ -23,7 +23,7 @@ A hosted 0x API for the Goerli testnet is available at [https://goerli.api.0x.or
 
 To view the currently supported sources on Goerli refer to [https://goerli.api.0x.org/swap/v1/sources](https://goerli.api.0x.org/swap/v1/sources). 
 
-At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. 
+At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` Be aware that token you want to use for testing *must* have liquidity on at least one of these sources; otherwise, you will receive an error. 
 
 #### Token Pairs Available on Goerli
 
