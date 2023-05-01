@@ -6,11 +6,9 @@ description: Rate Limiting
 
 # Rate Limiting
 
+Rate limiting is used by the API to prevent abuse and ensure a reliable experience for all consumers. The current limit for the Free Tier of our APIs is approximately 2 Requests Per Second (RPS) and 200K API calls per month globally. 
+
 :::info
-Want higher rate limits? [Check out our enterprise options](https://beta.0x.org/pricing)
+Want higher rate limits? [Check out our enterprise options](https://0x.org/pricing)
 :::
-
-Rate limiting is used by the API to prevent abuse and ensure a reliable experience for all consumers. The current limit for the public API is approximately 3 Requests Per Second (RPS)/40 Requests Per Minute (RPM) with a short burst of up to 5 times allowed.
-
-Note that the rate limits listed above are only approximations. The rate limit per chain is throttled, which means it can be variable, not just per chain, but potentially per call; however, these rates are generally sufficient for public use.
 
