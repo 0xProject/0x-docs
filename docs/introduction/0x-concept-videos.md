@@ -15,8 +15,6 @@ description: This page contains a shortlist of videos that showcase notable feat
 
 [🎙️ Livestream: Powered by 0x](/introduction/0x-concept-videos#%EF%B8%8F-livestream-powered-by-0x)
 
-[🧠 How to Build NFT Exchange in Your DApp](/introduction/0x-concept-videos#-how-to-build-nft-exchange-in-your-dapp)
-
 [🧠 MEV-aware DEX design](/introduction/0x-concept-videos#-mev-aware-dex-design)
 
 [🧠 Let's Talk MEV RoundTable](/introduction/0x-concept-videos#-lets-talk-mev-roundtable)
@@ -42,12 +40,6 @@ Written version [here](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0
 Follow [Powered by 0x,](https://www.youtube.com/watch?v=vxGaJVEkfyY\&list=PLN51Tjs40v5M8d6UeDQyZJHfqy9pBC00j\&index=2) our developer-focused livestream where we explore features in the 0x tech ecosystem and interview developers building innovative projects on the 0x tech stack.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vxGaJVEkfyY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-## 🧠 How to Build NFT Exchange in Your DApp
-
-Learn how does 0x work, the state of NFT exchange, and how to use the NFT Swap SDK to add NFT exchange into your dapp.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oCEU_Jed2Fs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## 🧠 MEV-aware DEX design
 
