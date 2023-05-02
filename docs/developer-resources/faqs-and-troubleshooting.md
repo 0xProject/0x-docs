@@ -215,7 +215,7 @@ This model ensures that we can continue to invest into long-term growth of our p
 
 <summary>Is it possible to use the Swap API to trade custom ERC20 tokens or altcoins?</summary>
 
-If you would like to trade a custom token, you will need to create the liquidity either by using 0x limit orders or by creating a Liquidity Pool for your token on one of the various AMM sources that the API sources from, such as Uniswap, SushiSwap, or Curve. Learn more about creating limit order: http://localhost:3000/docs/0x-limit-orders/guides/create-a-limit-order
+If you would like to trade a custom token, you will need to create the liquidity either by using 0x limit orders or by creating a Liquidity Pool for your token on one of the various AMM sources that the API sources from, such as Uniswap, SushiSwap, or Curve. Learn more about [creating limit orders](/0x-limit-orders/guides/create-a-limit-order)
 
 </details>
 
