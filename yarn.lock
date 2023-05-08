@@ -1741,10 +1741,10 @@
   resolved "https://registry.npmjs.org/@mdx-js/util/-/util-1.6.22.tgz"
   integrity sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==
 
-"@mendable/search@^0.0.88":
-  version "0.0.88"
-  resolved "https://registry.npmjs.org/@mendable/search/-/search-0.0.88.tgz"
-  integrity sha512-YD0q6FO8bl3Yg/5wqH5rl+FEB5TnXJkYhfDPrqQ44p0BB67EssNYkjLvTE/R5L7Y6gvgIb1N5GMoRjxbMYxIYw==
+"@mendable/search@^0.0.93":
+  version "0.0.93"
+  resolved "https://registry.npmjs.org/@mendable/search/-/search-0.0.93.tgz"
+  integrity sha512-MK4WUzp2xz/F/uCC+gNnUCdjD8Mp783uwS2J6N71Pyw2WxE9byg+vx/7yjtS3itW87mIQ8Fo5nWlcEzQlv8zLA==
   dependencies:
     posthog-js "^1.45.1"
 
