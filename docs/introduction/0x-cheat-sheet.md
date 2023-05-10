@@ -27,7 +27,7 @@ We are currently on v4 of the 0x protocol
 
 ### Exchange Proxy Addresses
 
-This is the primary contract for all interactions with the protocol. It is also the allowance-target/spender/operator for any ERC20, ERC721, and ERC1155 assets being traded.  For most networks the address is identical, but be aware that a small number (marked with a \*) are slightly different. The ABI can be found in the protocol repo's [IZeroEx.json](https://github.com/0xProject/protocol/blob/development/packages/contract-artifacts/artifacts/IZeroEx.json) file. All 0x contract addresses can be found in the protocol repo's [addresses.json](https://github.com/0xProject/protocol/blob/a99c9161007b5457d81ffe6d5a853a3d489ce30e/packages/contract-addresses/addresses.json) file.
+This is the primary contract for all interactions with the protocol. It is also the allowance-target/spender/operator for any ERC20, ERC721, and ERC1155 assets being traded.  For most networks the address is identical, but be aware that a small number (marked with a \*) are slightly different. The ABI can be found in the protocol repo's [IZeroEx.json](https://github.com/0xProject/protocol/blob/development/packages/contract-artifacts/artifacts/IZeroEx.json) file. All 0x contract addresses can be found in the protocol repo's [addresses.json](https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json) file.
 
 * Ethereum (Mainnet): `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 * Ethereum (Goerli): `0xf91bb752490473b8342a3e964e855b9f9a2a668e`\*
