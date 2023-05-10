@@ -44,7 +44,7 @@ Bids will be sorted in descending order by price, and asks will be sorted in asc
 GET
 
 ```markup
-https://api.0x.org/orderbook/v1?quoteToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&baseToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+https://api.0x.org/orderbook/v1?quoteToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&baseToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 ```
 
 #### Response
