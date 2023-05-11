@@ -149,11 +149,13 @@ Once you've received the API response, in order to submit the transaction to the
 
 If you are using vanilla Javascript, we recommend either web3.js or ether.js.
 
-#### web3.js
+### web3.js
 
-The fields returned in a swap [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) are designed to overlap with the raw transaction object accepted by [`web3.js`’s `sendTransaction()`](https://web3js.readthedocs.io/en/v1.7.5/web3-eth.html#sendtransaction) function. What this means is that if you are using web3.js, you can directly pass the entire response from [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) because it contains all the necessary parameters for [`web3.eth.setTransaction()`](https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#id84) - _from, to, value, gas, data.
+The fields returned by Swap API's [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) endpoint are designed to overlap with the raw transaction object accepted by [`web3.js`’s `sendTransaction()`](https://web3js.readthedocs.io/en/v1.7.5/web3-eth.html#sendtransaction) function. What this means is that if you are using web3.js, you can directly pass the entire response from `/quote` because it contains all the necessary parameters for [`web3.eth.setTransaction()`](https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#id84) - _from, to, value, gas, data. 
 
-**Option 1 - Submit the entire quote response to web3.eth.sendTransction**
+Both options work, up to use case and developer preference. 
+
+#### Option 1 - Submit the entire quote response to web3.eth.sendTransction
 
 ```js
     // Fetch the swap quote.
@@ -164,7 +166,7 @@ The fields returned in a swap [`/quote`](https://docs.0x.org/0x-api-swap/api-ref
     const  receipt = await  web3.eth.sendTransaction(quote);
 ```
 
-**Option 2 - Submit only the required parameters to web3.eth.sendTransaction**
+#### Option 2 - Submit only the required parameters to web3.eth.sendTransaction**
 
 ```js
     // Fetch the swap quote.
@@ -181,9 +183,9 @@ The fields returned in a swap [`/quote`](https://docs.0x.org/0x-api-swap/api-ref
     }));
 ```
 
-#### ethers.js
+### ethers.js
 
-[ethers.js](https://docs.ethers.io/v5/) is more explicit and requires you to pull out and submit _only_ the required parameters (whereas web3.js allows you to just submit the entire json response or submit only require parameters). So if you use ethers.js, make sure you submit only the required parameters similar to this. 
+[ethers.js](https://docs.ethers.io/v5/) is more explicit and requires you to pull out and submit _only_ the required parameters (whereas web3.js allows you to just submit the entire json response or submit only require parameters). So if you use ethers.js, make sure you submit only the required parameters similar to the example below. 
 
 Also note that ethers.js separates the concept of Wallet, Providers, and Signers. You can use a [Wallet](https://docs.ethers.org/v5/api/signer/#Wallet--properties) and connect it to a [provider](https://docs.ethers.org/v5/api/providers/) to [send transactions](https://docs.ethers.org/v5/api/signer/#Signer-sendTransaction). If you are using a Wallet such as MetaMask, review the ethers.js documentation on how to access these fields - [Connecting to Ethereum: MetaMask](https://docs.ethers.org/v5/getting-started/#getting-started--connecting). 
 
