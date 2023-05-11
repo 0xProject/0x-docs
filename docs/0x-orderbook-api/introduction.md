@@ -30,12 +30,12 @@ This section contains the following docs and guides
 * [Overview](/0x-orderbook-api/api-references/overview)
 * [GET /orderbook/v1/order](api-references/get-orderbook-v1.md)
 * [GET /orderbook/v1/orders](api-references/get-orderbook-v1-orders.md)
-* [GET /orderbook/v1/order/orderhash.md](api-references/get-orderbook-v1-order-orderhash.md)
-* [GET /orderbook/v1-fee\_recipients.md](api-references/get-orderbook-v1-fee\_recipients.md)
+* [GET /orderbook/v1/order/orderhash](api-references/get-orderbook-v1-order-orderhash.md)
+* [GET /orderbook/v1-fee\_recipients](api-references/get-orderbook-v1-fee\_recipients.md)
 * [POST /orderbook/v1/order](api-references/post-orderbook-v1-order.md )
 * [POST /orderbook/v1/orders](api-references/post-orderbook-v1-orders.md)
-* [POST /orderbook/v1/order\_config.md](api-references/post-orderbook-v1-order\_config.md)
-* [websocket-api.md](api-references/websocket-api.md "mention")
+* [POST /orderbook/v1/order\_config](api-references/post-orderbook-v1-order\_config.md)
+* [websocket-api](api-references/websocket-api.md "mention")
 
 [rate-limiting.md](rate-limiting.md "mention")
 
