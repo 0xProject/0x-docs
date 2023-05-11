@@ -145,19 +145,67 @@ An HTTP response with status 400 will be returned if the `eth_estimateGas` resul
 
 ## 3. Send the Transaction to the Network
 
-Once you've received the API response, in order to submit the transaction to the network you will need to sign the transaction with your preferred web3 library (web3.js, ethers.js, etc). 
+Once you've received the API response, in order to submit the transaction to the network you will need to sign the transaction with your preferred web3 library (web3.js, ethers.js, wagmi, etc). 
 
-Below are some implementation differences when using web3.js vs ethers.js:
+If you are using vanilla Javascript, we recommend either web3.js or ether.js.
 
 #### web3.js
 
-The fields returned in a swap [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) are designed to overlap with the raw transaction object accepted by [`web3.js`’s `sendTransaction()`](https://web3js.readthedocs.io/en/v1.7.5/web3-eth.html#sendtransaction) function. What this means is that if you are using web3.js, you can directly pass the response from [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response)  because it contains all the necessary parameters for `web3.eth.setTransaction()` - _from, to, value, gas, data, etc_.
+The fields returned in a swap [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) are designed to overlap with the raw transaction object accepted by [`web3.js`’s `sendTransaction()`](https://web3js.readthedocs.io/en/v1.7.5/web3-eth.html#sendtransaction) function. What this means is that if you are using web3.js, you can directly pass the entire response from [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) because it contains all the necessary parameters for [`web3.eth.setTransaction()`](https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#id84) - _from, to, value, gas, data.
+
+**Option 1 - Submit the entire quote response to web3.eth.sendTransction**
+
+```js
+    // Fetch the swap quote.
+    const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers });
+    quote = await response.json();
+
+    //Fill the quote by submitting the entire response to web3
+    const  receipt = await  web3.eth.sendTransaction(quote);
+```
+
+**Option 2 - Submit only the required parameters to web3.eth.sendTransaction**
+
+```js
+    // Fetch the swap quote.
+    const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers });
+    quote = await response.json();
+
+    // Fill the quote.
+    const receipt = await waitForTxSuccess(web3.eth.sendTransaction({
+        from: taker,
+        to: quote.to,
+        data: quote.data,
+        value: quote.value,
+        gasPrice: quote.gasPrice,
+    }));
+```
 
 #### ethers.js
 
-[ethers.js](https://docs.ethers.io/v5/) is more explicit and requires you to pull out and submit _only_ the required parameters. web3.js allows you to just submit the entire json response or submit only require parameters, so if you use ethers, make sure you submit only the required parameters similar to this [code example](https://github.com/0xProject/0x-api-starter-guide-code/blob/master/src/direct-swap.js#L105-L113).
+[ethers.js](https://docs.ethers.io/v5/) is more explicit and requires you to pull out and submit _only_ the required parameters (whereas web3.js allows you to just submit the entire json response or submit only require parameters). So if you use ethers.js, make sure you submit only the required parameters similar to this. 
 
-###
+Also note that ethers.js separates the concept of Wallet, Providers, and Signers. You can use a [Wallet](https://docs.ethers.org/v5/api/signer/#Wallet--properties) and connect it to a [provider](https://docs.ethers.org/v5/api/providers/) to [send transactions](https://docs.ethers.org/v5/api/signer/#Signer-sendTransaction). If you are using a Wallet such as MetaMask, review the ethers.js documentation on how to access these fields - [Connecting to Ethereum: MetaMask](https://docs.ethers.org/v5/getting-started/#getting-started--connecting). 
+
+```js
+// get signer from a wallet such as MetaMask
+
+const signer = provider.getSigner();
+
+await signer.sendTransaction({
+  gasLimit: quote.gas,
+  gasPrice: quote.gasPrice,
+  to: quote.to,
+  data: quote.data,
+  value: quote.value,
+  chainId: quote.chainId,
+});
+```
+
+#### wagmi
+
+If you are using React, we recommend using [wagmi](https://wagmi.sh/). You can use a React hooks library like wagmi and use their [sendTransaction API](https://wagmi.sh/examples/send-transaction).
+
 
 ## Examples
 
