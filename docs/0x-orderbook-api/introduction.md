@@ -14,7 +14,7 @@ Enable limit orders in your app or take liquidity directly from the 0x Orderbook
 * BSCs
 * Polygon
 
-In previous versions of 0x API prior to 0x v4, this functionality was exposed by the "SRA" endpoint. Previous docs: [https://github.com/0xProject/standard-relayer-api](https://github.com/0xProject/standard-relayer-api)
+In previous versions of 0x API prior to [0x Protocol v4](https://docs.0xprotocol.org/en/latest/), this functionality was exposed by the "SRA" endpoint. Previous docs: [https://github.com/0xProject/standard-relayer-api](https://github.com/0xProject/standard-relayer-api). Note that 0x Protocol is an open-sourced project that is separate and not maintained by 0x. 
 
 ## Get Started
 
@@ -29,12 +29,12 @@ This section contains the following docs and guides
 
 * [Overview](/0x-orderbook-api/api-references/overview)
 * [GET /orderbook/v1/order](api-references/get-orderbook-v1.md)
-* [GET /orderbook/v1/orders](api-references/get-orderbook-v1-orders.md
-* [post-orderbook-v1-order.md](api-references/post-orderbook-v1-order.md )
-* [post-orderbook-v1-orders.md](api-references/post-orderbook-v1-orders.md "mention")
-* [get-orderbook-v1-order-orderhash.md](api-references/get-orderbook-v1-order-orderhash.md "mention")
-* [post-orderbook-v1-order\_config.md](api-references/post-orderbook-v1-order\_config.md "mention")
-* [get-orderbook-v1-fee\_recipients.md](api-references/get-orderbook-v1-fee\_recipients.md "mention")
+* [GET /orderbook/v1/orders](api-references/get-orderbook-v1-orders.md)
+* [GET /orderbook/v1/order/orderhash.md](api-references/get-orderbook-v1-order-orderhash.md)
+* [GET /orderbook/v1-fee\_recipients.md](api-references/get-orderbook-v1-fee\_recipients.md)
+* [POST /orderbook/v1/order](api-references/post-orderbook-v1-order.md )
+* [POST /orderbook/v1/orders](api-references/post-orderbook-v1-orders.md)
+* [POST /orderbook/v1/order\_config.md](api-references/post-orderbook-v1-order\_config.md)
 * [websocket-api.md](api-references/websocket-api.md "mention")
 
 [rate-limiting.md](rate-limiting.md "mention")
