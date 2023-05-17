@@ -204,7 +204,7 @@ await signer.sendTransaction({
 });
 ```
 
-#### wagmi
+### wagmi
 
 If you are using React, we recommend using [wagmi](https://wagmi.sh/). You can use a React hooks library like wagmi and use their [sendTransaction API](https://wagmi.sh/examples/send-transaction).
 
