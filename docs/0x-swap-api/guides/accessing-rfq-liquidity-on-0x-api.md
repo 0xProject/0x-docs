@@ -7,7 +7,9 @@ description: This guide discusses what RFQ liquidity is, how it works, and how y
 # Accessing RFQ liquidity on Swap API
 
 :::info
-If you represent a trading firm that would like to add liquidity to the 0x ecosystem via the RFQ system, please get in touch here: [0x RFQ Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform?usp=sf_link)
+This guide is for integrators/projects who would like to access 0x RFQ liquidity, via the Swap API.
+
+If you represent a trading firm or professional market maker that would like to supply liquidity via the 0x RFQ system, please get in touch here: [0x RFQ Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform?usp=sf_link)
 :::
 
 This page includes:
@@ -300,6 +302,10 @@ curl --location --request GET 'https://api.0x.org/swap/v1/quote?sellToken=USDC&s
 Whenever a Swap API client specifies a `takerAddress` in their [`/quote`](../api-references/get-swap-v1-quote.md) request, the API will validate the quote before returning it to the client, avoiding a number of possible causes for transaction reverts. (For more details, see "[How does `takerAddress` help with catching issues?](/developer-resources/faqs-and-troubleshooting#-troubleshooting)")
 
 However, given that a `takerAddress` is required in order to obtain RFQ liquidity, and given that this requirement subverts the optionality of the quote validation feature, the implementation of RFQ introduced a new query parameter to the `/quote` resource: `skipValidation`. When this parameter is set to `true`, quote validation will be skipped. While validating even RFQ quotes is a best-practice recommended default, skipping validation can be useful in certain circumstances, such as when experimenting with a new maker integration deployment.
+
+### Note for Smart Contract Integrations
+
+One particular circumstance in which it may be necessary to skip quote validation is that in which the `takerAddress` refers to a smart contract. In this case, the validation of the quote by the 0x API could fail due to a lack of asset balances in the contract's account. In order to avoid such a validation failure, simply avoid validation, by specifying `skipValidation=true` in the query string of your `/quote` request.
 
 ### Excluding Liquidity Sources
 
