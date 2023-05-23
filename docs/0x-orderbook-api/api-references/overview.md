@@ -26,21 +26,18 @@ Each 0x HTTP API `path` is versioned independently using URI versioning. The for
 
 For example, you can request `https://api.0x.org/swap/v1/quote` which represents `v1` of the `quote` endpoint in the `swap` path. URLs not adhering to this format are not supported.
 
-\
-A major version bump occurs whenever a backwards incompatible change occurs to an `endpoint`, in which case every `endpoint` in that `path` will be on the next version. Old versions of the API will be deprecated and new features will be rolled out to them on a best-effort basis.\
-
+A major version bump occurs whenever a backwards incompatible change occurs to an `endpoint`, in which case every `endpoint` in that `path` will be on the next version. Old versions of the API will be deprecated and new features will be rolled out to them on a best-effort basis.
 
 ## Pagination
 
-\
-Requests that return potentially large collections are paginated and respond to the `page` and `perPage` parameters.&#x20;
+Requests that return potentially large collections are paginated and respond to the `page` and `perPage` parameters.
 
 Any endpoint that follows this convention will display the following:
 
 `This endpoint is paginated.`
 
-And will only document the objects in the `records` field.\
-\
+And will only document the objects in the `records` field.
+
 By default, a request returns page 1 with 20 orders. It is possible to change which page and how many records are returned per page via the query parameters. For example, to fetch page 3 with 50 records per page:
 
 ```
@@ -49,10 +46,10 @@ https://api.0x.org/orderbook/v1/orders?page=3&perPage=20
 
 #### Request
 
-| Query Param | Description                                                                                    |
-| ----------- | ---------------------------------------------------------------------------------------------- |
-| `page`      | (Optional, defaults to "1") The page index (1-indexed) requested in the collection.|
-| `perPage`   | (Optional, defaults to "20") The amount of records to return per page. The maximum is "1000".  |
+| Query Param | Description                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| `page`      | (Optional, defaults to "1") The page index (1-indexed) requested in the collection.           |
+| `perPage`   | (Optional, defaults to "20") The amount of records to return per page. The maximum is "1000". |
 
 #### Response
 
@@ -69,13 +66,13 @@ If a query provides an unreasonable (ie. too high) `perPage` value, the response
 
 Some interactions with 0x require or are improved by setting [token allowances](https://tokenallowance.io/), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some examples include -
 
-* Submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the contract address. This address can be found either as the value of `allowanceTarget` returned in the quote response or in the ExchangeProxy Address column in the "Addresses by Network" table below.
-* Trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract.
-* **Note:** For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
+- Submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the contract address. This address can be found either as the value of `allowanceTarget` returned in the quote response or in the ExchangeProxy Address column in the "Addresses by Network" table below.
+- Trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract.
+- **Note:** For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
 
 ### Addresses by Network
 
-The following table includes commonly used contract addresses. For a full list of our smart contract deployments address, see the[0x-cheat-sheet.md](../../introduction/0x-cheat-sheet.md "mention") .
+The following table includes commonly used contract addresses. For a full list of our smart contract deployments address, see the[0x Cheat Sheet](../../introduction/0x-cheat-sheet.md) .
 
 | Network             | ExchangeProxy Address                        | ERC20Proxy Address                           | StakingProxy Address                         |
 | ------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
@@ -104,19 +101,19 @@ Unless the spec defines otherwise, errors to bad requests should respond with HT
 
 ### Error reporting format
 
-For all 400 responses, see the [error response schema](https://github.com/0xProject/0x-monorepo/blob/development/packages/json-schemas/schemas/relayer\_api\_error\_response\_schema.json#L1).
+For all 400 responses, see the [error response schema](https://github.com/0xProject/0x-monorepo/blob/development/packages/json-schemas/schemas/relayer_api_error_response_schema.json#L1).
 
 ```json
 {
-    "code": 101,
-    "reason": "Validation failed",
-    "validationErrors": [
-        {
-            "field": "maker",
-            "code": 1002,
-            "reason": "Invalid address"
-        }
-    ]
+  "code": 101,
+  "reason": "Validation failed",
+  "validationErrors": [
+    {
+      "field": "maker",
+      "code": 1002,
+      "reason": "Invalid address"
+    }
+  ]
 }
 ```
 
@@ -186,11 +183,7 @@ A structured object containing the signature data for the order. For more info s
 
 ## Misc.
 
-* All requests and responses should be of "application/json" content type.
-* All token amounts are sent in amounts of the smallest level of precision (base units). (e.g if a token has 18 decimal places, selling 1 unit of the token would show up as selling `1000000000000000000` base units by this API).
-* All addresses are sent as lower-case (non-checksummed) Ethereum addresses with the `0x` prefix.
-* All parameters should use **lowerCamelCase.**
-
-
-
-
+- All requests and responses should be of "application/json" content type.
+- All token amounts are sent in amounts of the smallest level of precision (base units). (e.g if a token has 18 decimal places, selling 1 unit of the token would show up as selling `1000000000000000000` base units by this API).
+- All addresses are sent as lower-case (non-checksummed) Ethereum addresses with the `0x` prefix.
+- All parameters should use **lowerCamelCase.**

@@ -3,19 +3,20 @@ sidebar_label: FAQs & Troubleshooting
 sidebar_position: 2
 description: FAQs & Troubleshooting
 ---
+
 # 🤔 FAQs & Troubleshooting
 
 **Categories**
 
-* [🧰 Troubleshooting](faqs-and-troubleshooting.md#-troubleshooting)
-* [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
-* [🔄 Swap API](faqs-and-troubleshooting.md#-swap-api)
-  * [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
-  * [Working in the Testnet](faqs-and-troubleshooting.md#-working-in-the-testnet)
-  * [Parameter Questions](faqs-and-troubleshooting.md#-parameter-questions)
-  * [Best Practices](faqs-and-troubleshooting.md#-best-practices)
-* [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
-* [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
+- [🧰 Troubleshooting](faqs-and-troubleshooting.md#-troubleshooting)
+- [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
+- [🔄 Swap API](faqs-and-troubleshooting.md#-swap-api)
+  - [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
+  - [Working in the Testnet](faqs-and-troubleshooting.md#-working-in-the-testnet)
+  - [Parameter Questions](faqs-and-troubleshooting.md#-parameter-questions)
+  - [Best Practices](faqs-and-troubleshooting.md#-best-practices)
+- [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
+- [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
 
 ## 🧰 Troubleshooting
 
@@ -25,12 +26,12 @@ description: FAQs & Troubleshooting
 
 If your 0x quote is reverting, besides the standard revert issues related to ETH transactions, we recommend check the following are set correctly:
 
-* Are allowances properly set for the user to trade the `sellToken`?
-* Does the user have enough `sellToken` balance to execute the swap?
-* Do users have enough to pay the gas?
-* The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#slippage-tolerance) for how to handle this.
-* Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#fee-on-transfer-tokens) for how to handle this
-* Working in testnet? Only a subset of DEX sources are available. Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. Read [here](/0x-swap-api/guides/working-in-the-testnet) for how to handle this. 
+- Are allowances properly set for the user to trade the `sellToken`?
+- Does the user have enough `sellToken` balance to execute the swap?
+- Do users have enough to pay the gas?
+- The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#slippage-tolerance) for how to handle this.
+- Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#fee-on-transfer-tokens) for how to handle this
+- Working in testnet? Only a subset of DEX sources are available. Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. Read [here](/0x-swap-api/guides/working-in-the-testnet) for how to handle this.
 
 For more details on addressing common issues, read [Troubleshooting](/0x-swap-api/guides/troubleshooting-swap-api).
 
@@ -42,9 +43,9 @@ For more details on addressing common issues, read [Troubleshooting](/0x-swap-ap
 
 By passing a `takerAddress` parameter, 0x API can provide a more bespoke quote and help catch revert issues:
 
-* 0x API will estimate the gas cost for `takerAddress` to execute the provided quote.
-* If successfully called, the `gas` parameter in the quote will be an accurate amount of gas needed to execute the swap.
-* If unsuccessful for revert reasons suggested above, then 0x API will throw a gas cost estimation error, alluding to an issue with the `takerAddress` executing the quote.
+- 0x API will estimate the gas cost for `takerAddress` to execute the provided quote.
+- If successfully called, the `gas` parameter in the quote will be an accurate amount of gas needed to execute the swap.
+- If unsuccessful for revert reasons suggested above, then 0x API will throw a gas cost estimation error, alluding to an issue with the `takerAddress` executing the quote.
 
 **TLDR** Pass `takerAddress` to get the quote validated before provided to you, assuring that a number of revert cases will not occur.
 
@@ -90,7 +91,7 @@ For now we only support one user per team account, but we will add support for m
 
 If you have an API key, the key will remain the same (unless you change it). The API key you are currently using will continue to work as long as you create an account in the 0x Dashabord and have an API key; otherwise, will get an error in the API response.
 
-This applies to all 0x APIs, including Tx Relay API and Swap API.  
+This applies to all 0x APIs, including Tx Relay API and Swap API.
 
 </details>
 
@@ -110,9 +111,10 @@ An app is a self-contained unit for each individual application that you’re bu
 
 <summary>Is there a fee to use Swap API?</summary>
 
-The Swap API has a free tier that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, if you are an integrator who needs to access higher rate limits or a more custom solution, please check out our [enterprise options](https://0x.org/pricing). 
+The Swap API has a free tier that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, if you are an integrator who needs to access higher rate limits or a more custom solution, please check out our [enterprise options](https://0x.org/pricing).
 
 Also see our section on ["trade surplus"](faqs-and-troubleshooting.md#if-the-difference-between-the-quoted-price-and-the-executed-price-is-positive-what-happens-to-the-fu).
+
 </details>
 
 <details>
@@ -137,8 +139,8 @@ Use the API endpoint [`/swap/v1/sources`](/0x-swap-api/api-references/get-swap-v
 
 <summary>What are the differences when quoting by sellAmount and buyAmount</summary>
 
-* If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
-* When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
+- If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
+- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
 
 Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), these sources are ignored when quoting for `buyAmounts`
 
@@ -169,7 +171,7 @@ Read here for the [full details of Slippage Protection](../0x-swap-api/advanced-
 
 <summary>What is a trade surplus?</summary>
 
-A trade surplus occurs when the quoted price is more than the executed price due to "positive slippage" as a result of unique market conditions. 
+A trade surplus occurs when the quoted price is more than the executed price due to "positive slippage" as a result of unique market conditions.
 <br/>
 
 Also see ["If the difference between the quoted price and the executed price is positive what happens to the funds?"](faqs-and-troubleshooting.md#if-the-difference-between-the-quoted-price-and-the-executed-price-is-positive-what-happens-to-the-fu)
@@ -180,20 +182,20 @@ Also see ["If the difference between the quoted price and the executed price is 
 
 <summary>If the difference between the quoted price and the executed price is positive what happens to the funds?</summary>
 
-The answer to what happens to the [trade surplus](faqs-and-troubleshooting.md#what-is-a-trade-surplus) depends on whether or not you are a meta-aggregator AND whether or not you have an API key. 
+The answer to what happens to the [trade surplus](faqs-and-troubleshooting.md#what-is-a-trade-surplus) depends on whether or not you are a meta-aggregator AND whether or not you have an API key.
 <br/>
 
-**If you are **_**not**_** a meta-aggregator and have an API key:** 100% of the trade surplus is returned back to the user. 
+**If you are **_**not**_** a meta-aggregator and have an API key:** 100% of the trade surplus is returned back to the user.
 <br/>
 
-**If you are a meta-aggregator OR you **_**do not**_** have an API key:** 0x Labs will collect the surplus for trades that meet the following criteria - the trade is performed via Swap API,  goes through the 0x TransformERC20 contract, AND both tokens in the trade are in our allowed list: DAI, ETH, WETH, BUSD, MATIC, WMATIC, WBTC, USDT, USDC, TUSD, PAXG, LINK, UNI, BAT, and COMP.
+**If you are a meta-aggregator OR you **_**do not**_** have an API key:** 0x Labs will collect the surplus for trades that meet the following criteria - the trade is performed via Swap API, goes through the 0x TransformERC20 contract, AND both tokens in the trade are in our allowed list: DAI, ETH, WETH, BUSD, MATIC, WMATIC, WBTC, USDT, USDC, TUSD, PAXG, LINK, UNI, BAT, and COMP.
 <br/>
 
 For example:
 
-* APE→USDC (trade surplus not collected)
-* USDC→APE (trade surplus not collected)
-* ETH→USDC (trade surplus collected)
+- APE→USDC (trade surplus not collected)
+- USDC→APE (trade surplus not collected)
+- ETH→USDC (trade surplus collected)
 
 For context, trades that meet the criteria above are generally source liquidity from 2 or more sources, which is where the Swap API adds the most value.
 <br/>
@@ -207,7 +209,7 @@ In summary, 0x Labs will only recoup the surplus when our product is able to cre
 This model ensures that we can continue to invest into long-term growth of our products and continue to provide our integrators and end users the best experience.
 <br/>
 
-**🔑 Interested to get an API key? Get live API keys, create and manage your apps from the [0x Dashboard](https://dashboard.0x.org)**. 
+**🔑 Interested to get an API key? Get live API keys, create and manage your apps from the [0x Dashboard](https://dashboard.0x.org)**.
 
 </details>
 
@@ -230,8 +232,8 @@ A hosted Swap API for the Goerli testnet is available at https://goerli.api.0x.o
 To view the currently supported sources on Goerli refer to https://goerli.api.0x.org/swap/v1/sources. At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3`. The token you want to use for testing must have liquidity on at least one of these sources.
 
 In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is WETH < > UNI deployed by Uniswap on Goerli.
- 
-Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information. 
+
+Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information.
 
 </details>
 
@@ -245,13 +247,21 @@ Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-t
 - [Mumbai Faucet](https://mumbaifaucet.com/)
 - [Gwei Calculator](https://www.alchemy.com/gwei-calculator)
 - [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
-    - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
+  - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
 - Also see our [Working in Testnet Guide](/0x-swap-api/guides/working-in-the-testnet)
 
 </details>
 
-
 ### Parameter Questions
+
+<details>
+
+<summary>What is the significance of this address <code>0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE</code> ?</summary>
+
+The address `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is used to represent Ether (ETH) in Ethereum transactions, since ETH is not an ERC20 token. Read more about it [here](https://www.reddit.com/r/ethereum/comments/iatr1d/what_is_the_significance_of_this_address/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) and [here](https://ethereum.stackexchange.com/a/87444/85979).
+
+</details>
+
 <details>
 
 <summary>Why does the value of the <code>to</code> field in the <code>/swap/quote</code> response vary?</summary>
@@ -296,11 +306,10 @@ To ensure that users will always have their swap executed within a reasonable pr
 
 <br/>
 
-* If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
-* When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
+- If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
+- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
 
 Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), these sources are ignored when quoting for `buyAmounts`
-
 
 </details>
 
@@ -312,10 +321,7 @@ Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), 
 
 Developers can influence how much “worse” the `guaranteedPrice` is through the `slippagePercentage` parameter. With on-chain sources, prices can vary between the quote being made and settlement. The `slippagePercentage` provides a "upper bound" to how much the price provided by these on-chain sources can slip and remain desirable by the developer.
 
-
-
 </details>
-
 
 <details>
 
@@ -325,12 +331,12 @@ Read our [full blog post](https://blog.0x.org/0x-swap-api-price-impact-protectio
 <br/>
 **What is price impact?**
 <br/>
-****Price impact is the influence that a user’s trade has over the market price of an underlying trading pair. It is directly related to the amount of liquidity in the pool. Price impact can be particularly high for illiquid trading pairs and in certain instances can cause significant losses for traders.
+\*\*\*\*Price impact is the influence that a user’s trade has over the market price of an underlying trading pair. It is directly related to the amount of liquidity in the pool. Price impact can be particularly high for illiquid trading pairs and in certain instances can cause significant losses for traders.
 
 This is different from price slippage, although the terms are often mistakenly used interchangeably. Price slippage refers to the difference between the executed price and the quoted price, caused by external market movements unrelated to your trade.
 <br/>
 
-**What is our solution?** 
+**What is our solution?**
 
 We launched Price Impact Protection to make it easier to protect users from getting rekt by illiquid markets. Despite Swap API enabling access to the deepest liquidity from over 70+ exchanges, there are still some long-tailed token pairs that suffer from suboptimal liquidity on decentralized exchanges.
 <br/>
@@ -471,7 +477,7 @@ import "@0x/contracts-exchange-libs/contracts/src/LibFillResults.sol";
 (bool success, bytes memory data) = address(exchange).call.value(quote.protocolFee)(quote.calldataHex);
 require(success, "Swap not filled");
  fillResults = abi.decode(data, (LibFillResults.FillResults));
- 
+
 ```
 
 </details>
@@ -483,13 +489,13 @@ require(success, "Swap not filled");
 <summary>My project would like to integrate with 0x. How can I contact the 0x team?</summary>
 
 We appreciate your interest in building with our APIs. To get an API key and start building for free, please create an account on the [0x Dashboard](https://dashboard.0x.org/). You may also [check out our enterprise options](https://0x.org/pricing) and [contact our team](https://www.0x.org/#contact) for more custom needs. Our team will review and respond to you.
+
 </details>
 
 <details>
 
 <summary>My project is interested to apply as a liquidity source in 0x ecosystem. How can I contact the 0x team?</summary>
 
-Thank you for your interest in providing liquidity to the 0x ecosystem via our RFQ suite of products. Please fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE\_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform) to help us learn more about your firm, and determine whether 0x is a good fit for you. Our team will review and reach out to you.
-
+Thank you for your interest in providing liquidity to the 0x ecosystem via our RFQ suite of products. Please fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform) to help us learn more about your firm, and determine whether 0x is a good fit for you. Our team will review and reach out to you.
 
 </details>

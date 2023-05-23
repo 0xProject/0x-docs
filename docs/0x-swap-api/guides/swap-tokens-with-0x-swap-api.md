@@ -1,13 +1,13 @@
 ---
 sidebar_label: How to Use Swap API
 sidebar_position: 1
-description: Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API. 
+description: Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API.
 ---
 
 # How to Use Swap API
 
 :::info
-After May 8, 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
+After May 8, 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products.
 :::
 
 This guide covers the steps required to use [Swap API](/0x-swap-api/introduction). If you are looking for and end-to-end tutorial that shows how to implement the Swap API in a deployable DApp, check out [How to Build a Token Swap DApp](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api).
@@ -16,14 +16,13 @@ This guide covers the steps required to use [Swap API](/0x-swap-api/introduction
 
 [Swap API](/0x-swap-api/introduction) is the recommended way of interacting with 0x protocol for retail trade. Under the hood, the API performs three tasks:
 
-* Queries prices of ERC20 assets from multiple decentralized exchanges and market makers
-* Aggregates the liquidity from the queried sources to provide the best price possible
-* Returns the trade in a format that can be easily executed using the Web3 library of your choice
+- Queries prices of ERC20 assets from multiple decentralized exchanges and market makers
+- Aggregates the liquidity from the queried sources to provide the best price possible
+- Returns the trade in a format that can be easily executed using the Web3 library of your choice
 
 ## Code Sandbox
 
-If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox! Otherwise, continue on as we go through the steps needed to use Swap API. 
-
+If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox! Otherwise, continue on as we go through the steps needed to use Swap API.
 
 <div>
 <iframe height="300"
@@ -44,7 +43,7 @@ If you prefer diving into code, see how the following steps are implemented in t
 
 ## 0. Get a 0x API key
 
-If you are are creating an application on mainnet, you will need to [create a 0x account](https://dashboard.0x.org/apps) and get a live API key. See the [guide here](/introduction/getting-started) to get setup. 
+If you are are creating an application on mainnet, you will need to [create a 0x account](https://dashboard.0x.org/apps) and get a live API key. See the [guide here](/introduction/getting-started) to get setup.
 
 ## 1. Set a Token Allowance
 
@@ -133,61 +132,69 @@ const response = await fetch(
 );
 ```
 
-Under the hood, 0x API performs an [`eth_estimateGas`](https://eth.wiki/json-rpc/API#eth\_estimategas) using the `takerAddress` if one is provided. This serves two purposes:
+Under the hood, 0x API performs an [`eth_estimateGas`](https://eth.wiki/json-rpc/API#eth_estimategas) using the `takerAddress` if one is provided. This serves two purposes:
 
-* to more accurately estimate the gas required for the transaction, and
-* to catch any reverts that would occur if the `takerAddress` attempts to swap the tokens.
+- to more accurately estimate the gas required for the transaction, and
+- to catch any reverts that would occur if the `takerAddress` attempts to swap the tokens.
 
 An HTTP response with status 400 will be returned if the `eth_estimateGas` results in a revert (i.e. the swap would fail), along with reasons for the revert. In particular,
 
-* the `takerAddress` needs to have a sufficient balance of the `sellToken`, and
-* if the `sellToken` is not ETH, the `takerAddress` needs to have approved the 0x Exchange Proxy (`0xdef1c0ded9bec7f1a1670819833240f027b25eff` on mainnet) to transfer their tokens. See below for an example of setting a token approval before sending the API request.
+- the `takerAddress` needs to have a sufficient balance of the `sellToken`, and
+- if the `sellToken` is not ETH, the `takerAddress` needs to have approved the 0x Exchange Proxy (`0xdef1c0ded9bec7f1a1670819833240f027b25eff` on mainnet) to transfer their tokens. See below for an example of setting a token approval before sending the API request.
 
 ## 3. Send the Transaction to the Network
 
-Once you've received the API response, in order to submit the transaction to the network you will need to sign the transaction with your preferred web3 library (web3.js, ethers.js, wagmi, etc). 
+Once you've received the API response, in order to submit the transaction to the network you will need to sign the transaction with your preferred web3 library (web3.js, ethers.js, wagmi, etc).
 
 If you are using vanilla Javascript, we recommend either web3.js or ether.js.
 
 ### web3.js
 
-The fields returned by Swap API's [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) endpoint are designed to overlap with the raw transaction object accepted by [`web3.js`’s `sendTransaction()`](https://web3js.readthedocs.io/en/v1.7.5/web3-eth.html#sendtransaction) function. What this means is that if you are using web3.js, you can directly pass the entire response from `/quote` because it contains all the necessary parameters for [`web3.eth.setTransaction()`](https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#id84) - _from, to, value, gas, data. 
+The fields returned by Swap API's [`/quote`](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#response) endpoint are designed to overlap with the raw transaction object accepted by [`web3.js`’s `sendTransaction()`](https://web3js.readthedocs.io/en/v1.7.5/web3-eth.html#sendtransaction) function. What this means is that if you are using web3.js, you can directly pass the entire response from `/quote` because it contains all the necessary parameters for [`web3.eth.setTransaction()`](https://web3js.readthedocs.io/en/v1.2.11/web3-eth.html#id84) - \_from, to, value, gas, data.
 
-Both options work, up to use case and developer preference. 
+Both options work, up to use case and developer preference.
 
 #### Option 1 - Submit the entire quote response to web3.eth.sendTransction
 
 ```js
-    // Fetch the swap quote.
-    const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers });
-    quote = await response.json();
+// Fetch the swap quote.
+const response = await fetch(
+  `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+  { headers }
+);
+quote = await response.json();
 
-    //Fill the quote by submitting the entire response to web3
-    const  receipt = await  web3.eth.sendTransaction(quote);
+//Fill the quote by submitting the entire response to web3
+const receipt = await web3.eth.sendTransaction(quote);
 ```
 
-#### Option 2 - Submit only the required parameters to web3.eth.sendTransaction**
+#### Option 2 - Submit only the required parameters to web3.eth.sendTransaction\*\*
 
 ```js
-    // Fetch the swap quote.
-    const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers });
-    quote = await response.json();
+// Fetch the swap quote.
+const response = await fetch(
+  `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+  { headers }
+);
+quote = await response.json();
 
-    // Fill the quote.
-    const receipt = await waitForTxSuccess(web3.eth.sendTransaction({
-        from: taker,
-        to: quote.to,
-        data: quote.data,
-        value: quote.value,
-        gasPrice: quote.gasPrice,
-    }));
+// Fill the quote.
+const receipt = await waitForTxSuccess(
+  web3.eth.sendTransaction({
+    from: taker,
+    to: quote.to,
+    data: quote.data,
+    value: quote.value,
+    gasPrice: quote.gasPrice,
+  })
+);
 ```
 
 ### ethers.js
 
-[ethers.js](https://docs.ethers.io/v5/) is more explicit and requires you to pull out and submit _only_ the required parameters (whereas web3.js allows you to just submit the entire json response or submit only require parameters). So if you use ethers.js, make sure you submit only the required parameters similar to the example below. 
+[ethers.js](https://docs.ethers.io/v5/) is more explicit and requires you to pull out and submit _only_ the required parameters (whereas web3.js allows you to just submit the entire json response or submit only require parameters). So if you use ethers.js, make sure you submit only the required parameters similar to the example below.
 
-Also note that ethers.js separates the concept of Wallet, Providers, and Signers. You can use a [Wallet](https://docs.ethers.org/v5/api/signer/#Wallet--properties) and connect it to a [provider](https://docs.ethers.org/v5/api/providers/) to [send transactions](https://docs.ethers.org/v5/api/signer/#Signer-sendTransaction). If you are using a Wallet such as MetaMask, review the ethers.js documentation on how to access these fields - [Connecting to Ethereum: MetaMask](https://docs.ethers.org/v5/getting-started/#getting-started--connecting). 
+Also note that ethers.js separates the concept of Wallet, Providers, and Signers. You can use a [Wallet](https://docs.ethers.org/v5/api/signer/#Wallet--properties) and connect it to a [provider](https://docs.ethers.org/v5/api/providers/) to [send transactions](https://docs.ethers.org/v5/api/signer/#Signer-sendTransaction). If you are using a Wallet such as MetaMask, review the ethers.js documentation on how to access these fields - [Connecting to Ethereum: MetaMask](https://docs.ethers.org/v5/getting-started/#getting-started--connecting).
 
 ```js
 // get signer from a wallet such as MetaMask
@@ -208,7 +215,6 @@ await signer.sendTransaction({
 
 If you are using React, we recommend using [wagmi](https://wagmi.sh/). You can use a React hooks library like wagmi and use their [sendTransaction API](https://wagmi.sh/examples/send-transaction).
 
-
 ## Examples
 
 These examples illustrate how the response payload from 0x API’s `swap` endpoint can be passed directly into `web3.eth.sendTransaction`. Note that in a production implementation, there would be some error handling for the API response.
@@ -225,7 +231,7 @@ const DAI_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 const params = {
     sellToken: 'DAI',
     buyToken: 'ETH',
-    // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.    
+    // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     sellAmount: '100000000000000000000',
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 }
@@ -260,7 +266,7 @@ This swaps a fixed quantity of ETH for DAI. Unlike ERC20 tokens, ETH can be “a
 ```javascript
 // Selling 100 ETH for DAI.
 const params = {
-    sellToken: 'ETH',    
+    sellToken: 'ETH',
     buyToken: 'DAI',
     sellAmount: '1000000000000000000', // 1 ETH = 10^18 wei
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
@@ -286,7 +292,7 @@ This is similar to the previous example, but instead specifies the amount of DAI
 const params = {
     buyToken: 'DAI',
     sellToken: 'ETH',
-    // Note that the DAI token uses 18 decimal places, so `buyAmount` is `100 * 10^18`.    
+    // Note that the DAI token uses 18 decimal places, so `buyAmount` is `100 * 10^18`.
     buyAmount: '100000000000000000000',
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 }
@@ -316,7 +322,6 @@ The `slippagePercentage` parameter determines the difference between the `price`
 
 ## Starter projects
 
-* The [0x API starter project](https://github.com/0xProject/0x-api-starter-guide-code) has a direct swap example that you can play around with at no cost by using a Ganache instance forked from Ethereum mainnet.
-* [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_0x\_api\_swap.ts) - A runnable example of how to fill a 0x quote that can be run on Ropsten or Ganache.
-* [How to Build a Token Swap Dapp With 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - A full end-to-end guide on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x /swap API endpoint. This DEX aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
-
+- The [0x API starter project](https://github.com/0xProject/0x-api-starter-guide-code) has a direct swap example that you can play around with at no cost by using a Ganache instance forked from Ethereum mainnet.
+- [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_0x_api_swap.ts) - A runnable example of how to fill a 0x quote that can be run on Ropsten or Ganache.
+- [How to Build a Token Swap Dapp With 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - A full end-to-end guide on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x /swap API endpoint. This DEX aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.

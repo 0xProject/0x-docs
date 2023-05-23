@@ -4,13 +4,16 @@ sidebar_position: 2
 description: Learn how to set your token allowances
 ---
 
-
 # How to Set Your Token Allowances
 
-Some interactions with 0x require or are improved by setting [token allowances](https://tokenallowance.io/), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some situations of when you would need to set a token allowance include:&#x20;
+Some interactions with 0x require or are improved by setting [token allowances](https://tokenallowance.io/), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some situations of when you would need to set a token allowance include:
 
-* When submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the `allowanceTarget` specified in the quote response
-* When trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract
+- When submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the `allowanceTarget` specified in the quote response
+- When trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract
+
+:::info
+For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
+:::
 
 ## Setting Allowances for 0x API quotes
 
@@ -25,28 +28,34 @@ When setting the token allowance, make sure to provide enough allowance for the 
 All code snippets provided are designed to work in a browser environment with an injected web3 instance (like [Metamask](https://metamask.io/)). You can use the [npm web3 module](https://www.npmjs.com/package/web3) and modify these snippets to run them in a node environment.
 
 ```javascript
-import { ERC20TokenContract } from '@0x/contract-wrappers';
-import { BigNumber } from '@0x/utils';
+import { ERC20TokenContract } from "@0x/contract-wrappers";
+import { BigNumber } from "@0x/utils";
 
 (async () => {
-    const web3 = window.web3;
+  const web3 = window.web3;
 
-    // Get a quote from 0x API which contains `allowanceTarget`
-    // This is the contract that the user needs to set an ERC20 allowance for
-    const res = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`);
-    const quote = await res.json();
+  // Get a quote from 0x API which contains `allowanceTarget`
+  // This is the contract that the user needs to set an ERC20 allowance for
+  const res = await fetch(
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
+  );
+  const quote = await res.json();
 
-    // Set up approval
-    const USDCaddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-    const USDCcontract = new ERC20TokenContract(USDCaddress, web3.eth.currentProvider);
-    const maxApproval = new BigNumber(2).pow(256).minus(1);
+  // Set up approval
+  const USDCaddress = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+  const USDCcontract = new ERC20TokenContract(
+    USDCaddress,
+    web3.eth.currentProvider
+  );
+  const maxApproval = new BigNumber(2).pow(256).minus(1);
 
-    // Send the approval to the allowance target smart contract
-    const chainId = 1;
-    const approvalTxData = USDCcontract
-        .approve(quote.allowanceTarget, maxApproval)
-        .getABIEncodedTransactionData();
-    await web3.eth.sendTransaction(approvalTxData);
+  // Send the approval to the allowance target smart contract
+  const chainId = 1;
+  const approvalTxData = USDCcontract.approve(
+    quote.allowanceTarget,
+    maxApproval
+  ).getABIEncodedTransactionData();
+  await web3.eth.sendTransaction(approvalTxData);
 })();
 ```
 
