@@ -13,6 +13,7 @@ export default function SearchBarWrapper() {
         style={{ accentColor: "#179C54", darkMode: false }}
         placeholder="Search..."
         dialogPlaceholder="Ask me a question about 0x. I work best if you ask me a complete sentence."
+        showSimpleSearch={true}
       />
     </div>
   );
