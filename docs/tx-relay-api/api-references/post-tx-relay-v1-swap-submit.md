@@ -81,6 +81,7 @@ More information on signing 0x orders is available [here](https://docs.0x.org/ma
   * If the balance / allowance of the taker is less than the trade amount.
   * (`otc` only) If the trade has been outstanding for too long.
   * (`otc` only) If the balance / allowance of the market maker selected to settle the trade is less than the trade amount (very unlikely).
+  * If the query params are not able to pass validation.
 * `429` if there is already a trade associated with a taker address and a taker token that's not been settled by our relayers yet. For example, if `address A` already has a `USDC -> WETH` trade submitted and it has not settled yet, then a subsequent `/submit` call with `address A` and `USDC -> *` trade will fail with `429`. The taker is, however, allowed to submit other trades with a different taker token.
 * `500` if there is an internal server error.
 
