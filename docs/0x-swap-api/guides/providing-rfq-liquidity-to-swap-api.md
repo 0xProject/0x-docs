@@ -1,6 +1,6 @@
 ---
 sidebar_label: Providing RFQ liquidity to Swap API
-sidebar_position: 2
+sidebar_position: 7
 description: Providing RFQ liquidity to Swap API
 ---
 # Providing RFQ liquidity to Swap API
