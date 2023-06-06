@@ -14,35 +14,12 @@ If you represent a trading firm or professional market maker that would like to 
 
 This page includes:
 
-- [About the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#about-the-rfq-system)
 - [How to Integrate the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#how-to-integrate-the-rfq-system)
 - [Indicative Pricing](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#indicative-pricing)
 - [Firm Quotes](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#firm-quotes)
 - [Advanced Options](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#advanced-options)
 - [Testing Your Integrations](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#testing-your-rfq-integration-recommended)
 - [Code Examples](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#code-examples)
-
-## About the RFQ System
-
-_RFQ liquidity is currently available on Mainnet & Polygon._
-
-### An Exclusive Source of Liquidity
-
-In its role as a DEX aggregator, the Swap API integrates both on- and off-chain liquidity. On-chain liquidity is sourced by sampling smart contract liquidity pools, such as Uniswap and Curve. Off-chain liquidity is sourced from professional market makers via the 0x Request-for-Quote (“RFQ”) System.
-
-If integrators request a standard quote from the Swap API, part or all of their quote may be sourced via the **RFQ** system. In this system, the Swap API aggregates quotes from professional market makers, alongside quotes from AMMs. If the market-maker quotes are more competitive than AMM quotes, they may be included in the final price shown to the end-user. The end-user’s liquidity is ultimately provided by a combination of AMMs and professional market makers. _Everything happens under-the-hood!_
-
-![rfq diagram](/img/0x-swap-api/rfq-diagram.png)
-
-## Parties in the System
-
-### Trusted Takers
-
-RFQ orders contain a [`takerAddress` query parameter](/developer-resources/faqs-and-troubleshooting.md#how-does-takeraddress-help-with-catching-issues). When an order containing this parameter gets hashed and signed by two counterparties (the [taker](/developer-resources/glossary#taker) and the [maker](/developer-resources/glossary#maker)), the signed order is exclusive to these two counterparties.
-
-### Dedicated Makers
-
-In addition to the Swap API configuration identifying trusted takers, it also contains a list of specific market makers that participate in the RFQ system. Each maker is identified by an HTTP endpoint URL, and each endpoint has an associated list of asset pairs for which that endpoint will provide quotes. For the instance at `api.0x.org`, the 0x team is maintaining a list of trusted market makers.
 
 ## How to Integrate the RFQ System
 
