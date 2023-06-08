@@ -32,7 +32,7 @@ In its role as a liqudity aggregator, 0x's APIs integrates both on- and off-chai
 
 If integrators request a standard quote from the Swap API, part or all of their quote may be sourced via the **RFQ** system. In this system, the Swap API aggregates quotes from professional market makers, alongside quotes from AMMs. If the market-maker quotes are more competitive than AMM quotes, they may be included in the final price shown to the end-user. The end-user’s liquidity is ultimately provided by a combination of AMMs and professional market makers. _Everything happens under-the-hood!_
 
-![RFQ Diagram](/img/market-makers/rfq-diagram.png)
+![RFQ Diagram](/img/0x-swap-api/rfq-diagram.png)
 
 ### Parties in the System
 
