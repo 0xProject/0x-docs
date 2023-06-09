@@ -17,7 +17,6 @@ These protocols use smart contracts to define the price of digital assets and pr
 
 Examples of AMMs include Uniswap, Sushiswap, Curve, Balancer, Bancor, and many others. 
 
-
 ### Buys and Sells
 
 When we say “buys” vs “sells” in the context of Swap API, this is what we mean:
@@ -53,7 +52,7 @@ When the two assets in a pool start to diverge drastically in price (one becomes
 
 This is the Supply side of the the ecosystem. Makers create 0x orders, in other words, _provide the 0x liquidity_. 0x aggregates liquidity across a number of sources including -  public DEX liquidity (e.g. Uniswap, Curve, Bancor), Professional MMs, 0x's Open Orderbook, AMM  Liquidity Pools. This liquidity is put into the system to be consumed by Takers (see "Takers" for a graphic).&#x20;
 
-### Off-chain relay, on-chain settlement
+### Off-chain infrastructure, on-chain settlement
 
 Unlike other decentralized exchanges that function entirely on-chain, 0x does not store orders on the blockchain; instead, orders are stored off-chain and only trade settlement occurs on-chain.
 
@@ -65,34 +64,23 @@ The 0x API is a collection of services and endpoints that sit on top of the 0x P
 
 0x DAO ([Decentralized Autonomous Organization](https://ethereum.org/en/dao/)) is the collective governing voice of the [0x Protocol](https://www.0xprotocol.org/) and the ZRX token
 
-### 0x Labs
+### 0x
 
-0x Labs is the company that created 0x Protocol and API.
+0x is the company that created 0x Protocol and API.
 
 ### 0x Protocol
 
 The [0x protocol](https://protocol.0x.org/en/latest/) is an open standard that facilitates the trustless, low friction, peer-to-peer exchange of Ethereum-based assets. The benefit of a standardized protocol is that defines a set of rules that allow entities on the same network to understand how to transmit data amongst each other. The 0x protocol is composed of smart contracts and  developer-tools that allow open access to a pool of shared liquidity.
 
-
-
 ### Request For Quotes (RFQ)
 
-RFQ stands for Request for Quote. It is a design pattern that allows traders to get real time quotes from Market Makers. We  make API calls to Market Makers when they request a price from the 0x API.&#x20;
-
-#### RFQT
-
-RFQT stands for "RFQ - Taker", which means it is the taker's responsibility to submit the transaction on chain. This is important because who submits the transaction on chain will change the flow of who needs to sign the order
-
-#### RFQM
-
-Previously stood for "RFQ - Maker", but now RFQM stands for "RFQ - Metatransaction". In the case of Metatransactions, 0x will submit the transaction to chain, paying the gas cost.
+RFQ stands for Request for Quote. It is a design pattern that allows traders to get real time quotes from Market Makers. We  make API calls to Market Makers when they request a price from the 0x API. This source of liquidity is exclusive to 0x, has 0 slippage, and better trade execution.
 
 ### Slippage
 
 The price difference between when a transaction is submitted and when the transaction is confirmed on the blockchain.
 
 This occurs because AMMs price their assets along bonding curves that are a function of the size of the relative amounts of each asset, and this price can change if the relative trade size is large. 
-
 
 ### Smart Order Routing
 
