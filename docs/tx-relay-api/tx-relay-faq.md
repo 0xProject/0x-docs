@@ -26,7 +26,7 @@ The only trades Tx Relay CANNOT support on those wherein the end-user is trying 
 
 <details>
 
-<summary>Who does pay for the gas fess to allow those swaps to happen?
+<summary>Who pays for the gas fees to allow those swaps to happen?
 </summary>
 
 Gas fees are paid by 0x, but a fee to cover the gas costs are included by default to the end user. In other words, while the gas is technically paid by 0x, users will cover the costs in terms of fees. An application may choose to sponsor transactions, in which case they will pay 0x directly, and users will not be billed on chain
