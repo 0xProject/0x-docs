@@ -45,4 +45,4 @@ The 0x team reserves the right to reject the submission if it doesn’t comply w
 
 ### How the 0x Explorer Tag Works
 
-When you add a tag to an app, we include an [`affiliateAddresss`](/0x-swap-api/api-references/get-swap-v1-quote#request) in the call data of the transactions for that app before submitting them on-chain. This enables us to attribute the correct transactions to your app and provide you with analytics on 0x Explorer.
+When you add a tag to an app, we include a unique identifier  in the call data of the transactions for that app before submitting them on-chain. This enables us to attribute the correct transactions to your app and provide you with analytics on 0x Explorer.
