@@ -56,7 +56,8 @@ Either a `sellAmount` or `buyAmount` is required.
 | `sellTokenToEthRate` | The rate between ETH and `sellToken`                                                                                                                                                                                                                                                                                             |
 | `buyTokenToEthRate` | The rate between ETH and `buyToken`                                                                                                                                                                                                                                                                                            |
 | `expectedSlippage` | This is the expected slippage used in routing calculations for the quote returned. It is the value of slippage that we estimate that the selected route will have: <br/><br/> - It can be used by integrators to calculate the Final Expected Amount for the asset: i.e. calculated as (`buyAmount` * `expectedSlippage` ) <br/><br/> -  It will only be returned when `enableSlippageProtection` is not set to `false`                                                                                                                                                                                                                                                                                           |
-
+| `fees`             | Fees that would be charged. It can contain `zeroExFee`. See details about this fee type below.                                                                                                |
+| `zeroExFee`        | Related to `fees` param above. <br></br><br></br>Fee that 0x charges:<br></br>&ensp;&ensp;- `feeType`: `volume` which means 0x would charge a certain percentage of the trade. <br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. <br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as `0x` fee. <br></br>&ensp;&ensp;- `billingType`: The method that 0x fee is transferred. It can currently only be `on-chain` which means the fee would be charged on-chain. |
 
 ## Examples
 
@@ -242,7 +243,10 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=10000000
     ],
     "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
     "sellTokenToEthRate": "1",
-    "buyTokenToEthRate": "2504.46738154874763977"
+    "buyTokenToEthRate": "2504.46738154874763977",
+    "fees": {
+        "zeroExFee": null
+    }
 }
 ```
 
@@ -428,7 +432,10 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000000
     ],
     "allowanceTarget": "0x0000000000000000000000000000000000000000",
     "sellTokenToEthRate": "1",
-    "buyTokenToEthRate": "2482.11547954119199012"
+    "buyTokenToEthRate": "2482.11547954119199012",
+    "fees": {
+        "zeroExFee": null
+    }
 }
 ```
 
@@ -616,7 +623,10 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000000
     ],
     "allowanceTarget": "0x0000000000000000000000000000000000000000",
     "sellTokenToEthRate": "1",
-    "buyTokenToEthRate": "2485.49297930185739314"
+    "buyTokenToEthRate": "2485.49297930185739314",
+    "fees": {
+        "zeroExFee": null
+    }
 }
 ```
 
@@ -778,6 +788,9 @@ https://api.0x.org/swap/v1/quote?sellToken=WETH&buyToken=DAI&sellAmount=10000000
             "proportion": "0"
         }
     ],
-    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    "fees": {
+        "zeroExFee": null
+    }
 }
 ```
