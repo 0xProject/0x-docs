@@ -35,6 +35,7 @@ Either a `sellAmount` or `buyAmount` is required.
 | Field                | Description                                                                                                                                                                                                                                                                                                                      |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `price`              | If `buyAmount` was specified in the request it provides the price of `buyToken` in `sellToken` and vice versa. This price does not include the `slippage` provided in the request above, and therefore represents the best possible price. <br/><br/>If `buyTokenPercentageFee` and `feeRecipientwere` set, the fee amount will be part of this returned price. If `enableSlippageProtection` in the request was not false, the `buyAmount` & `price` responses returned will factor slippage in its routing.                                                                                      |
+| `grossPrice`         | Similar to `price` but with fees removed in the price calculation. This is the price as if no fee is charged. |
 | `guaranteedPrice`    | The price which must be met or else the entire transaction will revert. This price is influenced by the `slippagePercentage` parameter. On-chain sources may encounter price movements from quote to settlement.                                                                                                                 |
 | `estimatedPriceImpact`                 | When `priceImpactProtectionPercentage` is set, this value returns the estimated change in the price of the specified asset that would be caused by the executed swap due to [price impact(/0x-swap-api/advanced-topics/price-impact-protection)]. <br/><br/> **Note:** If we fail to estimate price change we will return `null`.  <br/><br/>**Read more** about price impact protection and how to set it up [here](/0x-swap-api/advanced-topics/price-impact-protection) .                                                                                                                                                                                                                                                                          |
 | `to`                 | The address of the contract to send call `data` to.                                                                                                                                                                                                                                                                              |
@@ -46,7 +47,9 @@ Either a `sellAmount` or `buyAmount` is required.
 | `protocolFee`        | The maximum amount of ether that will be paid towards the protocol fee (in wei), and what is used to compute the `value` field of the transaction.                                                                                                                                                                               |
 | `minimumProtocolFee` | The minimum amount of ether that will be paid towards the protocol fee (in wei) during the transaction.                                                                                                                                                                                                                          |
 | `buyAmount`          | The amount of `buyToken` (in `buyToken` units) that would be bought in this swap. Certain on-chain sources do not allow specifying `buyAmount`, when using `buyAmount` these sources are excluded.                                                                                                                               |
+| `grossBuyAmount`     | Similar to `buyAmount` but with fees removed. This is the `buyAmount` as if no fee is charged. |
 | `sellAmount`         | The amount of `sellToken` (in `sellToken` units) that would be sold in this swap. Specifying `sellAmount` is the recommended way to interact with 0xAPI as it covers all on-chain sources.                                                                                                                                       |
+| `grossSellAmount`    | Similar to `sellAmount` but with fees removed. This is the `sellAmount` as if no fee is charged. **Note:** Currently, this will be the same as `sellAmount` as fees can only be configured to occur on the `buyToken`.|
 | `sources`            | The percentage distribution of `buyAmount` or `sellAmount` split between each liquidity source. Ex: `[{ name: '0x', proportion: "0.8" }, { name: 'Kyber', proportion: "0.2"}, ...]`                                                                                                                                              |
 | `buyTokenAddress`    | The ERC20 token address of the token you want to receive in quote.                                                                                                                                                                                                                                                               |
 | `sellTokenAddress`   | The ERC20 token address of the token you want to sell with quote.                                                                                                                                                                                                                                                                |
@@ -241,7 +244,10 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=10000000
     ],
     "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
     "sellTokenToEthRate": "1",
-    "buyTokenToEthRate": "2504.46738154874763977"
+    "buyTokenToEthRate": "2504.46738154874763977",
+    "grossPrice": "2504.4918553394464675",
+    "grossBuyAmount": "25044918553394464675",
+    "grossSellAmount": "10000000000000000",
 }
 ```
 
@@ -427,7 +433,10 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000000
     ],
     "allowanceTarget": "0x0000000000000000000000000000000000000000",
     "sellTokenToEthRate": "1",
-    "buyTokenToEthRate": "2482.11547954119199012"
+    "buyTokenToEthRate": "2482.11547954119199012",
+    "grossPrice": "2484.996784870669179426",
+    "grossBuyAmount": "2484996784870669179426",
+    "grossSellAmount": "1000000000000000000",
 }
 ```
 
@@ -615,7 +624,10 @@ https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000000
     ],
     "allowanceTarget": "0x0000000000000000000000000000000000000000",
     "sellTokenToEthRate": "1",
-    "buyTokenToEthRate": "2485.49297930185739314"
+    "buyTokenToEthRate": "2485.49297930185739314",
+    "grossPrice": "2496.390120385736312458",
+    "grossBuyAmount": "2496390120385736312458",
+    "grossSellAmount": "1000000000000000000",
 }
 ```
 
@@ -777,6 +789,9 @@ https://api.0x.org/swap/v1/quote?sellToken=WETH&buyToken=DAI&sellAmount=10000000
             "proportion": "0"
         }
     ],
-    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    "grossPrice": "376.7868259",
+    "grossBuyAmount": "376786825900000000000",
+    "grossSellAmount": "1000000000000000000",
 }
 ```
