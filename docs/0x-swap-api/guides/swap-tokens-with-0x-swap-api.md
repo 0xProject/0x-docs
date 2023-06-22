@@ -7,10 +7,13 @@ description: Learn how to use the Swap API to access the most efficient liquidit
 # How to Use Swap API
 
 :::info
-After May 8, 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products.
+Starting in H2 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products.
 :::
 
-This guide covers the steps required to use [Swap API](/0x-swap-api/introduction). If you are looking for and end-to-end tutorial that shows how to implement the Swap API in a deployable DApp, check out [How to Build a Token Swap DApp](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api).
+This guide covers the steps required to use [Swap API](/0x-swap-api/introduction). If you are looking for end-to-end tutorials, checkout:
+
+- [(Next.js) How to Build a Token Swap DApp](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s)
+- [(HTML, CSS, Javscript) How to Build a Token Swap DApp](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
 
 ## About Swap API
 
@@ -72,8 +75,8 @@ const qs = require('qs');
 
 const params = {
     // Not all token symbols are supported. The address of the token can be used instead.
-    sellToken: 'DAI',
-    buyToken: 'WETH',
+    sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
+    buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
     // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     sellAmount: '100000000000000000000',
 };
@@ -118,8 +121,8 @@ The `takerAddress` field is the address that will be performing the trade. While
 
 ```javascript
 const params = {
-    sellToken: 'DAI',
-    buyToken: 'WETH',
+    sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
+    buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
     sellAmount: '100000000000000000000',
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 };
@@ -145,6 +148,10 @@ An HTTP response with status 400 will be returned if the `eth_estimateGas` resul
 ## 3. Send the Transaction to the Network
 
 Once you've received the API response, in order to submit the transaction to the network you will need to sign the transaction with your preferred web3 library (web3.js, ethers.js, wagmi, etc).
+
+### wagmi
+
+If you are using React, we recommend using [wagmi](https://wagmi.sh/). You can use a React hooks library like wagmi and use their [sendTransaction API](https://wagmi.sh/examples/send-transaction). See it implemented in our [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app/blob/main/pages/Quote/index.tsx).
 
 If you are using vanilla Javascript, we recommend either web3.js or ether.js.
 
@@ -211,10 +218,6 @@ await signer.sendTransaction({
 });
 ```
 
-### wagmi
-
-If you are using React, we recommend using [wagmi](https://wagmi.sh/). You can use a React hooks library like wagmi and use their [sendTransaction API](https://wagmi.sh/examples/send-transaction).
-
 ## Examples
 
 These examples illustrate how the response payload from 0x API’s `swap` endpoint can be passed directly into `web3.eth.sendTransaction`. Note that in a production implementation, there would be some error handling for the API response.
@@ -229,8 +232,8 @@ const DAI_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 
 // Selling 100 DAI for ETH.
 const params = {
-    sellToken: 'DAI',
-    buyToken: 'ETH',
+    sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
+    buyToken: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', //ETH
     // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     sellAmount: '100000000000000000000',
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
@@ -266,8 +269,8 @@ This swaps a fixed quantity of ETH for DAI. Unlike ERC20 tokens, ETH can be “a
 ```javascript
 // Selling 100 ETH for DAI.
 const params = {
-    sellToken: 'ETH',
-    buyToken: 'DAI',
+    sellToken: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', //ETH
+    buyToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
     sellAmount: '1000000000000000000', // 1 ETH = 10^18 wei
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
 }
@@ -290,8 +293,8 @@ This is similar to the previous example, but instead specifies the amount of DAI
 
 ```javascript
 const params = {
-    buyToken: 'DAI',
-    sellToken: 'ETH',
+    buyToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
+    sellToken: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', //ETH
     // Note that the DAI token uses 18 decimal places, so `buyAmount` is `100 * 10^18`.
     buyAmount: '100000000000000000000',
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
@@ -322,6 +325,6 @@ The `slippagePercentage` parameter determines the difference between the `price`
 
 ## Starter projects
 
-- The [0x API starter project](https://github.com/0xProject/0x-api-starter-guide-code) has a direct swap example that you can play around with at no cost by using a Ganache instance forked from Ethereum mainnet.
-- [Fill a 0x API quote](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_0x_api_swap.ts) - A runnable example of how to fill a 0x quote that can be run on Ropsten or Ganache.
-- [How to Build a Token Swap Dapp With 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - A full end-to-end guide on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x /swap API endpoint. This DEX aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
+- [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) - A demo ERC20 swapping app made with 0x Swap API, Next.js, and ConnectKit
+- [(Tutorial) Build a Token Swap dApp with 0x Swap API, ConnectKit, and Next.js](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s) - A video tutorial convering the core concepts when building any token swapping dApp.
+- [(Tutorial) How to Build a Token Swap dApp With 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - A full end-to-end guide on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x /swap API endpoint. This DEX aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.

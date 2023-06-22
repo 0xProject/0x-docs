@@ -1,7 +1,7 @@
 ---
 sidebar_label: Overview
 sidebar_position: 1
-description: Learn how to use the Swap API, the most efficient liquidity for web3 tokens through a single API. 
+description: Learn how to use the Swap API, the most efficient liquidity for web3 tokens through a single API.
 ---
 
 # API References
@@ -13,7 +13,7 @@ description: Learn how to use the Swap API, the most efficient liquidity for web
 We offer hosted versions for different EVM-compatible networks. Requests for more networks, and questions/feedback in general should be directed at our [Discord](https://discord.com/invite/d3FTX3M).
 
 | **Network**         | **Endpoint**                  |
-|---------------------|-------------------------------|
+| ------------------- | ----------------------------- |
 | Ethereum (Mainnet)  | https://api.0x.org/           |
 | Ethereum (Goerli)   | https://goerli.api.0x.org/    |
 | Polygon             | https://polygon.api.0x.org/   |
@@ -28,18 +28,16 @@ We offer hosted versions for different EVM-compatible networks. Requests for mor
 ## Endpoints
 
 Learn more about the different endpoints of Swap API:
- 
-* [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote) - Get an easy-to-consume quote for buying or selling any ERC20 token. Returns a transaction that can be submitted to an Ethereum node. 
-* [GET /swap/v1/price](/0x-swap-api/api-references/get-swap-v1-price) - `/price` is nearly identical to `/quote,` but with a few key differences. /price does not return a transaction that can be submitted on-chain; it simply provides us the same information. Think of it as the "read-only" version of `/quote`.
-* [GET /swap/v1/source](/0x-swap-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for the chain.
 
+- [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote) - Get an easy-to-consume quote for buying or selling any ERC20 token. Returns a transaction that can be submitted to an Ethereum node.
+- [GET /swap/v1/price](/0x-swap-api/api-references/get-swap-v1-price) - `/price` is nearly identical to `/quote,` but with a few key differences. /price does not return a transaction that can be submitted on-chain; it simply provides us the same information. Think of it as the "read-only" version of `/quote`.
+- [GET /swap/v1/source](/0x-swap-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for the chain.
 
 ## Authentication
 
 0x authenticates your API requests using your account’s API keys. Once you’re set up, ensure that you specify your key with the `0x-api-key` header parameter in your requests.
 
 You can create, access or revoke your API keys via the **[0x Dashboard](https://dashboard.0x.org)**.
-
 
 ## Versioning
 
@@ -63,13 +61,12 @@ Any endpoint that follows this convention will display the following:
 
 And will only document the objects in the `records` field.
 
-
 #### Request
 
-| Query Param | Description                                                                                    |
-| ----------- | ---------------------------------------------------------------------------------------------- |
-| `page`      | (Optional, defaults to "1") The page index (1-indexed) requested in the collection. |
-| `perPage`   | (Optional, defaults to "20") The amount of records to return per page. The maximum is "1000".  |
+| Query Param | Description                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| `page`      | (Optional, defaults to "1") The page index (1-indexed) requested in the collection.           |
+| `perPage`   | (Optional, defaults to "20") The amount of records to return per page. The maximum is "1000". |
 
 #### Response
 
@@ -86,16 +83,13 @@ If a query provides an unreasonable (ie. too high) `perPage` value, the response
 
 Some interactions with 0x require or are improved by setting [token allowances](https://tokenallowance.io/), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some examples include -
 
-* Submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the contract address. This address can be found either as the value of `allowanceTarget` returned in the quote response or in the ExchangeProxy Address column in the "Addresses by Network" table below.
-* Trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract.
-* **Note:** For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
-
+- Submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the contract address. This address can be found either as the value of `allowanceTarget` returned in the quote response or in the ExchangeProxy Address column in the "Addresses by Network" table below.
+- Trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract.
+- **Note:** For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
 
 ### Addresses by Network
 
 The following table includes commonly used contract addresses. For a full list of our smart contract deployments address, see the[0x Cheat Sheet](/introduction/0x-cheat-sheet).
-
-
 
 | Network             | ExchangeProxy Address                        | ERC20Proxy Address                           | StakingProxy Address                         |
 | ------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
@@ -107,6 +101,7 @@ The following table includes commonly used contract addresses. For a full list o
 | Fantom              | `0xdef189deaef76e379df891899eb5a00a94cbc250` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 | Celo                | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 | Avalanche           | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
+| Arbitrum            | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 
 ## Errors
 
@@ -125,39 +120,38 @@ Unless the spec defines otherwise, errors to bad requests should respond with HT
 
 ### Error reporting format
 
-For all 400 responses, see the [error response schema](https://github.com/0xProject/0x-monorepo/blob/development/packages/json-schemas/schemas/relayer\_api\_error\_response\_schema.json#L1).
+For all 400 responses, see the [error response schema](https://github.com/0xProject/0x-monorepo/blob/development/packages/json-schemas/schemas/relayer_api_error_response_schema.json#L1).
 
 ```json
 {
-    "code": 101,
-    "reason": "Validation failed",
-    "validationErrors": [
-        {
-            "field": "maker",
-            "code": 1002,
-            "reason": "Invalid address"
-        }
-    ]
+  "code": 101,
+  "reason": "Validation failed",
+  "validationErrors": [
+    {
+      "field": "maker",
+      "code": 1002,
+      "reason": "Invalid address"
+    }
+  ]
 }
 ```
 
-
 #### General error codes
 
-| Code | Reason                               |
-| ---- | ------------------------------------ |
-| 100  | Validation Failed                    |
-| 101  | Malformed JSON                       |
-| 102  | Order submission disabled            |
-| 103  | Throttled                            |
-| 104  | Not Implemented                      |
-| 105  | Transaction Invalid                  |
-| 106  | Unable to Submit on Behalf Of Taker  |
-| 107  | Invalid API Key                      |
-| 108  | Service Disabled                     |
-| 109  | Insufficient funds for transaction   |
-| 110  | ETH selling is not supported         |
-| 111  | Gas estimation failed                |
+| Code | Reason                              |
+| ---- | ----------------------------------- |
+| 100  | Validation Failed                   |
+| 101  | Malformed JSON                      |
+| 102  | Order submission disabled           |
+| 103  | Throttled                           |
+| 104  | Not Implemented                     |
+| 105  | Transaction Invalid                 |
+| 106  | Unable to Submit on Behalf Of Taker |
+| 107  | Invalid API Key                     |
+| 108  | Service Disabled                    |
+| 109  | Insufficient funds for transaction  |
+| 110  | ETH selling is not supported        |
+| 111  | Gas estimation failed               |
 
 #### Validation error codes
 
@@ -214,7 +208,7 @@ A structured object containing the signature data for the order. For more info s
 
 ## Misc.
 
-* All requests and responses should be of "application/json" content type.
-* All token amounts are sent in amounts of the smallest level of precision (base units). (e.g if a token has 18 decimal places, selling 1 unit of the token would show up as selling `1000000000000000000` base units by this API).
-* All addresses are sent as lower-case (non-checksummed) Ethereum addresses with the `0x` prefix.
-* All parameters should use **lowerCamelCase.**
+- All requests and responses should be of "application/json" content type.
+- All token amounts are sent in amounts of the smallest level of precision (base units). (e.g if a token has 18 decimal places, selling 1 unit of the token would show up as selling `1000000000000000000` base units by this API).
+- All addresses are sent as lower-case (non-checksummed) Ethereum addresses with the `0x` prefix.
+- All parameters should use **lowerCamelCase.**
