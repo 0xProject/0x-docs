@@ -6,10 +6,11 @@ description: Learn how to set your token allowances
 
 # How to Set Your Token Allowances
 
-Some interactions with 0x require or are improved by setting [token allowances](https://tokenallowance.io/), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some situations of when you would need to set a token allowance include:
+A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens.
 
-- When submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the `allowanceTarget` specified in the quote response
-- When trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract
+In our case, we would like the 0x Exchange Proxy smart contract to trade our ERC20 tokens for us, so we need to write to the ERC20 contract of that token, and approve an allowance for 0x Exchange Proxy (i.e. allow it to move a certain amount of tokens on our behalf us).
+
+To do so, we will need to give an allowance to the `allowanceTarget` parameter that's returned by the [`/quote`](0x-swap-api/api-references/get-swap-v1-quote) and [`/price`](0x-swap-api/api-references/get-swap-v1-price) Swap API endpoints. The `allowanceTarget` is the the target contract address, in our case the 0x Exchange Proxy smart contract address on the relevant network (see full list of address [here](/introduction/0x-cheat-sheet#exchange-proxy-addresses)). Read more about `allowanceTarget` [here](/0x-swap-api/api-references/get-swap-v1-quote). Note that `allowanceTarget` is only relevant when selling an ERC20 token.
 
 :::info
 For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
@@ -17,15 +18,62 @@ For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH"
 
 ## Setting Allowances for 0x API quotes
 
-0x API uses an advanced architecture to minimize the transaction costs for its users, as a result of this the target for allowances has changed for the `v1` endpoints. For users of the `swap/v1/*` swap endpoints the ERC20 allowance target has changed and a new field `allowanceTarget` is introduced in the `/price` and `/quote` responses. The `allowanceTarget` field is the contract address that the user needs to set an ERC20 allowance for in order to be able to perform the trade. Note that `allowanceTarget` is only relevant when selling an ERC20 token.
+There are several ways to set a token allowance, both programmatically and through a UI. We will cover options for both methods below.
 
-:::tip
-When setting the token allowance, make sure to provide enough allowance for the buy or sell amount _as well as the gas;_ otherwise, you may receive a 'Gas estimation failed' error.
-:::
+### Using wagmi
 
-### Setting Allowances for a quote with Web3.js
+wagmi has a number of hooks that can help us read and write to contracts.
 
-All code snippets provided are designed to work in a browser environment with an injected web3 instance (like [Metamask](https://metamask.io/)). You can use the [npm web3 module](https://www.npmjs.com/package/web3) and modify these snippets to run them in a node environment.
+- Call [`useContractRead`](https://wagmi.sh/react/hooks/useContractRead) to check if the ERC20 token we are interested in has approved an allowance to 0x Exchange Proxy.
+- Call [`usePrepareContractWrite`](https://wagmi.sh/react/prepare-hooks/usePrepareContractWrite) and [`useContractWrite`](https://wagmi.sh/react/hooks/useContractWrite) to write the approval to the token contract.
+
+See the full code implementation [here](https://github.com/0xProject/0x-nextjs-demo-app/blob/main/pages/Price/index.tsx) from our [Next.js 0x demo app](https://github.com/0xProject/0x-nextjs-demo-app/tree/main).
+
+```javascript
+// fetch quote
+...
+
+function ApproveButton({
+  takerAddress,
+  onClick,
+  sellTokenAddress,
+}: {
+  takerAddress: Address;
+  onClick: () => void;
+  sellTokenAddress: Address;
+}) {
+  // 1. Read from ERC20 contract. Does spender (0x Exchange Proxy) have an allowance?
+  const { data: allowance, refetch } = useContractRead({
+    address: sellTokenAddress,
+    abi: erc20ABI,
+    functionName: "allowance",
+    args: [takerAddress, exchangeProxy],
+  });
+
+  // 2. (Only if no allowance): Write to ERC20, approve 0x Exchange Proxy to spend max integer
+  const { config } = usePrepareContractWrite({
+    address: sellTokenAddress,
+    abi: erc20ABI,
+    functionName: "approve",
+    args: [exchangeProxy, MAX_ALLOWANCE],
+  });
+
+  const {
+    data: writeContractResult,
+    writeAsync: approveAsync,
+    error,
+  } = useContractWrite(config);
+
+  const { isLoading: isApproving } = useWaitForTransaction({
+    hash: writeContractResult ? writeContractResult.hash : undefined,
+    onSuccess(data) {
+      refetch();
+    },
+  });
+...
+```
+
+### Using web3.js
 
 ```javascript
 import { ERC20TokenContract } from "@0x/contract-wrappers";
@@ -35,7 +83,7 @@ import { BigNumber } from "@0x/utils";
   const web3 = window.web3;
 
   // Get a quote from 0x API which contains `allowanceTarget`
-  // This is the contract that the user needs to set an ERC20 allowance for
+  // `allowanceTarget` is the contract that the user needs to set an ERC20 allowance for
   const res = await fetch(
     `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
   );
@@ -47,9 +95,9 @@ import { BigNumber } from "@0x/utils";
     USDCaddress,
     web3.eth.currentProvider
   );
-  const maxApproval = new BigNumber(2).pow(256).minus(1);
+  const maxApproval = new BigNumber(2).pow(256).minus(1); // This example sets the allowance amount to a large number, but you can adjust it to only the amount required for trading
 
-  // Send the approval to the allowance target smart contract
+  // Write to the ERC20 token contract address and approve the allowanceTarget to spend maxApproval
   const chainId = 1;
   const approvalTxData = USDCcontract.approve(
     quote.allowanceTarget,
@@ -59,8 +107,16 @@ import { BigNumber } from "@0x/utils";
 })();
 ```
 
-## Setting Allowances on Etherscan
+### Using Etherscan
 
-There are a lot of dApps that let you set your allowances in Metamask, but for this example we will be using [Etherscan](http://etherscan.io/). To set your WETH allowance for the ERC20Proxy contract you can navigate to the [Dapp view for the WETH ERC20](https://etherscan.io/dapp/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2#writeContract) contract. Here you can use Metamask to call the `approve` method to approve the ERC20Proxy for the max uint256 amount which is `115792089237316195423570985008687907853269984665640564039457584007913129639935`. Again, you can find the address of the ERC20Proxy in the 0x cheat sheet.
+There are a lot of app that let you set your allowances in Metamask, but for this example we will be using [Etherscan](http://etherscan.io/). To set your WETH allowance for the ERC20Proxy contract you can navigate to the [dApp view for the WETH ERC20](https://etherscan.io/dapp/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2#writeContract) contract. Here you can use Metamask to call the `approve` method to approve the ERC20Proxy for the max uint256 amount which is `115792089237316195423570985008687907853269984665640564039457584007913129639935`. Again, you can find the address of the ERC20Proxy in the 0x cheat sheet.
 
 You can give a WETH allowance to any smart contract this way. To set your allowance for a different token, you'll have to navigate to the smart contract interface for that token.
+
+## Revoking Allowances
+
+To revoke an allowance, you can set the allowance to 0. This can be done programmatically or through a UI such as https://revoke.cash/ .
+
+## Common Issues
+
+When setting the token allowance, make sure to provide enough allowance for the buy or sell amount _as well as the gas;_ otherwise, you may receive a 'Gas estimation failed' error.

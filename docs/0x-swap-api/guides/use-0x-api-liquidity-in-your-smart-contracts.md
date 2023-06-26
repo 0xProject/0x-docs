@@ -4,11 +4,10 @@ sidebar_position: 4
 description: Use Swap API Liquidity in Your Smart Contracts
 ---
 
-
 # Use Swap API Liquidity in Your Smart Contracts
 
 :::info
-📣 Starting in June 2023, all API requests without an API key will return an error. Legacy code examples below may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products. 
+📣 Starting in H2 2023, all API requests without an API key will return an error. Legacy code examples below may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products.
 :::
 
 ## Overview
@@ -57,6 +56,7 @@ In this function we:
 3. Transfer any leftover ETH (protocol fee refunds) to the sender.
 
 <!-- Solidity code. Using js for highlighting -->
+
 ```js
 // Swaps ERC20->ERC20 tokens held by this contract using a 0x-API quote.
 function fillQuote(
@@ -97,6 +97,7 @@ function fillQuote(
 Since the contract will sell its own balance of a token when executing a swap, it needs to hold a balance of that token beforehand. In this example, we will be selling WETH, which can easily be minted from ETH. So the contract has a deposit function that accepts ETH and wraps it into WETH.
 
 <!-- Solidity code. Using js for highlighting -->
+
 ```js
 // Transfer ETH into this contract and wrap it into WETH.
 function depositETH()
@@ -112,6 +113,7 @@ function depositETH()
 Certain quotes require a protocol fee, in ETH, to be attached to the swap call. But it's possible that by the time the transaction is mind, the swap will end up not needing to pay the protocol fee. In these cases, the protocol fee would be refunded to the taker, which is in this case is the `SimpleTokenSwap` contract. So it's important that your contract be able to receive this ETH through either a payable `fallback()` or `receive()` function (in solidity 0.6+).
 
 <!-- Solidity code. Using js for highlighting -->
+
 ```js
 // Payable fallback to allow this contract to receive protocol fee refunds.
 receive() external payable {}
@@ -129,19 +131,21 @@ npm run deploy-fork
 
 The complete interaction with the contract is in the [`swap-contract.js`](https://github.com/0xProject/0x-api-starter-guide-code/blob/master/src/swap-contract.js) script. This script does the following:
 
-* Fund the deployed `SimpleTokenSwap` contract with WETH.
-* Fetch a swap quote from 0x-API to convert said WETH to DAI.
-* Call `fillQuote()` on the `SimpleTokenSwap` contract to execute the swap.
+- Fund the deployed `SimpleTokenSwap` contract with WETH.
+- Fetch a swap quote from 0x-API to convert said WETH to DAI.
+- Call `fillQuote()` on the `SimpleTokenSwap` contract to execute the swap.
 
 ### Fund the contract
 
 First we call `depositETH()`, which accepts ETH and wraps it into WETH, to give the contract a balance (`sellAmountWei`) of WETH .
 
 ```js
-await waitForTxSuccess(contract.methods.depositETH().send({
+await waitForTxSuccess(
+  contract.methods.depositETH().send({
     value: sellAmountWei,
     from: owner,
-}));
+  })
+);
 ```
 
 ### Fetch a quote from 0x API
@@ -183,17 +187,21 @@ The returned quote will have fields such as:
 We can now pass fields from this quote into the `fillQuote()` function on our contract to be filled. This will cause the contract to swap its WETH balance for DAI.
 
 ```js
-const receipt = await waitForTxSuccess(contract.methods.fillQuote(
-        quote.sellTokenAddress,
-        quote.buyTokenAddress,
-        quote.allowanceTarget,
-        quote.to,
-        quote.data,
-    ).send({
-        from: owner,
-        value: quote.value,
-        gasPrice: quote.gasPrice,
-    }));
+const receipt = await waitForTxSuccess(
+  contract.methods
+    .fillQuote(
+      quote.sellTokenAddress,
+      quote.buyTokenAddress,
+      quote.allowanceTarget,
+      quote.to,
+      quote.data
+    )
+    .send({
+      from: owner,
+      value: quote.value,
+      gasPrice: quote.gasPrice,
+    })
+);
 ```
 
 ### Running the example
@@ -215,5 +223,5 @@ Filling the quote through the contract at 0x7382949f535C1bb4D64059b934d4A63A11D3
 
 ## Next steps:
 
-* Refer to our [0x API swap specification](../../0x-orderbook-api/api-references/) for detailed documentation
-* If you need help building on 0x, please use[ Ethereum StackExchange](https://ethereum.stackexchange.com/questions/tagged/0x) with the '0x' tag so we're properly notified.&#x20;
+- Refer to our [0x API swap specification](../../0x-orderbook-api/api-references/) for detailed documentation
+- If you need help building on 0x, please use[ Ethereum StackExchange](https://ethereum.stackexchange.com/questions/tagged/0x) with the '0x' tag so we're properly notified.&#x20;
