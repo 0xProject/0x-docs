@@ -62,7 +62,8 @@ Identical to the response schema for `/swap/v1/quote`, with the execption that t
 | `sellTokenToEthRate` | The rate between ETH and `sellToken`                                                                                                                                                                                                                                                                                             |
 | `buyTokenToEthRate` | The rate between ETH and `buyToken`                                                                                                                                                                                                                                                                                            |
 | `expectedSlippage` | This is the expected slippage used in routing calculations for the quote returned. It is the value of slippage that we estimate that the selected route will have: <br/><br/> - It can be used by integrators to calculate the Final Expected Amount for the asset: i.e. calculated as (`buyAmount` * `expectedSlippage` ) <br/><br/> -  It will only be returned when `enableSlippageProtection` is not set to `false`                                                                                                                                                                                                                                                                                           |
-
+| `fees`             | Fees that would be charged. It can contain `zeroExFee`. See details about this fee type below.                                                                                                |
+| `zeroExFee`        | Related to `fees` param above. <br></br><br></br>Fee that 0x charges:<br></br>&ensp;&ensp;- `feeType`: `volume` which means 0x would charge a certain percentage of the trade. <br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. <br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as `0x` fee. <br></br>&ensp;&ensp;- `billingType`: The method that 0x fee is transferred. It can currently only be `on-chain` which means the fee would be charged on-chain. |
 ### Example
 
 #### Get the price available for selling 1 ETH for DAI
@@ -130,6 +131,9 @@ https://api.0x.org/swap/v1/price?sellToken=ETH&buyToken=DAI&sellAmount=100000000
     ],
     "estimatedGasTokenRefund": "252480",
     "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    "fees": {
+        "zeroExFee": null
+    },
     "grossPrice": "391.1643362",
     "grossBuyAmount": "391164336200000000000",
     "grossSellAmount": "1000000000000000000",
