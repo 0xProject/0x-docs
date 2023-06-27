@@ -342,9 +342,6 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 
 Checkout our [Guides](/market-makers/guides/generating-0x-order-hashes) for RFQT and RFQM Market Makers on how to create, hash, sign, fill, get state, and cancel 0x V4 RFQ orders
 
-- [Generating 0x Order Hashes](../../market-makers/guides/generating-0x-order-hashes.md)
-- [Signing 0x Orders](../../market-makers/guides/signing-0x-orders.md "mention")
-- [Python Code Examples of RFQ Order](../../market-makers/guides/0x-v4-rfq-orders-code-examples-with-python.md "mention")
 - [Fill ERC20 RFQ order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_rfq_order.ts)
 - [Fill ERC20 RFQ order with maker order signer](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_rfq_order_with_maker_order_signer.ts)
 - [Subscribe to RFQ order fill events](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_limit_order.ts)
