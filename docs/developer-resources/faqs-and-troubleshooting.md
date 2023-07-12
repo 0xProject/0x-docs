@@ -113,8 +113,6 @@ An app is a self-contained unit for each individual application that you’re bu
 
 The Swap API has a free tier that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, if you are an integrator who needs to access higher rate limits or a more custom solution, please check out our [enterprise options](https://0x.org/pricing).
 
-Also see our section on ["trade surplus"](faqs-and-troubleshooting.md#if-the-difference-between-the-quoted-price-and-the-executed-price-is-positive-what-happens-to-the-fu).
-
 </details>
 
 <details>
@@ -164,52 +162,6 @@ Slippage Protection is currently supported on Ethereum for the most active tradi
 **Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable to implement it in your API request.
 
 Read here for the [full details of Slippage Protection](../0x-swap-api/advanced-topics/slippage-protection.md).
-
-</details>
-
-<details>
-
-<summary>What is a trade surplus?</summary>
-
-A trade surplus occurs when the quoted price is more than the executed price due to "positive slippage" as a result of unique market conditions.
-<br/>
-
-Also see ["If the difference between the quoted price and the executed price is positive what happens to the funds?"](faqs-and-troubleshooting.md#if-the-difference-between-the-quoted-price-and-the-executed-price-is-positive-what-happens-to-the-fu)
-
-</details>
-
-<details>
-
-<summary>If the difference between the quoted price and the executed price is positive what happens to the funds?</summary>
-
-The answer to what happens to the [trade surplus](faqs-and-troubleshooting.md#what-is-a-trade-surplus) depends on whether or not you are a meta-aggregator AND whether or not you have an API key.
-<br/>
-
-**If you are **_**not**_** a meta-aggregator and have an API key:** 100% of the trade surplus is returned back to the user.
-<br/>
-
-**If you are a meta-aggregator OR you **_**do not**_** have an API key:** 0x Labs will collect the surplus for trades that meet the following criteria - the trade is performed via Swap API, goes through the 0x TransformERC20 contract, AND both tokens in the trade are in our allowed list: DAI, ETH, WETH, BUSD, MATIC, WMATIC, WBTC, USDT, USDC, TUSD, PAXG, LINK, UNI, BAT, and COMP.
-<br/>
-
-For example:
-
-- APE→USDC (trade surplus not collected)
-- USDC→APE (trade surplus not collected)
-- ETH→USDC (trade surplus collected)
-
-For context, trades that meet the criteria above are generally source liquidity from 2 or more sources, which is where the Swap API adds the most value.
-<br/>
-
-In summary, 0x Labs will only recoup the surplus when our product is able to create additional value through our smart order routing.
-<br/>
-
-**Note that for ALL integrators**, we will _not_ be recouping the surplus on orders that are routed through a single source (eg. 100% Uniswap or 100% Sushiswap), so our pricing will remain extremely competitive against AMMs and liquidity aggregators with a broader surplus policy.
-<br/>
-
-This model ensures that we can continue to invest into long-term growth of our products and continue to provide our integrators and end users the best experience.
-<br/>
-
-**🔑 Interested to get an API key? Get live API keys, create and manage your apps from the [0x Dashboard](https://dashboard.0x.org)**.
 
 </details>
 
