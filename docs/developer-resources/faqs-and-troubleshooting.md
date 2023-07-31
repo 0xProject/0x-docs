@@ -173,6 +173,22 @@ If you would like to trade a custom token, you will need to create the liquidity
 
 </details>
 
+<details>
+
+<summary>Can I collect trade surplus (a.k.a. positive slippage)?</summary>
+
+Trade surplus occurs when the user ends up receiving more tokens than their quoted amount. 0x API is configurable such that you collect trade surplus on your trades to a specified address. 
+
+This can be done by setting the `feeRecipientTradeSurplus` parameter in a [Swap API request](/0x-swap-api/api-references/get-swap-v1-quote#request).
+`feeRecipientTradeSurplus` represents the wallet address you want to collect the fee in. When a transaction produces trade surplus, 100% of it will be collected in that wallet.
+The fee is received in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to make that conversion on your own.
+
+When `feeRecipientTradeSurplus` is not specified, the feature is effectively OFF and all trade surplus will be passed back to the user.
+
+Details about these paratmers can be found in [GET /swap/v1/quote](0x-swap-api/api-references/get-swap-v1-quote).
+
+</details>
+
 ## Working in the Testnet
 
 <details>
