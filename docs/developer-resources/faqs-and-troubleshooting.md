@@ -88,7 +88,7 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 The Swap API has a powerful free plan that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, we also offer paid plans with higher throughput to support you as your user base and transactions grow. You can review and select the perfect plan for your team's needs on our [pricing page](https://0x.org/pricing).
 <br/>
 
-0x also takes an on-chain fee on swaps involving a select few token pairs for the Free and Starter tiers. This fee is charged on-chain to the users of your app during the transaction. If you are on the Growth tier, we completely waive this fee for your customers. In cases where we charge a fee, we'll return the value of the fee in the API response in the `zeroExFee` parameter. You can find more details about this in the [Swap API reference](https://0x.org/docs/0x-swap-api/api-references/get-swap-v1-quote#response).
+0x also takes an on-chain fee on swaps involving a select few token pairs for the Free and Starter tiers. This fee is charged on-chain to the users of your app during the transaction. If you are on the Growth tier, we completely waive this fee for your customers. In cases where we charge a fee, we'll return the value of the fee in the API response in the `zeroExFee` parameter. You can find more details about this in the [Swap API reference](/0x-swap-api/api-references/get-swap-v1-quote.md#response).
 
 </details>
 
@@ -97,7 +97,7 @@ The Swap API has a powerful free plan that you can access by creating an account
 
 <summary>How does Swap API select the best orders for me?</summary>
 
-Beyond simply sampling each liquidity source for their respective prices, Swap API adjusts for the gas consumption of each liquidity source with the specified gas price (if none provided Swap API will use ethGasStation's `fast` amount of gwei) and any associated fees with the specific liquidity source. By sampling through varying compositions of liquidity sources, Swap API selects the best set of orders to give you the best price. Swap API also creates another set of fallback orders to ensure that the quote can be executed by users.
+Beyond simply sampling each liquidity source for their respective prices, Swap API adjusts for the gas consumption of each liquidity source with the specified gas price (if none is provided Swap API will use ethGasStation's `fast` amount of gwei) and any associated fees with the specific liquidity source. By sampling through varying compositions of liquidity sources, Swap API selects the best set of orders to give you the best price. Swap API also creates another set of fallback orders to ensure that the quote can be executed by users.
 <br/>
 Ex: Swap API will adjust the price potentially received from Curve Finance by gas \* gasPrice and its fees. Because of Curve Finance’s costly gas consumption, its nominal price may not be the best price when settled.
 
@@ -116,7 +116,7 @@ Use the API endpoint [`/swap/v1/sources`](/0x-swap-api/api-references/get-swap-v
 <summary>What are the differences when quoting by sellAmount and buyAmount</summary>
 
 - If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
-- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
+- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect go over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
 
 Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), these sources are ignored when quoting for `buyAmounts`
 
@@ -137,7 +137,7 @@ Slippage Protection incorporates slippage forecasts into 0x API’s smart order 
 Slippage Protection is currently supported on Ethereum for the most active trading pairs (ETH-USDC, ETH-DAI, ETH-USDT, ETH-WBTC, WETH-USDC, WETH-DAI, WETH-USDT, WETH-WBTC)
 <br/>
 
-**Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable to implement it in your API request.
+**Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable it in your API request.
 
 Read here for the [full details of Slippage Protection](../0x-swap-api/advanced-topics/slippage-protection.md).
 
@@ -163,7 +163,7 @@ If you would like to trade a custom token, you will need to create the liquidity
 Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` parameters in a [Swap API request](../0x-swap-api/api-references/get-swap-v1-quote.md#request). Set a `buyTokenPercentageFee` on your DEX trades which represents the percentage (between 0 - 1.0) of the `buyAmount` (tokens being received) that should be attributed to `feeRecipient` (your wallet) as an affiliate fee.
 <br/>
 
-When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is receive in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
+When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is received in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
 <br/>
 
 Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote.md).
@@ -174,7 +174,7 @@ Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api
 
 <summary> How is the trading fee/commission I charge returned by Swap API - is it part of the quoted price or is it a separate parameter? </summary>
 
-The fee amount is incorporated as part of the quoted price. If you would like to display the fee to your end users separately, just display the amount return by `buyAmount * buyTokenPercentageFee`
+The fee amount is incorporated as part of the quoted price. If you would like to display the fee to your end users separately, just display the amount returned by `buyAmount * buyTokenPercentageFee`
 
 </details>
 
@@ -190,7 +190,7 @@ The fee is received in the `buyToken` (the token that the user will receive). If
 
 When `feeRecipientTradeSurplus` is not specified, the feature is effectively OFF and all trade surplus will be passed back to the user.
 
-Details about these paratmers can be found in [GET /swap/v1/quote](0x-swap-api/api-references/get-swap-v1-quote).
+Details about these parameters can be found in [GET /swap/v1/quote](0x-swap-api/api-references/get-swap-v1-quote).
 
 </details>
 
@@ -206,7 +206,7 @@ To view the currently supported sources on Goerli refer to https://goerli.api.0x
 
 In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is WETH < > UNI deployed by Uniswap on Goerli.
 
-Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information.
+Also, see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information.
 
 </details>
 
