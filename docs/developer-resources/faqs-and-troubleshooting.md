@@ -9,12 +9,13 @@ description: FAQs & Troubleshooting
 **Categories**
 
 - [🧰 Troubleshooting](faqs-and-troubleshooting.md#-troubleshooting)
-- [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 - [🔄 Swap API](faqs-and-troubleshooting.md#-swap-api)
-  - [About Swap API](faqs-and-troubleshooting.md#-about-swap-api)
-  - [Working in the Testnet](faqs-and-troubleshooting.md#-working-in-the-testnet)
-  - [Parameter Questions](faqs-and-troubleshooting.md#-parameter-questions)
-  - [Best Practices](faqs-and-troubleshooting.md#-best-practices)
+  - [About Swap API](faqs-and-troubleshooting.md#about-swap-api)
+  - [Monetizing your Swap Integration](faqs-and-troubleshooting.md#monetizing-your-swap-integration)
+  - [Working in the Testnet](faqs-and-troubleshooting.md#working-in-the-testnet)
+  - [Parameter Questions](faqs-and-troubleshooting.md#parameter-questions)
+  - [Best Practices](faqs-and-troubleshooting.md#best-practices)
+- [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 - [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
 - [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
 
@@ -75,33 +76,6 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 </details>
 
-## 💻 0x Dashboard
-
-<details>
-
-<summary>Does the 0x Dashboard support having multiple user accounts for our team?</summary>
-
-For now we only support one user per team account, but we will add support for multiple users in the coming weeks.
-
-</details>
-
-<details>
-
-<summary>My project integrated with 0x API before the 0x Dashboard was created. Will any existing 0x integrations break with this update?</summary>
-
-If you have an API key, the key will remain the same (unless you change it). The API key you are currently using will continue to work as long as you create an account in the 0x Dashabord and have an API key; otherwise, will get an error in the API response.
-
-This applies to all 0x APIs, including Tx Relay API and Swap API.
-
-</details>
-
-<details>
-
-<summary>What is an App?</summary>
-
-An app is a self-contained unit for each individual application that you’re building. You can set up multiple apps, each with its unique API keys and configurations on the [0x Dashboard](https://dashboard.0x.org/).
-
-</details>
 
 ## 🔄 Swap API
 
@@ -111,15 +85,19 @@ An app is a self-contained unit for each individual application that you’re bu
 
 <summary>Is there a fee to use Swap API?</summary>
 
-The Swap API has a free tier that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, if you are an integrator who needs to access higher rate limits or a more custom solution, please check out our [enterprise options](https://0x.org/pricing).
+The Swap API has a powerful free plan that you can access by creating an account via the [0x Dashboard](https://dashboard.0x.org/). However, we also offer paid plans with higher throughput to support you as your user base and transactions grow. You can review and select the perfect plan for your team's needs on our [pricing page](https://0x.org/pricing).
+<br/>
+
+0x also takes an on-chain fee on swaps involving a select few token pairs for the Free and Starter tiers. This fee is charged on-chain to the users of your app during the transaction. If you are on the Growth tier, we completely waive this fee for your customers. In cases where we charge a fee, we'll return the value of the fee in the API response in the `zeroExFee` parameter. You can find more details about this in the [Swap API reference](/0x-swap-api/api-references/get-swap-v1-quote.md#response).
 
 </details>
+
 
 <details>
 
 <summary>How does Swap API select the best orders for me?</summary>
 
-Beyond simply sampling each liquidity source for their respective prices, Swap API adjusts for the gas consumption of each liquidity source with the specified gas price (if none provided Swap API will use ethGasStation's `fast` amount of gwei) and any associated fees with the specific liquidity source. By sampling through varying compositions of liquidity sources, Swap API selects the best set of orders to give you the best price. Swap API also creates another set of fallback orders to ensure that the quote can be executed by users.
+Beyond simply sampling each liquidity source for their respective prices, Swap API adjusts for the gas consumption of each liquidity source with the specified gas price (if none is provided Swap API will use ethGasStation's `fast` amount of gwei) and any associated fees with the specific liquidity source. By sampling through varying compositions of liquidity sources, Swap API selects the best set of orders to give you the best price. Swap API also creates another set of fallback orders to ensure that the quote can be executed by users.
 <br/>
 Ex: Swap API will adjust the price potentially received from Curve Finance by gas \* gasPrice and its fees. Because of Curve Finance’s costly gas consumption, its nominal price may not be the best price when settled.
 
@@ -138,7 +116,7 @@ Use the API endpoint [`/swap/v1/sources`](/0x-swap-api/api-references/get-swap-v
 <summary>What are the differences when quoting by sellAmount and buyAmount</summary>
 
 - If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
-- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
+- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect go over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
 
 Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), these sources are ignored when quoting for `buyAmounts`
 
@@ -159,7 +137,7 @@ Slippage Protection incorporates slippage forecasts into 0x API’s smart order 
 Slippage Protection is currently supported on Ethereum for the most active trading pairs (ETH-USDC, ETH-DAI, ETH-USDT, ETH-WBTC, WETH-USDC, WETH-DAI, WETH-USDT, WETH-WBTC)
 <br/>
 
-**Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable to implement it in your API request.
+**Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable it in your API request.
 
 Read here for the [full details of Slippage Protection](../0x-swap-api/advanced-topics/slippage-protection.md).
 
@@ -170,6 +148,33 @@ Read here for the [full details of Slippage Protection](../0x-swap-api/advanced-
 <summary>Is it possible to use the Swap API to trade custom ERC20 tokens or altcoins?</summary>
 
 If you would like to trade a custom token, you will need to create the liquidity either by using 0x limit orders or by creating a Liquidity Pool for your token on one of the various AMM sources that the API sources from, such as Uniswap, SushiSwap, or Curve. Learn more about [creating limit orders](/0x-limit-orders/guides/create-a-limit-order)
+
+</details>
+
+### Monetizing your Swap Integration
+
+<details>
+
+<summary>I am building a DEX app using Swap API. Can I charge my users a trading fee/commission when using the Swap API? </summary>
+
+**TL;DR** You have full flexibility on the fees you collect on your trades.
+<br/>
+
+Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` parameters in a [Swap API request](../0x-swap-api/api-references/get-swap-v1-quote.md#request). Set a `buyTokenPercentageFee` on your DEX trades which represents the percentage (between 0 - 1.0) of the `buyAmount` (tokens being received) that should be attributed to `feeRecipient` (your wallet) as an affiliate fee.
+<br/>
+
+When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is received in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
+<br/>
+
+Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote.md).
+
+</details>
+
+<details>
+
+<summary> How is the trading fee/commission I charge returned by Swap API - is it part of the quoted price or is it a separate parameter? </summary>
+
+The fee amount is incorporated as part of the quoted price. If you would like to display the fee to your end users separately, just display the amount returned by `buyAmount * buyTokenPercentageFee`
 
 </details>
 
@@ -185,11 +190,11 @@ The fee is received in the `buyToken` (the token that the user will receive). If
 
 When `feeRecipientTradeSurplus` is not specified, the feature is effectively OFF and all trade surplus will be passed back to the user.
 
-Details about these paratmers can be found in [GET /swap/v1/quote](0x-swap-api/api-references/get-swap-v1-quote).
+Details about these parameters can be found in [GET /swap/v1/quote](0x-swap-api/api-references/get-swap-v1-quote).
 
 </details>
 
-## Working in the Testnet
+### Working in the Testnet
 
 <details>
 
@@ -201,7 +206,7 @@ To view the currently supported sources on Goerli refer to https://goerli.api.0x
 
 In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is WETH < > UNI deployed by Uniswap on Goerli.
 
-Also see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information.
+Also, see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information.
 
 </details>
 
@@ -331,44 +336,6 @@ Our rate limits exists because we want to encourage anyone using our infra to ac
 
 <details>
 
-<summary>What is the best way to query swap prices for many asset pairs without exceeding the rate limit?</summary>
-
-Our rate limits exists because we want to encourage anyone using our infra to actually swap, not just use our API as a price oracle. If you would like to query for token prices, we would recommend either setting up your own 0x API instance via the [repo README](https://github.com/0xProject/0x-api#getting-started) instructions or query a 3rd party service like [coingecko](https://www.coingecko.com/en/coins/usd-coin#markets).
-
-</details>
-
-<details>
-
-<summary>I am building a DEX app using Swap API. Can I charge my users a trading fee/commission fee/transaction fee when using the Swap API? </summary>
-
-**TL;DR** You have full flexibility on the fees you collect on your trades.
-<br/>
-
-Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` parameters in a [Swap API request](../0x-swap-api/api-references/get-swap-v1-quote.md#request). Set a `buyTokenPercentageFee` on your DEX trades which represents the percentage (between 0 - 1.0) of the `buyAmount` (tokens being received) that should be attributed to `feeRecipient` (your wallet) as an affiliate fee.
-<br/>
-
-When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is receive in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
-<br/>
-
-Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote.md).
-<br/>
-
-**How is a fee returned by Swap API - is it part of the quote price or is it a separate parameter?**
-<br/>
-The fee amount is incorporated as part of the quoted price. If you would like to display the fee separately, just display the amount return by `buyAmount * buyTokenPercentageFee`.
-
-</details>
-
-<details>
-
-<summary> How is a fee returned by Swap API - is it part of the quoted price or is it a separate parameter? </summary>
-
-The fee amount is incorporated as part of the quoted price. If you would like to display the fee separately, just display the amount return by `buyAmount * buyTokenPercentageFee`
-
-</details>
-
-<details>
-
 <summary>How can I find the Swap API liquidity sources for each chain?</summary>
 
 Use the API endpoint `/swap/v1/sources` to get the liquidity sources per chain. You will need to specify the root-endpoint for the chain you are interested in, for example, [https://polygon.api.0x.org/swap/v1/sources](https://polygon.api.0x.org/swap/v1/sources) for the Polygon Network or [https://api.0x.org/swap/v1/sources](https://api.0x.org/swap/v1/sources) for Ethereum Mainnet. See the [Swap API References](/0x-swap-api/api-references/overview)for a full list of endpoints we support.
@@ -383,6 +350,31 @@ All ERC20 tokens are supported with the caveat that if the token is fee-on-trans
 <br/>
 
 We recommend referring to [tokenlist.org](https://tokenlists.org/), specifically the [CoinGecko tokenlist ](https://tokenlists.org/token-list?url=https://tokens.coingecko.com/uniswap/all.json)for a list of all available ERC20 tokens.
+
+</details>
+
+<details>
+
+<summary>How do I return the 0x Swap Fee to my end users?</summary>
+
+The 0x fee amount is returned in the `zeroExFee` parameter in the quotes where we charge the fee. You are responsible for ensuring your end users are aware of such fees, and may return the `feeAmount` and `feeToken` to your end users in your app. The applicable fee for each plan is detailed in our [Pricing Page](https://0x.org/pricing).
+
+</details>
+
+## 💻 0x Dashboard
+
+<details>
+
+<summary>Does the 0x Dashboard support having multiple user accounts for our team?</summary>
+
+For now we only support one user per team account, but we will add support for multiple users in the coming weeks.
+</details>
+
+<details>
+
+<summary>What is an App?</summary>
+
+An app is a self-contained unit for each individual application that you’re building. You can set up multiple apps, each with its unique API keys and configurations on the [0x Dashboard](https://dashboard.0x.org/).
 
 </details>
 
