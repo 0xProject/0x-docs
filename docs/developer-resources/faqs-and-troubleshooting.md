@@ -14,7 +14,7 @@ description: FAQs & Troubleshooting
   - [Monetizing your Swap Integration](faqs-and-troubleshooting.md#monetizing-your-swap-integration)
   - [Working in the Testnet](faqs-and-troubleshooting.md#working-in-the-testnet)
   - [Parameter Questions](faqs-and-troubleshooting.md#parameter-questions)
-  - [Best Practices](faqs-and-troubleshooting.md#bestpractices)
+  - [Best Practices](faqs-and-troubleshooting.md#best-practices)
 - [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 - [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
 - [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
