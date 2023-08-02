@@ -30,8 +30,8 @@ If your 0x quote is reverting, besides the standard revert issues related to ETH
 - Are allowances properly set for the user to trade the `sellToken`?
 - Does the user have enough `sellToken` balance to execute the swap?
 - Do users have enough to pay the gas?
-- The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#slippage-tolerance) for how to handle this.
-- Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](https://docs.0x.org/0x-api-swap/guides/troubleshooting-0x-api-swaps#fee-on-transfer-tokens) for how to handle this
+- The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](/0x-api-swap/guides/troubleshooting-0x-api-swaps#slippage-tolerance) for how to handle this.
+- Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](/0x-api-swap/guides/troubleshooting-0x-api-swaps#fee-on-transfer-tokens) for how to handle this
 - Working in testnet? Only a subset of DEX sources are available. Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. Read [here](/0x-swap-api/guides/working-in-the-testnet) for how to handle this.
 
 For more details on addressing common issues, read [Troubleshooting](/0x-swap-api/guides/troubleshooting-swap-api).
@@ -64,7 +64,7 @@ There are two main interfaces that 0x API will provide quotes for:
 
 [**Forwarder extension contract**](https://github.com/0xProject/0x-protocol-specification/blob/master/v3/forwarder-specification.md) - a payable interface allowing swaps between native ETH (as a `sellToken`) and another ERC20 asset.
 
-Find the currently deployed contracts [here](https://docs.0x.org/introduction/0x-cheat-sheet).
+Find the currently deployed contracts [here](/introduction/0x-cheat-sheet).
 
 </details>
 
@@ -139,7 +139,7 @@ Slippage Protection is currently supported on Ethereum for the most active tradi
 
 **Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable it in your API request.
 
-Read here for the [full details of Slippage Protection](../0x-swap-api/advanced-topics/slippage-protection.md).
+Read here for the [full details of Slippage Protection](/0x-swap-api/advanced-topics/slippage-protection.md).
 
 </details>
 
@@ -160,7 +160,7 @@ If you would like to trade a custom token, you will need to create the liquidity
 **TL;DR** You have full flexibility on the fees you collect on your trades.
 <br/>
 
-Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` parameters in a [Swap API request](../0x-swap-api/api-references/get-swap-v1-quote.md#request). Set a `buyTokenPercentageFee` on your DEX trades which represents the percentage (between 0 - 1.0) of the `buyAmount` (tokens being received) that should be attributed to `feeRecipient` (your wallet) as an affiliate fee.
+Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` parameters in a [Swap API request](/0x-swap-api/api-references/get-swap-v1-quote.md#request). Set a `buyTokenPercentageFee` on your DEX trades which represents the percentage (between 0 - 1.0) of the `buyAmount` (tokens being received) that should be attributed to `feeRecipient` (your wallet) as an affiliate fee.
 <br/>
 
 When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is received in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
@@ -190,7 +190,7 @@ The fee is received in the `buyToken` (the token that the user will receive). If
 
 When `feeRecipientTradeSurplus` is not specified, the feature is effectively OFF and all trade surplus will be passed back to the user.
 
-Details about these parameters can be found in [GET /swap/v1/quote](0x-swap-api/api-references/get-swap-v1-quote).
+Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote).
 
 </details>
 
@@ -320,7 +320,7 @@ When we are able to calculate price impact estimates, users leveraging the Swap 
 Price Impact Protection is an optional feature - the default threshold will be set at 1. Developers and API users who want to take advantage of it will need to opt-in by adjusting this setting.
 <br/>
 
-Developers can also surface this information in their UI so users can see the potential price impact of a trade prior to submitting an order. Developers can simply ping the Swap API \[[swap/v1/quote](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#request)] and use the returned `estimatedPriceImpact` information.
+Developers can also surface this information in their UI so users can see the potential price impact of a trade prior to submitting an order. Developers can simply ping the Swap API \[[swap/v1/quote](/0x-api-swap/api-references/get-swap-v1-quote#request)] and use the returned `estimatedPriceImpact` information.
 
 </details>
 
