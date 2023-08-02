@@ -31,7 +31,7 @@ If your 0x quote is reverting, besides the standard revert issues related to ETH
 - Does the user have enough `sellToken` balance to execute the swap?
 - Do users have enough to pay the gas?
 - The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](/0x-swap-api/guides/troubleshooting-swap-api#slippage-tolerance) for how to handle this.
-- Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](/0x-swap-api/guides/troubleshooting-swap-apis#fee-on-transfer-tokens) for how to handle this
+- Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](/0x-swap-api/guides/troubleshooting-swap-api#fee-on-transfer-tokens) for how to handle this
 - Working in testnet? Only a subset of DEX sources are available. Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. Read [here](/0x-swap-api/guides/working-in-the-testnet) for how to handle this.
 
 For more details on addressing common issues, read [Troubleshooting](/0x-swap-api/guides/troubleshooting-swap-api).
