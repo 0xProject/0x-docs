@@ -24,6 +24,7 @@ We offer hosted versions for different EVM-compatible networks. Requests for mor
 | Celo                | https://celo.api.0x.org/      |
 | Avalanche           | https://avalanche.api.0x.org/ |
 | Arbitrum            | https://arbitrum.api.0x.org/  |
+| Base                | https://base.api.0x.org/      |
 
 ## Endpoints
 
@@ -102,6 +103,7 @@ The following table includes commonly used contract addresses. For a full list o
 | Celo                | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 | Avalanche           | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 | Arbitrum            | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
+| Base                | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 
 ## Errors
 
