@@ -25,6 +25,7 @@ We are currently on v4 of the 0x protocol
 - Celo: [https://celo.api.0x.org/](https://celo.api.0x.org/)
 - Avalanche: [https://avalanche.api.0x.org/](https://avalanche.api.0x.org/)
 - Arbitrum: [https://arbitrum.api.0x.org/](https://arbitrum.api.0x.org/)
+- Base [https://base.api.0x.org/](https://base.api.0x.org/)
 
 ### Tx Relay API Endpoints
 
@@ -51,6 +52,7 @@ This is the primary contract for all interactions with the protocol. It is also 
 - Celo: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 - Avalanche: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 - Arbitrum: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
+- Base: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 
 ### Ancillary Contract Addresses
 
