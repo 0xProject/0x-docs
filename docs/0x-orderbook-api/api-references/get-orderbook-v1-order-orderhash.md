@@ -11,13 +11,13 @@ Retrieves a specific order by orderHash.
 
 | Path Params | Description                                                                             |
 | ----------- | --------------------------------------------------------------------------------------- |
-| `orderHash` | The hash of the desired[ signed order](../../0x-swap-api/api-references/#signed-order). |
+| `orderHash` | The hash of the desired [signed order](/0x-orderbook-api/api-references/overview#signed-order). |
 
 ## Response
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw[ signed order](../../0x-swap-api/api-references/#signed-order).                                           |
+| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                           |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 |            |                                                                                                               |
 
