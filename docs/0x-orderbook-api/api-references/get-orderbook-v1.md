@@ -25,14 +25,14 @@ Bids will be sorted in descending order by price, and asks will be sorted in asc
 
 | Field  |                                                                                                                |
 | ------ | -------------------------------------------------------------------------------------------------------------- |
-| `bids` | [Paginated](./#pagination) collection of SRA signed orders (below) where `takerToken` is equal to `baseToken`. |
-| `asks` | [Paginated](./#pagination) collection of SRA signed orders (below) where `makerToken` is equal to `baseToken`. |
+| `bids` | [Paginated](/0x-orderbook-api/api-references/overview#pagination) collection of SRA signed orders (below) where `takerToken` is equal to `baseToken`. |
+| `asks` | [Paginated](/0x-orderbook-api/api-references/overview#pagination) collection of SRA signed orders (below) where `makerToken` is equal to `baseToken`. |
 
 ### Record
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw[ signed order](./#signed-order).                                                                          |
+| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                                                          |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 
 ## Examples
