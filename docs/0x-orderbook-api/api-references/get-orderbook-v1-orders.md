@@ -14,7 +14,7 @@ This endpoint is paginated. By default, a request returns page 1 with 20 orders.
 
 ## Request
 
-Any[ Signed Order ](./#signed-order)field can be use as a query parameter. Additional query parameters are listed below.
+Any [Signed Order](/0x-orderbook-api/api-references/overview#signed-order) field can be use as a query parameter. Additional query parameters are listed below.
 
 | Query Params | Description                                             |
 | ------------ | ------------------------------------------------------- |
@@ -26,7 +26,7 @@ Any[ Signed Order ](./#signed-order)field can be use as a query parameter. Addit
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw[ signed order](./#signed-order).                                                                          |
+| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                                                          |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 
 ## Examples
