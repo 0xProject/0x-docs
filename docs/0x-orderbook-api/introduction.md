@@ -34,7 +34,7 @@ This section contains the following docs and guides
 - [POST /orderbook/v1/order](api-references/post-orderbook-v1-order.md)
 - [POST /orderbook/v1/orders](api-references/post-orderbook-v1-orders.md)
 - [POST /orderbook/v1/order_config](api-references/post-orderbook-v1-order_config.md)
-- [websocket-api](api-references/websocket-api.md)
+- [Websocket API](api-references/websocket-api.md)
 - [Rate Limits](rate-limiting.md)
 - [Connection Limit](connection-limit.md)
 
