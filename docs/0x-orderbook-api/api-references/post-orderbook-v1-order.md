@@ -14,7 +14,7 @@ A [signed order](/0x-swap-api/api-references/overview#signed-order).
 
 ## Response
 
-No response fields when successful. An [error ](../../0x-swap-api/api-references/#errors)when unsuccessful.
+No response fields when successful. An [error](/0x-orderbook-api/api-references/overview#errors) when unsuccessful.
 
 ## Examples
 
