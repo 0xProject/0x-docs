@@ -170,7 +170,7 @@ A [0x Limit Order](https://protocol.0x.org/en/latest/basics/orders.html#limit-or
 | `chainId`             | The ID of the Ethereum chain where the `verifyingContract` is located.                                                                                                                                                     |
 | `signature`           | A JSON object with the signature of the fields above using the private key of `maker`. The fields of the signature object are documented in the table below.                                                               |
 
-### **Signature**
+### Signature
 
 A structured object containing the signature data for the order. For more info see [How to sign](https://protocol.0x.org/en/latest/basics/orders.html#how-to-sign).
 
