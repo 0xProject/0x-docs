@@ -34,17 +34,6 @@ This section contains the following docs and guides
 - [POST /orderbook/v1/order](api-references/post-orderbook-v1-order.md)
 - [POST /orderbook/v1/orders](api-references/post-orderbook-v1-orders.md)
 - [POST /orderbook/v1/order_config](api-references/post-orderbook-v1-order_config.md)
-- [websocket-api](api-references/websocket-api.md)
+- [Websocket API](api-references/websocket-api.md)
 - [Rate Limits](rate-limiting.md)
 - [Connection Limit](connection-limit.md)
-
-## Code Examples
-
-[0x Starter Project](https://github.com/0xProject/0x-starter-project) includes with a number of scenarios using the 0x v4 protocol that can be run from the command-line:
-
-- [Create a Limit Order](../limit-orders-advanced-traders/guides/create-a-limit-order.md)
-- [Cancel a Limit Order](../limit-orders-advanced-traders/guides/cancel-a-limit-order.md)
-- [Fill a Limit Order](../limit-orders-advanced-traders/guides/fill-a-limit-order.md)
-- [Limit Order Status](../limit-orders-advanced-traders/guides/limit-order-status.md)
-- [Fill ERC20 Limi Order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_limit_order.ts)
-- [Cancel a Pair of Limit Orders](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/cancel_pair_limit_orders.ts)

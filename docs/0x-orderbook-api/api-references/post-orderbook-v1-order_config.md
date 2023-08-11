@@ -5,7 +5,7 @@ description: Learn how to use  POST /orderbook/v1/order_config
 ---
 # POST /orderbook/v1/order_config
 
-Send a partial [signed order](../../0x-swap-api/api-references/#signed-order) to this endpoint to receive the rest of configuration-oriented fields. This response is currently static.
+Send a partial [signed order](/0x-orderbook-api/api-references/overview#signed-order)to this endpoint to receive the rest of configuration-oriented fields. This response is currently static.
 
 ## Request
 

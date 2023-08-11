@@ -9,7 +9,7 @@ description: Learn how to use GET /orderbook/v1/
 Retrieves the orderbook for a given asset pair.
 
 :::info
-This endpoint is paginated. By default, a request returns page 1 with 20 orders. It is possible to change which page and how many records are returned per page via the query parameters. See[#pagination](./#pagination "mention")for more details.&#x20;
+This endpoint is paginated. By default, a request returns page 1 with 20 orders. It is possible to change which page and how many records are returned per page via the query parameters. See [pagination](/0x-orderbook-api/api-references/overview#pagination) for more details.
 :::
 
 ## Request
@@ -25,14 +25,14 @@ Bids will be sorted in descending order by price, and asks will be sorted in asc
 
 | Field  |                                                                                                                |
 | ------ | -------------------------------------------------------------------------------------------------------------- |
-| `bids` | [Paginated](./#pagination) collection of SRA signed orders (below) where `takerToken` is equal to `baseToken`. |
-| `asks` | [Paginated](./#pagination) collection of SRA signed orders (below) where `makerToken` is equal to `baseToken`. |
+| `bids` | [Paginated](/0x-orderbook-api/api-references/overview#pagination) collection of SRA signed orders (below) where `takerToken` is equal to `baseToken`. |
+| `asks` | [Paginated](/0x-orderbook-api/api-references/overview#pagination) collection of SRA signed orders (below) where `makerToken` is equal to `baseToken`. |
 
 ### Record
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw[ signed order](./#signed-order).                                                                          |
+| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                                                          |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 
 ## Examples
