@@ -10,11 +10,11 @@ Submit a list of signed orders.
 
 ## Request
 
-A list of [signed orders](../../0x-swap-api/api-references/#signed-order).
+A list of [signed orders](/0x-orderbook-api/api-references/overview#signed-order).
 
 ## Response
 
-No response fields when successful. An [error ](../../0x-swap-api/api-references/#errors)when unsuccessful.
+No response fields when successful. An [error](/0x-orderbook-api/api-references/overview#errors) when unsuccessful.
 
 ## Examples
 
