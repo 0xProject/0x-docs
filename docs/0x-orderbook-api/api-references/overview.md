@@ -41,7 +41,7 @@ And will only document the objects in the `records` field.
 By default, a request returns page 1 with 20 orders. It is possible to change which page and how many records are returned per page via the query parameters. For example, to fetch page 3 with 50 records per page:
 
 ```
-https://api.0x.org/orderbook/v1/orders?page=3&perPage=20
+https://api.0x.org/orderbook/v1/orders?page=3&perPage=50
 ```
 
 #### Request
