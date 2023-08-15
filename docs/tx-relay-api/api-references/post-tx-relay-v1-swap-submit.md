@@ -14,17 +14,17 @@ If a token supports gasless approvals, a meta-transaction / otc may be submitted
 
 ```tsx
 const { approval } = response;
-approval.isRequired // whether an approval is required for the trade
-approval.isGaslessAvailable // whether gasless approval is available for the sell token
+approval.isRequired; // whether an approval is required for the trade
+approval.isGaslessAvailable; // whether gasless approval is available for the sell token
 ```
 
 To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
 
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
 
-* `name` , `version`, `chainId`, `verifyingContract`, `salt`
-  * Contracts may not utilize all of these fields (i.e. one or more may be missing), but if they are present, they must be in this order
-* Any other field must follow in alphabetical order
+- `name` , `version`, `chainId`, `verifyingContract`, `salt`
+  - Contracts may not utilize all of these fields (i.e. one or more may be missing), but if they are present, they must be in this order
+- Any other field must follow in alphabetical order
 
 The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
 
@@ -66,29 +66,29 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 ```json
 {
   "type": "metatransaction",
-  "tradeHash": "0xde5a11983edd012047dd3107532f007a73ae488bfb354f35b8a40580e2a775a1",
+  "tradeHash": "0xde5a11983edd012047dd3107532f007a73ae488bfb354f35b8a40580e2a775a1"
 }
 ```
 
-More information on signing 0x orders is available [here](https://docs.0x.org/market-makers/guides/signing-0x-orders).
+More information on signing 0x orders is available [here](https://docs.0xprotocol.org/en/latest/basics/orders.html#how-to-sign).
 
 ## Status Code
 
-* `201` if successful
-* `400`:
-  * If the trade is too close to expiration time.
-  * If the signature in the payload is invalid.
-  * If the balance / allowance of the taker is less than the trade amount.
-  * (`otc` only) If the trade has been outstanding for too long.
-  * (`otc` only) If the balance / allowance of the market maker selected to settle the trade is less than the trade amount (very unlikely).
-  * If the query params are not able to pass validation.
-* `429` if there is already a trade associated with a taker address and a taker token that's not been settled by our relayers yet. For example, if `address A` already has a `USDC -> WETH` trade submitted and it has not settled yet, then a subsequent `/submit` call with `address A` and `USDC -> *` trade will fail with `429`. The taker is, however, allowed to submit other trades with a different taker token.
-* `500` if there is an internal server error.
-
+- `201` if successful
+- `400`:
+  - If the trade is too close to expiration time.
+  - If the signature in the payload is invalid.
+  - If the balance / allowance of the taker is less than the trade amount.
+  - (`otc` only) If the trade has been outstanding for too long.
+  - (`otc` only) If the balance / allowance of the market maker selected to settle the trade is less than the trade amount (very unlikely).
+  - If the query params are not able to pass validation.
+- `429` if there is already a trade associated with a taker address and a taker token that's not been settled by our relayers yet. For example, if `address A` already has a `USDC -> WETH` trade submitted and it has not settled yet, then a subsequent `/submit` call with `address A` and `USDC -> *` trade will fail with `429`. The taker is, however, allowed to submit other trades with a different taker token.
+- `500` if there is an internal server error.
 
 ## Note
 
-* If you're using `go-ethereum`, for `domain`, make sure you order the fields in the exact same order as specified in https://eips.ethereum.org/EIPS/eip-712 since `go-ethereum` does not enforce ordering. Also, make sure you skipped fields that are absent.
+- If you're using `go-ethereum`, for `domain`, make sure you order the fields in the exact same order as specified in https://eips.ethereum.org/EIPS/eip-712 since `go-ethereum` does not enforce ordering. Also, make sure you skipped fields that are absent.
+
 ```
 - string name: the user readable name of signing domain, i.e. the name of the DApp or the protocol.
 - string version: the current major version of the signing domain. Signatures from different - versions are not compatible.
@@ -98,4 +98,5 @@ More information on signing 0x orders is available [here](https://docs.0x.org/ma
 
 The EIP712Domain fields should be the order as above, skipping any absent fields
 ```
-* If you're using `ethers v6` (`v5` and `v4` are fine), there is an [issue](https://github.com/ethers-io/ethers.js/discussions/3873) for signing EIP-712 object. Make sure you updated `ethers` version to `>= 6.3.0`.
+
+- If you're using `ethers v6` (`v5` and `v4` are fine), there is an [issue](https://github.com/ethers-io/ethers.js/discussions/3873) for signing EIP-712 object. Make sure you updated `ethers` version to `>= 6.3.0`.
