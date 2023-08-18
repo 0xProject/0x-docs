@@ -108,6 +108,7 @@ Being able to attribute a trade to a specifec integrator is simple if you have a
 Caveats:
 * Not all calls made to the 0x Exchange proxy have an affliate tag (`869584cd`) as it is optional component of the 0x Protocol
 * 0x API always adds an affiliate address to the calldata, but not all integrators have enabled tagging, in those cases the affiliate address will be `0x10000000000000000000000000000000000000011`
+* Since the 0x Protocol is permissionles anybody can "spoof" tags
 
 Feel free to reach out to [jorge@0xproject.com](mailto:jorge@0xproject.com) (@ktl\_xv) for any questions!
 
