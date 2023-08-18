@@ -88,7 +88,7 @@ If you are looking for stats on specific dates or attribution, you can click int
 
 #### 🔑 0x Data API (beta)
 
-_For those looking for an GraphQL API to stream the data._
+_For those looking for an GraphQL API to query 0x Protocol Data._
 
 0x Explorer provides an API to access all the data available under a public beta, and the document is available [here](https://0x-docs.gitbook.io/data-api/GO2tLD8DYyx4JW6MuM7l/). If you want to get access to this data, please reach out to us through [this contact form](https://www.0x.org/#contact) and select Data API (beta) as your interest.
 
@@ -98,6 +98,18 @@ Do you believe that the truth can only be found in the blockchain?
 
 * If you don't have a data pipeline yet - our [event scraper](https://github.com/0xProject/0x-event-pipeline) is open source and only requires an RPC endpoint and a Postgres DB (Contributions are also welcome).
 * If you already have a blockchain data ETL already, with the full copy of data processed into relational databases - our [folder](https://github.com/duneanalytics/spellbook/tree/main/models/zeroex) under DuneAnalytics' collaborative repo will be the best reference.
+
+#### Affiliate Tracking
+Being able to attribute a trade to a specifec integrator is simple if you have access to the calldata of calls made to the 0x Exchange Proxy.
+1. Find the string `869584cd` in the calldata.
+2. Skip the following 32 `0`s
+3. The next 40 characters are the affiliate address (it is useful to prefix it with `0x` so they can be later used as addresses)
+
+Caveats:
+* Not all calls made to the 0x Exchange proxy have an affliate tag (`869584cd`) as it is optional component of the 0x Protocol
+* 0x API always adds an affiliate address to the calldata, but not all integrators have enabled tagging, in those cases the affiliate address will be `0x10000000000000000000000000000000000000011`
+* Since the 0x Protocol is permissionles anybody can "spoof" tags
+* The affiliate tag is a random, or custom, address it does not contain encoded name of an integrator
 
 Feel free to reach out to [jorge@0xproject.com](mailto:jorge@0xproject.com) (@ktl\_xv) for any questions!
 
