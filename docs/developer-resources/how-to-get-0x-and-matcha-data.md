@@ -100,7 +100,7 @@ Do you believe that the truth can only be found in the blockchain?
 * If you already have a blockchain data ETL already, with the full copy of data processed into relational databases - our [folder](https://github.com/duneanalytics/spellbook/tree/main/models/zeroex) under DuneAnalytics' collaborative repo will be the best reference.
 
 #### Affiliate Tracking
-Being able to attribute a trade to a specifec integrator is simple if you have access to the calldata of calls made to the 0x Exchainge Proxy.
+Being able to attribute a trade to a specifec integrator is simple if you have access to the calldata of calls made to the 0x Exchange Proxy.
 1. Find the string `869584cd` in the calldata.
 2. Skip the following 32 `0`s
 3. The next 40 characters are the affiliate address (it is useful to prefix it with `0x` so they can be later used as addresses)
