@@ -23,24 +23,38 @@ An array of liquidity sources.
 **Request**
 
 ```http
-https://fantom.api.0x.org/swap/v1/sources
+curl https://api.0x.org/swap/v1/sources --header '0x-api-key: <API_KEY>'
 ```
 
 **Response**
 
 ```json
 {
-    "records": [
-        "Beethovenx",
-        "Curve",
-        "Curve_V2",
-        "JetSwap",
-        "MorpheusSwap",
-        "MultiHop",
-        "SpiritSwap",
-        "SpookySwap",
-        "SushiSwap",
-        "Synapse"
-    ]
+  "records": [
+    "0x",
+    "Aave_V2",
+    "Balancer",
+    "Balancer_V2",
+    "BancorV3",
+    "Compound",
+    "CryptoCom",
+    "Curve",
+    "Curve_V2",
+    "DODO",
+    "DODO_V2",
+    "KyberDMM",
+    "KyberElastic",
+    "Lido",
+    "MakerPsm",
+    "Maverick_V1",
+    "MultiHop",
+    "ShibaSwap",
+    "SushiSwap",
+    "Synapse",
+    "Synthetix",
+    "Uniswap",
+    "Uniswap_V2",
+    "Uniswap_V3"
+  ]
 }
 ```
