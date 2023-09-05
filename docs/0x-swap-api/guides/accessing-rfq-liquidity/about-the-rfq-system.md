@@ -7,7 +7,7 @@ description: This guide discusses what RFQ liquidity is, how it works, and how y
 # About the RFQ System
 
 :::info
-This guide is for integrators/projects who would like to **access 0x RFQ liquidity**, via the Swap API. If you represent a trading firm or professional market maker that would like to supply liquidity via the 0x RFQ system, please get in touch here: [0x RFQ Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform?usp=sf_link)
+This guide is for integrators/projects who would like to **access** 0x RFQ liquidity, via the Swap API. If you represent a trading firm or professional market maker that would like to **supply** RFQ liquidity, please get in touch here: [0x RFQ Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform?usp=sf_link)
 :::
 
 ## About the RFQ System
