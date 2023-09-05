@@ -76,7 +76,6 @@ Developers may note when analyzing their transactions that some subset of 0x ord
 
 </details>
 
-
 ## 🔄 Swap API
 
 ### About Swap API
@@ -91,7 +90,6 @@ The Swap API has a powerful free plan that you can access by creating an account
 0x also takes an on-chain fee on swaps involving a select few token pairs for the Free and Starter tiers. This fee is charged on-chain to the users of your app during the transaction. If you are on the Growth tier, we completely waive this fee for your customers. In cases where we charge a fee, we'll return the value of the fee in the API response in the `zeroExFee` parameter. You can find more details about this in the [Swap API reference](/0x-swap-api/api-references/get-swap-v1-quote.md#response).
 
 </details>
-
 
 <details>
 
@@ -182,7 +180,7 @@ The fee amount is incorporated as part of the quoted price. If you would like to
 
 <summary>Can I collect trade surplus (a.k.a. positive slippage)?</summary>
 
-Trade surplus occurs when the user ends up receiving more tokens than their quoted amount. 0x API is configurable such that you collect trade surplus on your trades to a specified address. 
+Trade surplus occurs when the user ends up receiving more tokens than their quoted amount. 0x API is configurable such that you collect trade surplus on your trades to a specified address.
 
 This can be done by setting the `feeRecipientTradeSurplus` parameter in a [Swap API request](/0x-swap-api/api-references/get-swap-v1-quote#request).
 `feeRecipientTradeSurplus` represents the wallet address you want to collect the fee in. When a transaction produces trade surplus, 100% of it will be collected in that wallet.
@@ -332,6 +330,8 @@ Developers can also surface this information in their UI so users can see the po
 
 Our rate limits exists because we want to encourage anyone using our infra to actually swap, not just use our API as a price oracle. If you would like to query for token prices, we would recommend either setting up your own 0x API instance via the [repo README](https://github.com/0xProject/0x-api#getting-started) instructions or query a 3rd party service like [coingecko](https://www.coingecko.com/en/coins/usd-coin#markets).
 
+Read more about our [rate limits](/0x-swap-api/guides/rate-limits).
+
 </details>
 
 <details>
@@ -368,6 +368,7 @@ The 0x fee amount is returned in the `zeroExFee` parameter in the quotes where w
 <summary>Does the 0x Dashboard support having multiple user accounts for our team?</summary>
 
 For now we only support one user per team account, but we will add support for multiple users in the coming weeks.
+
 </details>
 
 <details>
@@ -448,7 +449,7 @@ require(success, "Swap not filled");
 
 <summary>My project would like to integrate with 0x. How can I contact the 0x team?</summary>
 
-We appreciate your interest in building with our APIs. To get an API key and start building for free, please create an account on the [0x Dashboard](https://dashboard.0x.org/). You may also [check out our enterprise options](https://0x.org/pricing) and [contact our team](https://www.0x.org/#contact) for more custom needs. Our team will review and respond to you.
+We appreciate your interest in building with our APIs. To get an API key and start building for free, please create an account on the [0x Dashboard](https://dashboard.0x.org/). You may also [check out all our available plans](https://0x.org/pricing) and [contact our team](https://www.0x.org/#contact) for more custom needs. Our team will review and respond to you.
 
 </details>
 

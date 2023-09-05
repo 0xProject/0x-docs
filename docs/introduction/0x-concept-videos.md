@@ -1,10 +1,10 @@
 ---
-sidebar_label: 0x Concept Videos
+sidebar_label: Videos
 sidebar_position: 4
 description: This page contains a shortlist of videos that showcase notable features of the 0x tech stack
 ---
 
-# 0x Concept Videos
+# Videos
 
 **Table of Contents**
 
