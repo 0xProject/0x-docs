@@ -36,4 +36,4 @@ In addition to the Swap API configuration identifying trusted takers, it also co
 
 # Integrating RFQ Liquidity
 
-Read about how to easily integrate RFQ liquidity into your project here: [Integrating RFQ Liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/integrating-rfq-liquidity.md)
+Read about how to easily [integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/integrating-rfq-liquidity) into your project.
