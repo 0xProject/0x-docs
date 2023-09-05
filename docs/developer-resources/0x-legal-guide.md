@@ -1,8 +1,9 @@
 ---
-sidebar_label: 0x Legal Guide
+sidebar_label: Legal Guide
 sidebar_position: 8
 description: 0x Legal Guide
 ---
+
 # 0x Legal Guide
 
 ## Introduction
@@ -21,13 +22,13 @@ In the U.S., a complex web of laws and regulations apply to activities involving
 
 #### What is a security?
 
-So what is a security? Unfortunately, as even [federal courts have recognized](https://scholar.google.com/scholar\_case?case=10900624885862830401\&q=gary+plastic\&hl=en\&as\_sdt=6,47#p238), the definition of a security is "broad and ambiguous." Consequently, it is difficult to layout a bright line rule by which a security can easily be distinguished from a non-security. Instead, [courts have designed a flexible test](https://scholar.google.com/scholar\_case?case=12975052269830471754) that is intended to "to meet the countless and variable schemes devised by those who seek the use of money of others on the promise of profits."
+So what is a security? Unfortunately, as even [federal courts have recognized](https://scholar.google.com/scholar_case?case=10900624885862830401&q=gary+plastic&hl=en&as_sdt=6,47#p238), the definition of a security is "broad and ambiguous." Consequently, it is difficult to layout a bright line rule by which a security can easily be distinguished from a non-security. Instead, [courts have designed a flexible test](https://scholar.google.com/scholar_case?case=12975052269830471754) that is intended to "to meet the countless and variable schemes devised by those who seek the use of money of others on the promise of profits."
 
-In particular, the U.S. Supreme Court has outlined a four-part test for determining whether a transaction qualifies as a form of a security called an “investment contract." Originally set forth in [SEC v. W.J. Howey Co.](https://scholar.google.com/scholar\_case?case=12975052269830471754\&q=sec+v+howey\&hl=en\&as\_sdt=6,47#p298), the Court has explained that a transaction is an “investment contract” when it involves (1) an investment of money (2) in a common enterprise (3) with an expectation of profit (4) to be derived from the efforts of others.
+In particular, the U.S. Supreme Court has outlined a four-part test for determining whether a transaction qualifies as a form of a security called an “investment contract." Originally set forth in [SEC v. W.J. Howey Co.](https://scholar.google.com/scholar_case?case=12975052269830471754&q=sec+v+howey&hl=en&as_sdt=6,47#p298), the Court has explained that a transaction is an “investment contract” when it involves (1) an investment of money (2) in a common enterprise (3) with an expectation of profit (4) to be derived from the efforts of others.
 
-There is a long history of cases interpreting whether various financial instruments meet this definition of a security, covering everything from [bank certificates of deposits](https://scholar.google.com/scholar\_case?case=10900624885862830401) to interests in [whiskey barrels](https://scholar.google.com/scholar\_case?case=14457626249500273939). Some of the most influential cases have been compiled [here](broken-reference). However, there are many more cases analyzing various elements of the Howey test, each hinging on the specific facts of the particular transaction.
+There is a long history of cases interpreting whether various financial instruments meet this definition of a security, covering everything from [bank certificates of deposits](https://scholar.google.com/scholar_case?case=10900624885862830401) to interests in [whiskey barrels](https://scholar.google.com/scholar_case?case=14457626249500273939). Some of the most influential cases have been compiled [here](broken-reference). However, there are many more cases analyzing various elements of the Howey test, each hinging on the specific facts of the particular transaction.
 
-As proof of the inherent difficulty in defining a clear border between what is and is not a security, there have been numerous instances of courts applying the Howey test to seemingly similar transactions and coming to different results. For example, there are several cases holding certain [real estate leases](https://scholar.google.com/scholar\_case?case=4030348895733612487) to be securities when offered in a particular manner. Likewise, there are numerous cases addressing when the sale of a tangible product like [the sale of beavers](https://scholar.google.com/scholar\_case?case=8958675023427121133) may be offered as part of a securities transaction. These cases demonstrate that courts place less of a premium on the nature of the underlying product being sold and more on the manner in which it was sold.
+As proof of the inherent difficulty in defining a clear border between what is and is not a security, there have been numerous instances of courts applying the Howey test to seemingly similar transactions and coming to different results. For example, there are several cases holding certain [real estate leases](https://scholar.google.com/scholar_case?case=4030348895733612487) to be securities when offered in a particular manner. Likewise, there are numerous cases addressing when the sale of a tangible product like [the sale of beavers](https://scholar.google.com/scholar_case?case=8958675023427121133) may be offered as part of a securities transaction. These cases demonstrate that courts place less of a premium on the nature of the underlying product being sold and more on the manner in which it was sold.
 
 #### Application to the crypto asset industry
 
@@ -37,9 +38,9 @@ Moreover, there is significant confusion even among lawyers as to how Howey shou
 
 In the context of this unclear regulatory environment, developers integrating 0x are left to make good faith attempts at trying to comply with the securities law. For many offering a portal or platform for customers to trade crypto assets, this generally should involve conducting an analysis of each token and its underlying network before listing the asset on the platform. Some helpful factors to analyze include:
 
-* How was the initial token sale or distribution conducted, including what did the development team represent to prospective tokens purchasers?
-* How is the token designed to operate within the network being created, including whether the design is meant to confer specific financial returns to the token holder or instead be used in some consumptive manner?
-* What is the current status of development on the underlying network or project, and is their interest and involvement from those other than the team that issued the tokens?
+- How was the initial token sale or distribution conducted, including what did the development team represent to prospective tokens purchasers?
+- How is the token designed to operate within the network being created, including whether the design is meant to confer specific financial returns to the token holder or instead be used in some consumptive manner?
+- What is the current status of development on the underlying network or project, and is their interest and involvement from those other than the team that issued the tokens?
 
 This suggested framework is not meant to be comprehensive, and depending on the nature of the project being developed, it may be helpful to work directly with lawyers to design a process that provides adequate protection.
 
@@ -53,7 +54,7 @@ Currently, one of the largest areas of debate relating to the SEC's position on 
 
 The primary takeaway from these statements is that the SEC has recognized that a crypto asset previously sold in a securities offering can later be sold on the secondary market in a non-securities transactions under certain circumstances. However, there are still many questions to be answered about the standard the SEC will use to distinguish between securities and non-securities transactions of crypto assets. Furthermore, despite advocating for a nuanced analysis of each token's network to make such a determination, the SEC has not actively engaged with this concept in the enforcement actions it has brought against certain industry participants. Instead, the SEC has issued orders in settled cases involving secondary market participants in which it has alleged without further explanation that the tokens themselves are the securities. Therefore, it is unclear exactly what analysis is currently actually being applied as it relates to secondary market transactions of crypto assets.
 
-There has been significant debate about the SEC's general position relative to the crypto asset industry. Many have called on the SEC to provide greater clarity to the industry and to avoid regulating by enforcement. Most notably, for the first time ever, a crypto project in the SEC's crosshairs has decided not to settle and instead litigate against the SEC in court. The SEC filed [a complaint in federal court](https://www.sec.gov/litigation/complaints/2019/comp-pr2019-87.pdf) that alleges that Kik Interactive conducted an unregistered securities offering when it sold Kin tokens for approximately $100 million dollars in other assets. [Kik's submission to the SEC](http://kinecosystem.org/wells\_response.pdf) arguing that it should not be sued was released to the public, and together these two documents present the stark difference in opinion that some within in the industry have aboue the SEC's current approach to crypto assets.
+There has been significant debate about the SEC's general position relative to the crypto asset industry. Many have called on the SEC to provide greater clarity to the industry and to avoid regulating by enforcement. Most notably, for the first time ever, a crypto project in the SEC's crosshairs has decided not to settle and instead litigate against the SEC in court. The SEC filed [a complaint in federal court](https://www.sec.gov/litigation/complaints/2019/comp-pr2019-87.pdf) that alleges that Kik Interactive conducted an unregistered securities offering when it sold Kin tokens for approximately $100 million dollars in other assets. [Kik's submission to the SEC](http://kinecosystem.org/wells_response.pdf) arguing that it should not be sued was released to the public, and together these two documents present the stark difference in opinion that some within in the industry have aboue the SEC's current approach to crypto assets.
 
 The Kik case will play out in court and could potentially result in judicial decisions that provide further clarity as to how securities law will apply. However, there have also been [efforts](https://coincenter.org/entry/principles-for-clarifying-sec-jurisdiction-over-cryptocurrencies-and-icos) outside the judicial realm, and even [some early legislative bills](https://www.cnbc.com/2018/12/20/lawmakers-look-to-change-secs-72-year-old-securities-definition-to-exclude-cryptocurrencies.html) in Congress, calling for the creation of standards defining the line between securities and non-securities more clearly.
 
@@ -75,15 +76,15 @@ As explained above, settlement orders like this are not binding law. Moreover, e
 
 ### Federal Commodities and Derivatives Regulation
 
-When we think about commodities, historically this term has been used to refer to agriculture products like wheat, corn and sugar. However, U.S. law has evolved to define a commodity extremely broadly to also include "all services, rights, and interests . . . in which contracts for future delivery are presently or in the future dealt in.” As a result, almost anything (except [onions](https://en.wikipedia.org/wiki/Onion\_Futures\_Act)) can constitute a “commodity” under the definition.
+When we think about commodities, historically this term has been used to refer to agriculture products like wheat, corn and sugar. However, U.S. law has evolved to define a commodity extremely broadly to also include "all services, rights, and interests . . . in which contracts for future delivery are presently or in the future dealt in.” As a result, almost anything (except [onions](https://en.wikipedia.org/wiki/Onion_Futures_Act)) can constitute a “commodity” under the definition.
 
-The Commodities Futures Trading Commission (CFTC) is the primary regulator of "commodities interests". The [CFTC has taken the position](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrenforcementactions/documents/legalpleading/enfcoinfliprorder09172015.pdf) that some virtual currencies like Bitcoin are commodities, and there have already been [court cases that agree](https://scholar.google.com/scholar\_case?case=16464466787559233193) with this position. Based on the broad definition discussed above, it is possible that virtually every crypto asset can be legally defined as a commodity. From a practical perspective, it seems that the CFTC is taking a deliberate approach to the crypto asset industry, and is not actively extending its jurisdiction where, for example, the SEC may first want to identify an asset as a security. Moreover, it remains to be seen whether the CFTC will identify some limit to the definition of a commodity for assets like non-fungible tokens and crypto collectibles.
+The Commodities Futures Trading Commission (CFTC) is the primary regulator of "commodities interests". The [CFTC has taken the position](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrenforcementactions/documents/legalpleading/enfcoinfliprorder09172015.pdf) that some virtual currencies like Bitcoin are commodities, and there have already been [court cases that agree](https://scholar.google.com/scholar_case?case=16464466787559233193) with this position. Based on the broad definition discussed above, it is possible that virtually every crypto asset can be legally defined as a commodity. From a practical perspective, it seems that the CFTC is taking a deliberate approach to the crypto asset industry, and is not actively extending its jurisdiction where, for example, the SEC may first want to identify an asset as a security. Moreover, it remains to be seen whether the CFTC will identify some limit to the definition of a commodity for assets like non-fungible tokens and crypto collectibles.
 
 Commodities are regulated very differently than securities. Indeed, just because something is a commodity does not mean that it is subject to specific rules such as the requirements around securities governing who can purchase them, how they must be offered, etc. This is due to the fact that, historically, the spot market for trading commodities has been considerably smaller than the market for trading derivatives of commodities. Most people do not trade actual stalks of corn for cash. Instead, most people trade contracts based on the future price of corn (or other commodities) - i.e., futures contracts. However, with crypto assets, much of the exchange activity occurs in the spot market.
 
 There are no laws directly regulating spot market transactions for commodities (i.e., transactions that involve the full payment of the purchase price and contemporaneous delivery of commodity at the time the transaction is entered by the parties). The CFTC has limited authority to police the spot markets for fraud and manipulation, but cannot adopt rules that directly control how spot market participants transact.
 
-U.S. law does set forth detailed restrictions for a wide range of non-spot market transactions, including those involving commodities derivatives, future delivery or financing, leverage, or margin. As a result, the CFTC has been actively regulating nascent futures markets in commodities like Bitcoin. Additionally, the CFTC has been monitoring smart contract applications closely and [has put out statements](https://www.cftc.gov/sites/default/files/2018-11/LabCFTC\_PrimerSmartContracts112718\_0.pdf) explaining that certain actors must comply with applicable regulations when using smart contracts to facilitate regulated transactions in commodities interests, such as forwards, futures, options and swaps.
+U.S. law does set forth detailed restrictions for a wide range of non-spot market transactions, including those involving commodities derivatives, future delivery or financing, leverage, or margin. As a result, the CFTC has been actively regulating nascent futures markets in commodities like Bitcoin. Additionally, the CFTC has been monitoring smart contract applications closely and [has put out statements](https://www.cftc.gov/sites/default/files/2018-11/LabCFTC_PrimerSmartContracts112718_0.pdf) explaining that certain actors must comply with applicable regulations when using smart contracts to facilitate regulated transactions in commodities interests, such as forwards, futures, options and swaps.
 
 At a high level, a CFTC-regulated transaction can only be conducted over regulated exchanges, which include, depending on the type of transaction, Designated Contract Markets (“DCMs”) and Swap Execution Facilities (“SEFs”). Exceptions to this requirement may apply, but broadly speaking, these exceptions are only available to certain sophisticated market participants or high-net-worth individuals. In addition, the CFTC directly regulates the intermediaries that facilitate CFTC-regulated transactions, including introducing brokers, futures commission merchants, swap dealers, commodity pool operators, or commodity trading advisors. The application process to become a DCM, SEF, or regulated intermediary is costly and difficult, and regulated exchanges and intermediaries are subject to extensive ongoing regulatory oversight by the CFTC.
 
@@ -95,7 +96,7 @@ Unlike most other U.S. financial laws that establish process-based rules that mu
 
 In practice, most companies implement risk-based processes custom tailored to their business in order to avoid sanctions violations. The convenience store in Michigan faces virtually no risk of conducting significant business with sanctioned individuals and thus likely does not need a "know your customer" (KYC) program. On the other hand, a U.S. affiliated bank operating in countries that rank high in corruption will likely need to be able to conduct thorough background checks on customers to ensure compliance.
 
-OFAC sanctions is one of the legal regimes that does not suffer from a significant lack of clarity when applied to most crypto asset projects. For any U.S. person operating such a project, they are potentially liable if a sanctioned individual uses their service. For more information, OFAC has included some [frequently asked questions about virtual currencies on its website](https://www.treasury.gov/resource-center/faqs/Sanctions/Pages/faq\_compliance.aspx#vc\_faqs). Notably, OFAC states that it may identify certain virtual currency wallet addresses belonging to individuals on the SDN list so that U.S. persons can block transactions with that address. The first instance of this practice occured in November 2018, 2h3n OFAC [identified](https://home.treasury.gov/news/press-releases/sm556) bitcoin wallet addresses belonging to two individuals added to the SDN list.
+OFAC sanctions is one of the legal regimes that does not suffer from a significant lack of clarity when applied to most crypto asset projects. For any U.S. person operating such a project, they are potentially liable if a sanctioned individual uses their service. For more information, OFAC has included some [frequently asked questions about virtual currencies on its website](https://www.treasury.gov/resource-center/faqs/Sanctions/Pages/faq_compliance.aspx#vc_faqs). Notably, OFAC states that it may identify certain virtual currency wallet addresses belonging to individuals on the SDN list so that U.S. persons can block transactions with that address. The first instance of this practice occured in November 2018, 2h3n OFAC [identified](https://home.treasury.gov/news/press-releases/sm556) bitcoin wallet addresses belonging to two individuals added to the SDN list.
 
 The extent of the risk of exposure to sanctioned individuals and countries can vary widely based on the specific project, and may be influenced by such variables as the type of assets being offered, the volume of transactions being facilitated, the areas in which the service is available. Ultimately, there is no one-size-fits-all to OFAC sanctions compliance but it is an issue that each project should consider.
 
@@ -115,19 +116,19 @@ Where the line is between what is and is not a convertible virtual currency is n
 
 For now, let's assume we are dealing with a token that meets the definition of a convertible virtual currency. The guidance describes certain activities involving convertible virtual currencies that constitute money transmission. Specifically, FinCEN created the following categories:
 
-* User - A user is defined as someone who obtains convertible virtual currency in order to purchase goods or services. In subsequent statements from FinCEN, this definition has been broadened somewhat to include someone who purchases convertible virtual currency as investment for his or her own account.
-* Exchanger - An exchanger is defined as someone engaged in the business of exchanging virtual currency for real currency, funds, or another virtual currency by either 1) accepting and transmitting a convertible virtual currency or 2) buying and selling a convertible virtual currency for any reason.
-* Administrator - An administrator is defined as someone engaged as a business in issuing (putting into circulation) a virtual currency, and who has the authority to redeem (to withdraw from circulation) such virtual currency. As most crypto assets are issued without an ability to mandate redemption, this definition is generally not that relevant for our purposes.
+- User - A user is defined as someone who obtains convertible virtual currency in order to purchase goods or services. In subsequent statements from FinCEN, this definition has been broadened somewhat to include someone who purchases convertible virtual currency as investment for his or her own account.
+- Exchanger - An exchanger is defined as someone engaged in the business of exchanging virtual currency for real currency, funds, or another virtual currency by either 1) accepting and transmitting a convertible virtual currency or 2) buying and selling a convertible virtual currency for any reason.
+- Administrator - An administrator is defined as someone engaged as a business in issuing (putting into circulation) a virtual currency, and who has the authority to redeem (to withdraw from circulation) such virtual currency. As most crypto assets are issued without an ability to mandate redemption, this definition is generally not that relevant for our purposes.
 
 Since issuing its initial guidance in 2013, FinCEN has clarified these definitions in subsequent "Administrative Rulings." In [one of these administrative rulings](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R001.pdf), FinCEN clarified that a person who exchanges virtual currency for their own account as not as a business service to third parties is considered a user and not an exchanger. In [another ruling](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R002.pdf), FinCEN stated "\[t]he production and distribution of software, in and of itself, does not constitute acceptance and transmission of value, even if the purpose of the software is to facilitate the sale of virtual currency. "
 
-For teams developing on 0x, there is a strong argument that the definition of exchanger does not apply to someone who does not take custody of another person's virtual currency. As explained thoughtfully in [this report](https://www.coincenter.org/aml-kyc-tokens/) from Coin Center: 
+For teams developing on 0x, there is a strong argument that the definition of exchanger does not apply to someone who does not take custody of another person's virtual currency. As explained thoughtfully in [this report](https://www.coincenter.org/aml-kyc-tokens/) from Coin Center:
 
 _"A non-custodial exchange is probably not an exchanger or a money transmitter. If, like Craigslist or any other online classified advertising service, the business merely helps individual buyers and sellers find and communicate with each other, then it is never “accepting and transmitting” tokens or bitcoins for its users, nor is it “buying or selling” tokens or bitcoins. It may be commonly understood as an exchange because it deals in exchange-related information (e.g. order-books, offers, acceptances, communications between buyers and sellers) but it, as a company, is never doing the actual currency conversion or handling the actual tokens or money; that all happens peer-to-peer. Another way to characterize what these companies do is: development of a web-based software tool (e.g. a website) that facilitates peer-to-peer exchange. As we discussed earlier, FinCEN’s Software and Investment Ruling describes mere software development and distribution as outside the scope of BSA regulation."_
 
 The facts and circumstances of any particular project built on 0x may impact this analysis. As with this entire primer, the above is just intended as a legal resource and for actual legal advice on any particular project or situation, you should hire a lawyer.
 
-***
+---
 
 ## Legal Library
 
@@ -137,135 +138,135 @@ The facts and circumstances of any particular project built on 0x may impact thi
 
 _Regarding Crypto Assets_
 
-* [SEC v. Blockvest, LLC](https://www.sec.gov/litigation/litreleases/2019/order24400.pdf) (S.D. Cal. 2019)
+- [SEC v. Blockvest, LLC](https://www.sec.gov/litigation/litreleases/2019/order24400.pdf) (S.D. Cal. 2019)
 
 _Important Howey Test Cases_
 
-* [SEC v. C.M. Joiner Leasing Corp.](https://scholar.google.com/scholar\_case?case=11822356269281048781), 320 U.S. 344 (1943)
-* [SEC v. W.J. Howey Co.](https://scholar.google.com/scholar\_case?case=12975052269830471754), 328 U.S. 293 (1946)
-* [Tcherepnin v. Knight](https://scholar.google.com/scholar\_case?case=5481496770318090573), 389 U.S. 332 (1967)
-* [United Housing Foundation, Inc. v. Forman](https://scholar.google.com/scholar\_case?case=11168754825085710379), 421 U.S. 837 (1975)
-* [Glen-Arden Commodities, Inc. v. Costantino](https://scholar.google.com/scholar\_case?case=14457626249500273939), 493 F.2d 1027 (2d Cir. 1974)
-* [Gary Plastic Packaging Corp. v. Merrill Lynch](https://scholar.google.com/scholar\_case?case=10900624885862830401), 756 F.2d 230 (2d Cir. 1985)
+- [SEC v. C.M. Joiner Leasing Corp.](https://scholar.google.com/scholar_case?case=11822356269281048781), 320 U.S. 344 (1943)
+- [SEC v. W.J. Howey Co.](https://scholar.google.com/scholar_case?case=12975052269830471754), 328 U.S. 293 (1946)
+- [Tcherepnin v. Knight](https://scholar.google.com/scholar_case?case=5481496770318090573), 389 U.S. 332 (1967)
+- [United Housing Foundation, Inc. v. Forman](https://scholar.google.com/scholar_case?case=11168754825085710379), 421 U.S. 837 (1975)
+- [Glen-Arden Commodities, Inc. v. Costantino](https://scholar.google.com/scholar_case?case=14457626249500273939), 493 F.2d 1027 (2d Cir. 1974)
+- [Gary Plastic Packaging Corp. v. Merrill Lynch](https://scholar.google.com/scholar_case?case=10900624885862830401), 756 F.2d 230 (2d Cir. 1985)
 
 #### SEC Statements & Settlement Orders
 
-* [Framework for Investment Contract Analysis of Digital Assets](https://www.sec.gov/corpfin/framework-investment-contract-analysis-digital-assets)
-  * Proposed framework from SEC's FinHub as to how to analyze whether the sale or offering of a digital asset constitutes a security in the form of an investment contract.
-* [SEC Settlement Order re: Gladius Network LLC](https://www.sec.gov/litigation/admin/2019/33-10608.pdf) (Feb. 20, 2019)
-  * Settlement for unregistered securities offering resulting in no penalty due to self disclosure and cooperation.
-* [Speech by Commissioner Hester Peirce: Regulation: A View from Inside the Machine](https://www.sec.gov/news/speech/peirce-regulation-view-inside-machine) (Feb. 8, 2019)
-* [Statement on Digital Asset Securities Issuance and Trading](https://www.sec.gov/news/public-statement/digital-asset-securites-issuuance-and-trading) (Nov. 16, 2018)
-  * Statement from multiple SEC divisions highlighting recent enforcement actions and providing some guidance on the SEC's interpretation about the intersection of securities law and token offerings and trading.
-* [SEC Settlement Order re: AirFox](https://www.sec.gov/litigation/admin/2018/33-10575.pdf) (Nov. 16, 2018)
-  * Settlement based on allegations that AirFox token sale constituted an unregistered securities offering and that AirFox tokens are securities.
-* [SEC Settlement Order re: Paragon](https://www.sec.gov/litigation/admin/2018/33-10574.pdf) (Nov. 16, 2018)
-  * Settlement based on allegations that Paragon token sale constituted an unregistered securities offering and that PRG tokens are securities.
-* [SEC Settlement Order re: Zachary Coburn](https://www.sec.gov/litigation/admin/2018/34-84553.pdf) (Nov. 8, 2018)
-  * Settlement based on allegation that EtherDelta operated as a securities exchange without proper registration.
-* [SEC Settlement Order re: TokenLot](https://www.sec.gov/litigation/admin/2018/33-10543.pdf) (Sept. 11, 2018)
-  * Settlement based on allegations that TokenLot operated as an unregistered broker-dealer by soliciting investors to participate in ICOs and facilitating secondary market trading of tokens that were securities.
-* [Digital Asset Transactions: When Howey Met Gary (Plastic)](https://www.sec.gov/news/speech/speech-hinman-061418): William Hinman - SEC Director of Division of Corporate Finance (June 14, 2018)
-  * Speech by SEC official opining that ETH in its current form is not a security and laying out factors fow when a sufficiently decentralized digital asset may not be a security.
-* [Statement on Potentially Unlawful Online Platforms for Trading Digital Assets](https://www.sec.gov/news/public-statement/enforcement-tm-statement-potentially-unlawful-online-platforms-trading) (Mar. 7, 2018)
-  * Statement from multiple SEC divisions regarding regulatory issues and consumer risks related to trading tokens on exchanges, particularly tokens that meet the definition of a security.
-* [SEC Settlement Order re: Munchee](https://www.sec.gov/litigation/admin/2017/33-10445.pdf) (Dec. 11, 2017)
-  * Settlement based on allegation that MUN token sale constituted sale of unregistered securities.
-* [Statement on Cryptocurrencies and Initial Coin Offerings](https://www.sec.gov/news/public-statement/statement-clayton-2017-12-11) (Dec. 11, 2017)
-  * Statement from SEC Chairman directed at investors and industry participants regarding potential regulatory issues with ICOs.
-* [Report of Investigation Pursuant to Section 21(a) of the Securities Exchange Act of 1934: The DAO](https://www.sec.gov/litigation/investreport/34-81207.pdf) (July 25, 2017)
-  * Report alleging that DAO token sale constituted sale of unregistered securities and that DAO tokens were securities.
-* Other SEC resources:
-  * [Initial Coin Offerings](https://www.sec.gov/spotlight-initial-coin-offerings-and-digital-assets) resource page
-  * [Index of statements](https://www.sec.gov/spotlight-initial-coin-offerings-and-digital-assets) re ICOs and digital assets
-  * [SEC FinHub](https://www.sec.gov/finhub) landing page
+- [Framework for Investment Contract Analysis of Digital Assets](https://www.sec.gov/corpfin/framework-investment-contract-analysis-digital-assets)
+  - Proposed framework from SEC's FinHub as to how to analyze whether the sale or offering of a digital asset constitutes a security in the form of an investment contract.
+- [SEC Settlement Order re: Gladius Network LLC](https://www.sec.gov/litigation/admin/2019/33-10608.pdf) (Feb. 20, 2019)
+  - Settlement for unregistered securities offering resulting in no penalty due to self disclosure and cooperation.
+- [Speech by Commissioner Hester Peirce: Regulation: A View from Inside the Machine](https://www.sec.gov/news/speech/peirce-regulation-view-inside-machine) (Feb. 8, 2019)
+- [Statement on Digital Asset Securities Issuance and Trading](https://www.sec.gov/news/public-statement/digital-asset-securites-issuuance-and-trading) (Nov. 16, 2018)
+  - Statement from multiple SEC divisions highlighting recent enforcement actions and providing some guidance on the SEC's interpretation about the intersection of securities law and token offerings and trading.
+- [SEC Settlement Order re: AirFox](https://www.sec.gov/litigation/admin/2018/33-10575.pdf) (Nov. 16, 2018)
+  - Settlement based on allegations that AirFox token sale constituted an unregistered securities offering and that AirFox tokens are securities.
+- [SEC Settlement Order re: Paragon](https://www.sec.gov/litigation/admin/2018/33-10574.pdf) (Nov. 16, 2018)
+  - Settlement based on allegations that Paragon token sale constituted an unregistered securities offering and that PRG tokens are securities.
+- [SEC Settlement Order re: Zachary Coburn](https://www.sec.gov/litigation/admin/2018/34-84553.pdf) (Nov. 8, 2018)
+  - Settlement based on allegation that EtherDelta operated as a securities exchange without proper registration.
+- [SEC Settlement Order re: TokenLot](https://www.sec.gov/litigation/admin/2018/33-10543.pdf) (Sept. 11, 2018)
+  - Settlement based on allegations that TokenLot operated as an unregistered broker-dealer by soliciting investors to participate in ICOs and facilitating secondary market trading of tokens that were securities.
+- [Digital Asset Transactions: When Howey Met Gary (Plastic)](https://www.sec.gov/news/speech/speech-hinman-061418): William Hinman - SEC Director of Division of Corporate Finance (June 14, 2018)
+  - Speech by SEC official opining that ETH in its current form is not a security and laying out factors fow when a sufficiently decentralized digital asset may not be a security.
+- [Statement on Potentially Unlawful Online Platforms for Trading Digital Assets](https://www.sec.gov/news/public-statement/enforcement-tm-statement-potentially-unlawful-online-platforms-trading) (Mar. 7, 2018)
+  - Statement from multiple SEC divisions regarding regulatory issues and consumer risks related to trading tokens on exchanges, particularly tokens that meet the definition of a security.
+- [SEC Settlement Order re: Munchee](https://www.sec.gov/litigation/admin/2017/33-10445.pdf) (Dec. 11, 2017)
+  - Settlement based on allegation that MUN token sale constituted sale of unregistered securities.
+- [Statement on Cryptocurrencies and Initial Coin Offerings](https://www.sec.gov/news/public-statement/statement-clayton-2017-12-11) (Dec. 11, 2017)
+  - Statement from SEC Chairman directed at investors and industry participants regarding potential regulatory issues with ICOs.
+- [Report of Investigation Pursuant to Section 21(a) of the Securities Exchange Act of 1934: The DAO](https://www.sec.gov/litigation/investreport/34-81207.pdf) (July 25, 2017)
+  - Report alleging that DAO token sale constituted sale of unregistered securities and that DAO tokens were securities.
+- Other SEC resources:
+  - [Initial Coin Offerings](https://www.sec.gov/spotlight-initial-coin-offerings-and-digital-assets) resource page
+  - [Index of statements](https://www.sec.gov/spotlight-initial-coin-offerings-and-digital-assets) re ICOs and digital assets
+  - [SEC FinHub](https://www.sec.gov/finhub) landing page
 
 #### Commentary & Analysis
 
-* [Electronic Frontier Foundation letter to the SEC re: EtherDelta settlement](https://www.eff.org/files/2019/02/12/correspondence\_from\_eff\_re\_in\_the\_matter\_of\_zachary\_coburn\_file\_no.\_3-18888-2.pdf) (Feb. 12, 2019)
-* [Submission by Kik Interactive Inc. to the SEC](http://kinecosystem.org/wells\_response.pdf) (Dec. 10, 2018)
-* [What Are Token Securities? Some Questions from the Perplexed](https://corpgov.law.harvard.edu/2018/12/20/when-are-tokens-securities-some-questions-from-the-perplexed/) by James J. Park - UCLA School of Law (Dec. 20, 2018)
-* [What can the EtherDelta settlement tell us about how decentralized exchanges are regulated?](https://coincenter.org/entry/what-can-the-etherdelta-settlement-tell-us-about-how-decentralized-exchanges-are-regulated) by Peter Van Valkenburgh - Coin Center (Nov. 8, 2018)
-* [Securities Law & Crypto - Unqualified Opinions #14](https://messari.substack.com/p/securities-law-and-crypto-unqualified) by Katherine Wu - Messari (Oct. 11, 2018)
-* [Securities Regulations and Initial Coin Offerings: A Legal Primer](https://fas.org/sgp/crs/misc/R45301.pdf) by Jay B. Sykes - Congressional Research Service (Aug. 31, 2018)
-* [Framework for Securities Regulation of Cryptocurrencies (v2)](https://www.coincenter.org/framework-for-securities-regulation-of-cryptocurrencies/) by Peter Van Valkenburgh - Coin Center (Aug. 10, 2018)
-* [Principles for Clarifying SEC Jurisdiction over Cryptocurrencies and ICOs](https://coincenter.org/entry/principles-for-clarifying-sec-jurisdiction-over-cryptocurrencies-and-icos) by Peter Van Valkenburgh - Coin Center (May 24, 2018)
-* [Regulation of Token Sales](https://youtu.be/tz8t5OTc7R0) {video} - Coin Center (Oct. 24, 2017)
+- [Electronic Frontier Foundation letter to the SEC re: EtherDelta settlement](https://www.eff.org/files/2019/02/12/correspondence_from_eff_re_in_the_matter_of_zachary_coburn_file_no._3-18888-2.pdf) (Feb. 12, 2019)
+- [Submission by Kik Interactive Inc. to the SEC](http://kinecosystem.org/wells_response.pdf) (Dec. 10, 2018)
+- [What Are Token Securities? Some Questions from the Perplexed](https://corpgov.law.harvard.edu/2018/12/20/when-are-tokens-securities-some-questions-from-the-perplexed/) by James J. Park - UCLA School of Law (Dec. 20, 2018)
+- [What can the EtherDelta settlement tell us about how decentralized exchanges are regulated?](https://coincenter.org/entry/what-can-the-etherdelta-settlement-tell-us-about-how-decentralized-exchanges-are-regulated) by Peter Van Valkenburgh - Coin Center (Nov. 8, 2018)
+- [Securities Law & Crypto - Unqualified Opinions #14](https://messari.substack.com/p/securities-law-and-crypto-unqualified) by Katherine Wu - Messari (Oct. 11, 2018)
+- [Securities Regulations and Initial Coin Offerings: A Legal Primer](https://fas.org/sgp/crs/misc/R45301.pdf) by Jay B. Sykes - Congressional Research Service (Aug. 31, 2018)
+- [Framework for Securities Regulation of Cryptocurrencies (v2)](https://www.coincenter.org/framework-for-securities-regulation-of-cryptocurrencies/) by Peter Van Valkenburgh - Coin Center (Aug. 10, 2018)
+- [Principles for Clarifying SEC Jurisdiction over Cryptocurrencies and ICOs](https://coincenter.org/entry/principles-for-clarifying-sec-jurisdiction-over-cryptocurrencies-and-icos) by Peter Van Valkenburgh - Coin Center (May 24, 2018)
+- [Regulation of Token Sales](https://youtu.be/tz8t5OTc7R0) {video} - Coin Center (Oct. 24, 2017)
 
 ### Federal Commodities & Derivatives Regulation
 
 #### Key Cases
 
-* [CFTC v. My Big Coin Pay, Inc.](https://www.cftc.gov/sites/default/files/2018-10/enfmybigcoinpayincmemorandum092618\_0.pdf) (D. Mass. 2018)
-* [CFTC v. McDonnell](https://scholar.google.com/scholar\_case?case=16464466787559233193), 287 F.Supp.3d 213 (E.D.N.Y. 2018)
+- [CFTC v. My Big Coin Pay, Inc.](https://www.cftc.gov/sites/default/files/2018-10/enfmybigcoinpayincmemorandum092618_0.pdf) (D. Mass. 2018)
+- [CFTC v. McDonnell](https://scholar.google.com/scholar_case?case=16464466787559233193), 287 F.Supp.3d 213 (E.D.N.Y. 2018)
 
 #### CFTC Statements & Settlement Orders
 
-* [How the CFTC can take a pro-innovation posture while maintaining orderly markets](https://coincenter.org/entry/how-the-cftc-can-take-a-pro-innovation-posture-while-maintaining-orderly-markets) - Article by Commissioner Brian Quintenz (Feb. 12, 2019)
-* [Remarks of Commissioner Brian Quintenz at the 38th Annual GITEX Technology Week Conference](https://www.cftc.gov/PressRoom/SpeechesTestimony/opaquintenz16) regarding smart contract regulation (Oct. 16, 2018)
-* Proposed Interpretation on Virtual Currency “Actual Delivery” in Retail Transactions
-  * [CFTC announcement](https://www.cftc.gov/PressRoom/PressReleases/7664-17) (Dec. 15, 2017)
-  * [Proposed interpretation](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrfederalregister/documents/file/2017-27421a.pdf)
-* [Primer on Smart Contracts](https://www.cftc.gov/sites/default/files/2018-11/LabCFTC\_PrimerSmartContracts112718\_0.pdf) (Nov. 27, 2018)
-* [Backgrounder on Oversight of and Approach to Virtual Currency Markets](https://www.cftc.gov/sites/default/files/idc/groups/public/%40customerprotection/documents/file/backgrounder\_virtualcurrency01.pdf) (Jan. 4, 2018)
-* [Primer on Virtual Currencies](https://www.cftc.gov/sites/default/files/idc/groups/public/%40customerprotection/documents/file/labcftc\_primercurrencies100417.pdf) (Oct. 17, 2017)
-* [CFTC Settlement Order re: Bitfinex](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrenforcementactions/documents/legalpleading/enfbfxnaorder060216.pdf) (June 2, 2016)
-* [CFTC Settlement Order re: Coinflip](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrenforcementactions/documents/legalpleading/enfcoinfliprorder09172015.pdf) (Sept. 17, 2015)
+- [How the CFTC can take a pro-innovation posture while maintaining orderly markets](https://coincenter.org/entry/how-the-cftc-can-take-a-pro-innovation-posture-while-maintaining-orderly-markets) - Article by Commissioner Brian Quintenz (Feb. 12, 2019)
+- [Remarks of Commissioner Brian Quintenz at the 38th Annual GITEX Technology Week Conference](https://www.cftc.gov/PressRoom/SpeechesTestimony/opaquintenz16) regarding smart contract regulation (Oct. 16, 2018)
+- Proposed Interpretation on Virtual Currency “Actual Delivery” in Retail Transactions
+  - [CFTC announcement](https://www.cftc.gov/PressRoom/PressReleases/7664-17) (Dec. 15, 2017)
+  - [Proposed interpretation](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrfederalregister/documents/file/2017-27421a.pdf)
+- [Primer on Smart Contracts](https://www.cftc.gov/sites/default/files/2018-11/LabCFTC_PrimerSmartContracts112718_0.pdf) (Nov. 27, 2018)
+- [Backgrounder on Oversight of and Approach to Virtual Currency Markets](https://www.cftc.gov/sites/default/files/idc/groups/public/%40customerprotection/documents/file/backgrounder_virtualcurrency01.pdf) (Jan. 4, 2018)
+- [Primer on Virtual Currencies](https://www.cftc.gov/sites/default/files/idc/groups/public/%40customerprotection/documents/file/labcftc_primercurrencies100417.pdf) (Oct. 17, 2017)
+- [CFTC Settlement Order re: Bitfinex](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrenforcementactions/documents/legalpleading/enfbfxnaorder060216.pdf) (June 2, 2016)
+- [CFTC Settlement Order re: Coinflip](https://www.cftc.gov/sites/default/files/idc/groups/public/@lrenforcementactions/documents/legalpleading/enfcoinfliprorder09172015.pdf) (Sept. 17, 2015)
 
 #### Commentary & Analysis
 
-* Cryptocurrency Derivatives, Funds and Advisers: Key Considerations Under U.S. Commodity Laws by Andrew P. Cross - Perkins Coie (Four-Part Series: [1](https://www.derivativesandreporeport.com/2018/09/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-1-cryptos-are-commodites-except-when-they-are-not/), [2](https://www.derivativesandreporeport.com/2018/09/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-2-the-regulation-of-commodities-quite-substantial-even-if-not-substantive/), [3](https://www.derivativesandreporeport.com/2018/10/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-3-why-commodity-interests-are-of-interest/), [4](https://www.derivativesandreporeport.com/2018/10/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-4-about-the-interests-of-interest/))
-* [Frequently Asked Questions on Virtual Currency and CFTC Jurisdiction](https://www.skadden.com/insights/publications/2017/11/faqs-on-virtual-currency-and-cftc-jurisdiction) by several attorneys at Skadden, Arps, Slate, Meagher & Flom LLP (Nov. 15, 2017)
-* [Bitcoin and Virtual Currencies: Welcome to Your Regulators](https://www.bakermckenzie.com/en/-/media/files/people/kluchenek-matthew/ar\_na\_mkluchenek\_bitcoinvirtualcurrency\_2016.pdf) by Matthew Kluchenek - Baker & McKenzie LLP
+- Cryptocurrency Derivatives, Funds and Advisers: Key Considerations Under U.S. Commodity Laws by Andrew P. Cross - Perkins Coie (Four-Part Series: [1](https://www.derivativesandreporeport.com/2018/09/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-1-cryptos-are-commodites-except-when-they-are-not/), [2](https://www.derivativesandreporeport.com/2018/09/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-2-the-regulation-of-commodities-quite-substantial-even-if-not-substantive/), [3](https://www.derivativesandreporeport.com/2018/10/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-3-why-commodity-interests-are-of-interest/), [4](https://www.derivativesandreporeport.com/2018/10/cryptocurrency-derivatives-funds-and-advisers-key-considerations-under-u-s-commodity-laws-part-4-about-the-interests-of-interest/))
+- [Frequently Asked Questions on Virtual Currency and CFTC Jurisdiction](https://www.skadden.com/insights/publications/2017/11/faqs-on-virtual-currency-and-cftc-jurisdiction) by several attorneys at Skadden, Arps, Slate, Meagher & Flom LLP (Nov. 15, 2017)
+- [Bitcoin and Virtual Currencies: Welcome to Your Regulators](https://www.bakermckenzie.com/en/-/media/files/people/kluchenek-matthew/ar_na_mkluchenek_bitcoinvirtualcurrency_2016.pdf) by Matthew Kluchenek - Baker & McKenzie LLP
 
 ### OFAC Sanctions
 
 #### OFAC Statements
 
-* [FAQ on Virtual Currencies](https://www.treasury.gov/resource-center/faqs/Sanctions/Pages/faq\_compliance.aspx#vc\_faqs)
-* Addition of two Individuals to SDN List and identification of associated bitcoin public addresses
-  * [Treasury Dept. PR Release](https://home.treasury.gov/news/press-releases/sm556) (Nov. 28, 2018)
-  * [SDN Designation](https://www.treasury.gov/resource-center/sanctions/OFAC-Enforcement/Pages/20181128.aspx) (Nov. 28, 2018)
+- [FAQ on Virtual Currencies](https://www.treasury.gov/resource-center/faqs/Sanctions/Pages/faq_compliance.aspx#vc_faqs)
+- Addition of two Individuals to SDN List and identification of associated bitcoin public addresses
+  - [Treasury Dept. PR Release](https://home.treasury.gov/news/press-releases/sm556) (Nov. 28, 2018)
+  - [SDN Designation](https://www.treasury.gov/resource-center/sanctions/OFAC-Enforcement/Pages/20181128.aspx) (Nov. 28, 2018)
 
 #### Commentary & Analysis
 
-* [What is OFAC and how does it apply to Bitcoin?](https://coincenter.org/entry/what-is-ofac-and-how-does-it-apply-to-bitcoin) by Joshua Garcia (May 3, 2015)
+- [What is OFAC and how does it apply to Bitcoin?](https://coincenter.org/entry/what-is-ofac-and-how-does-it-apply-to-bitcoin) by Joshua Garcia (May 3, 2015)
 
 ### Federal Anti-Money Laundering Regulation
 
 #### Key Cases
 
-* DOJ and FinCEN actions against BTC-E
-  * [FinCEN Assessment of Civil Money Penalty](https://www.fincen.gov/sites/default/files/enforcement\_action/2017-07-26/Assessment%20for%20BTCeVinnik%20FINAL%20SignDate%2007.26.17.pdf) (July 26, 2017)
-  * [Indictment of BTC-E and Alexander Vinnik](https://www.justice.gov/usao-ndca/press-release/file/984661/download) (Jan. 17, 2017)
-* [US v. Murgio](https://scholar.google.com/scholar\_case?case=14324236322418966686), 209 F.Supp.3d 698 (S.D.N.Y. 2016)
-* DOJ and FinCEN settlements with Ripple Labs (May 5, 2015)
-  * [DOJ Non-Prosecution Agreement and Statement of Facts](https://www.justice.gov/sites/default/files/opa/press-releases/attachments/2015/05/05/settlement\_agreement.pdf)
-  * [FinCEN Assessment of Civil Money Penalty](https://www.fincen.gov/sites/default/files/shared/Ripple\_Assessment.pdf)
-* [US v. Faiella](https://scholar.google.com/scholar\_case?case=11943246728627907201), 39 F.Supp.3d 544 (S.D.N.Y. 2014)
+- DOJ and FinCEN actions against BTC-E
+  - [FinCEN Assessment of Civil Money Penalty](https://www.fincen.gov/sites/default/files/enforcement_action/2017-07-26/Assessment%20for%20BTCeVinnik%20FINAL%20SignDate%2007.26.17.pdf) (July 26, 2017)
+  - [Indictment of BTC-E and Alexander Vinnik](https://www.justice.gov/usao-ndca/press-release/file/984661/download) (Jan. 17, 2017)
+- [US v. Murgio](https://scholar.google.com/scholar_case?case=14324236322418966686), 209 F.Supp.3d 698 (S.D.N.Y. 2016)
+- DOJ and FinCEN settlements with Ripple Labs (May 5, 2015)
+  - [DOJ Non-Prosecution Agreement and Statement of Facts](https://www.justice.gov/sites/default/files/opa/press-releases/attachments/2015/05/05/settlement_agreement.pdf)
+  - [FinCEN Assessment of Civil Money Penalty](https://www.fincen.gov/sites/default/files/shared/Ripple_Assessment.pdf)
+- [US v. Faiella](https://scholar.google.com/scholar_case?case=11943246728627907201), 39 F.Supp.3d 544 (S.D.N.Y. 2014)
 
 #### Statements & Administrative Rulings
 
-* [Application of FinCEN’s Regulations to Certain Business Models Involving Convertible Virtual Currencies](https://www.fincen.gov/sites/default/files/2019-05/FinCEN%20CVC%20Guidance%20FINAL.pdf) (May 9, 2019)
-  * Comprehensive guidance from FinCEN on the application of the Bank Secrecy Act to various crypto asset business models, including those involved in decentralized exchange.
-* [Prepared Remarks of FinCEN Director Kenneth A. Blanco](https://www.fincen.gov/news/speeches/prepared-remarks-fincen-director-kenneth-blanco-delivered-2018-chicago-kent-block) (Aug. 9, 2018)
-  * Speech summarizing FinCEN's approach to virtual currency.
-* [Department of Treasury Letter to Senator Ron Wyden](https://coincenter.org/) (Feb. 13, 2018)
-* FinCEN Administrative Rulings
-  * [Application of FinCEN’s Regulations to a Virtual Currency Trading Platform](https://www.fincen.gov/sites/default/files/administrative\_ruling/FIN-2014-R011.pdf) (Oct. 29, 2014)
-    * Traditional centralized exchange model involving matching buyers and sellers directly constitutes money transmission despite argument that the exchange does not sit in the middle of a transaction.
-  * [Application of FinCEN’s Regulations to a Virtual Currency Payment System](https://www.fincen.gov/sites/default/files/administrative\_ruling/FIN-2014-R012.pdf) (Oct. 27, 2014)
-    * Company that exchanges virtual currency for fiat in order to facilitate payment for vendors interested in accepting virtual currency is a money transmitter.
-  * [Application of Money Services Business regulations to the rental of computer systems for mining virtual currency](https://www.fincen.gov/sites/default/files/administrative\_ruling/FIN-2014-R007.pdf) (Apr. 29, 2014)
-    * Rental of computer system for third party to mine virtual currency does not constitute money transmission when all virtual currency goes directly to third party's wallet and no virtual currency is exchanged
-  * [Application of FinCEN’s Regulations to Virtual Currency Software Development and Certain Investment Activity](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R002.pdf) (Jan. 30, 2014)
-    * (1) The production and distribution of software alone is not sufficient to constitute money transmission and (2) buying and selling virtual currencies solely for one's own account is not money transmission.
-  * [Application of FinCEN’s Regulations to Virtual Currency Mining Operations](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R001.pdf) (Jan. 30, 2014)
-    * A bitcoin miner is not a money transmitter when converting bitcoin to fiat for its own purposes and not as a business service for the benefit of others.
-* [Application of FinCEN's Regulations to Persons Administering, Exchanging, or Using Virtual Currencies](https://www.fincen.gov/sites/default/files/shared/FIN-2013-G001.pdf) (Mar. 18, 2013)
-  * Initial guidance from FinCEN addressing who within the virtual currency industry is considered a money transmitter.
+- [Application of FinCEN’s Regulations to Certain Business Models Involving Convertible Virtual Currencies](https://www.fincen.gov/sites/default/files/2019-05/FinCEN%20CVC%20Guidance%20FINAL.pdf) (May 9, 2019)
+  - Comprehensive guidance from FinCEN on the application of the Bank Secrecy Act to various crypto asset business models, including those involved in decentralized exchange.
+- [Prepared Remarks of FinCEN Director Kenneth A. Blanco](https://www.fincen.gov/news/speeches/prepared-remarks-fincen-director-kenneth-blanco-delivered-2018-chicago-kent-block) (Aug. 9, 2018)
+  - Speech summarizing FinCEN's approach to virtual currency.
+- [Department of Treasury Letter to Senator Ron Wyden](https://coincenter.org/) (Feb. 13, 2018)
+- FinCEN Administrative Rulings
+  - [Application of FinCEN’s Regulations to a Virtual Currency Trading Platform](https://www.fincen.gov/sites/default/files/administrative_ruling/FIN-2014-R011.pdf) (Oct. 29, 2014)
+    - Traditional centralized exchange model involving matching buyers and sellers directly constitutes money transmission despite argument that the exchange does not sit in the middle of a transaction.
+  - [Application of FinCEN’s Regulations to a Virtual Currency Payment System](https://www.fincen.gov/sites/default/files/administrative_ruling/FIN-2014-R012.pdf) (Oct. 27, 2014)
+    - Company that exchanges virtual currency for fiat in order to facilitate payment for vendors interested in accepting virtual currency is a money transmitter.
+  - [Application of Money Services Business regulations to the rental of computer systems for mining virtual currency](https://www.fincen.gov/sites/default/files/administrative_ruling/FIN-2014-R007.pdf) (Apr. 29, 2014)
+    - Rental of computer system for third party to mine virtual currency does not constitute money transmission when all virtual currency goes directly to third party's wallet and no virtual currency is exchanged
+  - [Application of FinCEN’s Regulations to Virtual Currency Software Development and Certain Investment Activity](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R002.pdf) (Jan. 30, 2014)
+    - (1) The production and distribution of software alone is not sufficient to constitute money transmission and (2) buying and selling virtual currencies solely for one's own account is not money transmission.
+  - [Application of FinCEN’s Regulations to Virtual Currency Mining Operations](https://www.fincen.gov/sites/default/files/shared/FIN-2014-R001.pdf) (Jan. 30, 2014)
+    - A bitcoin miner is not a money transmitter when converting bitcoin to fiat for its own purposes and not as a business service for the benefit of others.
+- [Application of FinCEN's Regulations to Persons Administering, Exchanging, or Using Virtual Currencies](https://www.fincen.gov/sites/default/files/shared/FIN-2013-G001.pdf) (Mar. 18, 2013)
+  - Initial guidance from FinCEN addressing who within the virtual currency industry is considered a money transmitter.
 
 #### Commentary & Analysis
 
-* [Electronic Cash, Decentralized Exchange, and the Constitution](https://www.coincenter.org/electronic-cash-decentralized-exchange-and-the-constitution/) by Peter Van Valkenburgh - Coin Center (March 2019)
-* [The Bank Secrecy Act, Cryptocurrencies and New Tokens: What is Known and What Remains Ambiguous](https://coincenter.org/files/2017-05/report-bsa-crypto-token1.pdf) by Peter Van Valkenburgh - Coin Center (May 2017)
+- [Electronic Cash, Decentralized Exchange, and the Constitution](https://www.coincenter.org/electronic-cash-decentralized-exchange-and-the-constitution/) by Peter Van Valkenburgh - Coin Center (March 2019)
+- [The Bank Secrecy Act, Cryptocurrencies and New Tokens: What is Known and What Remains Ambiguous](https://coincenter.org/files/2017-05/report-bsa-crypto-token1.pdf) by Peter Van Valkenburgh - Coin Center (May 2017)

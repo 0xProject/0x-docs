@@ -74,7 +74,7 @@ const sidebars = {
       items: [
         {
           type: "link",
-          label: "0x System Status",
+          label: "System Status",
           href: "https://status.0x.org/",
         },
         "developer-resources/glossary",
