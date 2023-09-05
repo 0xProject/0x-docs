@@ -33,3 +33,7 @@ Takers fill 0x orders by agreeing to trade their asset for the Maker's asset; in
 **Dedicated Makers**
 
 In addition to the Swap API configuration identifying trusted takers, it also contains a list of specific market makers that participate in the RFQ system. Each maker is identified by an HTTP endpoint URL, and each endpoint has an associated list of asset pairs for which that endpoint will provide quotes. For the instance at `api.0x.org`, the 0x team is maintaining a list of trusted market makers.
+
+# Integrating RFQ Liquidity
+
+Read about how to easily integrate RFQ liquidity into your project here: [Integrating RFQ Liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/integrating-rfq-liquidity.md)
