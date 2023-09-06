@@ -18,7 +18,7 @@ An array of liquidity sources.
 
 ### Example
 
-#### Get a list of liquidity sources on Fantom
+#### Get a list of liquidity sources on Ethereum Mainnet
 
 **Request**
 
