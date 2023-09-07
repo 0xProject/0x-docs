@@ -6,10 +6,15 @@ description: Learn how to use the Swap API to access the most efficient liquidit
 
 # How to Use Swap API
 
-This guide covers the steps required to use [Swap API](/0x-swap-api/introduction). If you are looking for end-to-end tutorials, checkout:
+This guide covers the steps required to use [Swap API](/0x-swap-api/introduction).
+
+:::tip
+Looking for code samples and tutorials?
 
 - [Next.js 0x Demo App (TypeScript)](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s)
 - [How to Build a Token Swap DApp (HTML, CSS, Javscript)](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
+
+:::
 
 ## About Swap API
 
@@ -70,11 +75,12 @@ Once the token allowance has been set, say you would like to sell 100 DAI for WE
 const qs = require('qs');
 
 const params = {
-    // Not all token symbols are supported. The address of the token can be used instead.
+    // Not all token symbols are supported. The address of the token should be used instead.
     sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
     buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
     // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     sellAmount: '100000000000000000000',
+    takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B', //Including takerAddress is highly recommended to help with gas estimation, catch revert issues, and provide the best price
 };
 
 const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
@@ -113,7 +119,7 @@ Note the `to` field is the contract address to send call `data` to. This is the 
 
 ### Specify a Taker Address for Your Swaps
 
-The `takerAddress` field is the address that will be performing the trade. While technically optional, we recommend providing this parameter if possible so that the API can more accurately estimate the gas required for the swap transaction. Note that this currently only works with non-contract addresses. Read more on how [adding the `takerAddress` helps catch issues](/developer-resources/faqs-and-troubleshooting#-troubleshooting).
+The `takerAddress` field is the address that will be performing the trade. While technically optional, we highly recommend providing this parameter if possible so that the API can more accurately estimate the gas required for the swap transaction. Note that this currently only works with non-contract addresses. Read more on how [adding the `takerAddress` helps catch issues](/developer-resources/faqs-and-troubleshooting#-troubleshooting).
 
 ```javascript
 const params = {
