@@ -26,14 +26,14 @@ If integrators request a standard quote from the Swap API, part or all of their 
 
 ### Parties in the System
 
-**Trusted Takers**
+**Takers**
 
 Takers fill 0x orders by agreeing to trade their asset for the Maker's asset; in other words, consume the 0x liquidity. When making a Swap API request, the RFQ orders must contain the [`takerAddress`](/0x-swap-api/api-references/get-swap-v1-quote) request parameter. When an order containing this parameter gets hashed and signed by two counterparties, it is exclusive to those two counterparties. This means that the order can only be filled by the taker address specified in the order. This is a security feature that prevents front-running and other types of attacks.
 
-**Dedicated Makers**
+**Market Makers**
 
-In addition to the Swap API configuration identifying trusted takers, it also contains a list of specific market makers that participate in the RFQ system. Each maker is identified by an HTTP endpoint URL, and each endpoint has an associated list of asset pairs for which that endpoint will provide quotes. For the instance at `api.0x.org`, the 0x team is maintaining a list of trusted market makers.
+As mentioned earlier, 0x API works with specific market makers who participate in the RFQ system. Each maker is identified by an HTTP endpoint URL, and each endpoint has an associated list of asset pairs for which that endpoint will provide quotes. For the instance at `api.0x.org`, the 0x team is maintaining a list of trusted market makers.
 
 ## Integrating RFQ Liquidity
 
-Read about how to easily [integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/integrating-rfq-liquidity) into your project.
+Read about [how to easily integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity) into your project.
