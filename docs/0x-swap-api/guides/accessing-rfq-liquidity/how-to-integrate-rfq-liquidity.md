@@ -4,7 +4,7 @@ sidebar_position: 2
 description: This guide covers the 3 steps to integrate RFQ liquidity into your application.
 ---
 
-# Integrating RFQ Liquidity
+# How to Integrate RFQ Liquidity
 
 In [About the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api/about-the-rfq-system), we covered what is RFQ liquidity and how it is aggregated by 0x. This guide will cover the 3 steps to integrate RFQ liquidity into your application.
 
@@ -21,7 +21,8 @@ Easily integrate RFQ liquidity in 3 steps:
 :::
 
 :::tip
-Prefer to see a code demo and watch a video instead? Checkout the [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) and related [walk-through video](https://www.youtube.com/watch?v=P1ECx9zKQiU) that shows best practices for implementing indicative pricing and firm quotes.
+Prefer to see a code demo and watch a video? 
+Checkout the [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) and [video](https://www.youtube.com/watch?v=P1ECx9zKQiU) for best practices implementing indicative pricing and firm quotes.
 :::
 
 
