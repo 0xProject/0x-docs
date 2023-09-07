@@ -6,14 +6,10 @@ description: Learn how to use the Swap API to access the most efficient liquidit
 
 # How to Use Swap API
 
-:::info
-Starting in H2 2023, all API requests without an API key will return an error. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products.
-:::
-
 This guide covers the steps required to use [Swap API](/0x-swap-api/introduction). If you are looking for end-to-end tutorials, checkout:
 
-- [(Next.js) How to Build a Token Swap DApp](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s)
-- [(HTML, CSS, Javscript) How to Build a Token Swap DApp](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
+- [Next.js 0x Demo App (TypeScript)](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s)
+- [How to Build a Token Swap DApp (HTML, CSS, Javscript)](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
 
 ## About Swap API
 

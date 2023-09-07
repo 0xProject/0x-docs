@@ -1,65 +1,32 @@
 ---
-sidebar_label: Accessing RFQ liquidity on Swap API
-sidebar_position: 5
-description: This guide discusses what RFQ liquidity is, how it works, and how your project can apply to access it
+sidebar_label: How to Integrate RFQ Liquidity
+sidebar_position: 2
+description: This guide covers the 3 steps to integrate RFQ liquidity into your application.
 ---
 
-# Accessing RFQ liquidity on Swap API
+# How to Integrate RFQ Liquidity
+
+In [About the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api/about-the-rfq-system), we covered what is RFQ liquidity and how it is aggregated by 0x. This guide will cover the 3 steps to integrate RFQ liquidity into your application.
+
+### Overview
+
+Easily integrate RFQ liquidity in 3 steps:
+
+1. [Query for an **indicative price**](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#1-indicative-pricing) via `/swap/v1/price`
+2. [Fetch a **firm quote**](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#2-firm-quotes) from Swap API via `/swap/v1/quote`
+3. [**Submit the transaction**](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#3-submitting-the-transaction) to blockchain
 
 :::info
-This guide is for integrators/projects who would like to access 0x RFQ liquidity, via the Swap API.
-
-If you represent a trading firm or professional market maker that would like to supply liquidity via the 0x RFQ system, please get in touch here: [0x RFQ Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform?usp=sf_link)
+⏰ The time difference between each step is non-trivial because we are requesting bespoke quotes from market makers. If a client sits on the RFQ firm quote too long, the probability of the transaction reverting increases. Typically, it's expected that time difference between steps 1 and 2 are minimal. We also recommend setting a max amount of time between steps 2 and 3, 30 seconds is usually a reasonable time before re-asking for a firm quote.
 :::
 
-This page includes:
-
-- [About 0x RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#about-the-rfq-system)
-- [How to Integrate the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#how-to-integrate-the-rfq-system)
-- [Indicative Pricing](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#indicative-pricing)
-- [Firm Quotes](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#firm-quotes)
-- [Advanced Options](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#advanced-options)
-- [Testing Your Integrations](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#testing-your-rfq-integration-recommended)
-- [Code Examples](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api#code-examples)
-
-## About the RFQ System
-
-_RFQ liquidity is currently available on Mainnet & Polygon._
-
-### An Exclusive Source of Liquidity
-
-In its role as a liqudity aggregator, 0x's APIs integrates both on- and off-chain liquidity. On-chain liquidity is sourced by sampling smart contract liquidity pools, such as Uniswap and Curve. Off-chain liquidity is sourced from professional market makers via the 0x Request-for-Quote (“RFQ”) System.
-
-If integrators request a standard quote from the Swap API, part or all of their quote may be sourced via the **RFQ** system. In this system, the Swap API aggregates quotes from professional market makers, alongside quotes from AMMs. If the market-maker quotes are more competitive than AMM quotes, they may be included in the final price shown to the end-user. The end-user’s liquidity is ultimately provided by a combination of AMMs and professional market makers. _Everything happens under-the-hood!_
-
-![RFQ Diagram](/img/0x-swap-api/rfq-diagram.png)
-
-### Parties in the System
-
-**Trusted Takers**
-
-RFQ orders contain a [`takerAddress` query parameter](../../developer-resources/faqs-and-troubleshooting.md#how-does-takeraddress-help-with-catching-issues). When an order containing this parameter gets hashed and signed by two counterparties, it is exclusive to those two counterparties.
-
-**Dedicated Makers**
-
-In addition to the Swap API configuration identifying trusted takers, it also contains a list of specific market makers that participate in the RFQ system. Each maker is identified by an HTTP endpoint URL, and each endpoint has an associated list of asset pairs for which that endpoint will provide quotes. For the instance at `api.0x.org`, the 0x team is maintaining a list of trusted market makers.
-
-## How to Integrate the RFQ System
-
-### High-Level View
-
-Requesting liquidity from Swap API happens in 3 steps:
-
-1. **Step 1:** Integrator client performs price exploration via indicative quote `/swap/v1/price`
-2. **Step 2:** When the Integrator client is ready to actually perform a fill, it will request a firm quote from Swap API `/swap/v1/quote`
-3. **Step 3:** The Integrator client can take the Ethereum transaction returned from the firm quote and submit it to the blockchain
-   1. Unless the customer is paying in ETH, they will need to set allowances to the `allowanceTarget` key that is present in the `/swap/v1/quote` response.
-
-:::info
-⏰ We assume the time difference between steps 1 and 2 to be minimal. We also recommend setting a max amount of time between steps 2 and 3; otherwise, if the client sits on the RFQ firm quote for too long, the probability of the transaction reverting increases. 30 seconds is usually a reasonable time before re-asking for a firm quote.
+:::tip
+Prefer to see a code demo and watch a video? 
+Checkout the [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) and [video](https://www.youtube.com/watch?v=P1ECx9zKQiU) for best practices implementing indicative pricing and firm quotes.
 :::
 
-## Indicative Pricing
+
+## 1. Indicative Pricing
 
 Indicative pricing is used for takers who are querying the prices they could receive. The Swap API will respond to an indicative price with the expected rate of trade between the asset pair specified.
 
@@ -68,10 +35,7 @@ The indicative pricing resource is hosted at [`/swap/v1/price`](../api-reference
 ### Example Parameters of API Request
 
 :::info
-An API key should always be specified when requesting all possible sources of liquidity. API keys are specified via a header parameter called `0x-api-key`
-<br></br>
-
-A `takerAddress` needs to always be present
+A `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
 :::
 
 ```
@@ -81,6 +45,7 @@ https://api.0x.org/swap/v1/price             // Request an indicative quote
 &buyToken=WETH                               // Buy WETH
 &gasPrice=50000000000                        // Optionally, specify the gas price
 &takerAddress=$USER_TAKER_ADDRESS            // Address that will make the trade
+--header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
 ### Example Response
@@ -146,11 +111,10 @@ The response to an indicative quote will include a price and a buy/sell amount i
 ### Sample cURL Request
 
 ```bash
-curl --location --request GET 'https://api.0x.org/swap/v1/price?sellToken=USDC&sellAmount=30000000&buyToken=ETH&takerAddress=0x0A975d7B53F8DA11e64196d53Fb35532fea37E85' \
---header '0x-api-key: [api-key]'
+curl https://api.0x.org/swap/v1/price?sellToken=USDC&sellAmount=30000000&buyToken=ETH&takerAddress=0x0A975d7B53F8DA11e64196d53Fb35532fea37E85 --header '0x-api-key: [api-key]'
 ```
 
-## Firm Quotes
+## 2. Firm Quotes
 
 When a taker is ready to actually perform a fill, they will request a firm quote from Swap API. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the Market Maker if they do not.
 
@@ -161,13 +125,8 @@ In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must incl
 ### Example Parameters of API Request
 
 :::info
-An API key should always be specified when requesting RFQT liquidity. This RFQT liquidity should be passed in as a header parameter called `0x-api-key`
-<br></br>
-
-A `takerAddress` needs to always be present.
-<br></br>
-
-`intentOnFilling` needs to always be set to true.
+A `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
+Additionally, `intentOnFilling` needs to always be set to true.
 :::
 
 ```
@@ -178,8 +137,10 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &takerAddress=0x3bA5De64E24Eea0E974393BeF8a047B58f961c08.   // Address that will make the trade
 &intentOnFilling=true                // Confirms to our MM that you intend to fill this order
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
-&feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
+&feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the address that will receive affiliate fees specified (used if you choose to monetize your app)
 &buyTokenPercentageFee=0.01        // pays a 1% fee denominated in WETH to `feeRecipient`
+&takerAddress=$USER_TAKER_ADDRESS            // Address that will make the trade
+--header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
 ### Example Response
@@ -287,13 +248,18 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 ### Sample cURL Request
 
 :::tip
-The following example cURL request does not add a fee recipient parameter; however, this cURL request can be easily modified for your own monetization needs.
+The following example cURL request does not add a fee recipient parameter; however, this cURL request can be easily modified for your own monetization needs. Learn more about monetizing your app [here](/developer-resources/faqs-and-troubleshooting#monetizing-your-swap-integration).
 :::
 
 ```bash
-curl --location --request GET 'https://api.0x.org/swap/v1/quote?sellToken=USDC&sellAmount=30000000&buyToken=ETH&takerAddress=0x0A975d7B53F8DA11e64196d53Fb35532fea37E85&intentOnFilling=true&skipValidation=true' \
---header '0x-api-key: [api-key]'
+curl https://api.0x.org/swap/v1/quote?sellToken=USDC&sellAmount=30000000&buyToken=ETH&takerAddress=0x0A975d7B53F8DA11e64196d53Fb35532fea37E85&intentOnFilling=true&skipValidation=true --header '0x-api-key: [api-key]'
 ```
+
+## 3. Submitting the Transaction
+
+The firm quote returned by Swap API is an unsigned Ethereum transaction. In order to submit the transaction to the network, you just need to sign the transaction with your preferred web3 library (wagmi, web3.js, ethers.js) and submit it to the blockchain. Read more about how to sign and submit a transaction [here](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-send-the-transaction-to-the-network).
+
+Also, make sure a [token allowance](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances) has been given for the `allowanceTarget` parameter returned by the `/swap/v1/quote` response.
 
 ## Advanced Options
 
@@ -334,17 +300,12 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &intentOnFilling=true                // Confirms to our MM that you intend to fill this order
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
 &feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
-&buyTokenPercentageFee=0.01        // pays a 1% fee denominated in WETH to `feeRecipient`
-&includedSources=RFQT              //
+&buyTokenPercentageFee=0.01        // Pays a 1% fee denominated in WETH to `feeRecipient`
+&includedSources=RFQT              // Ensures only RFQ liquidity is sourced
+--header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
 ## Code Examples
 
-Checkout our [Guides](/market-makers/guides/generating-0x-order-hashes) for RFQT and RFQM Market Makers on how to create, hash, sign, fill, get state, and cancel 0x V4 RFQ orders
-
-- [Fill ERC20 RFQ order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_rfq_order.ts)
-- [Fill ERC20 RFQ order with maker order signer](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_rfq_order_with_maker_order_signer.ts)
-- [Subscribe to RFQ order fill events](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_limit_order.ts)
-- [Execute Metatransaction](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/execute_metatransaction_fill_rfq_order.ts) to fill RFQ order&#x20;
-- [Fill ERC20 OTC order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_otc_order.ts)
-- [(Advanced) Fill an aggregated quote via TransformERC20](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/transform_erc20.ts)
+- [Next.js 0x Demo App (TypeScript)](https://github.com/0xProject/0x-nextjs-demo-app) - A Next.js app that shows best practices for implementing indicative pricing and firm quotes
+- [Walk-through Video](https://www.youtube.com/watch?v=P1ECx9zKQiU)
