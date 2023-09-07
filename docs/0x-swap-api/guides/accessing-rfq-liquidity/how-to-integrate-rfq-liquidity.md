@@ -308,9 +308,4 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 ## Code Examples
 
 - [Next.js 0x Demo App (TypeScript)](https://github.com/0xProject/0x-nextjs-demo-app) - A Next.js app that shows best practices for implementing indicative pricing and firm quotes
-- [Fill ERC20 RFQ order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_rfq_order.ts)
-- [Fill ERC20 RFQ order with maker order signer](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_rfq_order_with_maker_order_signer.ts)
-- [Subscribe to RFQ order fill events](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_limit_order.ts)
-- [Execute Metatransaction](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/execute_metatransaction_fill_rfq_order.ts) to fill RFQ order&#x20;
-- [Fill ERC20 OTC order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_otc_order.ts)
-- [(Advanced) Fill an aggregated quote via TransformERC20](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/transform_erc20.ts)
+- [Walk-through Video](https://www.youtube.com/watch?v=P1ECx9zKQiU)
