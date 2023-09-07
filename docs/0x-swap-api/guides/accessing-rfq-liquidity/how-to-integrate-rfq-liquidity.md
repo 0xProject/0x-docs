@@ -1,5 +1,5 @@
 ---
-sidebar_label: Integrating RFQ Liquidity
+sidebar_label: How to Integrate RFQ Liquidity
 sidebar_position: 2
 description: This guide covers the 3 steps to integrate RFQ liquidity into your application.
 ---
@@ -12,13 +12,18 @@ In [About the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api/
 
 Easily integrate RFQ liquidity in 3 steps:
 
-1. Query for an **indicative price** via `/swap/v1/price`
-2. Fetch a **firm quote** from Swap API via `/swap/v1/quote`
-3. **Submit the transaction** to blockchain
+1. [Query for an **indicative price**](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#1-indicative-pricing) via `/swap/v1/price`
+2. [Fetch a **firm quote**](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#2-firm-quotes) from Swap API via `/swap/v1/quote`
+3. [**Submit the transaction**](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#3-submitting-the-transaction) to blockchain
 
 :::info
 ⏰ The time difference between each step is non-trivial because we are requesting bespoke quotes from market makers. If a client sits on the RFQ firm quote too long, the probability of the transaction reverting increases. Typically, it's expected that time difference between steps 1 and 2 are minimal. We also recommend setting a max amount of time between steps 2 and 3, 30 seconds is usually a reasonable time before re-asking for a firm quote.
 :::
+
+:::tip
+Prefer to see a code demo and watch a video instead? Checkout the [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) and related [walk-through video](https://www.youtube.com/watch?v=P1ECx9zKQiU) that shows best practices for implementing indicative pricing and firm quotes.
+:::
+
 
 ## 1. Indicative Pricing
 
