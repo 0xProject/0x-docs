@@ -275,11 +275,29 @@ One particular circumstance in which it may be necessary to skip quote validatio
 
 ### Excluding Liquidity Sources
 
-When requesting a quote from the Swap API, clients can choose to have the API exclude specific liquidity sources. (For more details, see [the API specification](../api-references/get-swap-v1-quote.md#excluding-liquidity-sources).)
+When requesting a quote from the Swap API, clients can choose to have the API [exclude specific liquidity sources](/0x-swap-api/api-references/get-swap-v1-quote#excluding-liquidity-sources).
 
-At this time, RFQ liquidity is considered by the Swap API to be included within the `0x`/`Native` liquidity group. (In the API's interface, it's referred to as `0x`, but in the underlying routing logic it's referred to as `Native`.)
+At this time, RFQ liquidity is considered by the Swap API to be included within the `0x`/`Native` liquidity group. (In the API's interface, it's referred to as `0x`, but in the [underlying routing logic at the protocol-level](https://github.com/0xProject/protocol/blob/4f32f3174f25858644eae4c3de59c3a6717a757c/packages/asset-swapper/src/utils/market_operation_utils/types.ts#L38) it's referred to as `Native`, referencing as either works in the system).
 
-Therefore, if a Swap API client intends to access RFQ liquidity, it's important that they not exclude the `0x` liquidity source.
+```
+# Example request using the excludedSources=0x flag
+
+https://api.0x.org/swap/v1/quote             // Request a firm quote
+?sellToken=DAI                               // Sell DAI
+&sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
+&buyToken=ETH                                // Buy ETH
+&takerAddress=0x3bA5De64E24Eea0E974393BeF8a047B58f961c08.   // Address that will make the trade
+&intentOnFilling=true                // Confirms to our MM that you intend to fill this order
+&skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
+&feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
+&buyTokenPercentageFee=0.01        // Pays a 1% fee denominated in WETH to `feeRecipient`
+&excludedSources=0x              // Excludes RFQ liquidity. excludedSources=Native also works
+--header '0x-api-key: [API_KEY]'             // Replace with your own API key
+```
+
+Therefore, if a Swap API client intends to access RFQ liquidity, it's important that they not exclude the `0x` or the `Native` liquidity sources. 
+
+
 
 ## Testing Your RFQ Integration (Recommended)
 
