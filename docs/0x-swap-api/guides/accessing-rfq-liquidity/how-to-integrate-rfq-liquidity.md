@@ -30,7 +30,9 @@ Checkout the [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-a
 
 Indicative pricing is used for takers who are querying the prices they could receive. The Swap API will respond to an indicative price with the expected rate of trade between the asset pair specified.
 
-The indicative pricing resource is hosted at [`/swap/v1/price`](../api-references/get-swap-v1-price.md) and responds with pricing information, but that response does not contain a full 0x order, so it does not constitute a legitimate transaction that can be submitted to the Ethereum network. This resource can be used by price feeds and other applications that do not intend to submit an actual transaction.
+The indicative pricing resource is hosted at [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) and responds with pricing information, but that response does not contain a full 0x order, so it does not constitute a legitimate transaction that can be submitted to the Ethereum network (you must use [/quote](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#2-firm-quotes) for this). 
+
+In order to receive indicative pricing that includes RFQ liquidity, the request to `/swap/v1/price` must include a non-null `takerAddress` parameter.
 
 ### Example Parameters of API Request
 
@@ -118,15 +120,17 @@ curl https://api.0x.org/swap/v1/price?sellToken=USDC&sellAmount=30000000&buyToke
 
 When a taker is ready to actually perform a fill, they will request a firm quote from Swap API. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the Market Maker if they do not.
 
-The firm quote resource is hosted at [`/swap/v1/quote`](../api-references/get-swap-v1-quote.md) and responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
+The firm quote resource is hosted at [`/swap/v1/quote`](/0x-swap-api/api-references/get-swap-v1-quote) and responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
 
-In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must include the query parameter `intentOnFilling=true` (in addition to the aforementioned `0x-api-key` and non-null `takerAddress`).
+In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must include the following parameters:
+* `intentOnFilling=true`
+* non-null `takerAddress`
 
 ### Example Parameters of API Request
 
 :::info
-A `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
-Additionally, `intentOnFilling` needs to always be set to true.
+- `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
+- `intentOnFilling` needs to always be set to true.
 :::
 
 ```
@@ -265,19 +269,19 @@ Also, make sure a [token allowance](/0x-swap-api/advanced-topics/how-to-set-your
 
 ### Quote Validation
 
-Whenever a Swap API client specifies a `takerAddress` in their [`/quote`](../api-references/get-swap-v1-quote.md) request, the API will validate the quote before returning it to the client, avoiding a number of possible causes for transaction reverts. (For more details, see "[How does `takerAddress` help with catching issues?](/developer-resources/faqs-and-troubleshooting#-troubleshooting)")
+Whenever a Swap API client specifies a `takerAddress` in their [`/quote`](/0x-swap-api/api-references/get-swap-v1-quote) request, the API will validate the quote before returning it to the client, avoiding a number of possible causes for transaction reverts. For more details, see "[How does `takerAddress` help with catching issues?](/developer-resources/faqs-and-troubleshooting#-troubleshooting)"
 
-However, given that a `takerAddress` is required in order to obtain RFQ liquidity, and given that this requirement subverts the optionality of the quote validation feature, the implementation of RFQ introduced a new query parameter to the `/quote` resource: `skipValidation`. When this parameter is set to `true`, quote validation will be skipped. While validating even RFQ quotes is a best-practice recommended default, skipping validation can be useful in certain circumstances, such as when experimenting with a new maker integration deployment.
+However, given that a `takerAddress` is required in order to obtain RFQ liquidity, and given that this requirement subverts the optionality of the quote validation feature, the implementation of RFQ introduced a new query parameter to the `/quote` endpoint: `skipValidation`. When this parameter is set to `true`, quote validation will be skipped. While validating even RFQ quotes is a best-practice recommended default, skipping validation can be useful in certain circumstances, such as when experimenting with a new maker integration deployment or [when the `takerAddress` refers to a smart contract](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#note-for-smart-contract-integrations).
 
 ### Note for Smart Contract Integrations
 
-One particular circumstance in which it may be necessary to skip quote validation is that in which the `takerAddress` refers to a smart contract. In this case, the validation of the quote by the 0x API could fail due to a lack of asset balances in the contract's account. In order to avoid such a validation failure, simply avoid validation, by specifying `skipValidation=true` in the query string of your `/quote` request.
+One particular circumstance in which it may be necessary to skip quote validation is that in which the `takerAddress` refers to a smart contract. In this case, the validation of the quote by the Swap API could fail due to a lack of asset balances in the contract's account. In order to avoid such a validation failure, simply avoid validation, by specifying `skipValidation=true` in the query string of your `/quote` request.
 
 ### Excluding Liquidity Sources
 
 When requesting a quote from the Swap API, clients can choose to have the API [exclude specific liquidity sources](/0x-swap-api/api-references/get-swap-v1-quote#excluding-liquidity-sources).
 
-At this time, RFQ liquidity is considered by the Swap API to be included within the `0x`/`Native` liquidity group. (In the API's interface, it's referred to as `0x`, but in the [underlying routing logic at the protocol-level](https://github.com/0xProject/protocol/blob/4f32f3174f25858644eae4c3de59c3a6717a757c/packages/asset-swapper/src/utils/market_operation_utils/types.ts#L38) it's referred to as `Native`, referencing as either works in the system).
+At this time, RFQ liquidity is considered by the Swap API to be included within the `0x`/`Native` liquidity group. In the API's interface, it's referred to as `0x`, but in the underlying routing logic at the [protocol-level](https://github.com/0xProject/protocol/blob/4f32f3174f25858644eae4c3de59c3a6717a757c/packages/asset-swapper/src/utils/market_operation_utils/types.ts#L38) it's referred to as `Native`. Referencing as either works in the system.
 
 ```
 # Example request using the excludedSources=0x flag
@@ -304,8 +308,13 @@ Therefore, if a Swap API client intends to access RFQ liquidity, it's important 
 The best way to ensure that your RFQ integration is working end-to-end (at least, between you and Swap API) is to add the `includedSources=RFQT` flag. A `/swap` request with this parameter will:
 
 - raise an error if `takerAddress` is not present
-- return pricing for only RFQT liquidity
+- return pricing for only RFQ liquidity
 - raise an error if API key is invalid
+
+:::info
+- Using `includedSources=0x` or `includedSources=Native` achieves the same result.
+- The parameter value, RFQT, includes the "T" for historical reasons. We're talking about the same RFQ liquidity here.
+:::
 
 ```
 # Example request using the includedSources=RFQT flag
@@ -319,11 +328,11 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
 &feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
 &buyTokenPercentageFee=0.01        // Pays a 1% fee denominated in WETH to `feeRecipient`
-&includedSources=RFQT              // Ensures only RFQ liquidity is sourced
+&includedSources=RFQT              // Ensures only RFQ liquidity is sourced. includedSources=0x and includedSources=Native achieve the same result
 --header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
 ## Code Examples
 
 - [Next.js 0x Demo App (TypeScript)](https://github.com/0xProject/0x-nextjs-demo-app) - A Next.js app that shows best practices for implementing indicative pricing and firm quotes
-- [Walk-through Video](https://www.youtube.com/watch?v=P1ECx9zKQiU)
+- [Video](https://www.youtube.com/watch?v=P1ECx9zKQiU) walking through setting up indicative pricing and firm quotes
