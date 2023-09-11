@@ -132,7 +132,8 @@ In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must incl
 
 - `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
 - `intentOnFilling` needs to always be set to true.
-  :::
+
+:::
 
 ```
 https://api.0x.org/swap/v1/quote             // Request a firm quote
