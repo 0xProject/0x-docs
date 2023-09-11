@@ -121,9 +121,8 @@ When a taker is ready to actually perform a fill, they will request a firm quote
 
 The firm quote resource is hosted at [`/swap/v1/quote`](/0x-swap-api/api-references/get-swap-v1-quote) and responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
 
-In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must include the following parameters:
+In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must include the following parameter:
 
-- `intentOnFilling=true`
 - non-null `takerAddress`
 
 ### Example Parameters of API Request
@@ -131,7 +130,6 @@ In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must incl
 :::info
 
 - `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
-- `intentOnFilling` needs to always be set to true.
 
 :::
 
@@ -141,7 +139,6 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
 &buyToken=ETH                                // Buy ETH
 &takerAddress=0x3bA5De64E24Eea0E974393BeF8a047B58f961c08.   // Address that will make the trade
-&intentOnFilling=true                // Confirms to our MM that you intend to fill this order
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
 &feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the address that will receive affiliate fees specified (used if you choose to monetize your app)
 &buyTokenPercentageFee=0.01        // pays a 1% fee denominated in WETH to `feeRecipient`
@@ -258,7 +255,7 @@ The following example cURL request does not add a fee recipient parameter; howev
 :::
 
 ```bash
-curl https://api.0x.org/swap/v1/quote?sellToken=USDC&sellAmount=30000000&buyToken=ETH&takerAddress=0x0A975d7B53F8DA11e64196d53Fb35532fea37E85&intentOnFilling=true&skipValidation=true --header '0x-api-key: [api-key]'
+curl https://api.0x.org/swap/v1/quote?sellToken=USDC&sellAmount=30000000&buyToken=ETH&takerAddress=0x0A975d7B53F8DA11e64196d53Fb35532fea37E85&skipValidation=true --header '0x-api-key: [api-key]'
 ```
 
 ## 3. Submitting the Transaction
@@ -293,7 +290,6 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
 &buyToken=ETH                                // Buy ETH
 &takerAddress=0x3bA5De64E24Eea0E974393BeF8a047B58f961c08.   // Address that will make the trade
-&intentOnFilling=true                // Confirms to our MM that you intend to fill this order
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
 &feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
 &buyTokenPercentageFee=0.01        // Pays a 1% fee denominated in WETH to `feeRecipient`
@@ -317,7 +313,6 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
 &buyToken=ETH                                // Buy ETH
 &takerAddress=0x3bA5De64E24Eea0E974393BeF8a047B58f961c08.   // Address that will make the trade
-&intentOnFilling=true                // Confirms to our MM that you intend to fill this order
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
 &feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
 &buyTokenPercentageFee=0.01        // Pays a 1% fee denominated in WETH to `feeRecipient`
