@@ -21,16 +21,15 @@ Easily integrate RFQ liquidity in 3 steps:
 :::
 
 :::tip
-Prefer to see a code demo and watch a video? 
+Prefer to see a code demo and watch a video?
 Checkout the [Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) and [video](https://www.youtube.com/watch?v=P1ECx9zKQiU) for best practices implementing indicative pricing and firm quotes.
 :::
-
 
 ## 1. Indicative Pricing
 
 Indicative pricing is used for takers who are querying the prices they could receive. The Swap API will respond to an indicative price with the expected rate of trade between the asset pair specified.
 
-The indicative pricing resource is hosted at [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) and responds with pricing information, but that response does not contain a full 0x order, so it does not constitute a legitimate transaction that can be submitted to the Ethereum network (you must use [/quote](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#2-firm-quotes) for this). 
+The indicative pricing resource is hosted at [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) and responds with pricing information, but that response does not contain a full 0x order, so it does not constitute a legitimate transaction that can be submitted to the Ethereum network (you must use [/quote](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#2-firm-quotes) for this).
 
 In order to receive indicative pricing that includes RFQ liquidity, the request to `/swap/v1/price` must include a non-null `takerAddress` parameter.
 
@@ -123,15 +122,17 @@ When a taker is ready to actually perform a fill, they will request a firm quote
 The firm quote resource is hosted at [`/swap/v1/quote`](/0x-swap-api/api-references/get-swap-v1-quote) and responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
 
 In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must include the following parameters:
-* `intentOnFilling=true`
-* non-null `takerAddress`
+
+- `intentOnFilling=true`
+- non-null `takerAddress`
 
 ### Example Parameters of API Request
 
 :::info
+
 - `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
 - `intentOnFilling` needs to always be set to true.
-:::
+  :::
 
 ```
 https://api.0x.org/swap/v1/quote             // Request a firm quote
@@ -299,22 +300,15 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 --header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
-Therefore, if a Swap API client intends to access RFQ liquidity, it's important that they not exclude the `0x` or the `Native` liquidity sources. 
-
-
+Therefore, if a Swap API client intends to access RFQ liquidity, it's important that they not exclude the `0x` or the `Native` liquidity sources.
 
 ## Testing Your RFQ Integration (Recommended)
 
-The best way to ensure that your RFQ integration is working end-to-end (at least, between you and Swap API) is to add the `includedSources=RFQT` flag. A `/swap` request with this parameter will:
+The best way to ensure that your RFQ integration is working end-to-end (at least, between you and Swap API) is to add the `includedSources=0x` flag. A `/swap` request with this parameter will:
 
 - raise an error if `takerAddress` is not present
 - return pricing for only RFQ liquidity
 - raise an error if API key is invalid
-
-:::info
-- Using `includedSources=0x` or `includedSources=Native` achieves the same result.
-- The parameter value, RFQT, includes the "T" for historical reasons. We're talking about the same RFQ liquidity here.
-:::
 
 ```
 # Example request using the includedSources=RFQT flag
@@ -328,7 +322,7 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 &skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
 &feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the fee recipient
 &buyTokenPercentageFee=0.01        // Pays a 1% fee denominated in WETH to `feeRecipient`
-&includedSources=RFQT              // Ensures only RFQ liquidity is sourced. includedSources=0x and includedSources=Native achieve the same result
+&includedSources=0x              // Ensures only RFQ liquidity is sourced
 --header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
