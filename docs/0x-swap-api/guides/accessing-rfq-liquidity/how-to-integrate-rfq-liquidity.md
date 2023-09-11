@@ -311,8 +311,6 @@ The best way to ensure that your RFQ integration is working end-to-end (at least
 - raise an error if API key is invalid
 
 ```
-# Example request using the includedSources=RFQT flag
-
 https://api.0x.org/swap/v1/quote             // Request a firm quote
 ?sellToken=DAI                               // Sell DAI
 &sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
