@@ -735,7 +735,7 @@ https://api.0x.org/swap/v1/quote?buyToken=WETH&sellToken=ETH&buyAmount=10000000
 
 ### Ensure RFQ liquidity
 
-RFQ liquidity can only be accessed if the request supplies a taker address, a permissioned API key via header `0x-api-key` (get one from the [0x Dashboard](https://dashboard.0x.org/)). For more details see the guide [here](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity).
+RFQ liquidity can only be accessed if the request supplies a taker address and a permissioned API key via header `0x-api-key` (get one from the [0x Dashboard](https://dashboard.0x.org/)). For more details see the guide [here](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity).
 
 #### Request
 
