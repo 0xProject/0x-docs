@@ -78,8 +78,7 @@ const params = {
     // Not all token symbols are supported. The address of the token should be used instead.
     sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
     buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
-    // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
-    sellAmount: '100000000000000000000',
+    sellAmount: '100000000000000000000', // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B', //Including takerAddress is highly recommended to help with gas estimation, catch revert issues, and provide the best price
 };
 
@@ -139,7 +138,8 @@ const response = await fetch(
 
 Under the hood, 0x API performs an [`eth_estimateGas`](https://eth.wiki/json-rpc/API#eth_estimategas) using the `takerAddress` if one is provided. This serves two purposes:
 
-- to more accurately estimate the gas required for the transaction, and
+- to more accurately estimate the gas required for the transaction,
+- to provide the best pricing that includes [enabling RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity), and
 - to catch any reverts that would occur if the `takerAddress` attempts to swap the tokens.
 
 An HTTP response with status 400 will be returned if the `eth_estimateGas` results in a revert (i.e. the swap would fail), along with reasons for the revert. In particular,
@@ -177,7 +177,7 @@ quote = await response.json();
 const receipt = await web3.eth.sendTransaction(quote);
 ```
 
-#### Option 2 - Submit only the required parameters to web3.eth.sendTransaction\*\*
+#### Option 2 - Submit only the required parameters to web3.eth.sendTransaction
 
 ```js
 // Fetch the swap quote.
@@ -328,5 +328,4 @@ The `slippagePercentage` parameter determines the difference between the `price`
 ## Starter projects
 
 - [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) - A demo ERC20 swapping app made with 0x Swap API, Next.js, and ConnectKit
-- [(Tutorial) Build a Token Swap dApp with 0x Swap API, ConnectKit, and Next.js](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s) - A video tutorial convering the core concepts when building any token swapping dApp.
-- [(Tutorial) How to Build a Token Swap dApp With 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - A full end-to-end guide on how to build a token swapping dapp (a simple [Matcha.xyz](https://matcha.xyz/)) using the 0x /swap API endpoint. This DEX aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
+- [(Video) Build a Token Swap dApp with 0x Swap API, ConnectKit, and Next.js](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s) - A video tutorial convering the core concepts when building any token swapping dApp.
