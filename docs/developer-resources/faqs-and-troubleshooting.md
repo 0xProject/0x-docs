@@ -188,6 +188,8 @@ The fee is received in the `buyToken` (the token that the user will receive). If
 
 When `feeRecipientTradeSurplus` is not specified, the feature is effectively OFF and all trade surplus will be passed back to the user.
 
+Note: Trade surplus is only sent to `feeRecipientTradeSurplus` for SELLs (when the sellAmount is specified). It is a no-op for BUYs (when the buyAmount is specified), which means the user will always receive the trade surplus.
+
 Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote).
 
 </details>
