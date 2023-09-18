@@ -44,7 +44,6 @@ https://api.0x.org/swap/v1/price             // Request an indicative quote
 ?sellToken=DAI                               // Sell DAI
 &sellAmount=4000000000000000000000           // Sell amount: 4000
 &buyToken=WETH                               // Buy WETH
-&gasPrice=50000000000                        // Optionally, specify the gas price
 &takerAddress=$USER_TAKER_ADDRESS            // Address that will make the trade
 --header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
@@ -138,10 +137,6 @@ https://api.0x.org/swap/v1/quote             // Request a firm quote
 ?sellToken=DAI                               // Sell DAI
 &sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
 &buyToken=ETH                                // Buy ETH
-&takerAddress=0x3bA5De64E24Eea0E974393BeF8a047B58f961c08.   // Address that will make the trade
-&skipValidation=true                // We suggest to set this parameter, if you do not want Swap API to simulate the trade
-&feeRecipient=0x46B5BC959e8A754c0256FFF73bF34A52Ad5CdfA9.   // Specifies the address that will receive affiliate fees specified (used if you choose to monetize your app)
-&buyTokenPercentageFee=0.01        // pays a 1% fee denominated in WETH to `feeRecipient`
 &takerAddress=$USER_TAKER_ADDRESS            // Address that will make the trade
 --header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
