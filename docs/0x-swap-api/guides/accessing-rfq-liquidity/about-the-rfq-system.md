@@ -12,7 +12,7 @@ This guide is for integrators/projects who would like to **access** 0x RFQ liqui
 
 ## About the RFQ System
 
-_RFQ liquidity is currently available on Mainnet & Polygon._
+_RFQ liquidity is currently available on Mainnet, Polygon, and Arbitrum via Swap API._
 
 ### An Exclusive Source of Liquidity
 
