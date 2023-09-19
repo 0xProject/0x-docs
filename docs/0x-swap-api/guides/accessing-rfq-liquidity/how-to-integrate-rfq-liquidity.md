@@ -37,6 +37,9 @@ In order to receive indicative pricing that includes RFQ liquidity, the request 
 
 :::info
 A `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
+
+RFQ liquidity is currently available on Mainnet, Polygon, and Arbitrum via Swap API. Find the API endpoint for different chains [here](/0x-swap-api/api-references/overview).
+
 :::
 
 ```
@@ -128,7 +131,9 @@ In order to qualify for RFQ liquidity, the request to `/swap/v1/quote` must incl
 
 :::info
 
-- `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
+A `takerAddress` is required for RFQ liquidity. This is the address that will be filling the order.
+
+RFQ liquidity is currently available on Mainnet, Polygon, and Arbitrum via Swap API. Find the API endpoint for different chains [here](/0x-swap-api/api-references/overview).
 
 :::
 
