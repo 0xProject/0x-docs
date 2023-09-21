@@ -96,8 +96,8 @@ The Swap API has a powerful free plan that you can access by creating an account
 <summary>How does Swap API select the best orders for me?</summary>
 
 Beyond simply sampling each liquidity source for their respective prices, Swap API adjusts for the gas consumption of each liquidity source with the specified gas price (if none is provided Swap API will use ethGasStation's `fast` amount of gwei) and any associated fees with the specific liquidity source. By sampling through varying compositions of liquidity sources, Swap API selects the best set of orders to give you the best price. Swap API also creates another set of fallback orders to ensure that the quote can be executed by users.
-<br/>
-Ex: Swap API will adjust the price potentially received from Curve Finance by gas \* gasPrice and its fees. Because of Curve Finance’s costly gas consumption, its nominal price may not be the best price when settled.
+
+Ex: Swap API will adjust the price potentially received from Curve Finance by `gas * gasPrice` and its fees. Because of Curve Finance’s costly gas consumption, its nominal price may not be the best price when settled.
 
 </details>
 
@@ -164,7 +164,7 @@ Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` 
 When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is received in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
 <br/>
 
-If you would like to display the fee to your end users separately, just display the amount returned by `grossBuyAmount * buyTokenPercentageFee`. 
+If you would like to display the fee to your end users separately, just display the amount returned by `grossBuyAmount * buyTokenPercentageFee`.
 <br/>
 
 Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote.md).
@@ -363,6 +363,24 @@ We recommend referring to [tokenlist.org](https://tokenlists.org/), specifically
 <summary>How do I return the 0x Swap Fee to my end users?</summary>
 
 The 0x fee amount is returned in the `zeroExFee` parameter in the quotes where we charge the fee. You are responsible for ensuring your end users are aware of such fees, and may return the `feeAmount` and `feeToken` to your end users in your app. The applicable fee for each plan is detailed in our [Pricing Page](https://0x.org/pricing).
+
+</details>
+
+<details>
+
+<summary>Is there a way to sell assets via Swap API if the exact sellToken amount is not known before the transaction is executed?</summary>
+
+Yes, you can set `shouldSellEntireBalance=true` when making a Swap [/quote](https://0x.org/docs/0x-swap-api/api-references/get-swap-v1-quote) request. This will sell the entirety of the caller's `takerToken` balance.
+
+Here is an example two-step transaction use case:
+
+1. Withdraw collateral from a lending protocol
+
+- the lending protcol is volatile, so the exact amount of collateral withdrawn is not known before the transaction is executed
+
+2. Swap that collateral into a different asset using Swap API
+
+- set `shouldSellEntireBalance=true` to sell the entire collateral balance
 
 </details>
 
