@@ -82,7 +82,7 @@ We recommended meta-aggregators and integrators who compare the quoted price wit
 The `buyAmount` , `price`, and `expectedSlippage` response fields in the [**`/swap/quote`**](/0x-swap-api/api-references/get-swap-v1-quote) and [**`/swap/price`**](/0x-swap-api/api-references/get-swap-v1-price) endpoints are affected by this change
 
 * `buyAmount` & `price`: It should be noted that when `enableSlippageProtection` is not false, the `buyAmount` & `price` returned will factor slippage in its routing.
-*`expectedSlippage`: This is the expected slippage used in routing calculations for the quote returned. It is the value of slippage that we estimate that the selected route will have:
+* `expectedSlippage`: This is the expected slippage used in routing calculations for the quote returned. It is the value of slippage that we estimate that the selected route will have:
   * It can be used by integrators to calculate the Final Expected Amount for the asset: i.e. calculated as (`buyAmount` \* `expectedSlippage`)
   * It will only be returned when `enableSlippageProtection` is not set to `false`
 

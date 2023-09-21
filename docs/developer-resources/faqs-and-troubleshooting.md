@@ -164,6 +164,9 @@ Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` 
 When the transaction has gone through, the fee amount will be sent to the `feeRecipient` address you've set. The fee is received in the `buyToken` (the token that the user will receive). If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
 <br/>
 
+If you would like to display the fee to your end users separately, just display the amount returned by `grossBuyAmount * buyTokenPercentageFee`. 
+<br/>
+
 Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote.md).
 
 </details>
@@ -172,7 +175,7 @@ Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api
 
 <summary> How is the trading fee/commission I charge returned by Swap API - is it part of the quoted price or is it a separate parameter? </summary>
 
-The fee amount is incorporated as part of the quoted price. If you would like to display the fee to your end users separately, just display the amount returned by `buyAmount * buyTokenPercentageFee`
+The fee amount is incorporated as part of the quoted price. If you would like to display the fee to your end users separately, just display the amount returned by `grossBuyAmount * buyTokenPercentageFee`
 
 </details>
 
