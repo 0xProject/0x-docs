@@ -370,7 +370,7 @@ The 0x fee amount is returned in the `zeroExFee` parameter in the quotes where w
 
 <summary>Is there a way to sell assets via Swap API if the exact sellToken amount is not known before the transaction is executed?</summary>
 
-Yes, you can set `shouldSellEntireBalance=true` when making a Swap [/quote](https://0x.org/docs/0x-swap-api/api-references/get-swap-v1-quote) request. This will sell the entirety of the caller's `takerToken` balance. If `shouldSellEntireBalance=true`, then neither `sellAmount` nor `buyAmount` are required
+Yes, you can set `shouldSellEntireBalance=true` when making a Swap [/quote](https://0x.org/docs/0x-swap-api/api-references/get-swap-v1-quote) request. This will sell the entirety of the caller's `takerToken` balance. A `sellAmount` is still required, even if it is a best guess, because it is how a reasonable minimum received amount is determined after slippage.
 
 Here is an example two-step transaction use case:
 
