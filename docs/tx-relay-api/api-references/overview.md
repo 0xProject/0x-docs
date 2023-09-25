@@ -23,8 +23,8 @@ Tx Relay API is supported on Mainnet and Polygon, available via https://api.0x.o
 
 Once signed orders hit the blockchain, if the orders are swap only, they are settled by 0x Protocol smart contracts directly:
 * For meta-transaction orders, they are settled by the contract `MetaTransactionsFeature` and filled by the `execteMetaTransaction` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol).
-* For meta-transaction v2 orders (currently in development in tx relay API), they are settled by the contract `MetaTransactionsFeatureV2` and filled by the `executeMetaTransactionV2` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol).
-* For otc order (currently in development in tx relay API), they are settled by the contract `OtcOrdersFeature` and filled by the `fillTakerSignedOtcOrderForEth` or `fillTakerSignedOtcOrder` functions, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol).
+* For meta-transaction v2 orders, they are settled by the contract `MetaTransactionsFeatureV2` and filled by the `executeMetaTransactionV2` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol).
+* For otc order, they are settled by the contract `OtcOrdersFeature` and filled by the `fillTakerSignedOtcOrderForEth` or `fillTakerSignedOtcOrder` functions, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol).
 
 If the orders are approval and swap, they are settled by `permitAndCall` contract which handles the approval and swap atomically. The swap would be forwarded to 0x Protocol smart contracts and handled by the same functions.
 

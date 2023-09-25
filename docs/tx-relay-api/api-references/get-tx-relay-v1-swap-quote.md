@@ -44,11 +44,16 @@ curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99
 
 ### Example Responses
 
-The response will initially be of type `metatransaction`. There are two new types `metatransaction_v2` and `otc` currently under development and will be available in the near future.
+There are 3 possible types of the response: `metatransaction_v2`, `otc` and `metatransaction` (`metatransaction` would be deprecated in the future so it's recommended not to use it).
 
 Thus, please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on types returned, namely `metatransaction` , `metatransaction_v2` and `otc`. More types might also be added in the future.
 
 Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as there are different types of gasless approval standards.
+
+**Note that:**
+- if returned type is `metatransaction_v2`, `feeToken` would be `sellToken`
+- if returned type is `otc`, `feeToken` would be `buyToken` if it's a `sell` and `sellToken` if it's a `buy`
+- if returned type is `metatransaction`, `feeToken` would be `buyToken`
 
 ### Liquidity Unavailable Response
 
