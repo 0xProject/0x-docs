@@ -46,60 +46,6 @@ curl 'https://api.0x.org/tx-relay/v1/swap/price?buyToken=0x0d500B1d8E8eF31E21C99
 
 ## Response
 
-### Example Responses
-
-#### Liquidity Unavailable Response
-
-```json
-{
-    "liquidityAvailable": false
-}
-```
-
-#### Response if liquidity is available
-
-```json
-{
-    "liquidityAvailable": true,
-    "buyAmount": "111769157454278150000",
-    "buyTokenAddress": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
-    "estimatedPriceImpact": "1.3618",
-    "price": "1.1176915745427815",
-    "sellAmount": "100000000",
-    "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-    "grossBuyAmount": "113147008545248165897",
-    "grossSellAmount": "100000000",
-    "grossPrice": "1.131470085452481658",
-    "grossEstimatedPriceImpact": "0.1458",
-    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
-    "sources": [
-        {
-            "name": "Uniswap_V3",
-            "proportion": "1"
-        }
-    ],
-    "fees": {
-        "integratorFee": {
-            "feeType": "volume",
-            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-            "feeAmount": "1000000",
-            "billingType": "on-chain"
-        },
-        "zeroExFee": {
-            "feeType": "volume",
-            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-            "feeAmount": "150000",
-            "billingType": "on-chain"
-        },
-        "gasFee": {
-            "feeType": "gas",
-            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-            "feeAmount": "67753",
-            "billingType": "on-chain"
-        }
-    }
-}
-```
 ### Response Params
 
 | **Query Params**       | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -119,9 +65,97 @@ curl 'https://api.0x.org/tx-relay/v1/swap/price?buyToken=0x0d500B1d8E8eF31E21C99
 | `allowanceTarget`      | The target contract address for which the user needs to have an allowance in order to be able to complete the swap.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `sources`              | The underlying sources for the liquidity. The format will be:<br></br>`[{ name: string; proportion: string }]`<br></br>An example: `[{"name": "Uniswap_V2", "proportion": "0.87"}, {"name": "Balancer", "proportion": "0.13"}]`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `fees`                 | \[optional] Fees that would be charged. It can optionally contain `integratorFee`, `zeroExFee` and `gasFee`. See details about each fee type below.                                                                                                |
-| `integratorFee`        | Related to `fees` param above. <br></br><br></br>Integrator fee (in amount of `sellToken`) would be provided if `feeType` and the corresponding query params are provided in the request:<br></br> &ensp;&ensp;- `feeType`: The type of the `integrator` fee. This is always the same as the `feeType` in the request. It can only be `volume` currently.<br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. This is always be the same as `sellToken` in the request.<br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as integrator fee. Note this amount includes the possible 0x fee if 0x charges integrator fee described below.<br></br>&ensp;&ensp;- `billingType`: The method that integrator fee is transferred. It can only be `on-chain` which means integrator fee can only be transferred on-chain to `feeRecipient` query param provided.<br></br><br></br>The endpoint currently does _**not**_ support integrator fees if the order type  `otc` is chosen due to better pricing. Callers can opt-out of `otc` by explicitly passing in `acceptedTypes` query param without `otc`. `otc` order would, however, potentially improve the pricing the endpoint returned as there are more sources for liquidity. 
-| `zeroExFee`        | Related to `fees` param above. <br></br><br></br>Fee that 0x charges:<br></br>&ensp;&ensp;- `feeType`: `volume` or `integrator_share` which varies per integrator. `volume` means 0x would charge a certain percentage of the trade independently. `integrator_share` means 0x would change a certain percentage of what the integrator charges. <br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. <br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as `0x` fee. <br></br>&ensp;&ensp;- `billingType`: The method that 0x fee is transferred. It can be either `on-chain`, `off-chain` or `liquidity` which varies per integrator. `on-chain` means the fee would be charged on-chain. `off-chain` means the fee would be charged to the integrator via off-chain payment. `liquidity` means the fee would be charged off-chain but not to the integrator.<br></br><br></br>Please reach out to us if you'd like more details on the `feeType` and `billingType`. |
-| `gasFee`       | Related to `fees`. See param above. <br></br><br></br>Gas fee to compensate for the transaction submission performed by our relayers:<br></br>&ensp;&ensp;- `feeType`: The value is always `gas`.<br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge gas fee.<br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as gas fee.<br></br>&ensp;&ensp;- `billingType`: The method that gas compensation is transferred. It can be either `on-chain`, `off-chain` or `liquidity` which has the same meaning as described above in `zeroExFee` section.<br></br><br></br>Please reach out to us if you'd like more details on the `billingType`. |
+| `integratorFee`        | Related to `fees` param above. <br></br><br></br>Integrator fee (in amount of `sellToken`) would be provided if `feeType` and the corresponding query params are provided in the request:<br></br> &ensp;&ensp;- `feeType`: The type of the `integrator` fee. This is always the same as the `feeType` in the request. It can only be `volume` currently.<br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. This is always the same as `sellToken` in the request.<br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as integrator fee.<br></br>&ensp;&ensp;- `billingType`: The method that integrator fee is transferred. It can only be `on-chain` which means integrator fee can only be transferred on-chain to `feeRecipient` query param provided.<br></br><br></br>The endpoint currently does _**not**_ support integrator fees if the order type  `otc` is chosen due to better pricing. Callers can opt-out of `otc` by explicitly passing in `acceptedTypes` query param without `otc`. `otc` order would, however, potentially improve the pricing the endpoint returned as there are more sources for liquidity. 
+| `zeroExFee`        | Related to `fees` param above. <br></br><br></br>Fee that 0x charges:<br></br>&ensp;&ensp;- `feeType`: `volume` or `integrator_share` which varies per integrator. `volume` means 0x would charge a certain percentage of the trade independently. `integrator_share` means 0x would change a certain percentage of what the integrator charges. <br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. The token could be either `sellToken` or `buyToken`. <br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as `0x` fee. <br></br>&ensp;&ensp;- `billingType`: The method that 0x fee is transferred. It can be either `on-chain`, `off-chain` or `liquidity` which varies per integrator. `on-chain` means the fee would be charged on-chain. `off-chain` means the fee would be charged to the integrator via off-chain payment. `liquidity` means the fee would be charged off-chain but not to the integrator.<br></br><br></br>Please reach out to us if you'd like more details on the `feeType` and `billingType`. |
+| `gasFee`       | Related to `fees`. See param above. <br></br><br></br>Gas fee to compensate for the transaction submission performed by our relayers:<br></br>&ensp;&ensp;- `feeType`: The value is always `gas`.<br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge gas fee. The token could be either `sellToken` or `buyToken`. <br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as gas fee.<br></br>&ensp;&ensp;- `billingType`: The method that gas compensation is transferred. It can be either `on-chain`, `off-chain` or `liquidity` which has the same meaning as described above in `zeroExFee` section.<br></br><br></br>Please reach out to us if you'd like more details on the `billingType`. |
+
+### Example Responses
+
+#### Liquidity Unavailable Response
+
+```json
+{
+    "liquidityAvailable": false
+}
+```
+
+#### Response if liquidity is available (`feeToken` is `sellToken`)
+
+```json
+{
+    "liquidityAvailable": true,
+    "buyAmount": "99887369",
+    "buyTokenAddress": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    "estimatedPriceImpact": "0",
+    "price": "0.998873",
+    "sellAmount": "100000000",
+    "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    "grossBuyAmount": "100005950",
+    "grossSellAmount": "100000000",
+    "grossPrice": "1.000059",
+    "grossEstimatedPriceImpact": "0",
+    "sources": [
+        {
+            "name": "DODO",
+            "proportion": "1"
+        }
+    ],
+    "fees": {
+        "zeroExFee": {
+            "feeType": "volume",
+            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+            "feeAmount": "100000",
+            "billingType": "on-chain"
+        },
+        "gasFee": {
+            "feeType": "gas",
+            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+            "feeAmount": "18574",
+            "billingType": "on-chain"
+        }
+    },
+    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+}
+```
+
+#### Response if liquidity is available (`feeToken` is `buyToken`)
+
+```json
+{
+    "liquidityAvailable": true,
+    "price": "0.9989278",
+    "buyAmount": "99892788",
+    "buyTokenAddress": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    "sellAmount": "100000000",
+    "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    "grossBuyAmount": "99999998",
+    "grossSellAmount": "100000000",
+    "grossPrice": "0.9999999",
+    "estimatedPriceImpact": null,
+    "grossEstimatedPriceImpact": null,
+    "sources": [
+        {
+            "name": "0x",
+            "proportion": "1"
+        }
+    ],
+    "fees": {
+        "zeroExFee": {
+            "feeType": "volume",
+            "feeToken": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+            "feeAmount": "100108",
+            "billingType": "liquidity"
+        },
+        "gasFee": {
+            "feeType": "gas",
+            "feeToken": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+            "feeAmount": "7102",
+            "billingType": "liquidity"
+        }
+    }
+}
+```
 
 ## Status Codes
 * `200` if successful.
