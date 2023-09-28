@@ -1,7 +1,7 @@
 ---
 sidebar_label: Introduction
 sidebar_position: 1
-description: 0x API hosts an Orderbook of 0x Limit Orders that anyone can provide liquidity to or take liquidity from.
+description: 0x API hosts an Orderbook of 0x Limit Orders for teams to take liquidity from.
 ---
 
 # Introduction
@@ -11,16 +11,16 @@ Enable limit orders in your app or take liquidity directly from the 0x Orderbook
 0x API has an Orderbook on the following chains:
 
 - Ethereum
-- BSCs
+- BSC
 - Polygon
 
 In previous versions of 0x API prior to [0x Protocol v4](https://docs.0xprotocol.org/en/latest/), this functionality was exposed by the "SRA" endpoint. Previous docs: [https://github.com/0xProject/standard-relayer-api](https://github.com/0xProject/standard-relayer-api). Note that 0x Protocol is an open-sourced project that is separate and not maintained by 0x.
 
-## Get Started
-
 :::info
-To create an account, and get your live API keys to access the Orderbook API, visit the **[0x Dashboard](https://dashboard.0x.org/)**.
+All teams with a valid [API key](https://dashboard.0x.org/) are able to **GET /orderbook**, if you are interested to **POST /orderbook** please contact 0x via the [Intercom Messenger](/introduction/getting-started#6-have-a-question) in the bottom-right of your [0x Dashboard](https://dashboard.0x.org/), we will review your request promptly.
 :::
+
+## Get Started
 
 This section contains the following docs and guides
 

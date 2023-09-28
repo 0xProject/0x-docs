@@ -1,9 +1,14 @@
 ---
-sidebar_label:  POST /orderbook/v1/order_config
+sidebar_label: POST /orderbook/v1/order_config
 sidebar_position: 7
 description: Learn how to use  POST /orderbook/v1/order_config
 ---
+
 # POST /orderbook/v1/order_config
+
+:::info
+All teams with a valid [API key](https://dashboard.0x.org/) are able to **GET /orderbook**, if you are interested to **POST /orderbook** please contact 0x via the [Intercom Messenger](/introduction/getting-started#6-have-a-question) in the bottom-right of your [0x Dashboard](https://dashboard.0x.org/), we will review your request promptly.
+:::
 
 Send a partial [signed order](/0x-orderbook-api/api-references/overview#signed-order)to this endpoint to receive the rest of configuration-oriented fields. This response is currently static.
 
