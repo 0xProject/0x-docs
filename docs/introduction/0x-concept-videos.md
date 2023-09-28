@@ -14,7 +14,11 @@ description: This page contains a shortlist of videos that showcase notable feat
 
 [🛠️ Tutorial: Build a Token Swap Dapp With Swap API with HTML, CSS, Javascript](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-build-a-token-swap-dapp-with-swap-api)
 
+[🎙️ 0x DevTalks: Accessing RFQ Liquidity from 0x Swap API](/introduction/0x-concept-videos#%EF%B8%8F-0x-devtalks-accessing-rfq-liquidity-from-0x-swap-api)
+
 [🎙️ Livestream: Powered by 0x](/introduction/0x-concept-videos#%EF%B8%8F-livestream-powered-by-0x)
+
+[🧠 Monetization Across the DEX Stack](/introduction/0x-concept-videos#-monetization-across-the-dex-stack)
 
 [🧠 MEV-aware DEX design](/introduction/0x-concept-videos#-mev-aware-dex-design)
 
@@ -40,11 +44,27 @@ Written version [here](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tVvZ1ivp4X0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+## 🎙️ 0x DevTalks: Accessing RFQ Liquidity from 0x Swap API
+
+Check out this 0x DevTalks video where we explore:
+
+- What RFQ liquidity is
+- Which use cases benefit most from RFQ
+- How to unlock optimal trades with RFQ liquidity in 3 simple steps
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IFA21ciyQxw?si=VtAHVOclJjs4cGjL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ## 🎙️ Livestream: Powered by 0x
 
 Follow [Powered by 0x,](https://www.youtube.com/watch?v=vxGaJVEkfyY&list=PLN51Tjs40v5M8d6UeDQyZJHfqy9pBC00j&index=2) our developer-focused livestream where we explore features in the 0x tech ecosystem and interview developers building innovative projects on the 0x tech stack.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vxGaJVEkfyY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## 🧠 Monetization Across the DEX Stack
+
+In this workshop, Will Warren (co-CEO of 0x) covers the different layers of the DEX stack how value has been captured and distributed at each layer, and how these models are continuing to evolve, setting the stage for new applications to enter the space.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ihbHPVJ3BKc?si=6hpWLXJ7hdXv7DXb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## 🧠 MEV-aware DEX design
 
