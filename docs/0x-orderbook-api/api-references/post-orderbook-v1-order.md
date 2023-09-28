@@ -6,6 +6,10 @@ description: Learn how to use POST /orderbook/v1/order
 
 # POST /orderbook/v1/order
 
+:::info
+All teams with a valid [API key](https://dashboard.0x.org/) are able to **GET /orderbook**, if you are interested to **POST /orderbook** please contact 0x via the [Intercom Messenger](/introduction/getting-started#6-have-a-question) in the bottom-right of your [0x Dashboard](https://dashboard.0x.org/), we will review your request promptly.
+:::
+
 Submit a signed order.
 
 ## Request

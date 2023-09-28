@@ -1,16 +1,12 @@
 ---
-sidebar_label:  GET /orderbook/v1/fee_recipients
+sidebar_label: GET /orderbook/v1/fee_recipients
 sidebar_position: 9
 description: Learn how to use GET /orderbook/v1/fee_recipients
 ---
 
-# GET /orderbook/v1/fee\_recipients
+# GET /orderbook/v1/fee_recipients
 
 Retrieves a list of valid feeRecipient addresses.
-
-:::info
-This endpoint is paginated. By default, a request returns page 1 with 20 orders. It is possible to change which page and how many records are returned per page via the query parameters. See [pagination](/0x-orderbook-api/api-references/overview#pagination) for more details.
-:::
 
 ## Request
 
