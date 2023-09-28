@@ -37,3 +37,20 @@ As mentioned earlier, 0x API works with specific market makers who participate i
 ## Integrating RFQ Liquidity
 
 Read about [how to easily integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity) into your project.
+
+## Learn More
+
+### Video
+
+Check out this 0x DevTalks video where we explore:
+
+- What RFQ liquidity is
+- Which use cases benefit most from RFQ
+- How to unlock optimal trades with RFQ liquidity in 3 simple steps
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IFA21ciyQxw?si=VtAHVOclJjs4cGjL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+### Blog
+
+- [Unlock optimal trades in Swap API with 0x RFQ liquidity](https://0x.org/post/unlock-optimal-trades-in-swap-api-with-0x-rfq-liquidity)
+- [A comprehensive analysis of RFQ performance](https://0x.org/post/a-comprehensive-analysis-of-rfq-performance)
