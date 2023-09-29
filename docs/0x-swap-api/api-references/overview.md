@@ -10,7 +10,7 @@ description: Learn how to use the Swap API, the most efficient liquidity for web
 
 **The Swap API is the liquidity and data endpoint for DeFi.** It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests for your application and your users.
 
-We offer hosted versions for different EVM-compatible networks. Requests for more networks, and questions/feedback in general should be directed at our [Discord](https://discord.com/invite/d3FTX3M).
+We offer hosted versions for different EVM-compatible networks.
 
 | **Network**         | **Endpoint**                  |
 | ------------------- | ----------------------------- |
