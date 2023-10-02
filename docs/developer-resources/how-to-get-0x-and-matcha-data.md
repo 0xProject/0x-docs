@@ -4,7 +4,6 @@ sidebar_position: 5
 description: With Existing Tools and Resources
 ---
 
-
 # 📊 How to Get 0x and Matcha Data
 
 \* _updated as of Apr 12, 2023_
@@ -25,9 +24,9 @@ The following resources cover **active** versions of 0x exchange contracts (v2, 
 
 It is an off-chain order matching system that compares prices across:
 
-* On-chain **bridge liquidity** (30+ AMM pools across chain like Uniswap, PancakeSwap, etc.)
-* Off-chain **native liquidity** from RFQ system with Professional Market Makers’ quotes
-* Off-chain **native liquidity** from 0x’s Open Order Book network (known as mesh, accessed via 0x API `/orderbook` endpoint)
+- On-chain **bridge liquidity** (30+ AMM pools across chain like Uniswap, PancakeSwap, etc.)
+- Off-chain **native liquidity** from RFQ system with Professional Market Makers’ quotes
+- Off-chain **native liquidity** from 0x’s Open Order Book network (known as mesh, accessed via 0x API `/orderbook` endpoint)
 
 It returns the best price source (or sources) to users and prepares the routing information to be settled on chain — by 0x exchange contracts (**native liquidity**) or other DEXes' contracts (**bridge liquidity**).
 
@@ -51,23 +50,21 @@ Below is a summary table for different attributions:
 | ------------------------------- | ------------------------------------------------------------- | ----------------- | ----------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | 0x Native                       | Ethereum                                                      | Settlement Layer  | DEX                     | No                  | native volume settled on 0x exchange contracts with fired events including Fill(), rfqOrderFilled() and limitOrderFilled() |
 | 0x API                          | Ethereum, BSC, Polygon, Avalanche, Fantom, Celo, Optimism     | Aggregator Layer  | Aggregator              | Yes                 | native + bridge volume going thru 0x API `/swap` endpoint                                                                  |
-| 0x API Integrator (e.g. Matcha) | Ethereum, BSC, Polygon, Avalanche, Fantom, Celo, Optimism     | Application Layer | Aggregator (Integrator) | Yes                 | volume Integrator affiliated on top of 0x API `/swap` and `/orderbook` endpoints                                                 |
+| 0x API Integrator (e.g. Matcha) | Ethereum, BSC, Polygon, Avalanche, Fantom, Celo, Optimism     | Application Layer | Aggregator (Integrator) | Yes                 | volume Integrator affiliated on top of 0x API `/swap` and `/orderbook` endpoints                                           |
 | **0x Protocol**                 | **Ethereum, BSC, Polygon, Avalanche, Fantom, Celo, Optimism** | **Global**        | **DEX + Aggregator**    | **Yes**             | **combined total 0x volume with de-duplication of overlap**                                                                |
-
 
 ### 🧮 Available Data Tools 📎
 
 ![0x Data Attribution Map](/img/developer-resources/0x-data-attribution-map.png)
 _Existing & Coming Atttributions_
 
-
 #### 🔍 0x Explorer
 
 _Data info site built by 0x team, for multichain stats & charts on 0x ecosystem._
 
-[0x Explorer](https://explorer.0x.org/) offers an easy way to explore all 0x Protocol data across applications and liquidity sources. It gives users a comprehensive view in terms of key metrics like total trade volume, and total users. 
+[0x Explorer](https://explorer.0x.org/) offers an easy way to explore all 0x Protocol data across applications and liquidity sources. It gives users a comprehensive view in terms of key metrics like total trade volume, and total users.
 
-All application are tagged [here](https://explorer.0x.org/apps).  If you see your application missing on the list, please reach out on 0x Discord in 0x-explorer channel.
+All application are tagged [here](https://explorer.0x.org/apps). If you see your application missing on the list, please [Contact Support](/introduction/getting-started#6-have-a-question) via the Intercom messenger in the bottom-right of your 0x Dashboard.
 
 #### 🧙 Dune Analytics
 
@@ -75,14 +72,14 @@ _For those looking for retrospective data, charts and stats._
 
 **0x Dashboards** _(planned multichain version updates coming)_
 
-* [0x Trading Activities](https://www.duneanalytics.com/0x/0x-trading-activity) (covers 0x Protocol, 0x API, 0x Native on Ethereum)
-* [Matcha 🍵 ](https://www.duneanalytics.com/0x/matcha)(covers Matcha on Ethereum)
-* [0x API and Matcha on Optimism](https://dune.xyz/0x/0x-API-and-Matcha-on-Optimism)
+- [0x Trading Activities](https://www.duneanalytics.com/0x/0x-trading-activity) (covers 0x Protocol, 0x API, 0x Native on Ethereum)
+- [Matcha 🍵 ](https://www.duneanalytics.com/0x/matcha)(covers Matcha on Ethereum)
+- [0x API and Matcha on Optimism](https://dune.xyz/0x/0x-API-and-Matcha-on-Optimism)
 
 Also comparison with other DEXes & Aggregators on:
 
-* [DEX metrics 📊 ](https://explore.duneanalytics.com/dashboard/dex-metrics)(covers 0x API, 0x Native)
-* [Aggregator Market Share 🏦](https://duneanalytics.com/danning.sui/dex-aggregators-by-sui414) (covers 0x API)
+- [DEX metrics 📊 ](https://explore.duneanalytics.com/dashboard/dex-metrics)(covers 0x API, 0x Native)
+- [Aggregator Market Share 🏦](https://duneanalytics.com/danning.sui/dex-aggregators-by-sui414) (covers 0x API)
 
 If you are looking for stats on specific dates or attribution, you can click into the queries in the above dashboards, to simply fork the queries and change filter for dates or affiliate/relayer in SQL.
 
@@ -96,21 +93,24 @@ _For those looking for an GraphQL API to query 0x Protocol Data._
 
 Do you believe that the truth can only be found in the blockchain?
 
-* If you don't have a data pipeline yet - our [event scraper](https://github.com/0xProject/0x-event-pipeline) is open source and only requires an RPC endpoint and a Postgres DB (Contributions are also welcome).
-* If you already have a blockchain data ETL already, with the full copy of data processed into relational databases - our [folder](https://github.com/duneanalytics/spellbook/tree/main/models/zeroex) under DuneAnalytics' collaborative repo will be the best reference.
+- If you don't have a data pipeline yet - our [event scraper](https://github.com/0xProject/0x-event-pipeline) is open source and only requires an RPC endpoint and a Postgres DB (Contributions are also welcome).
+- If you already have a blockchain data ETL already, with the full copy of data processed into relational databases - our [folder](https://github.com/duneanalytics/spellbook/tree/main/models/zeroex) under DuneAnalytics' collaborative repo will be the best reference.
 
 #### Affiliate Tracking
+
 Being able to attribute a trade to a specifec integrator is simple if you have access to the calldata of calls made to the 0x Exchange Proxy.
+
 1. Find the string `869584cd` in the calldata.
 2. Skip the following 32 `0`s
 3. The next 40 characters are the affiliate address (it is useful to prefix it with `0x` so they can be later used as addresses)
 
 Caveats:
-* Not all calls made to the 0x Exchange proxy have an affliate tag (`869584cd`) as it is optional component of the 0x Protocol
-* 0x API always adds an affiliate address to the calldata, but not all integrators have enabled tagging, in those cases the affiliate address will be `0x10000000000000000000000000000000000000011`
-* Since the 0x Protocol is permissionles anybody can "spoof" tags
-* The affiliate tag is a random, or custom, address it does not contain encoded name of an integrator
 
-Feel free to reach out to [jorge@0xproject.com](mailto:jorge@0xproject.com) (@ktl\_xv) for any questions!
+- Not all calls made to the 0x Exchange proxy have an affliate tag (`869584cd`) as it is optional component of the 0x Protocol
+- 0x API always adds an affiliate address to the calldata, but not all integrators have enabled tagging, in those cases the affiliate address will be `0x10000000000000000000000000000000000000011`
+- Since the 0x Protocol is permissionles anybody can "spoof" tags
+- The affiliate tag is a random, or custom, address it does not contain encoded name of an integrator
+
+Feel free to reach out to [jorge@0xproject.com](mailto:jorge@0xproject.com) (@ktl_xv) for any questions!
 
 The data must flow. 🧙‍♀️🔮

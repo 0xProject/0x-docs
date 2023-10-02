@@ -15,6 +15,7 @@ description: FAQs & Troubleshooting
   - [Working in the Testnet](faqs-and-troubleshooting.md#working-in-the-testnet)
   - [Parameter Questions](faqs-and-troubleshooting.md#parameter-questions)
   - [Best Practices](faqs-and-troubleshooting.md#best-practices)
+- [⛽️ Tx Relay API](faqs-and-troubleshooting.md#-tx-relay-api)
 - [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 - [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
 - [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
@@ -384,6 +385,10 @@ Here is an example two-step transaction use case:
 
 </details>
 
+## ⛽️ Tx Relay API
+
+Tx Relay API FAQs found [here](/tx-relay-api/tx-relay-faq)
+
 ## 💻 0x Dashboard
 
 <details>
@@ -480,6 +485,9 @@ We appreciate your interest in building with our APIs. To get an API key and sta
 
 <summary>My project is interested to apply as a liquidity source in 0x ecosystem. How can I contact the 0x team?</summary>
 
-Thank you for your interest in providing liquidity to the 0x ecosystem via our RFQ suite of products. Please fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform) to help us learn more about your firm, and determine whether 0x is a good fit for you. Our team will review and reach out to you.
+Thank you for your interest in providing liquidity to the 0x ecosystem. Please fill out the relevant form below for our team to review and reach out to you.
+
+- If you are looking provide [AMM Liquidity](https://docs.google.com/forms/d/e/1FAIpQLSf9Xw5M4I8c2Kw1mTkc5LsucrT_3pRuJ6O6RRHPPvn9EXL1tQ/viewform)
+- If you are looking to provide [RFQ Liquidity](https://docs.google.com/forms/d/e/1FAIpQLSen019JsWFZHluSgqSaPE_WFVc4YBtNS4EKB8ondJJ40Eh8jw/viewform)
 
 </details>
