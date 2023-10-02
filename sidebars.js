@@ -97,7 +97,6 @@ const sidebars = {
         type: "generated-index",
       },
       items: [
-        "developer-resources/faqs-and-troubleshooting",
         {
           type: "link",
           label: "Contact Support",
