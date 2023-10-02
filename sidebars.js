@@ -100,11 +100,6 @@ const sidebars = {
         "developer-resources/faqs-and-troubleshooting",
         {
           type: "link",
-          label: "Submit a Feature Request",
-          href: "https://help.0x.org/en/articles/8410844-how-to-submit-a-0x-feature-request",
-        },
-        {
-          type: "link",
           label: "Contact Support",
           href: "https://help.0x.org/en/articles/8230055-how-to-get-support-from-the-0x-team",
         },
@@ -112,6 +107,11 @@ const sidebars = {
           type: "link",
           label: "Help Center",
           href: "https://help.0x.org/en/",
+        },
+        {
+          type: "link",
+          label: "Submit a Feature Request",
+          href: "https://help.0x.org/en/articles/8410844-how-to-submit-a-0x-feature-request",
         },
         {
           type: "link",

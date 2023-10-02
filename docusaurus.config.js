@@ -62,9 +62,13 @@ const config = {
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-
     ({
       image: "img/0x-social-card.jpg",
+      colorMode: {
+        defaultMode: "light",
+        disableSwitch: false,
+        respectPrefersColorScheme: false,
+      },
       navbar: {
         title: "Docs",
         logo: {
@@ -86,7 +90,6 @@ const config = {
             href: "https://github.com/0xProject/0x-nextjs-demo-app/tree/main",
             className: "header-github-link",
             position: "right",
-            label: "GitHub repository",
           },
         ],
       },
@@ -96,11 +99,11 @@ const config = {
           autoCollapseCategories: true,
         },
       },
-      announcementBar: {
+      /* announcementBar: {
         id: "announcementBar", // Increment on change
         content: `📣 All requests to Swap API now require API keys. Please visit <a target="_blank" rel="noopener noreferrer" href="https://dashboard.0x.org">0x Dashboard</a> to get your API key.`,
         backgroundColor: "#A2FFC1",
-      },
+      }, */
       footer: {
         style: "dark",
         links: [
