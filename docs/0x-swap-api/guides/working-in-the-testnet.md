@@ -4,47 +4,69 @@ sidebar_position: 3
 description: Learn about working in the testnet
 ---
 
-# Working in the testnet
+# Working in the Testnet
 
-Swap API and 0x Protocol can be accessed on the Goerli testnet, or by forking Ethereum mainnet into your own testnet.
+## Available Testnets
 
-This page includes:
+0x Swap API testnets can be accessed from:
 
-- [Using Swap API on Goerli](/0x-swap-api/guides/working-in-the-testnet#using-swap-api-on-goerli)
-- [Tokens Available on Goerli](/0x-swap-api/guides/working-in-the-testnet#tokens-available-on-goerli)
-- [Getting Testnet Funds](/0x-swap-api/guides/working-in-the-testnet#getting-testnet-funds)
-- [Code Example - Performing a Swap on Goerli](/0x-swap-api/guides/working-in-the-testnet#code-example---performing-a-swap-on-)
-- [Forking Mainnet Ethereum](/0x-swap-api/guides/working-in-the-testnet#forking-mainnet-ethereum)
+- Ethereum (Goerli): https://goerli.api.0x.org/
+- Polygon (Mumbai): https://mumbai.api.0x.org
 
-### Using Swap API on Goerli
+These testnets offers a subset of DEX sources available on Ethereum mainnet.
+To view the currently supported sources on each network, you can use the [/sources](/0x-swap-api/api-references/get-swap-v1-sources) endpoint.
 
-A hosted 0x API for the Goerli testnet is available at [https://goerli.api.0x.org/](https://goerli.api.0x.org/) which offers a subset of DEX sources available on Ethereum mainnet.
+Altneratively, you can also fork Ethereum mainnet into your own testnet.
 
-To view the currently supported sources on Goerli refer to [https://goerli.api.0x.org/swap/v1/sources](https://goerli.api.0x.org/swap/v1/sources).
+## Available Token Pairs
 
-At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` Be aware that token you want to use for testing _must_ have liquidity on at least one of these sources; otherwise, you will receive an error.
+Because testnet liquidity is more limited than on mainnet, we recommend finding available testnet tokens is using pairs found in "Tokens Transferred" for the transactions that have gone through the [0x Exchange Proxy](/developer-resources/contract-addresses#0x-v4) contract for your desired network.
 
-#### Token Pairs Available on Goerli
+Note that liquidity sources are also different between mainnets and testnets. Be aware that token you want to use for testing _must_ have liquidity on at least one of these sources; otherwise, you will receive an error.
+
+In addition, only certain pairs are deployed on testnests and available for testing.
+
+To view the currently supported sources on each network, you can use the [/sources](/0x-swap-api/api-references/get-swap-v1-sources) endpoint.
+
+### Goerli
+
+At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.`
 
 In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is `WETH <> UNI` deployed by Uniswap on Goerli.
 
-##### Example tokens available on Goerli
+To find additional example pairs for each network, you can try using pairs found in "Tokens Transferred" for the transactions that have gone through the [0x Exchange Proxy](/developer-resources/contract-addresses#0x-v4) contract on Goerli, [0xF91bB752490473B8342a3E964E855b9f9a2A668e](https://goerli.etherscan.io/address/0xf91bb752490473b8342a3e964e855b9f9a2a668e).
+
+![Goerli tokens example](/img/0x-swap-api/goerli-tokens.png)
+
+#### Example tokens available on Goerli
 
 | Symbol | Address                                                                                                                    |
 | ------ | -------------------------------------------------------------------------------------------------------------------------- |
 | UNI    | [0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984](https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984)        |
 | WETH   | [0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6](https://goerli.etherscan.io/token/0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6) |
 | DAI    | [0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E](https://goerli.etherscan.io/token/0xe68104d83e647b7c1c15a91a8d8aad21a51b3b3e) |
-| USDC   | [0x5FfbaC75EFc9547FBc822166feD19B05Cd5890bb](https://goerli.etherscan.io/token/0x5ffbac75efc9547fbc822166fed19b05cd5890bb) |
+| USDC   | [0x07865c6E87B9F70255377e024ace6630C1Eaa37F](https://goerli.etherscan.io/token/0x07865c6e87b9f70255377e024ace6630c1eaa37f) |
 
-### Getting Testnet Funds
+### Mumbai
+
+To find example pairs for each network, you can try using pairs found in "Tokens Transferred" for the transactions that have gone through the [0x Exchange Proxy](http://localhost:3000/docs/developer-resources/contract-addresses#0x-v4) contract on Mumbai, [0xf471d32cb40837bf24529fcf17418fc1a4807626](https://mumbai.polygonscan.com/address/0xf471d32cb40837bf24529fcf17418fc1a4807626).
+
+![Mumbai tokens example](/img/0x-swap-api/mumbai-tokens.png)
+
+#### Example tokens available on Mumbai
+
+| Symbol | Address                                                                                                                         |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| WETH   | [0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa](https://mumbai.polygonscan.com/address/0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa) |
+| USDC   | [0x2058a9d7613eee744279e3856ef0eada5fcbaa7e](https://mumbai.polygonscan.com/address/0x2058a9d7613eee744279e3856ef0eada5fcbaa7e) |
+
+## Getting Testnet Funds
 
 - [Goerli Faucet](https://goerlifaucet.com/)
 - [Goerli POW Faucet](https://goerli-faucet.pk910.de/)
-- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
-  - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
+- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/) - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
 
-### Code Example - Performing a Swap on Goerli
+## Code Example: Performing a Swap on Goerli
 
 For general information about the /swap endpoints see [Swap API](/0x-swap-api/introduction).
 
@@ -65,7 +87,7 @@ _Instructions to use the CodePen:_
 </iframe>
 </div>
 
-#### Interacting with Limit Orders on Goerli
+## Interacting with Limit Orders on Goerli
 
 Refer to [@0x/contract-addresses](https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json#L44-L85) to find the addresses of the latest deployment on Goerli and then follow our limit order related guides below, using the Goerli contract addresses, and chain id 5.
 
@@ -74,17 +96,17 @@ Refer to [@0x/contract-addresses](https://github.com/0xProject/protocol/blob/dev
 - [Fill a Limit Order](/0x-limit-orders/guidesfill-a-limit-order)
 - [Limit Order Status](/0x-limit-orders/guideslimit-order-status)
 
-### Forking mainnet Ethereum
+## Forking mainnet Ethereum
 
 If you need to test composability between multiple protocols, or the liquidity source/token that you want to test is not available on Goerli then using a tool like [Ganache](https://trufflesuite.com/ganache/) or [Hardhat](https://hardhat.org/) to create your own private fork of the Ethereum mainnet can be helpful.
 
 When forking Ethereum mainnet all current Ethereum state as of the block that you fork will also be available in your private fork, all contracts addresses, and balances tokens will be exactly like the Ethereum mainnet. The main advantage with this is that you can test quotes from our hosted Ethereum mainnet 0x API on your private forked network without having to run any additional infrastructure or spend any real funds on test transactions.
 
-#### Forking Ethereum mainnet with Hardhat
+### Forking Ethereum mainnet with Hardhat
 
 This guide assumes that you already have a working Hardhat project, if not please refer to the official [Hardhat Getting Started Guide](https://hardhat.org/getting-started/).
 
-**Configuring Hardhat to create a private fork**
+#### Configuring Hardhat to create a private fork
 
 First, you need to add a `hardhat` network in your Hardhat config file.
 
@@ -106,7 +128,7 @@ const config = {
 
 Now, for your tests, you can find an account on Ethereum mainnet with the appropriate balances required for the swaps that you want to test locally, then using the [hardhat_impersonateAccount](https://hardhat.org/hardhat-network/reference/#hardhat-impersonateaccount) you can act as that account on your private fork. You can then request a valid quote for that account from Ethereum mainnet 0x API and submit the transaction on your private fork. Keep in mind that you may need to set allowances if you are trading with other tokens than Ethereum.
 
-**Example test swapping 1 ETH for DAI using an Ethereum mainnet 0x API quote**
+#### Example test swapping 1 ETH for DAI using an Ethereum mainnet 0x API quote
 
 ```typescript
 import { expect } from "chai";
@@ -180,5 +202,7 @@ describe("0x API integration", function () {
   });
 });
 ```
+
+### Hardhat Example Project
 
 For more detailed information please refer to our [mainnet fork example project](https://github.com/0xProject/0x-api-forked-testnet-example)

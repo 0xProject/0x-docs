@@ -1,7 +1,7 @@
 ---
-sidebar_label: Legal Guide
+sidebar_label: Legal guide
 sidebar_position: 8
-description: 0x Legal Guide
+description: 0x lega guide
 ---
 
 # 0x Legal Guide

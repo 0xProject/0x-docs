@@ -1,5 +1,5 @@
 ---
-sidebar_label: Create a limit order
+sidebar_label: Create a Limit Order
 sidebar_position: 1
 description: Learn about how to create a limit order
 ---
