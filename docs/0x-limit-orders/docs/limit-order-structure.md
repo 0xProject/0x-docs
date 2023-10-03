@@ -1,5 +1,5 @@
 ---
-sidebar_label: Limit Order Structure
+sidebar_label: Limit Order structure
 sidebar_position: 2
 description: Learn about 0x Limit Order Structure, why, and how to use it
 ---

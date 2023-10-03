@@ -1,5 +1,5 @@
 ---
-sidebar_label: Cancel a Limit Order
+sidebar_label: Cancel a limit order
 sidebar_position: 2
 description: Learn about how to cancel a limit order
 ---

@@ -1,5 +1,5 @@
 ---
-sidebar_label: Explorer Tag Guide
+sidebar_label: Explorer tag guide
 sidebar_position: 9
 description: Submitting a tag for your apps via the 0x Dashboard.
 ---
