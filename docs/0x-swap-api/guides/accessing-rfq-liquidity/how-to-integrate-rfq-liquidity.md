@@ -1,5 +1,5 @@
 ---
-sidebar_label: How to access RFQ Liquidity
+sidebar_label: How to access RFQ liquidity
 sidebar_position: 2
 description: This guide covers the 3 steps to access RFQ liquidity in your application.
 ---
