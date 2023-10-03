@@ -6,10 +6,6 @@ description: Use Swap API Liquidity in Your Smart Contracts
 
 # Use Swap API Liquidity in Your Smart Contracts
 
-:::info
-📣 Starting in H2 2023, all API requests without an API key will return an error. Legacy code examples below may contain requests without API keys. Follow [this guide](/introduction/getting-started) for how to get a live API key and use it for any 0x products.
-:::
-
 ## Overview
 
 After you complete this guide, you will have a smart contract that swaps WETH for DAI, powered by Swap API.
