@@ -1,5 +1,5 @@
 ---
-sidebar_label: Providing AMM Liquidity to 0x API
+sidebar_label: Providing AMM liquidity to 0x API
 sidebar_position: 1
 description: Providing AMM liquidity to 0x API
 ---

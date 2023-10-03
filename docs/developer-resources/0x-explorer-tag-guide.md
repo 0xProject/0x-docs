@@ -10,13 +10,13 @@ description: Submitting a tag for your apps via the 0x Dashboard.
 
 Add a 0x Explorer Tag to your app on the 0x Dashboard to access on-chain transaction analytics for it on 0x Explorer.
 
-[0x Explorer](https://explorer.0x.org/?period=day) provides transaction tracking, liquidity source and chain breakdowns, and in-depth metrics for your apps. It also showcases your apps and their activity to the broader 0x ecosystem and potential users!
+[0x Explorer](https://explorer.0x.org/?period=day) is a public dasbhoard that provides transaction tracking, liquidity source and chain breakdowns, and in-depth metrics for your apps. It also showcases your apps and their activity to the broader 0x ecosystem and potential users!
 
 ![0x Explorer Screenshot](/img/developer-resources/explorer-screenshot.png)
 
 You may use the same tag for all your apps to ensure that data from your apps is aggregated under one name, or use a different tag for each app, to split them on 0x Explorer.
 
-🔎[Read more about the 0x Explorer](https://blog.0x.org/introducing-0x-explorer/).
+🔎 [Read more about the 0x Explorer](https://blog.0x.org/introducing-0x-explorer/).
 
 ### Submitting a 0x Explorer Tag
 
@@ -39,7 +39,7 @@ To ensure that your app submission is appropriate and approved to be displayed o
 - Logos should be clearly visible, even at small sizes.
 - Logos must be of high quality and resolution
 
-The 0x team reserves the right to reject the submission if it doesn’t comply with our terms of service. -->
+The 0x team reserves the right to reject the submission if it doesn’t comply with our terms of service.
 
 ### How the 0x Explorer Tag Works
 

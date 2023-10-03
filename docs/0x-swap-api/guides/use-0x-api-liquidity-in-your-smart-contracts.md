@@ -1,10 +1,10 @@
 ---
-sidebar_label: Use Swap API Liquidity in Your Smart Contracts
+sidebar_label: Use 0x Swap API liquidity in your smart contracts
 sidebar_position: 4
 description: Use Swap API Liquidity in Your Smart Contracts
 ---
 
-# Use Swap API Liquidity in Your Smart Contracts
+# Use 0x Swap API Liquidity in Your Smart Contracts
 
 ## Overview
 

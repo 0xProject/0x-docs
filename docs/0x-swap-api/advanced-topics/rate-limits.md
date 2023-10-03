@@ -1,10 +1,10 @@
 ---
-sidebar_label: Rate Limits
+sidebar_label: Rate limits
 sidebar_position: 1
-description: Rate Limits
+description: Rate limits
 ---
 
-# Rate Limits
+# Rate limits
 
 :::info
 Want higher rate limits? Check out all our [available options](https://0x.org/pricing)

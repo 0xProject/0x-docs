@@ -1,5 +1,5 @@
 ---
-sidebar_label: Accessing RFQ Liquidity on Swap API
+sidebar_label: About the RFQ system
 sidebar_position: 1
 description: This guide discusses what RFQ liquidity is, how it works, and how your project can apply to access it from the Swap API.
 ---

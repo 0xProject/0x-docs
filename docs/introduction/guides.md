@@ -1,27 +1,51 @@
 ---
-sidebar_label: Guides
-sidebar_position: 2
-description: This page lists the most popular guides to get started building with 0x based on your use case
+sidebar_label: Learning resources
+sidebar_position: 3
+description: This page lists the most popular guides and videosto get started building with 0x based on your use case
 ---
 
-# Guides
+# Learning resources
 
 This page lists the most popular guides to get started building with 0x based on your use case
 
-## Swap API
+## Code Examples
 
-Easily add liquidity aggregation into your app with a single API. Access 100+ exchanges and thousands of tokens with the Swap API.
+- **[(Next.js) 0x demo app](https://github.com/0xProject/0x-nextjs-demo-app)**
+- **[(HTML, CSS, JavaScript) 0x demo app](https://github.com/0xProject/swap-demo-tutorial)**
+- **[0x Command line examples](https://github.com/0xProject/0x-starter-project)**
 
-### Code Examples
+## Tutorials
 
-- [(Next.js) 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) - Example ERC20 swapping app made with 0x Swap API, Next.js, and ConnectKit
-- [(HTML, CSS, Javascript) 0x Demo App](https://github.com/0xProject/swap-demo-tutorial)
-- [https://github.com/0xProject/0x-starter-project](https://github.com/0xProject/0x-starter-project) - A project showcasing the 0x v4 protocol through a collection of runnable examples.
+### Fundamentals
 
-### Tutorials
+- **[How to use 0x Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api)**
+- **[How to build a token swap dapp with Next.js, 0x, ConnectKit](https://www.youtube.com/watch?v=P1ECx9zKQiU&t)**
+- **[How to build a token swap dapp with HTML, CSS, JavaScript](/docs/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)**
+- **[How to set your token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)**
 
-- [How to Use Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api) - This guide will teach you how to programmatically execute a ERC20 token trade.
-- [Build a Token Swap Dapp With Next.js, 0x, ConnectKit](https://www.youtube.com/watch?v=P1ECx9zKQiU&t) - A video walk-through covering core developer concepts important when building any token swapping dapp.
-- [How to Build a Token Swap dApp with 0x API](https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/9.-how-to-build-a-token-swap-dapp-with-0x-api) - Written and [video](https://www.youtube.com/watch?v=tVvZ1ivp4X0) content on how to build a token swapping dapp (a simple [Matcha.xyz](https://www.matcha.xyz/)) using the Swap API. This dApp aggregates liquidity across the greater DEX ecosystem surfaces the best price to the user.
-- [Use 0x API Liquidity in Your Smart Contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts) - This guide will teach you how to consume 0x API swap quotes from inside a smart contract.
-- [Working in the Testnet](/0x-limit-orders/guides/working-in-the-testnet) - Learn two ways to test swapping ERC20 tokens with the 0x API - either using the Goerli testnet or forking Ethereum mainnet into your own testnet. Includes a runnable example.
+### Beyond the Basics
+
+- **[Use 0x API liquidity in your smart contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts)**
+- **[Working in the testnet](/0x-limit-orders/guides/working-in-the-testnet)**
+- **[How to integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity)**
+- **[How to monetize your swap app](/0x-swap-api/guides/monetize-your-app-using-swap)**
+
+## Videos
+
+### Fundamentals
+
+- **[🛠️ Tutorial: How to use Swap API](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-how-to-use-swap-api)**
+- **[🛠️ Tutorial: Build a Token Swap Dapp With Next.js, 0x, ConnectKit](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-build-a-token-swap-dapp-with-nextjs-0x-connectkit)**
+- **[🛠️ Tutorial: Build a Token Swap Dapp With Swap API with HTML, CSS, Javascript](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-build-a-token-swap-dapp-with-swap-api)**
+
+### Beyond the Basics
+
+- **[🎙️ 0x DevTalks: Accessing RFQ Liquidity from 0x Swap API](/introduction/0x-concept-videos#%EF%B8%8F-0x-devtalks-accessing-rfq-liquidity-from-0x-swap-api)**
+- **[🎙️ Livestream: Powered by 0x](/introduction/0x-concept-videos#%EF%B8%8F-livestream-powered-by-0x)**
+- **[🧠 Monetization Across the DEX Stack](/introduction/0x-concept-videos#-monetization-across-the-dex-stack)**
+- **[🧠 MEV-aware DEX design](/introduction/0x-concept-videos#-mev-aware-dex-design)**
+- **[🧠 Let's Talk MEV RoundTable](/introduction/0x-concept-videos#-lets-talk-mev-roundtable)**
+
+## Troubleshooting
+
+- **[Troubleshooting Swap API](/0x-swap-api/guides/troubleshooting-swap-api)**

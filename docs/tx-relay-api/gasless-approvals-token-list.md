@@ -1,7 +1,7 @@
 ---
-sidebar_label:  Gasless Approvals Token List
+sidebar_label: Gasless approvals token list
 sidebar_position: 5
-description:  Gasless Approvals Token List
+description: Gasless Approvals Token List
 ---
 
 # Gasless Approvals Token List
@@ -82,8 +82,6 @@ You can also examine a token’s eligibility at trade time, by observing the res
 | Dola USD Stablecoin                 | 0x865377367054516e17014ccded1e7d814edc9ce4 |
 | Kromatika                           | 0x3af33bef05c2dcb3c7288b77fe1c8d2aeba4d789 |
 | BananaClubToken                     | 0x350d3f0f41b5b21f0e252fe2645ae9d55562150a |
-
-
 
 ### Polygon
 

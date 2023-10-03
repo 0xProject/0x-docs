@@ -1,5 +1,5 @@
 ---
-sidebar_label: Development Status
+sidebar_label: Development status
 sidebar_position: 2
 description: Development Status for Tx Relay. Get access to Sandbox.
 ---

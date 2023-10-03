@@ -12,7 +12,6 @@ const sidebars = {
         "introduction/getting-started",
         "introduction/introduction-to-0x",
         "introduction/guides",
-        "introduction/0x-concept-videos",
         "introduction/community",
         "introduction/0x-cheat-sheet",
         "developer-resources/faqs-and-troubleshooting",
@@ -74,7 +73,7 @@ const sidebars = {
       items: [
         {
           type: "link",
-          label: "System Status",
+          label: "System status",
           href: "https://status.0x.org/",
         },
         "developer-resources/glossary",

@@ -1,10 +1,10 @@
 ---
-sidebar_label: How to Set Your Token Allowances
+sidebar_label: How to set your token allowances
 sidebar_position: 2
 description: Learn how to set your token allowances
 ---
 
-# How to Set Your Token Allowances
+# How to set your token allowances
 
 A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens.
 

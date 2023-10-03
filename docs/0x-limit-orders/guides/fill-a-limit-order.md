@@ -1,5 +1,5 @@
 ---
-sidebar_label: Fill a Limit Order
+sidebar_label: Fill a limit order
 sidebar_position: 3
 description: Fill a Limit Order
 ---

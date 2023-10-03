@@ -1,29 +1,28 @@
 ---
-sidebar_label: Working in the Testnet
+sidebar_label: Working in the testnet
 sidebar_position: 3
 description: Learn about working in the testnet
 ---
 
-# Working in the Testnet
+# Working in the testnet
 
 Swap API and 0x Protocol can be accessed on the Goerli testnet, or by forking Ethereum mainnet into your own testnet.
 
 This page includes:
 
-* [Using Swap API on Goerli](/0x-swap-api/guides/working-in-the-testnet#using-swap-api-on-goerli)
-* [Tokens Available on Goerli](/0x-swap-api/guides/working-in-the-testnet#tokens-available-on-goerli)
-* [Getting Testnet Funds](/0x-swap-api/guides/working-in-the-testnet#getting-testnet-funds)
-* [Code Example - Performing a Swap on Goerli](/0x-swap-api/guides/working-in-the-testnet#code-example---performing-a-swap-on-)
-* [Forking Mainnet Ethereum](/0x-swap-api/guides/working-in-the-testnet#forking-mainnet-ethereum)
-
+- [Using Swap API on Goerli](/0x-swap-api/guides/working-in-the-testnet#using-swap-api-on-goerli)
+- [Tokens Available on Goerli](/0x-swap-api/guides/working-in-the-testnet#tokens-available-on-goerli)
+- [Getting Testnet Funds](/0x-swap-api/guides/working-in-the-testnet#getting-testnet-funds)
+- [Code Example - Performing a Swap on Goerli](/0x-swap-api/guides/working-in-the-testnet#code-example---performing-a-swap-on-)
+- [Forking Mainnet Ethereum](/0x-swap-api/guides/working-in-the-testnet#forking-mainnet-ethereum)
 
 ### Using Swap API on Goerli
 
 A hosted 0x API for the Goerli testnet is available at [https://goerli.api.0x.org/](https://goerli.api.0x.org/) which offers a subset of DEX sources available on Ethereum mainnet.
 
-To view the currently supported sources on Goerli refer to [https://goerli.api.0x.org/swap/v1/sources](https://goerli.api.0x.org/swap/v1/sources). 
+To view the currently supported sources on Goerli refer to [https://goerli.api.0x.org/swap/v1/sources](https://goerli.api.0x.org/swap/v1/sources).
 
-At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` Be aware that token you want to use for testing *must* have liquidity on at least one of these sources; otherwise, you will receive an error. 
+At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3.` Be aware that token you want to use for testing _must_ have liquidity on at least one of these sources; otherwise, you will receive an error.
 
 #### Token Pairs Available on Goerli
 
@@ -38,13 +37,12 @@ In addition, only certain pairs are deployed on testnests and available for test
 | DAI    | [0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E](https://goerli.etherscan.io/token/0xe68104d83e647b7c1c15a91a8d8aad21a51b3b3e) |
 | USDC   | [0x5FfbaC75EFc9547FBc822166feD19B05Cd5890bb](https://goerli.etherscan.io/token/0x5ffbac75efc9547fbc822166fed19b05cd5890bb) |
 
-
 ### Getting Testnet Funds
 
 - [Goerli Faucet](https://goerlifaucet.com/)
 - [Goerli POW Faucet](https://goerli-faucet.pk910.de/)
 - [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
-    - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
+  - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
 
 ### Code Example - Performing a Swap on Goerli
 
@@ -54,8 +52,8 @@ The following is example code for swapping 0.1 ETH for DAI on Goerli using Metam
 
 _Instructions to use the CodePen:_
 
-* Click "TypeScript" to see the code. Click "Run Pen" to run the code demo.
-* You can either edit the code directly in the window below, or you can [edit it on CodePen](https://codepen.io/0xProject/pen/abVJYra).
+- Click "TypeScript" to see the code. Click "Run Pen" to run the code demo.
+- You can either edit the code directly in the window below, or you can [edit it on CodePen](https://codepen.io/0xProject/pen/abVJYra).
 
 <div>
 <iframe height="300"
@@ -67,15 +65,14 @@ _Instructions to use the CodePen:_
 </iframe>
 </div>
 
-
 #### Interacting with Limit Orders on Goerli
 
 Refer to [@0x/contract-addresses](https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json#L44-L85) to find the addresses of the latest deployment on Goerli and then follow our limit order related guides below, using the Goerli contract addresses, and chain id 5.
 
-* [Create a Limit Order](/0x-limit-orders/guides/create-a-limit-order)
-* [Cancel a Limit Order](/0x-limit-orders/guidescancel-a-limit-order)
-* [Fill a Limit Order](/0x-limit-orders/guidesfill-a-limit-order)
-* [Limit Order Status](/0x-limit-orders/guideslimit-order-status)
+- [Create a Limit Order](/0x-limit-orders/guides/create-a-limit-order)
+- [Cancel a Limit Order](/0x-limit-orders/guidescancel-a-limit-order)
+- [Fill a Limit Order](/0x-limit-orders/guidesfill-a-limit-order)
+- [Limit Order Status](/0x-limit-orders/guideslimit-order-status)
 
 ### Forking mainnet Ethereum
 
@@ -107,7 +104,7 @@ const config = {
 // ...
 ```
 
-Now, for your tests, you can find an account on Ethereum mainnet with the appropriate balances required for the swaps that you want to test locally, then using the [hardhat\_impersonateAccount](https://hardhat.org/hardhat-network/reference/#hardhat-impersonateaccount) you can act as that account on your private fork. You can then request a valid quote for that account from Ethereum mainnet 0x API and submit the transaction on your private fork. Keep in mind that you may need to set allowances if you are trading with other tokens than Ethereum.
+Now, for your tests, you can find an account on Ethereum mainnet with the appropriate balances required for the swaps that you want to test locally, then using the [hardhat_impersonateAccount](https://hardhat.org/hardhat-network/reference/#hardhat-impersonateaccount) you can act as that account on your private fork. You can then request a valid quote for that account from Ethereum mainnet 0x API and submit the transaction on your private fork. Keep in mind that you may need to set allowances if you are trading with other tokens than Ethereum.
 
 **Example test swapping 1 ETH for DAI using an Ethereum mainnet 0x API quote**
 
@@ -144,7 +141,7 @@ describe("0x API integration", function () {
     // Impersonate the taker account so that we can submit the quote transaction
     await network.provider.request({
       method: "hardhat_impersonateAccount",
-      params: [takerAddress]
+      params: [takerAddress],
     });
 
     // Get a signer for the account we are impersonating
@@ -182,7 +179,6 @@ describe("0x API integration", function () {
     );
   });
 });
-
 ```
 
 For more detailed information please refer to our [mainnet fork example project](https://github.com/0xProject/0x-api-forked-testnet-example)

@@ -1,5 +1,5 @@
 ---
-sidebar_label: Limit Order Status
+sidebar_label: Limit order status
 sidebar_position: 4
 description: Learn about viewing & distributing 0x Limit Orders
 ---

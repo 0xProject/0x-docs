@@ -1,5 +1,5 @@
 ---
-sidebar_label: How to Get 0x and Matcha Data
+sidebar_label: How to get 0x and Matcha data
 sidebar_position: 5
 description: With Existing Tools and Resources
 ---

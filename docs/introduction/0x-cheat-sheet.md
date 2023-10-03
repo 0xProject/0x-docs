@@ -1,5 +1,5 @@
 ---
-sidebar_label: Endpoints, Contracts, Version
+sidebar_label: Endpoints, contracts, versions
 sidebar_position: 5
 description: A collection of commonly used addresses, endpoints, and values across 0x products.
 ---

@@ -1,10 +1,10 @@
 ---
-sidebar_label: How to Integrate RFQ Liquidity
+sidebar_label: How to access RFQ Liquidity
 sidebar_position: 2
-description: This guide covers the 3 steps to integrate RFQ liquidity into your application.
+description: This guide covers the 3 steps to access RFQ liquidity in your application.
 ---
 
-# How to Integrate RFQ Liquidity
+# How to access RFQ Liquidity
 
 In [About the RFQ System](/0x-swap-api/guides/accessing-rfq-liquidity/about-the-rfq-system), we covered what is RFQ liquidity and how it is aggregated by 0x. This guide will cover the 3 steps to integrate RFQ liquidity into your application.
 

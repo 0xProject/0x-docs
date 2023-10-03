@@ -1,10 +1,10 @@
 ---
-sidebar_label: How to Use Swap API
+sidebar_label: How to use 0x Swap API
 sidebar_position: 1
 description: Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API.
 ---
 
-# How to Use Swap API
+# How to use 0x Swap API
 
 This guide covers the steps required to use [Swap API](/0x-swap-api/introduction).
 

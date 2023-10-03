@@ -156,7 +156,7 @@ If you would like to trade a custom token, you will need to create the liquidity
 
 <summary>I am building a DEX app using Swap API. Can I charge my users a trading fee/commission when using the Swap API? </summary>
 
-**TL;DR** You have full flexibility on the fees you collect on your trades. Read our full guide on [monetizing your swap integration](/0x-swap-api/guides/monetize-your-swap-integration). 
+**TL;DR** You have full flexibility on the fees you collect on your trades. Read our full guide on [monetizing your swap integration](/0x-swap-api/guides/monetize-your-app-using-swap).
 <br/>
 
 Yes, this can be done by setting the `feeRecipient` and `buyTokenPercentageFee` parameters in a [Swap API request](/0x-swap-api/api-references/get-swap-v1-quote.md#request). Set a `buyTokenPercentageFee` on your DEX trades which represents the percentage (between 0 - 1.0) of the `buyAmount` (tokens being received) that should be attributed to `feeRecipient` (your wallet) as an affiliate fee.
@@ -178,10 +178,10 @@ Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api
 
 The fee amount is incorporated as part of the quoted price. Two recommended methods of displaying the fees are:
 
-- display the amount returned by grossBuyAmount * buyTokenPercentageFee
+- display the amount returned by grossBuyAmount \* buyTokenPercentageFee
 - display the grossBuyAmount and the buyTokenPercentageFee separately
 
-For examples and details, read our full guide on [monetizing your swap integration](/0x-swap-api/guides/monetize-your-swap-integration). 
+For examples and details, read our full guide on [monetizing your swap integration](/0x-swap-api/guides/monetize-your-app-using-swap).
 
 </details>
 
@@ -201,7 +201,7 @@ Note: Trade surplus is only sent to `feeRecipientTradeSurplus` for SELLs (when t
 
 Details about these parameters can be found in [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote).
 
-Read our full guide on [monetizing your swap integration](/0x-swap-api/guides/monetize-your-swap-integration). 
+Read our full guide on [monetizing your swap integration](/0x-swap-api/guides/monetize-your-app-using-swap).
 
 </details>
 
