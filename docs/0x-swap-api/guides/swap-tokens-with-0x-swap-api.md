@@ -42,8 +42,9 @@ If you prefer diving into code, see how the following steps are implemented in t
 
 0. Get a 0x API key
 1. (If needed) Set token allowance
-2. Fetch a swap quote
-3. Send the transaction to the network
+2. Get an indicative price
+3. Fetch a firm quote
+4. Send the transaction to the network
 
 ## 0. Get a 0x API key
 
@@ -57,19 +58,23 @@ In our case, we would like the [0x Exchange Proxy smart contract](https://docs.0
 
 When setting the token allowance, make sure to provide enough allowance for the buy or sell amount as well as the gas.
 
+For implementation details, see [How to Set Your Token Allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)
+
 :::tip
 When setting the token allowance, make sure to provide enough allowance for the buy or sell amount _as well as the gas;_ otherwise, you may receive a 'Gas estimation failed' error.
 :::
 
-For implementation details, see [How to Set Your Token Allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)
+## 2. Get an Indicative Price
 
-## 2. Fetch a Swap Quote
+Now, let's find the best price!
 
-:::tip
-The examples in this guide are for Ethereum mainnet `https://api.0x.org/`. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for all other 0x supported blockchains.
-:::
+The next step is to learn how to get an indiciative price which is used when a taker is just browsing for the price they could receive on the specified asset pair.
 
-Once the token allowance has been set, say you would like to sell 100 DAI for WETH. We encode the trade parameters and fetch the swap quote as follows:
+Use the [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) endpoint to get the indicative price. This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a legitimate transaction that can be submitted to the Ethereum network (you must use [`/quote`](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-fetch-a-firm-quote) for this). Think of [`/price`](/0x-swap-api/api-references/get-swap-v1-price) as the the "read-only" version of [`/quote`](0x-swap-api/api-references/get-swap-v1-quote).
+
+### Example /price request
+
+Here is an example indicative price request to sell 100 DAI for WETH using [`/price`](/0x-swap-api/api-references/get-swap-v1-price):
 
 ```javascript
 const qs = require('qs');
@@ -79,7 +84,54 @@ const params = {
     sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
     buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
     sellAmount: '100000000000000000000', // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
-    takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B', //Including takerAddress is highly recommended to help with gas estimation, catch revert issues, and provide the best price
+    takerAddress: '$USER_TAKER_ADDRESS', //Address that will make the trade
+};
+
+const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+
+const response = await fetch(
+    `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`, { headers }
+); // Using the global fetch() method. Learn more https://developer.mozilla.org/en-US/docs/Web/API/fetch
+
+console.log(await response.json());
+```
+
+The API response will look like the following (some fields omitted):
+
+```
+    "price": "0.002663907000981641",
+    "gasPrice": "56000000000",
+    "gas": "111000",
+    "sellAmount": "100000000000000000000",
+    "buyAmount": "2663907000981641103",
+    "buyTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "sellTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+```
+
+## 3. Fetch a Firm Quote
+
+When a taker is ready to actually perform a fill, they will request a firm quote from Swap API using the [`/swap/v1/quote`](/0x-swap-api/api-references/get-swap-v1-quote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the Market Maker if they do not.
+
+[`/swap/v1/quote`](/0x-swap-api/api-references/get-swap-v1-quote) responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
+
+:::warning
+Make sure you are using `/quote` only when the taker is ready to fill the returned response; otherwise, the taker may be added to the Market Makers' ban lists if they are making too many `/quote` requests without filling them. This is because `/quote` indicates a soft commitment to fill the order, so Market Makers will commit their assets when returning this response. If the taker is just browsing for a price, and not ready to fill the order, use `/price` instead.
+:::
+
+### Example /quote request
+
+Here is an example to fetch a firm quote to sell 100 DAI for WETH using [`/quote`](/0x-swap-api/api-references/get-swap-v1-quote):
+
+```javascript
+const qs = require('qs');
+
+const params = {
+    // Not all token symbols are supported. The address of the token should be used instead.
+    sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
+    buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
+    sellAmount: '100000000000000000000', // Note that the DAI token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
+    takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B', //Including takerAddress is required to help with gas estimation, catch revert issues, and provide the best price
 };
 
 const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
@@ -90,6 +142,10 @@ const response = await fetch(
 
 console.log(await response.json());
 ```
+
+:::tip
+The examples in this guide are for Ethereum mainnet `https://api.0x.org/`. Refer to the [0x Cheat Sheet](/introduction/0x-cheat-sheet) for endpoints and addresses appropriate for all other 0x supported blockchains.
+:::
 
 The API response will look like the following (some fields omitted):
 
@@ -118,22 +174,15 @@ Note the `to` field is the contract address to send call `data` to. This is the 
 
 ### Specify a Taker Address for Your Swaps
 
-The `takerAddress` field is the address that will be performing the trade. While technically optional, we highly recommend providing this parameter if possible so that the API can more accurately estimate the gas required for the swap transaction. Note that this currently only works with non-contract addresses. Read more on how [adding the `takerAddress` helps catch issues](/developer-resources/faqs-and-troubleshooting#-troubleshooting).
+The `takerAddress` field is the address that will be performing the trade. This parameter is required so the API can more accurately estimate the gas required for the swap transaction. Note that this currently only works with non-contract addresses. Read more on how [adding the `takerAddress` helps catch issues](/developer-resources/faqs-and-troubleshooting#-troubleshooting).
 
 ```javascript
-const params = {
-    sellToken: '0x6B175474E89094C44Da98b954EedeAC495271d0F', //DAI
-    buyToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', //WETH
-    sellAmount: '100000000000000000000',
-    takerAddress: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
-};
-
-const headers = {'0x-api-key: [api-key]'}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
-
-// The response will now include a more accurate `gas` field.
-const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers }
-);
+https://api.0x.org/swap/v1/quote             // Request a firm quote
+?sellToken=DAI                               // Sell DAI
+&sellAmount=4000000000000000000000           // Sell amount: 4000 (18 decimal)
+&buyToken=ETH                                // Buy ETH
+&takerAddress=$USER_TAKER_ADDRESS            // Address that will make the trade
+--header '0x-api-key: [API_KEY]'             // Replace with your own API key
 ```
 
 Under the hood, 0x API performs an [`eth_estimateGas`](https://eth.wiki/json-rpc/API#eth_estimategas) using the `takerAddress` if one is provided. This serves two purposes:
@@ -142,7 +191,7 @@ Under the hood, 0x API performs an [`eth_estimateGas`](https://eth.wiki/json-rpc
 - to provide the best pricing that includes [enabling RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity), and
 - to catch any reverts that would occur if the `takerAddress` attempts to swap the tokens.
 
-An HTTP response with status 400 will be returned if the `eth_estimateGas` results in a revert (i.e. the swap would fail), along with reasons for the revert. In particular,
+An HTTP response with [status 400](/0x-swap-api/api-references/overview#common-error-codes) will be returned if the `eth_estimateGas` results in a revert (i.e. the swap would fail), along with reasons for the revert. In particular,
 
 - the `takerAddress` needs to have a sufficient balance of the `sellToken`, and
 - if the `sellToken` is not ETH, the `takerAddress` needs to have approved the 0x Exchange Proxy (`0xdef1c0ded9bec7f1a1670819833240f027b25eff` on mainnet) to transfer their tokens. See below for an example of setting a token approval before sending the API request.
