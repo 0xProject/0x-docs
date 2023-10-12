@@ -11,6 +11,7 @@ Submit a GET request to `/tx-relay/v1/swap/quote` to obtain a fillable quote.
 ## Request
 
 ### Request Params
+
 The request parameters are the same as [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) except with an extra field `checkApproval`:
 
 | **Query Params** | **Description**                                                                                                                                                                                                                                                                     |
@@ -21,6 +22,13 @@ The request parameters are the same as [/price](https://0x.org/docs/tx-relay-api
 
 ### Example Request
 
+:::info
+An API key should always be specified when requesting all possible sources of liquidity. API keys are specified via a header parameter called `0x-api-key`. Chain ids are specified via a header parameter called `0x-chain-id` which currently supports `1` (Ethereum) and `137` (Polygon).
+:::
+
+:::info
+`sellToken`, `buyToken`, `takerAddres` and one of \[`sellAmount` ,`buyAmount` ] must be present
+:::
 
 ```bash
 curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellAmount=100000000&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&takerAddress=<TAKER_ADDRESS>&priceImpactProtectionPercentage=0.95&feeType=volume&feeSellTokenPercentage=0.01&feeRecipient=<FEE_RECIPIENT_ADDRESS>' \
