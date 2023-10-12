@@ -40,7 +40,7 @@ Addresses of `permitAndCall` contracts
 
 ## Technical Appendix
 
-#### Presenting EIP-712 Signatures for `signTypedData`
+### Presenting EIP-712 Signatures for `signTypedData`
 
 If you are integrating with Metamask or another user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. In order to do so, you will need the following:
 
@@ -256,7 +256,7 @@ For `types` and `primaryTypes`, it will depend on the message format.
     };
     ```
 
-#### Computing a trade hash
+### Computing a trade hash
 
 You could / should verify that the hash we provide in our request matches the meta-transaction provided.
 
