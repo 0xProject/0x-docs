@@ -1622,6 +1622,18 @@
     url-loader "^4.1.1"
     webpack "^5.73.0"
 
+"@fullstory/browser@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@fullstory/browser/-/browser-2.0.0.tgz#43228edafd3fa7828d4a21c5023b426ab1c3782e"
+  integrity sha512-TcHEDORY/xBDEZD2SC6nLBoiZDGMKTD/8568A9NBf7ufPkDlJh5zuKHu81dv40M/GPG/kcFCD2RooLDUILRkMw==
+  dependencies:
+    "@fullstory/snippet" "2.0.0"
+
+"@fullstory/snippet@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@fullstory/snippet/-/snippet-2.0.0.tgz#77d6fc6fc304f09708512971168701b5d88052e0"
+  integrity sha512-rAEPt5mCBXnJfPsD9lY7N4/5QWNiMj1vczn31B7B8mBDop/EzJsVHXeRA8ExhaRW2Oe87bZvmOoUIRoOrx5R+w==
+
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
