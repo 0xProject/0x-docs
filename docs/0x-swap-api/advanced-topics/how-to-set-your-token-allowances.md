@@ -109,7 +109,11 @@ import { BigNumber } from "@0x/utils";
 
 ### Using Etherscan
 
-There are a lot of app that let you set your allowances in Metamask, but for this example we will be using [Etherscan](http://etherscan.io/). To set your WETH allowance for the ERC20Proxy contract you can navigate to the [dApp view for the WETH ERC20](https://etherscan.io/dapp/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2#writeContract) contract. Here you can use Metamask to call the `approve` method to approve the ERC20Proxy for the max uint256 amount which is `115792089237316195423570985008687907853269984665640564039457584007913129639935`. Again, you can find the address of the ERC20Proxy in the 0x cheat sheet.
+There are a lot of app that let you set your allowances in Metamask, but for this example we will be using [Etherscan](http://etherscan.io/). To set your WETH allowance for the ERC20Proxy contract you can navigate to the WETH ERC20 Contract > Contracts > Write Contract tab > approve method [here](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2#writeContract).
+
+![Etherscan approve method](/img/0x-swap-api/etherscan-token-allowance.png)
+
+From here, you can call the `approve` method to approve the [ERC20Proxy Address](http://localhost:3000/docs/introduction/0x-cheat-sheet#exchange-proxy-addresses) for the max uint256 amount which is `115792089237316195423570985008687907853269984665640564039457584007913129639935`. You can find a full list of all the ERC20Proxy addresses for different networks in the [0x cheat sheet](http://localhost:3000/docs/introduction/0x-cheat-sheet#exchange-proxy-addresses).
 
 You can give a WETH allowance to any smart contract this way. To set your allowance for a different token, you'll have to navigate to the smart contract interface for that token.
 

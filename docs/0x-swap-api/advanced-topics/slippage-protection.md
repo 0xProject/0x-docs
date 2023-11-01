@@ -8,13 +8,12 @@ description: Say goodbye to MEV attacks and say hello 👋 to the best executed 
 
 Topics covered on this page include:
 
-* [What is Slippage Protection?](/0x-swap-api/advanced-topics/slippage-protection#what-is-slippage-protection)
-* [What is the best executed price?](/0x-swap-api/advanced-topics/slippage-protection#what-is-the-best-executed-price-)
-* [Why did we launch Slippage Protection?](/0x-swap-api/advanced-topics/slippage-protection#why-did-we-launch-slippage-protection-)
-* [How does Slippage Protection work?](/0x-swap-api/advanced-topics/slippage-protection#how-does-slippage-protection-work)
-* [How can I implement Slippage Protection in my Swap API quote?](/0x-swap-api/advanced-topics/slippage-protection#how-can-i-implement-slippage-protection-in-my-0x-api-quotes-)
-* [Read More](/0x-swap-api/advanced-topics/slippage-protection#read-more)
-
+- [What is Slippage Protection?](/0x-swap-api/advanced-topics/slippage-protection#what-is-slippage-protection)
+- [What is the best executed price?](/0x-swap-api/advanced-topics/slippage-protection#what-is-the-best-executed-price-)
+- [Why did we launch Slippage Protection?](/0x-swap-api/advanced-topics/slippage-protection#why-did-we-launch-slippage-protection-)
+- [How does Slippage Protection work?](/0x-swap-api/advanced-topics/slippage-protection#how-does-slippage-protection-work)
+- [How can I implement Slippage Protection in my Swap API quote?](/0x-swap-api/advanced-topics/slippage-protection#how-can-i-implement-slippage-protection-in-my-0x-api-quotes-)
+- [Read More](/0x-swap-api/advanced-topics/slippage-protection#read-more)
 
 ## What is Slippage Protection?
 
@@ -37,7 +36,7 @@ The best executed price is the price users receive that’s inclusive of gas fee
 Without Slippage Protection, the user is routed to Liquidity Source A because it offers the best quoted price. However, if Slippage Protection is enabled, 0x API’s smart order routing instead attempts to maximize the executed price, so the user is routed to Liquidity Source B instead.
 
 ![best executed price](/img/0x-swap-api/slippage-protection-executed-price.png)
-*Without Slippage Protection, the user is routed to Liquidity Source A because it offers the best quoted price. However, if Slippage Protection is enabled, 0x API’s smart order routing instead attempts to maximize the executed price, so the user is routed to Liquidity Source B instead.*
+_Without Slippage Protection, the user is routed to Liquidity Source A because it offers the best quoted price. However, if Slippage Protection is enabled, 0x API’s smart order routing instead attempts to maximize the executed price, so the user is routed to Liquidity Source B instead._
 
 ## Why did we launch Slippage Protection ?
 
@@ -53,13 +52,13 @@ In April 2022, we published a [research piece](https://blog.0x.org/measuring-the
 
 With Slippage Protection activated, orders will be routed to avoid slippage and MEV attacks, find the lowest gas fees, and deliver the best executed price. The result is a more transparent and consistently better executed price than what users encounter today in DeFi applications.
 
-For more details on how Slippage Protection works, please read[Introducing Slippage Protection for 0x API](https://blog.0x.org/slippage-protection-for-0x-api/).
+For more details on how Slippage Protection works, please read [Introducing Slippage Protection for 0x API](https://blog.0x.org/slippage-protection-for-0x-api/).
 
 Read about the performance [Post-launch of Slippage Protection](https://blog.0x.org/post-launch-of-slippageprotection-a-look-at-our-performance/).
 
 ## How can I implement Slippage Protection in my Swap API quotes?
 
-**Slippage Protection is an auto-enabled feature of the 0x API**, and no additional action is required to enable to implement it in your API request. It is controlled by the new [`enableSlippageProtection` parameter](slippage-protection.md#request-parameter-changes)
+**Slippage Protection is an auto-enabled feature of the 0x Swap API**, and no additional action is required to enable to implement it in your API request. It is controlled by the new [`enableSlippageProtection` parameter](slippage-protection.md#request-parameter-changes)
 
 The following section includes a summary of the Request and Response changes related to Slippage Protection:
 
@@ -69,26 +68,24 @@ The following section includes a summary of the Request and Response changes rel
 
 The `enableSlippageProtection` parameter (an Optional Boolean) has been added to the [**`/swap/quote`**](/0x-swap-api/api-references/get-swap-v1-quote) and [**`/swap/price`**](/0x-swap-api/api-references/get-swap-v1-price) endpoints.
 
-* If it is set to `true` or _not set_, the quote will automatically adjust for MEV-aware slippage.
-* If set to `false`, the quote returned will not be adjusted for MEV-aware slippage.
+- If it is set to `true` or _not set_, the quote will automatically adjust for MEV-aware slippage.
+- If set to `false`, the quote returned will not be adjusted for MEV-aware slippage.
 
 :::tip
 We recommended meta-aggregators and integrators who compare the quoted price with other sources to set the `enableSlippageProtection`to `false`.
 :::
 
-
 #### **Response Changes**
 
 The `buyAmount` , `price`, and `expectedSlippage` response fields in the [**`/swap/quote`**](/0x-swap-api/api-references/get-swap-v1-quote) and [**`/swap/price`**](/0x-swap-api/api-references/get-swap-v1-price) endpoints are affected by this change
 
-* `buyAmount` & `price`: It should be noted that when `enableSlippageProtection` is not false, the `buyAmount` & `price` returned will factor slippage in its routing.
-* `expectedSlippage`: This is the expected slippage used in routing calculations for the quote returned. It is the value of slippage that we estimate that the selected route will have:
-  * It can be used by integrators to calculate the Final Expected Amount for the asset: i.e. calculated as (`buyAmount` \* `expectedSlippage`)
-  * It will only be returned when `enableSlippageProtection` is not set to `false`
+- `buyAmount` & `price`: It should be noted that when `enableSlippageProtection` is not false, the `buyAmount` & `price` returned will factor slippage in its routing.
+- `expectedSlippage`: This is the expected slippage used in routing calculations for the quote returned. It is the value of slippage that we estimate that the selected route will have:
+  - It can be used by integrators to calculate the Final Expected Amount for the asset: i.e. calculated as (`buyAmount` \* `expectedSlippage`)
+  - It will only be returned when `enableSlippageProtection` is not set to `false`
 
 ## Read More
 
-* (Blog)[ Introducing SlippageProtection for 0x API](https://blog.0x.org/slippage-protection-for-0x-api/)
-* (Blog)[ Measuring the impact of hidden DEX costs](https://blog.0x.org/measuring-the-impact-of-hidden-dex-costs/)
-* (Blog) [Post-launch of Slippage Protection: A look at our performance](https://blog.0x.org/post-launch-of-slippageprotection-a-look-at-our-performance/)
-
+- (Blog)[ Introducing SlippageProtection for 0x API](https://blog.0x.org/slippage-protection-for-0x-api/)
+- (Blog)[ Measuring the impact of hidden DEX costs](https://blog.0x.org/measuring-the-impact-of-hidden-dex-costs/)
+- (Blog) [Post-launch of Slippage Protection: A look at our performance](https://blog.0x.org/post-launch-of-slippageprotection-a-look-at-our-performance/)

@@ -32,10 +32,33 @@ If your 0x quote is reverting, besides the standard revert issues related to ETH
 - Does the user have enough `sellToken` balance to execute the swap?
 - Do users have enough to pay the gas?
 - The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read [here](/0x-swap-api/guides/troubleshooting-swap-api#slippage-tolerance) for how to handle this.
+- Did the RFQ Quote expire? RFQ quotes from Market Makers are only valid for a short period of time, for example roughly 60s on mainnet. See "Did my order revert because the RFQ quote expired?" below for more details.
 - Fee-on-transfer tokens may wreak havoc on our contracts. Read [here](/0x-swap-api/guides/troubleshooting-swap-api#fee-on-transfer-tokens) for how to handle this
 - Working in testnet? Only a subset of DEX sources are available. Be aware that token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error. Read [here](/0x-swap-api/guides/working-in-the-testnet) for how to handle this.
 
 For more details on addressing common issues, read [Troubleshooting](/0x-swap-api/guides/troubleshooting-swap-api).
+
+</details>
+
+<details>
+
+<summary>Did my order revert because the RFQ quote expired?</summary>
+
+RFQ quotes from Market Makers are only valid for a short period of time, for example roughly 60s on mainnet.
+
+Two ways to check if this was the reason for your order reverting, you can use the Tenderly debugger on the transaction, search for order info by looking at the `getOTCOrderInfo` step in the trace look for the `expiryAndNonce` field. You may need to reach out to [0x support](https://help.0x.org/en/articles/8230055-how-to-get-support-from-the-0x-team) to help you decode the `expiryAndNonce` field.
+
+Therefore, as a best practice we highly recommend adding an in-app mechanism that refreshes the quotes, approximately every 30s, to make sure RFQ orders don’t expire. See [Matcha.xyz](https://matcha.xyz/) for an example of this in action.
+
+Read [here](http://localhost:3000/docs/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#2-firm-quotes) for best practices when presenting firm quotes.
+
+</details>
+
+<details>
+
+<summary>0x orders are reverting but my transaction is fine, what is happening?</summary>
+
+Developers may note when analyzing their transactions that some subset of 0x orders may revert (not filled) but the whole transaction is successful. This is expected behavior as implied earlier, some orders due to timing, and the pricing may be filled or expired before a users attempt to fill the order. This would result in a revert and 0x protocol will utilize fallback orders to compensate for the reverted order. This will result in a successful transaction even though reverts occur within the transactions.
 
 </details>
 
@@ -55,7 +78,7 @@ By passing a `takerAddress` parameter, 0x API can provide a more bespoke quote a
 
 <details>
 
-<summary>Why does the value of the to field in the /swap/quote response vary?</summary>
+<summary>Why does the value of the `to` field in the /swap/quote response vary?</summary>
 
 0x API selects the best 0x protocol interface to interact with based on the provided parameters and the smart order routing logic.
 
@@ -71,9 +94,20 @@ Find the currently deployed contracts [here](/introduction/0x-cheat-sheet).
 
 <details>
 
-<summary>0x orders are reverting but my transaction is fine, what is happening?</summary>
+<summary>I received an `INSUFFICIENT_BALANCE` error. Help!</summary>
 
-Developers may note when analyzing their transactions that some subset of 0x orders may revert (not filled) but the whole transaction is successful. This is expected behavior as implied earlier, some orders due to timing, and the pricing may be filled or expired before a users attempt to fill the order. This would result in a revert and 0x protocol will utilize fallback orders to compensate for the reverted order. This will result in a successful transaction even though reverts occur within the transactions.
+For insufficient balance errors, check the following:
+
+- the connected wallet as enough of the funds to cover the trade plus gas for the transaction
+- the connected wallet has given a token allowance to the 0x Exchange Proxy on the specified chain for the token to be traded
+
+</details>
+
+<details>
+
+<summary>I received an `INSUFFICIENT_ASSET_LIQUIDITY` error. Help!</summary>
+
+This error indicates there is not enough of the asset on the network to make this trade. This is common for very long-tail tokens or if you are building in a testnet (e.g. Goerli). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
 
 </details>
 
@@ -107,6 +141,16 @@ Ex: Swap API will adjust the price potentially received from Curve Finance by `g
 <summary>How can I find the Swap API liquidity sources for each chain?</summary>
 
 Use the API endpoint [`/swap/v1/sources`](/0x-swap-api/api-references/get-swap-v1-sources) to get the liquidity sources per chain. You will need to specify the root-endpoint for the chain you are interested in, for example, [https://polygon.api.0x.org/swap/v1/sources](https://polygon.api.0x.org/swap/v1/sources) for the Polygon Network or [https://api.0x.org/swap/v1/sources](https://api.0x.org/swap/v1/sources) for Ethereum Mainnet. See the [Swap API References Overview](/0x-swap-api/api-references/overview) for a full list of endpoints we support.
+
+</details>
+
+<details>
+
+<summary>How can i see the tokens that 0x supports for trading?</summary>
+
+0x supports trades for all ERC20 tokens that are aggregated from our aggregated liquidity sources. Note that the Swap API does not support fee-on-transfer tokens.
+
+To see the tokens that 0x supports for trading, you can refer to the CoinGecko tokenlist. This tokenlist provides a list of all available ERC20 tokens that are supported by 0x. You can access the CoinGecko tokenlist at [tokenlist.org](http://tokenlist.org/), specifically the [CoinGecko tokenlist ](https://tokenlists.org/token-list?url=https://tokens.coingecko.com/uniswap/all.json)for a list of all available ERC20 tokens.
 
 </details>
 
@@ -242,7 +286,9 @@ Also, see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-
 
 <summary>What is the significance of this address <code>0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE</code> ?</summary>
 
-The address `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is used to represent Ether (ETH) in Ethereum transactions, since ETH is not an ERC20 token. Read more about it [here](https://www.reddit.com/r/ethereum/comments/iatr1d/what_is_the_significance_of_this_address/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) and [here](https://ethereum.stackexchange.com/a/87444/85979).
+`0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is the contract address to use for native tokens. Native tokens are a blockchain’s foundational digital currency. Each blockchain has its own native token, such as ETH on Ethereum, BNB on Binance Smart Chain, and MATIC on Polygon.
+
+In the case of Ethereum, this contract address is used to represent Ether (ETH) in Ethereum transactions, since ETH is not an ERC20 token. Read more about it [here](https://www.reddit.com/r/ethereum/comments/iatr1d/what_is_the_significance_of_this_address/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) and [here](https://ethereum.stackexchange.com/a/87444/85979).
 
 </details>
 
@@ -359,10 +405,9 @@ Use the API endpoint `/swap/v1/sources` to get the liquidity sources per chain. 
 
 <summary>How do I query what tokens are available to be swapped through the API?</summary>
 
-All ERC20 tokens are supported with the caveat that if the token is fee-on-transfer or has some other special logic there is no way for the API to detect this and their requests may fail/transactions revert/result in some wonky swaps.
-<br/>
+0x supports trades for all ERC20 tokens that are aggregated from our aggregated liquidity sources. Note that the Swap API does not support fee-on-transfer tokens.
 
-We recommend referring to [tokenlist.org](https://tokenlists.org/), specifically the [CoinGecko tokenlist ](https://tokenlists.org/token-list?url=https://tokens.coingecko.com/uniswap/all.json)for a list of all available ERC20 tokens.
+To see the tokens that 0x supports for trading, you can refer to the CoinGecko tokenlist. This tokenlist provides a list of all available ERC20 tokens that are supported by 0x. You can access the CoinGecko tokenlist at [tokenlist.org](http://tokenlist.org/), specifically the [CoinGecko tokenlist ](https://tokenlists.org/token-list?url=https://tokens.coingecko.com/uniswap/all.json)for a list of all available ERC20 tokens.
 
 </details>
 
