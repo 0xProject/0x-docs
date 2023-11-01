@@ -34,6 +34,7 @@ const config = {
   },
 
   plugins: [["docusaurus-node-polyfills", { excludeAliases: ["console"] }]],
+  scripts: [{ src: "/fullstory-script.js" }],
 
   presets: [
     [
