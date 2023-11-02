@@ -42,5 +42,10 @@
   },
   "engines": {
     "node": ">=16.14"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }
