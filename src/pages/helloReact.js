@@ -11,6 +11,10 @@ const js_snippet = fs.readFileSync(filePath, "utf-8");
 export default function Hello() {
   return (
     <Layout title="Hello" description="Hello React Page">
+      <script
+        type="text/javascript"
+        dangerouslySetInnerHTML={{ __html: js_snippet }}
+      />
       <div
         style={{
           display: "flex",
@@ -22,10 +26,6 @@ export default function Hello() {
       >
         <p>Nothing to see here</p>
       </div>
-      <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{ __html: js_snippet }}
-      />
     </Layout>
   );
 }
