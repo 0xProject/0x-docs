@@ -198,3 +198,8 @@ const config = {
 };
 
 module.exports = config;
+
+module.exports = {
+  clientModules: [require.resolve("./src/scripts/fullstory.js")],
+  config,
+};
