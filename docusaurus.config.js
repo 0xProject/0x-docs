@@ -60,6 +60,8 @@ const config = {
     },
   ],
 
+  clientModules: [require.resolve("./src/scripts/fullstory.js")],
+
   presets: [
     [
       "classic",
