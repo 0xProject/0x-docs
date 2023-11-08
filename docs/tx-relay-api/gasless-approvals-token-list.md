@@ -146,3 +146,4 @@ You can also examine a token’s eligibility at trade time, by observing the res
 | ApeCoin (PoS)               | 0xb7b31a6bc18e48888545ce79e83e06003be70930 |
 | SHIBA INU (PoS)             | 0x6f8a06447ff6fcf75d803135a7de15ce88c1d4ec |
 | Dogelon (PoS)               | 0xe0339c80ffde91f3e20494df88d4206d86024cdf |
+| GLM                         | 0x0B220b82F3eA3B7F6d9A1D8ab58930C064A2b5Bf |

@@ -37,9 +37,7 @@ Gas fees are paid by 0x, but a fee to cover the gas costs are included by defaul
 
 <summary>Why is the support limited to some tokens?</summary>
 
-Tx Relay API actually supports all tokens that [Swap API](/0x-swap-api/introduction) supports; however, it does not support all tokens for gasless approvals. That is, trades are always supported on Tx Relay in a gasless manner. The approval, however, depends on token support (generally, [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)).
-
-Some UIs may choose not to support tokens that do not support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) to be able to guarantee a 100% gasless experience. However, Tx Relay does not limit anyone in this manner and is strictly a choice of the developer
+For gasless swaps, we support all tokens that [Swap API](/0x-swap-api/introduction)supports on Polygon, while we currently only support tokens on the [Uniswap Token List](https://tokenlists.org/) on Ethereum. Gasless approvals, however, depend on the token's support (generally, for [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)). You can find the list of tokens supported for gasless approvals [here](/tx-relay-api/gasless-approvals-token-list).
 
 </details>
 
@@ -75,12 +73,7 @@ To perform a standard approval, your user would need to (or your frontend should
 <br></br>
 <br></br>
 
-Said another way, Tx Relay API actually supports all tokens that [Swap API](/0x-swap-api/introduction) supports; however, it does not support all tokens for gasless approvals. That is, trades are always supported on Tx Relay in a gasless manner. The approval, however, depends on token support (generally, [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)).
-
-<br></br>
-<br></br>
-
-Some UIs may choose not to support tokens that do not support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) to be able to guarantee a 100% gasless experience. However, Tx Relay does not limit anyone in this manner and is strictly a choice of the developer
+Some UIs may choose not to support tokens that do not support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) to be able to guarantee a 100% gasless experience. However, Tx Relay does not limit anyone in this manner and is strictly a choice of the developer.
 
 </details>
 
