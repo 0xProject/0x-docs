@@ -39,7 +39,7 @@ Similar to gasless approval, to submit a trade, you must have your user sign `tr
 ```bash
 curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key: <API_KEY>' --header '0x-chain-id: 137' --data '{
  "trade": {
-   "type": "metatransaction", // this is trade.type from the /quote endpoint
+   "type": "metatransaction_v2", // this is trade.type from the /quote endpoint
    "eip712": { /* this is trade.eip712 from the /quote endpoint */ },
    "signature": {
      "v": 27,
@@ -65,7 +65,7 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 
 ```json
 {
-  "type": "metatransaction",
+  "type": "metatransaction_v2",
   "tradeHash": "0xde5a11983edd012047dd3107532f007a73ae488bfb354f35b8a40580e2a775a1"
 }
 ```

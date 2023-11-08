@@ -46,7 +46,7 @@ curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `liquidityAvailable`                                                                                                                                                                                                                            | Used to validate that liquidity is available from a given source. This would always be present.                                                            |
 | _**The rest of the fields would only be present if `liquidityAvailable` is `true`. Fields that have been explained previously in [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) are not included again here.**_ |                                                                                                                                                            |
-| `trade`                                                                                                                                                                                                                                         | This is the “trade” object which contains the necessary information to process a trade<br></br>&ensp;&ensp;- `type`: `metatransaction` or `metatransaction_v2` or `otc`<br></br>&ensp;&ensp;- `hash`: The hash for the trade according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.<br></br>&ensp;&ensp;- `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).<br></br>&ensp;&ensp;- Note: Please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on the `type` field and we would add more types in the future.                                                                    |
+| `trade`                                                                                                                                                                                                                                         | This is the “trade” object which contains the necessary information to process a trade<br></br>&ensp;&ensp;- `type`: `metatransaction_v2` or `otc`<br></br>&ensp;&ensp;- `hash`: The hash for the trade according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.<br></br>&ensp;&ensp;- `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).<br></br>&ensp;&ensp;- Note: Please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on the `type` field and we would add more types in the future.                                                                    |
 |`approval`   |This is the “approval” object which contains the necessary information to process a gasless approval, if requested via `checkApproval` and is available. You will only be able to initiate a gasless approval for the sell token  if the response has both `isRequired` and `isGaslessAvailable` set to `true`.<br></br><br></br>&ensp;&ensp;- `type`: `permit` or `executeMetaTransaction::approve`<br></br>&ensp;&ensp;- `hash`: The hash for the approval according to EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)). Note that if you compute the hash from `eip712` field, it should match the value of this field.<br></br>&ensp;&ensp;- `eip712`: Necessary data for EIP-712 ([https://eips.ethereum.org/EIPS/eip-712](https://eips.ethereum.org/EIPS/eip-712)).<br></br>&ensp;&ensp;- Note: Please don’t assume particular shapes of `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as they will change based on the `type` field.<br></br><br></br>See [here](/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit.md) for more information about gasless approvals.
 
 
@@ -54,16 +54,15 @@ curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99
 
 ### Example Responses
 
-There are 3 possible types of the response: `metatransaction_v2`, `otc` and `metatransaction` (`metatransaction` would be deprecated in the future so it's recommended not to use it).
+There are 2 possible types of the response: `metatransaction_v2` and `otc`.
 
-Thus, please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on types returned, namely `metatransaction` , `metatransaction_v2` and `otc`. More types might also be added in the future.
+Thus, please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on types returned, namely `metatransaction_v2` and `otc`. More types might also be added in the future.
 
 Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as there are different types of gasless approval standards.
 
 **Note that:**
 - if returned type is `metatransaction_v2`, `feeToken` would be `sellToken`
 - if returned type is `otc`, `feeToken` would be `buyToken` if it's a `sell` and `sellToken` if it's a `buy`
-- if returned type is `metatransaction`, `feeToken` would be `buyToken`
 
 ### Liquidity Unavailable Response
 
@@ -73,7 +72,7 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
 }
 ```
 
-### Example Meta-Transaction Response
+### Example Meta-Transaction V2 Response
 
 ```json
 {
@@ -96,93 +95,102 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
   "fees": {
     // Same as the response in /price. Refacted here.
   }, 
-  "trade": {
-      "type": "metatransaction",
-      "hash": "0x863d64d4b29ff57086aba0ce9d3534ad261c359def2ffe9aa2faa39071332557",
-      "eip712": {
-          "types": {
-              "EIP712Domain": [
-                  {
-                      "name": "name",
-                      "type": "string"
-                  },
-                  {
-                      "name": "version",
-                      "type": "string"
-                  },
-                  {
-                      "name": "chainId",
-                      "type": "uint256"
-                  },
-                  {
-                      "name": "verifyingContract",
-                      "type": "address"
-                  }
-              ],
-              "MetaTransactionData": [
-                  {
-                      "name": "signer",
-                      "type": "address"
-                  },
-                  {
-                      "name": "sender",
-                      "type": "address"
-                  },
-                  {
-                      "name": "minGasPrice",
-                      "type": "uint256"
-                  },
-                  {
-                      "name": "maxGasPrice",
-                      "type": "uint256"
-                  },
-                  {
-                      "name": "expirationTimeSeconds",
-                      "type": "uint256"
-                  },
-                  {
-                      "name": "salt",
-                      "type": "uint256"
-                  },
-                  {
-                      "name": "callData",
-                      "type": "bytes"
-                  },
-                  {
-                      "name": "value",
-                      "type": "uint256"
-                  },
-                  {
-                      "name": "feeToken",
-                      "type": "address"
-                  },
-                  {
-                      "name": "feeAmount",
-                      "type": "uint256"
-                  }
-              ]
-          },
-          "primaryType": "MetaTransactionData",
-          "domain": {
-              "name": "ZeroEx",
-              "version": "1.0.0",
-              "chainId": 137,
-              "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
-          },
-          "message": {
-              "signer": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
-              "sender": "0x0000000000000000000000000000000000000000",
-              "minGasPrice": "0",
-              "maxGasPrice": "281474976710656",
-              "expirationTimeSeconds": "1685943341",
-              "salt": "44217760592608935726250682047230628181970455946629113966221726162962909023752",
-              "callData": "0x415565b00000000000000000000000002791b......",
-              "value": "0",
-              "feeToken": "0x0000000000000000000000000000000000000000",
-              "feeAmount": "0"
-          }
-      },
+    "trade": {
+    "type": "metatransaction_v2",
+    "hash": "0x1e6ae91b3642e3a195c81a2d07cce9c0b811a6ca5a5de6ebd30651b48dd3cef1",
+    "eip712": {
+        "types": {
+            "EIP712Domain": [
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "version",
+                    "type": "string"
+                },
+                {
+                    "name": "chainId",
+                    "type": "uint256"
+                },
+                {
+                    "name": "verifyingContract",
+                    "type": "address"
+                }
+            ],
+
+            "MetaTransactionDataV2": [
+                {
+                    "name": "signer",
+                    "type": "address"
+                },
+                {
+                    "name": "sender",
+                    "type": "address"
+                },
+                {
+                    "name": "expirationTimeSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "name": "salt",
+                    "type": "uint256"
+                },
+                {
+                    "name": "callData",
+                    "type": "bytes"
+                },
+                {
+                    "name": "feeToken",
+                    "type": "address"
+                },
+                {
+                    "name": "fees",
+                    "type": "MetaTransactionFeeData[]"
+                }
+            ],
+
+            "MetaTransactionFeeData": [
+                {
+                    "name": "recipient",
+                    "type": "address"
+                },
+                {
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ]
+        },
+
+        "primaryType": "MetaTransactionDataV2",
+        "domain": {
+            "name": "ZeroEx",
+            "version": "1.0.0",
+            "chainId": 137,
+            "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+        },
+
+        "message": {
+            "signer": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+            "sender": "0x0000000000000000000000000000000000000000",
+            "expirationTimeSeconds": "1685943660",
+            "salt": "4251159851784773262096467229012398168674432764636501672764910900271042799065",
+            "callData": "0x415565b00000000000000000000000002791b......",
+            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+            "fees": [
+                {
+                    "recipient": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                    "amount": "1000000"
+                },
+                {
+                    "recipient": "0x38f5e5b4da37531a6e85161e337e0238bb27aa90",
+                    "amount": "218127"
+                }
+            ]
+        }
+    }
   },
+
   "approval": {
       "isRequired": true,
       "isGaslessAvailable": true,
@@ -250,129 +258,19 @@ Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip71
 }
 ```
 
-### Example Meta-Transaction V2 Response
-
-For meta-transaction v2 response, all fields are the same as the meta-transaction response except for `trade` field. More specifically, the following fields are different:
-
-* `trade.eip712.types`: New types`MetaTransactionDataV2` and `MetaTransactionFeeData` instead of `MetaTransactionData`
-* `trade.eip712.primaryType`: `MetaTransactionDataV2` instead of `MetaTransactionData`
-* `trade.eip712.message`
-
-```json
-{
-  ...
-	// All fields other than `trade` are the same as meta-transaction response
-  "trade": {
-    "type": "metatransaction_v2",
-    "hash": "0x1e6ae91b3642e3a195c81a2d07cce9c0b811a6ca5a5de6ebd30651b48dd3cef1",
-    "eip712": {
-        "types": {
-            "EIP712Domain": [
-                {
-                    "name": "name",
-                    "type": "string"
-                },
-                {
-                    "name": "version",
-                    "type": "string"
-                },
-                {
-                    "name": "chainId",
-                    "type": "uint256"
-                },
-                {
-                    "name": "verifyingContract",
-                    "type": "address"
-                }
-            ],
-            // different type compared with meta-transaction response
-            "MetaTransactionDataV2": [
-                {
-                    "name": "signer",
-                    "type": "address"
-                },
-                {
-                    "name": "sender",
-                    "type": "address"
-                },
-                {
-                    "name": "expirationTimeSeconds",
-                    "type": "uint256"
-                },
-                {
-                    "name": "salt",
-                    "type": "uint256"
-                },
-                {
-                    "name": "callData",
-                    "type": "bytes"
-                },
-                {
-                    "name": "feeToken",
-                    "type": "address"
-                },
-                {
-                    "name": "fees",
-                    "type": "MetaTransactionFeeData[]"
-                }
-            ],
-            // different type compared with meta-transaction response
-            "MetaTransactionFeeData": [
-                {
-                    "name": "recipient",
-                    "type": "address"
-                },
-                {
-                    "name": "amount",
-                    "type": "uint256"
-                }
-            ]
-        },
-        // different primary type compared with meta-transaction response
-        "primaryType": "MetaTransactionDataV2",
-        "domain": {
-            "name": "ZeroEx",
-            "version": "1.0.0",
-            "chainId": 137,
-            "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
-        },
-        // different message with meta-transaction response
-        "message": {
-            "signer": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
-            "sender": "0x0000000000000000000000000000000000000000",
-            "expirationTimeSeconds": "1685943660",
-            "salt": "4251159851784773262096467229012398168674432764636501672764910900271042799065",
-            "callData": "0x415565b00000000000000000000000002791b......",
-            "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-            "fees": [
-                {
-                    "recipient": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
-                    "amount": "1000000"
-                },
-                {
-                    "recipient": "0x38f5e5b4da37531a6e85161e337e0238bb27aa90",
-                    "amount": "218127"
-                }
-            ]
-        }
-    }
-  },
-  ...
-}
-```
 
 ### Example OTC Response
 
-Similarly, for otc response, all fields are the same as the meta-transaction response except for `trade` field. More specifically, the following fields are different:
+For otc response, all fields are the same as the meta-transaction v2 response except for `trade` field. More specifically, the following fields are different:
 
-* `trade.eip712.types`: New type `OtcOrder` instead of `MetaTransactionData`
-* `trade.eip712.primaryType`: `MetaTransactionDataV2` instead of `MetaTransactionData`
+* `trade.eip712.types`: New type `OtcOrder` instead of `MetaTransactionDataV2`
+* `trade.eip712.primaryType`: `OtcOrder` instead of `MetaTransactionDataV2`
 * `trade.eip712.message`
 
 ```json
 {
   ...
-	// All fields other than `trade` are the same as meta-transaction response
+	// All fields other than `trade` are the same as meta-transaction v2 response
   "trade": {
       "type": "otc",
       "hash": "0x832cd3dbb57813f47598cee9a9a0cae149921bb6e84675893b8f3da14198a0b8",
@@ -396,7 +294,7 @@ Similarly, for otc response, all fields are the same as the meta-transaction res
                       "type": "address"
                   }
               ],
-              // different type compared with meta-transaction response
+              // different type compared with meta-transaction v2 response
               "OtcOrder": [
                   {
                       "name": "makerToken",
@@ -432,7 +330,7 @@ Similarly, for otc response, all fields are the same as the meta-transaction res
                   }
               ]
           },
-          // different primary type compared with meta-transaction response
+          // different primary type compared with meta-transaction v2 response
           "primaryType": "OtcOrder",
           "domain": {
               "name": "ZeroEx",
@@ -440,7 +338,7 @@ Similarly, for otc response, all fields are the same as the meta-transaction res
               "chainId": 137,
               "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
           },
-          // different message with meta-transaction response
+          // different message with meta-transaction v2 response
           "message": {
               "makerToken": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
               "takerToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",

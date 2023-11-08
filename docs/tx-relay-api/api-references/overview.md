@@ -22,7 +22,6 @@ Tx Relay API is supported on Mainnet and Polygon, available via https://api.0x.o
 ## Signed Orders are Settled by 0x Protocol Smart Contracts
 
 Once signed orders hit the blockchain, if the orders are swap only, they are settled by 0x Protocol smart contracts directly:
-* For meta-transaction orders, they are settled by the contract `MetaTransactionsFeature` and filled by the `execteMetaTransaction` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol).
 * For meta-transaction v2 orders, they are settled by the contract `MetaTransactionsFeatureV2` and filled by the `executeMetaTransactionV2` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol).
 * For otc order, they are settled by the contract `OtcOrdersFeature` and filled by the `fillTakerSignedOtcOrderForEth` or `fillTakerSignedOtcOrder` functions, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol).
 
@@ -49,7 +48,7 @@ If you are integrating with Metamask or another user facing wallet that shows th
 * `primaryType`
 * `message`
 
-The message will be `MetaTransactionData` (in the future `MetaTransactionDataV2`) that is returned at the time of `/quote`. However, you will also need the other fields.
+The message will be `MetaTransactionDataV2` that is returned at the time of `/quote`. However, you will also need the other fields.
 
 The Domain will change per chain, but the `name` and `version` fields are consistent. Example:
 
@@ -64,73 +63,7 @@ const domain = {
 
 For `types` and `primaryTypes`, it will depend on the message format.
 
-*   For `MetaTransactionData`
 
-    ```jsx
-    const primaryType = "MetaTransactionData";
-    const types = {
-      "EIP712Domain": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "version",
-          "type": "string"
-        },
-        {
-          "name": "chainId",
-          "type": "uint256"
-        },
-        {
-          "name": "verifyingContract",
-          "type": "address"
-        }
-      ],
-      "MetaTransactionData": [
-        {
-          "type": "address",
-          "name": "signer"
-        },
-        {
-          "type": "address",
-          "name": "sender"
-        },
-        {
-          "type": "uint256",
-          "name": "minGasPrice"
-        },
-        {
-          "type": "uint256",
-          "name": "maxGasPrice"
-        },
-        {
-          "type": "uint256",
-          "name": "expirationTimeSeconds"
-        },
-        {
-          "type": "uint256",
-          "name": "salt"
-        },
-        {
-          "type": "bytes",
-          "name": "callData"
-        },
-        {
-          "type": "uint256",
-          "name": "value"
-        },
-        {
-          "type": "address",
-          "name": "feeToken"
-        },
-        {
-          "type": "uint256",
-          "name": "feeAmount"
-        }
-      ]
-    };
-    ```
 *   For `MetaTransactionDataV2`
 
     ```jsx
@@ -262,7 +195,6 @@ You could / should verify that the hash we provide in our request matches the me
 
 For the `trade.hash` field:
 
-* If it's a meta-transaction, verify that the `meta-transaction` hashes to the `trade.hash`: `getMetaTransactionHash` [link](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeature.sol#L202)
 * If it's a meta-transaction v2, verify that the `meta-transaction v2` hashes to the `trade.hash`: `getMetaTransactionV2Hash`[link](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol#L192)
 * It it's an otc, verify that `otc` hashes to the `trade.hash`: `getOtcOrderHash` [link](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol#L454)
 
