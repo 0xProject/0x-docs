@@ -3,6 +3,7 @@ sidebar_label: Websocket API
 sidebar_position: 10
 description: Learn how to use the Websocket API
 ---
+
 # Websocket API
 
 The Standard Relayer API also exposes a websocket server at the root endpoint.
@@ -35,7 +36,7 @@ A list consisting of signed orders with metaData.
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw [signed orders](/0x-swap-api/api-references/overview#signed-order).                                          |
+| `order`    | Raw [signed orders](/0x-swap-api/api-references/overview#signed-order).                                       |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 
 ## Examples

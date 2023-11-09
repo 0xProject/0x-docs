@@ -9,6 +9,7 @@ description: Learn how to use GET /tx-relay/v1/swap/status/:trade-hash
 Submit a GET request to `/tx-relay/v1/swap/status/:trade-hash` to check the status of a trade
 
 ## Request
+
 ### Example Request
 
 ```bash
@@ -17,6 +18,7 @@ curl '<https://api.0x.org/tx-relay/v1/swap/status/0xd114c77249bb3a137634afeba1ea
 ```
 
 ## Response
+
 ### Example Response
 
 ```jsx
@@ -110,6 +112,6 @@ to avoid unintended errors.
 
 ## Status Code
 
-* `200` if successful.
-* `404` if the trade hash cannot be found.
-* `500` if there is an internal server error.
+- `200` if successful.
+- `404` if the trade hash cannot be found.
+- `500` if there is an internal server error.

@@ -18,18 +18,18 @@ In order for the 0x smart contracts to move funds on the behalf of traders, the 
 
 0x Limit Orders are created off-chain and are completely free to create. Here are a few applications from the 0x ecosystem where you can trade with 0x Limit Orders:
 
-* [Matcha](https://matcha.xyz/)
-* [Opyn](https://v2.opyn.co/#/)
-* [Metric.exchange](https://metric.exchange/)
-* [Thales](https://thalesmarket.io/)
+- [Matcha](https://matcha.xyz/)
+- [Opyn](https://v2.opyn.co/#/)
+- [Metric.exchange](https://metric.exchange/)
+- [Thales](https://thalesmarket.io/)
 
 ## 0x API
 
 You can also trade with 0x Limit orders using the 0x API. 0x Limit Orders are supported on multiple blockchains, including:
 
-* Ethereum
-* Binance Smart Chain
-* Polygon
+- Ethereum
+- Binance Smart Chain
+- Polygon
 
 We are deploying 0x Limit Orders to more chains, so please check [0x Cheat Sheet](/introduction/0x-cheat-sheet) for the most up-to-date list of availability.
 
@@ -37,5 +37,5 @@ We are deploying 0x Limit Orders to more chains, so please check [0x Cheat Sheet
 
 [0x Starter Project](https://github.com/0xProject/0x-starter-project) includes with a number of scenarios using the 0x v4 protocol that can be run from the command-line:
 
-* [Fill ERC20 limit order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill\_erc20\_limit\_order.ts)
-* [Cancel pair limit orders](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/cancel\_pair\_limit\_orders.ts)
+- [Fill ERC20 limit order](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/fill_erc20_limit_order.ts)
+- [Cancel pair limit orders](https://github.com/0xProject/0x-starter-project/blob/master/src/scenarios/cancel_pair_limit_orders.ts)

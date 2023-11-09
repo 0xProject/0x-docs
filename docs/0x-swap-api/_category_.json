@@ -1,7 +1,7 @@
 {
-    "label": "Swap API",
-    "position": 2,
-    "link": {
-      "description": "An introduction Swap API"
-    }
+  "label": "Swap API",
+  "position": 2,
+  "link": {
+    "description": "An introduction Swap API"
+  }
 }
