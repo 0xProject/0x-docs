@@ -1,18 +1,19 @@
 ---
-sidebar_label: How to use 0x Swap API
+sidebar_label: Get started with Swap API
 sidebar_position: 1
 description: Learn how to use the Swap API to access the most efficient liquidity for ERC20 tokens through a single API.
 ---
 
-# How to use 0x Swap API
+# Get started with Swap API
 
-This guide covers the steps required to use [Swap API](/0x-swap-api/introduction).
+_Send your first [Swap API](/0x-swap-api/introduction) request._
 
 :::tip
 Looking for code samples and tutorials?
 
 - [Next.js 0x Demo App (TypeScript)](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s)
 - [How to Build a Token Swap DApp (HTML, CSS, Javscript)](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
+- [CodePen sandbox](https://codepen.io/0xProject/pen/abVJYra)
 
 :::
 
@@ -23,20 +24,6 @@ Looking for code samples and tutorials?
 - Queries prices of ERC20 assets from multiple decentralized exchanges and market makers
 - Aggregates the liquidity from the queried sources to provide the best price possible
 - Returns the trade in a format that can be easily executed using the Web3 library of your choice
-
-## Code Sandbox
-
-If you prefer diving into code, see how the following steps are implemented in this [CodePen](https://codepen.io/0xProject/pen/abVJYra) sandbox! Otherwise, continue on as we go through the steps needed to use Swap API.
-
-<div>
-<iframe height="300"
-  width="100%;"
-  scrolling="no" title="Example using Swap API on the Goerli testnet" src="https://codepen.io/0xProject/embed/preview/abVJYra?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/0xProject/pen/abVJYra">
-  Example using Swap API on the Goerli testnet</a> by 0x(<a href="https://codepen.io/0xProject">@0xProject</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>
-</div>
 
 ## Swap Tokens in 4 Simple Steps
 

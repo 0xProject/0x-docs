@@ -1,0 +1,63 @@
+---
+sidebar_label: Understanding Tx Relay API
+sidebar_position: 2
+description: Covers how Tx Relay API works, key terminology, and technical implementation flow
+---
+
+# Understanding Tx Relay API
+
+## How does it work?
+
+Tx Relay API to provide a “gasless” user experience. This API returns liquidity—prices and quotes—to end users. If a user is happy with a quote, they can sign an [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) for the approval and trade. Then, Tx Relay API can submit the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
+
+The term "gasless" refers to the ability for users to trade without needing to pay the gas cost at that moment. Instead, a third party like 0x can submit the transaction(s) to the blockchain and pay the gas fee. So, in practice, there is still gas involved—it's just being paid by someone else. The user doesn't have to pay upfront for the gas cost when submitting a transaction. A suggested implementation is to use Tx Relay API to pay for the gas on behalf of the user with the trade's input token (sell token).
+
+## Technical Flow Charts
+
+### Gasless Approval + Tx Relay Flow
+
+Below is an image showing the ideal path when implementing both gasless approvals and Tx Relay. [![Click here to expand the image]](/img/tx-relay-api/gasless-approval-tx-relay.png).
+
+<img
+  src="/img/tx-relay-api/gasless-approval-tx-relay.png"
+  alt=""
+  data-size="original"
+></img>
+
+![Gasless Approval + Tx Relay Flow Tx Relay Happy Path](/img/tx-relay-api/gasless-approval-tx-relay.png)
+
+### Composing Gasless Approval + Tx Relay API + Swap API
+
+Tx Relay API is composable with Swap API if you want to offer execution optionality. Devs can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience. [![Click here to expand the image]](/img/tx-relay-api/tx-relay-swap-api-flow.png)
+
+![Composing Gasless Approval + Tx Relay API + Swap API Happy Path](/img/tx-relay-api/tx-relay-swap-api-flow.png)
+
+:::tip
+Try out the composed Tx Relay API + Swap API flow in the the Matcha Auto feature 👉 https://matcha.xyz/
+:::
+
+## Key Terminology
+
+### Token Allowances and Approval
+
+You may see token allowances and approvals come up as related terms in this documentation. A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens.
+
+Approval usually refers to using a usually a mutator function on an ERC-20 contract to do this, in other words, [`approval()`](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20#IERC20-approve-address-uint256-) is used to set the token allowance.
+
+Read more about [setting a token allowances](https://0x.org/docs/0x-swap-api/advanced-topics/how-to-set-your-token-allowances#revoking-allowances).
+
+### Gasless Approvals
+
+Gasless approvals is possible when the user signs a [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) giving Tx Relay API permission to set an allowance on the token required for approval. In the current architecture 0x or the market maker pays for this gas fee, and the user has a “gasless” experience. This is possible for tokens that support the Permit Extension ([EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)).
+
+### Gasless Transactions
+
+By integrating Tx Relay API, your app can support gasless transactions — in which the user signs a EIP-712 message giving Tx Relay API permission to submit a transaction on behalf of the user to the blockchain. This is possible with Meta Transactions. In the current architecture, Tx Relay pays for the gas of the transaction using some of the user’s sell token.
+
+### Meta Transaction V2
+
+This represents one of two types of gasless transactions returned by the Tx Relay API. Meta Transaction V2 leverages the [Swap API](/0x-swap-api/introduction) to fetch indicative pricing and quotes. 0x submits these transactions to the blockchain on behalf of the user.
+
+### OTC
+
+This represents the other type of transaction returned by the Tx Relay API. OTC transactions allow market makers to provide indicative pricing and quotes. In these transactions, a market maker submits the transaction to the blockchain on behalf of the user.

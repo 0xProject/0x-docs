@@ -1,6 +1,6 @@
 ---
 sidebar_label: POST /tx-relay/v1/swap/submit
-sidebar_position: 3
+sidebar_position: 4
 description: Learn how to use POST /tx-relay/v1/swap/submit
 ---
 
