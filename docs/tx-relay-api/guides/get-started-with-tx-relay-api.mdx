@@ -1,0 +1,75 @@
+---
+sidebar_label: Get started with Tx Relay API
+sidebar_position: 2
+description: Covers how Tx Relay API works, key terminology, and technical implementation flow
+---
+
+# Getting started with Tx Relay API
+
+_Send your first [Tx Relay API](/tx-relay-api/introduction) request._
+
+## About Tx Relay API
+
+[Tx Relay API](/tx-relay-api/introduction) allows developers to create the smoothest trading experience in DeFi by abstracting away the complexities related to approvals, allowances, and swaps for their users.
+
+Build more intuitive user interfaces and user flows in your applications, improve your conversion funnel drop-offs due to insufficient gas, and set yourself up to easily onboard the next wave of users into Web3.
+
+Make sure to read [Understanding Tx Relay API](http://localhost:3000/docs/tx-relay-api/guides/understanding-tx-relay-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
+
+This guide will walk you through the scenario of using Tx Relay API when you are:
+
+- selling a non-native, ERC-20 token, where,
+- no prior token allowance has been set and approval is required,
+- and we can perform gasless approvals because the token supports Permit ([EIP-2612](https://eips.ethereum.org/EIPS/eip-2612))
+
+See other user flows [here](/tx-relay-api/guides/understanding-tx-relay-api#technical-flow-charts).
+
+## 0. Get a 0x API key
+
+Every call to a 0x API must include a 0x API secret key. [Create a 0x account](https://dashboard.0x.org/) or [sign in](https://dashboard.0x.org/) get a live API key. See the [guide here](/introduction/getting-started) to get setup.
+
+## 1. Get an indicative price
+
+Use [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) to get the indicative price. This is used when the user is just _browsing_ for the price they could receive on the specified asset pair, but they are not ready to submit the quote yet.
+
+This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a full transaction that can be submitted to the Ethereum network (you must use [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) for this). Think of `/price` as the the "read-only" version of `/quote`.
+
+### Example response
+
+### Example request
+
+## 2. Get a firm quote
+
+When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Tx Relay API using the [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](https://0x.org/docs/developer-resources/glossary#maker) if they do not.
+
+:::tip
+To ensure the quotes stay fresh, they expire in ~ 30 sec. Make sure to take this into account when building your app with a timer and/or automatic refresh.
+:::
+
+### checkApproval parameter
+
+The request parameters for `/quote` are the same as `/price` except with an extra field [`checkApproval`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#request-params).
+
+This boolean checks for approval and potentially utilizes gasless approval feature. Its allowed values are `true` or `false`, the default to `false` if not provided.
+
+`/tx-relay/v1/swap/quote` responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
+
+### Example response
+
+### Example request
+
+## 3. Submit transaction
+
+- Sign EIP 712 object
+- **POST /submit**
+- Example response
+- Example request
+
+## 4. Check trade status
+
+- Once user submits signed meta txn (+ maybe sign approval), app should continuously check the status of the trade
+- Once successful ( `200` if successful)
+- **GET /tx-relay/v1/swap/status/:trade-hash**
+- Example response
+- Example request
+- Display confirmation to use

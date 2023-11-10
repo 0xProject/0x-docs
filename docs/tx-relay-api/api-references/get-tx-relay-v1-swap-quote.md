@@ -14,9 +14,9 @@ Submit a GET request to `/tx-relay/v1/swap/quote` to obtain a fillable quote.
 
 The request parameters are the same as [/price](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price) except with an extra field `checkApproval`:
 
-| **Query Params** | **Description**                                                                                                                                                                                                                                                                     |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `checkApproval`  | \[optional] Whether to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Default to `false` if not provided. Setting it to `true` would require more processing and computation on our end so it would have worse performance. |
+| **Query Params** | **Description**                                                                                                                                                                                                                                                                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `checkApproval`  | \[optional] A boolean that indicates whether or not to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Default to `false` if not provided. On a performance note, setting it to `true` requires more processing and computation than setting it to `false`. |
 
 ### Example Request
 

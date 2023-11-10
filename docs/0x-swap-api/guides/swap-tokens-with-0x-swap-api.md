@@ -35,7 +35,7 @@ Looking for code samples and tutorials?
 
 ## 0. Get a 0x API key
 
-If you are are creating an application on mainnet, you will need to [create a 0x account](https://dashboard.0x.org/apps) and get a live API key. See the [guide here](/introduction/getting-started) to get setup.
+Every call to a 0x API must include a 0x API secret key. [Create a 0x account](https://dashboard.0x.org/) and get a live API key. See the [guide here](/introduction/getting-started) to get setup.
 
 ## 1. Set a Token Allowance
 
@@ -55,11 +55,11 @@ When setting the token allowance, make sure to provide enough allowance for the 
 
 Now, let's find the best price!
 
-The next step is to learn how to get an indiciative price which is used when a [taker](https://0x.org/docs/developer-resources/glossary#taker) is just _browsing_ for the price they could receive on the specified asset pair.
+The next step is to learn how to get an indiciative price which is used when a [taker](https://0x.org/docs/developer-resources/glossary#taker)(aka the user) is just _browsing_ for the price they could receive on the specified asset pair.
 
 Use the [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) endpoint to get the indicative price. This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a full transaction that can be submitted to the Ethereum network (you must use [`/quote`](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-fetch-a-firm-quote) for this). Think of [`/price`](/0x-swap-api/api-references/get-swap-v1-price) as the the "read-only" version of [`/quote`](0x-swap-api/api-references/get-swap-v1-quote).
 
-### Example /price request
+### Example request
 
 Here is an example indicative price request to sell 100 DAI for WETH using [`/price`](/0x-swap-api/api-references/get-swap-v1-price):
 
@@ -82,6 +82,8 @@ const response = await fetch(
 
 console.log(await response.json());
 ```
+
+### Example response
 
 The API response will look like the following (some fields omitted):
 
@@ -106,7 +108,7 @@ When a taker has found a price they are happy with and are ready to fill a quote
 Make sure you are using `/quote` only when the taker is ready to fill the returned response; otherwise, the taker may be added to the Market Maker's ban list if they are making too many `/quote` requests without filling them. This is because `/quote` indicates a soft commitment to fill the order, so Market Makers will commit their assets when returning this response. If the taker is just browsing for a price, and not ready to fill the order, use `/price` instead.
 :::
 
-### Example /quote request
+### Example request
 
 Here is an example to fetch a firm quote to sell 100 DAI for WETH using [`/quote`](/0x-swap-api/api-references/get-swap-v1-quote):
 
@@ -129,6 +131,8 @@ const response = await fetch(
 
 console.log(await response.json());
 ```
+
+### Example response
 
 The API response will look like the following (some fields omitted):
 
