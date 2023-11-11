@@ -1,6 +1,6 @@
 ---
 sidebar_label: Tx Relay FAQ
-sidebar_position: 4
+sidebar_position: 5
 description: Tx Relay FAQ
 ---
 
@@ -10,7 +10,7 @@ description: Tx Relay FAQ
 
 <summary>What chains will Tx Relay be on?</summary>
 
-Through Q2 2023, Mainnet & Polygon….more chains to come
+Through 2023, Ethereum Mainnet and Polygon….more chains to come
 
 </details>
 
@@ -37,7 +37,7 @@ Gas fees are paid by 0x, but a fee to cover the gas costs are included by defaul
 
 <summary>Why is the support limited to some tokens?</summary>
 
-For gasless swaps, we support all tokens that [Swap API](/0x-swap-api/introduction)supports on Polygon, while we currently only support tokens on the [Uniswap Token List](https://tokenlists.org/) on Ethereum. Gasless approvals, however, depend on the token's support (generally, for [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)). You can find the list of tokens supported for gasless approvals [here](/tx-relay-api/gasless-approvals-token-list).
+For gasless swaps, we support all tokens that [Swap API](/0x-swap-api/introduction) supports on Polygon, while we currently only support tokens on the [Uniswap Token List](https://tokenlists.org/) on Ethereum. Gasless approvals, however, depend on the token's support (generally, for [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)). You can find the list of tokens supported for gasless approvals [here](/tx-relay-api/gasless-approvals-token-list).
 
 </details>
 

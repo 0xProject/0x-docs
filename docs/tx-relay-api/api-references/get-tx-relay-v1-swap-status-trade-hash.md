@@ -1,6 +1,6 @@
 ---
 sidebar_label: GET /tx-relay/v1/swap/status/:trade-hash
-sidebar_position: 4
+sidebar_position: 5
 description: Learn how to use GET /tx-relay/v1/swap/status/:trade-hash
 ---
 

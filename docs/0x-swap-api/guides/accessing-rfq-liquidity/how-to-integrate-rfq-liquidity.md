@@ -406,7 +406,9 @@ curl https://api.0x.org/swap/v1/quote?sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEe
 
 ## 3. Submitting the Transaction
 
-The firm quote returned by Swap API is an unsigned Ethereum transaction. In order to submit the transaction to the network, you just need to sign the transaction with your preferred web3 library (wagmi, web3.js, ethers.js) and submit it to the blockchain. Read more about how to sign and submit a transaction [here](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-send-the-transaction-to-the-network).
+The firm quote returned by Swap API is an unsigned Ethereum transaction. In order to submit the transaction to the network, you just need to sign the transaction with your preferred web3 library (wagmi, web3.js, ethers.js) and submit it to the blockchain.
+
+Read more about how to sign and submit a transaction [here](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#4-send-the-transaction-to-the-network).
 
 Also, make sure a [token allowance](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances) has been given for the `allowanceTarget` parameter returned by the `/swap/v1/quote` response.
 

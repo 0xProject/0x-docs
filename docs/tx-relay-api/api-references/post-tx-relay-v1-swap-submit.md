@@ -1,6 +1,6 @@
 ---
 sidebar_label: POST /tx-relay/v1/swap/submit
-sidebar_position: 3
+sidebar_position: 4
 description: Learn how to use POST /tx-relay/v1/swap/submit
 ---
 
@@ -10,7 +10,7 @@ If your user accepts the quote and wants to trade, `POST` to `/tx-relay/v1/swap/
 
 ## Gasless Approvals
 
-If a token supports gasless approvals, a meta-transaction / otc may be submitted along with an approval object. You will be able to tell if the sell token is supported by gasless approvals by checking the response of `/quote` and looking for
+If a token supports [gasless approvals](/tx-relay-api/gasless-approvals-token-list), a meta-transaction / otc may be submitted along with an approval object. You will be able to tell if the sell token is supported by gasless approvals by checking the response of `/quote` and looking for
 
 ```tsx
 const { approval } = response;
@@ -18,7 +18,7 @@ approval.isRequired; // whether an approval is required for the trade
 approval.isGaslessAvailable; // whether gasless approval is available for the sell token
 ```
 
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”. 
 
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
 
@@ -28,7 +28,13 @@ Keep in mind that the `domain` field of this object must follow a strict orderin
 
 The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
 
+Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
+
+### Computing a trade hash
+
 If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
+
+Read more about [computing a trade hash](/tx-relay-api/api-references/overview#computing-a-trade-hash).
 
 ## Trade
 
