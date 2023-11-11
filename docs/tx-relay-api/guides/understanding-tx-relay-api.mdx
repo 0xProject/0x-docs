@@ -34,13 +34,10 @@ Want to see a live implementation of Tx Relay + Swap API? Try out the flow in th
 
 ## Key Terms
 
-### Token Allowances and Approval
+### Token Allowances
+A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens. In our case, we would like the [0x Exchange Proxy smart contract](/introduction/0x-cheat-sheet#exchange-proxy-addresses) to trade our ERC20 tokens for us, so we need to write to the ERC20 contract of that token, and approve an allowance for 0x Exchange Proxy (i.e. allow it to move a certain amount of tokens on our behalf us).
 
-You may see token allowances and approvals come up as related terms in this documentation. A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens.
-
-Approval usually refers to using a mutator function on an ERC-20 contract to do this, in other words, [`approval()`](https://docs.openzeppelin.com/contracts/2.x/api/token/erc20#IERC20-approve-address-uint256-) is used to set the token allowance.
-
-Read more about [setting a token allowances](https://0x.org/docs/0x-swap-api/advanced-topics/how-to-set-your-token-allowances#revoking-allowances).
+Read more about [setting a token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances#revoking-allowances).
 
 ### EIP-712: Human Readable Messages
 
