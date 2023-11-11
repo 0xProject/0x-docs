@@ -6,7 +6,7 @@ description: Learn how to use the Swap API to access the most efficient liquidit
 
 # Get started with Swap API
 
-_Send your first [Swap API](/0x-swap-api/introduction) request._
+_Learn how to send your first [Swap API](/0x-swap-api/introduction) request._
 
 :::tip
 Looking for code samples and tutorials?

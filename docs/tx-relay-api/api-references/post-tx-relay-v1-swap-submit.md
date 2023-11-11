@@ -18,7 +18,7 @@ approval.isRequired; // whether an approval is required for the trade
 approval.isGaslessAvailable; // whether gasless approval is available for the sell token
 ```
 
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”. 
 
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
 
@@ -28,7 +28,13 @@ Keep in mind that the `domain` field of this object must follow a strict orderin
 
 The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
 
+Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
+
+### Computing a trade hash
+
 If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
+
+Read more about [computing a trade hash](/tx-relay-api/api-references/overview#computing-a-trade-hash).
 
 ## Trade
 

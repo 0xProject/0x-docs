@@ -19,8 +19,9 @@ Tx Relay API is supported on Mainnet and Polygon, available via https://api.0x.o
 
 ## Signed Orders are Settled by 0x Protocol Smart Contracts
 
-Once signed orders hit the blockchain, if the orders are swap only, they are settled by 0x Protocol smart contracts directly:
+Once signed orders hit the blockchain, 
 
+- If the orders are swap only, they are settled by [0x Protocol smart contracts](https://0x.org/docs/introduction/0x-cheat-sheet) directly,
 - For meta-transaction v2 orders, they are settled by the contract `MetaTransactionsFeatureV2` and filled by the `executeMetaTransactionV2` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol).
 - For otc order, they are settled by the contract `OtcOrdersFeature` and filled by the `fillTakerSignedOtcOrderForEth` or `fillTakerSignedOtcOrder` functions, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol).
 
@@ -39,7 +40,7 @@ Addresses of `permitAndCall` contracts
 
 ### Presenting EIP-712 Signatures for `signTypedData`
 
-If you are integrating with Metamask or another user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. In order to do so, you will need the following:
+If you are integrating with Metamask ( via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or another user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. In order to do so, you will need the following:
 
 * `domain`
 * `types`

@@ -6,7 +6,7 @@ description: Covers how Tx Relay API works, key terminology, and technical imple
 
 # Getting started with Tx Relay API
 
-_Send your first [Tx Relay API](/tx-relay-api/introduction) request._
+_Learn how to send your first [Tx Relay API](/tx-relay-api/introduction) request._
 
 ## About Tx Relay API
 
@@ -180,7 +180,23 @@ approval.isRequired; // whether an approval is required for the trade
 approval.isGaslessAvailable; // whether gasless approval is available for the sell token
 ```
 
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”. 
+
+Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
+
+- `name` , `version`, `chainId`, `verifyingContract`, `salt`
+  - Contracts may not utilize all of these fields (i.e. one or more may be missing), but if they are present, they must be in this order
+- Any other field must follow in alphabetical order
+
+The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
+
+#### Computing a trade hash 
+
+You can verify that the hash we provide in our request matches the meta-transaction provided.
+
+If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
+
+Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
 
 ### Trade
 
