@@ -140,7 +140,7 @@ await waitForTxSuccess(
   contract.methods.depositETH().send({
     value: sellAmountWei,
     from: owner,
-  })
+  }),
 );
 ```
 
@@ -190,13 +190,13 @@ const receipt = await waitForTxSuccess(
       quote.buyTokenAddress,
       quote.allowanceTarget,
       quote.to,
-      quote.data
+      quote.data,
     )
     .send({
       from: owner,
       value: quote.value,
       gasPrice: quote.gasPrice,
-    })
+    }),
 );
 ```
 

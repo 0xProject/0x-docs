@@ -16,7 +16,7 @@ The request parameters are the same as [/price](https://0x.org/docs/tx-relay-api
 
 | **Query Params** | **Description**                                                                                                                                                                                                                                                                                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `checkApproval`  | \[optional] A boolean that indicates whether or not to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Default to `false` if not provided. On a performance note, setting it to `true` requires more processing and computation than setting it to `false`. |
+| `checkApproval`  | \[optional] A boolean that indicates whether or not to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Defaults to `false` if not provided. On a performance note, setting it to `true` requires more processing and computation than setting it to `false`. |
 
 ### Example Request
 
@@ -34,7 +34,7 @@ curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99
 --header '0x-chain-id: 137'
 ```
 
-- `checkApproval`: \[optional] Whether to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Default to `false` if not provided. Setting it to `true` would require more processing and computation on our end so it would have worse performance.
+- `checkApproval`: \[optional] Whether to check for approval and potentially utilizes gasless approval feature. Allowed values `true` / `false`. Defaults to `false` if not provided. On a performance note, setting it to `true` requires more processing and computation than setting it to `false`. 
 
 ## Response
 

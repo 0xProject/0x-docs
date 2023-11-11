@@ -41,10 +41,10 @@ Addresses of `permitAndCall` contracts
 
 If you are integrating with Metamask or another user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. In order to do so, you will need the following:
 
-- `domain`
-- `types`
-- `primaryType`
-- `message`
+* `domain`
+* `types`
+* `primaryType`
+* `message`
 
 The message will be `MetaTransactionDataV2` that is returned at the time of `/quote`. However, you will also need the other fields.
 
@@ -193,8 +193,8 @@ You could / should verify that the hash we provide in our request matches the me
 
 For the `trade.hash` field:
 
-- If it's a meta-transaction v2, verify that the `meta-transaction v2` hashes to the `trade.hash`: `getMetaTransactionV2Hash` ([code link](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol#L192))
-- It it's an otc, verify that `otc` hashes to the `trade.hash`: `getOtcOrderHash` ([code link](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol#L454))
+- If it's a meta-transaction v2, verify that the `meta-transaction v2` hashes to the `trade.hash`: `getMetaTransactionV2Hash`[link](https://github.com/0xProject/protocol/blob/development/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol#L192)
+- It it's an otc, verify that `otc` hashes to the `trade.hash`: `getOtcOrderHash` [link](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/OtcOrdersFeature.sol#L454)
 
 If you need to call these functions on the 0x smart contracts to validate your code, you may need:
 

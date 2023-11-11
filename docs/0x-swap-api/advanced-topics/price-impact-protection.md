@@ -8,15 +8,13 @@ description: Get notifications on illiquid markets. Don't get rekt.
 
 Topics covered on this page include:
 
-* [What is price impact?](/0x-swap-api/advanced-topics/price-impact-protection#what-is-price-impact-)
-* [How is price impact different from slippage?](/0x-swap-api/advanced-topics/price-impact-protection#how-is-price-impact-different-from-slippage-)
-* [How is price impact calculated?](/0x-swap-api/advanced-topics/price-impact-protection#how-is-price-impact-calculated-)
-* [How does Price Impact Protection work?](/0x-swap-api/advanced-topics/price-impact-protection#how-does-price-impact-protection-work-)
-* [How do I setup Price Impact Protection when using the Swap API?](/0x-swap-api/advanced-topics/price-impact-protection#how-do-i-setup-price-impact-protection-when-using-the-swap-api-)
-* [Do you have recommendations for how to display price impact to end-users in a dApp UI?](/0x-swap-api/advanced-topics/price-impact-protection#do-you-have-recommendations-for-how-to-display-price-impact-to-end-users-in-a-dapp-ui)
-* [Read More](/0x-swap-api/advanced-topics/price-impact-protection#read-more)
-
-
+- [What is price impact?](/0x-swap-api/advanced-topics/price-impact-protection#what-is-price-impact-)
+- [How is price impact different from slippage?](/0x-swap-api/advanced-topics/price-impact-protection#how-is-price-impact-different-from-slippage-)
+- [How is price impact calculated?](/0x-swap-api/advanced-topics/price-impact-protection#how-is-price-impact-calculated-)
+- [How does Price Impact Protection work?](/0x-swap-api/advanced-topics/price-impact-protection#how-does-price-impact-protection-work-)
+- [How do I setup Price Impact Protection when using the Swap API?](/0x-swap-api/advanced-topics/price-impact-protection#how-do-i-setup-price-impact-protection-when-using-the-swap-api-)
+- [Do you have recommendations for how to display price impact to end-users in a dApp UI?](/0x-swap-api/advanced-topics/price-impact-protection#do-you-have-recommendations-for-how-to-display-price-impact-to-end-users-in-a-dapp-ui)
+- [Read More](/0x-swap-api/advanced-topics/price-impact-protection#read-more)
 
 ## What is price impact?
 
@@ -36,17 +34,17 @@ Let's assume we are on the Ethereum network for this example. For, token A and t
 
 Suppose a user wants to sell 10 token A for token B.
 
-* 0.1 ETH → 1 A (1 ETH → 10 A)
-* 0.1 ETH → 10 B (1 ETH → 100 B)
-* Price (without price impact) = **10B/A**
-* Actual quote
-  * 10 A → 99 B (price = **9.9 B/A**)
-* Estimated Price Impact
-  * 1 - (10/9.9) \~= 0.0101 = **1.01%**
+- 0.1 ETH → 1 A (1 ETH → 10 A)
+- 0.1 ETH → 10 B (1 ETH → 100 B)
+- Price (without price impact) = **10B/A**
+- Actual quote
+  - 10 A → 99 B (price = **9.9 B/A**)
+- Estimated Price Impact
+  - 1 - (10/9.9) \~= 0.0101 = **1.01%**
 
 ## How does Price Impact Protection work?
 
-We added Price Impact Protection as an optional feature of the Swap API to make  it easier to protect users from getting rekt by illiquid markets. Despite Swap API enabling access to the deepest liquidity from over 70+ exchanges, there are still some long-tailed token pairs that suffer from suboptimal liquidity on decentralized exchanges.
+We added Price Impact Protection as an optional feature of the Swap API to make it easier to protect users from getting rekt by illiquid markets. Despite Swap API enabling access to the deepest liquidity from over 70+ exchanges, there are still some long-tailed token pairs that suffer from suboptimal liquidity on decentralized exchanges.
 
 When we are able to calculate price impact estimates, users leveraging the Swap API will be notified when their trade faces a price impact over a certain threshold. The API will return an error of insufficient liquidity due to the price impact being higher than the defined limit. The threshold is easily customizable by setting `priceImpactProtectionPercentage` anywhere from 0-1, so we encourage every Swap API user to customize this parameter based on their needs and tolerance.
 
@@ -56,7 +54,6 @@ In other words, Price Impact Protection adds the following protection logic:
 Given X is set by the `priceImpactProtectionPercentage` parameter, if the price impact for the quoted trade is > X, then we throw an error, effectively blocking the trade protecting a user's tokens.
 :::
 
-
 Price Impact Protection is an optional feature - the default threshold will be set at 1 which means that every transaction is passed without triggering an error. Developers and API users who want to take advantage of it will need to opt-in by adjusting this setting.
 
 Developers can also surface this information in their UI so users can see the potential price impact of a trade prior to submitting an order (example image shown below). Developers can simply ping the Swap API \[[swap/v1/quote](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#request)] and use the returned `estimatedPriceImpact` information.
@@ -64,7 +61,6 @@ Developers can also surface this information in their UI so users can see the po
 ## How do I setup Price Impact Protection when using the Swap API? <a href="#what-is-price-impact" id="what-is-price-impact"></a>
 
 **Price Impact Protection is an opt-in feature 0x API,** it is controlled by the new [`priceImpactProtectionPercentage` parameter](/0x-swap-api/api-references/get-swap-v1-quote#request).
-
 
 The following section includes a summary of the Request and Response changes related to Price Impact Protection:
 
@@ -96,11 +92,9 @@ First, set `priceImpactProtectionPercentage` to a value less than 1 but greater 
 
 It is up to you how to design the user flow, some examples include:
 
-* You can surface this parameter in the settings and allow the user to set their own percentage tolerance (similar to setting slippage tolerance)
-* Or you can not allow the user to change it and just put a limit you are comfortable with that will be applied to each request and display the value returned by the `estimatedPriceImpact` parameter to inform users before they submit an order (as shown in the image below)
-
-
+- You can surface this parameter in the settings and allow the user to set their own percentage tolerance (similar to setting slippage tolerance)
+- Or you can not allow the user to change it and just put a limit you are comfortable with that will be applied to each request and display the value returned by the `estimatedPriceImpact` parameter to inform users before they submit an order (as shown in the image below)
 
 ## Read More
 
-* (Blog) [Price Impact Protection is here. Don't get rekt.](https://blog.0x.org/0x-swap-api-price-impact-protection/)
+- (Blog) [Price Impact Protection is here. Don't get rekt.](https://blog.0x.org/0x-swap-api-price-impact-protection/)

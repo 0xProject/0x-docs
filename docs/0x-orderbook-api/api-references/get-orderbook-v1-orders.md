@@ -26,7 +26,7 @@ Any [Signed Order](/0x-orderbook-api/api-references/overview#signed-order) field
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                                                          |
+| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                   |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 
 ## Examples
@@ -83,5 +83,3 @@ https://api.0x.org/orderbook/v1/orders?makerToken=0xc02aaa39b223fe8d0a0e5c4f27ea
 ```
 
 \
-
-

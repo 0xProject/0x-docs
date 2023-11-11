@@ -1,8 +1,7 @@
 {
-    "label": "Liquidity Providers",
-    "position": 6,
-    "link": {
-      "description": "Learn how to be a liquidity provider for 0x API"
-    }
+  "label": "Liquidity Providers",
+  "position": 6,
+  "link": {
+    "description": "Learn how to be a liquidity provider for 0x API"
   }
-  
+}

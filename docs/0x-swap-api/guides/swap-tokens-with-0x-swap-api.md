@@ -205,7 +205,7 @@ Both options work, up to use case and developer preference.
 // Fetch the swap quote.
 const response = await fetch(
   `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
-  { headers }
+  { headers },
 );
 quote = await response.json();
 
@@ -219,7 +219,7 @@ const receipt = await web3.eth.sendTransaction(quote);
 // Fetch the swap quote.
 const response = await fetch(
   `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
-  { headers }
+  { headers },
 );
 quote = await response.json();
 
@@ -231,7 +231,7 @@ const receipt = await waitForTxSuccess(
     data: quote.data,
     value: quote.value,
     gasPrice: quote.gasPrice,
-  })
+  }),
 );
 ```
 
