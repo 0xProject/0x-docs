@@ -122,7 +122,7 @@ describe("0x API integration", function () {
     const takerAddress = "0xab5801a7d398351b8be11c439e05c5b3259aec9b"; // An account with sufficient balance on mainnet
 
     const quoteResponse = await fetch(
-      `https://api.0x.org/swap/v1/quote?buyToken=${buyToken}&sellAmount=${sellAmount}&sellToken=${sellToken}&takerAddress=${takerAddress}`
+      `https://api.0x.org/swap/v1/quote?buyToken=${buyToken}&sellAmount=${sellAmount}&sellToken=${sellToken}&takerAddress=${takerAddress}`,
     );
     // Check for error from 0x API
     if (quoteResponse.status !== 200) {
@@ -166,10 +166,10 @@ describe("0x API integration", function () {
     const daiBalanceAfter = await dai.balanceOf(takerAddress);
 
     console.log(
-      `ETH: ${etherBalanceBefore.toString()} -> ${etherBalanceAfter.toString()}`
+      `ETH: ${etherBalanceBefore.toString()} -> ${etherBalanceAfter.toString()}`,
     );
     console.log(
-      `DAI: ${daiBalalanceBefore.toString()} -> ${daiBalanceAfter.toString()}`
+      `DAI: ${daiBalalanceBefore.toString()} -> ${daiBalanceAfter.toString()}`,
     );
   });
 });

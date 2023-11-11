@@ -3,21 +3,22 @@ sidebar_label: GET /orderbook/v1/order/orderHash
 sidebar_position: 6
 description: Learn how to use GET /orderbook/v1/order/orderHash
 ---
+
 # GET /orderbook/v1/order/:orderHash:
 
 Retrieves a specific order by orderHash.
 
 ## Request
 
-| Path Params | Description                                                                             |
-| ----------- | --------------------------------------------------------------------------------------- |
+| Path Params | Description                                                                                     |
+| ----------- | ----------------------------------------------------------------------------------------------- |
 | `orderHash` | The hash of the desired [signed order](/0x-orderbook-api/api-references/overview#signed-order). |
 
 ## Response
 
 | Field      | Description                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                           |
+| `order`    | Raw [signed order](/0x-orderbook-api/api-references/overview#signed-order).                                   |
 | `metaData` | Object where optional meta-data will be included, such as the `orderHash` and `remainingFillableTakerAmount`. |
 |            |                                                                                                               |
 

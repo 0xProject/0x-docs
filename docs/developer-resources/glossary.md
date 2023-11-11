@@ -3,6 +3,7 @@ sidebar_label: Glossary
 sidebar_position: 1
 description: A list of commonly encountered terms when developing with 0x
 ---
+
 # 📘 Glossary
 
 ### Atomically Swapped
@@ -11,22 +12,22 @@ Atomically swapped means the entire trade - the Maker’s asset going to the Tak
 
 ### Automatic Market Maker (AMM)
 
-An Automatic Market Maker (AMM) is the protocol that  provides liquidity to the exchange it operates in through automated trading.
+An Automatic Market Maker (AMM) is the protocol that provides liquidity to the exchange it operates in through automated trading.
 
 These protocols use smart contracts to define the price of digital assets and provide liquidity. Here, the protocol pools liquidity into smart contracts. In essence, users are not technically trading against counterparties – instead, they are trading against the liquidity locked inside smart contracts. These smart contracts are often called liquidity pools.
 
-Examples of AMMs include Uniswap, Sushiswap, Curve, Balancer, Bancor, and many others. 
+Examples of AMMs include Uniswap, Sushiswap, Curve, Balancer, Bancor, and many others.
 
 ### Buys and Sells
 
 When we say “buys” vs “sells” in the context of Swap API, this is what we mean:
 
-* _Imagine a user is trading **token A for token B**._
-  * **Sell**: a sell is when the user is specifying the units of token A that they **would like to send**
-  * **Buy**: a buy is when the user is specifying the units of token B that they **would like to receive**
-* In both cases, the user is selling A for B. The terminology of "sells" vs "buys" in our `/swap` endpoint simply means "are you specifying an **input amount** or an **output amount**"?
-* Generally in the UI, a "sell" is triggered when the user sets the field for token A and a "buy" is triggered when the user sets the field for token B. But in both cases, they're going from A → B.
-* While these are commonly used terms, "buys" are a less commonly used feature.
+- _Imagine a user is trading **token A for token B**._
+  - **Sell**: a sell is when the user is specifying the units of token A that they **would like to send**
+  - **Buy**: a buy is when the user is specifying the units of token B that they **would like to receive**
+- In both cases, the user is selling A for B. The terminology of "sells" vs "buys" in our `/swap` endpoint simply means "are you specifying an **input amount** or an **output amount**"?
+- Generally in the UI, a "sell" is triggered when the user sets the field for token A and a "buy" is triggered when the user sets the field for token B. But in both cases, they're going from A → B.
+- While these are commonly used terms, "buys" are a less commonly used feature.
 
 ### Call Data
 
@@ -50,7 +51,7 @@ When the two assets in a pool start to diverge drastically in price (one becomes
 
 ### Maker
 
-This is the Supply side of the the ecosystem. Makers create 0x orders, in other words, _provide the 0x liquidity_. 0x aggregates liquidity across a number of sources including -  public DEX liquidity (e.g. Uniswap, Curve, Bancor), Professional MMs, 0x's Open Orderbook, AMM  Liquidity Pools. This liquidity is put into the system to be consumed by Takers (see "Takers" for a graphic).&#x20;
+This is the Supply side of the the ecosystem. Makers create 0x orders, in other words, _provide the 0x liquidity_. 0x aggregates liquidity across a number of sources including - public DEX liquidity (e.g. Uniswap, Curve, Bancor), Professional MMs, 0x's Open Orderbook, AMM Liquidity Pools. This liquidity is put into the system to be consumed by Takers (see "Takers" for a graphic).&#x20;
 
 ### Off-chain infrastructure, on-chain settlement
 
@@ -70,17 +71,17 @@ The 0x API is a collection of services and endpoints that sit on top of the 0x P
 
 ### 0x Protocol
 
-The [0x protocol](https://protocol.0x.org/en/latest/) is an open standard that facilitates the trustless, low friction, peer-to-peer exchange of Ethereum-based assets. The benefit of a standardized protocol is that defines a set of rules that allow entities on the same network to understand how to transmit data amongst each other. The 0x protocol is composed of smart contracts and  developer-tools that allow open access to a pool of shared liquidity.
+The [0x protocol](https://protocol.0x.org/en/latest/) is an open standard that facilitates the trustless, low friction, peer-to-peer exchange of Ethereum-based assets. The benefit of a standardized protocol is that defines a set of rules that allow entities on the same network to understand how to transmit data amongst each other. The 0x protocol is composed of smart contracts and developer-tools that allow open access to a pool of shared liquidity.
 
 ### Request For Quotes (RFQ)
 
-RFQ stands for Request for Quote. It is a design pattern that allows traders to get real time quotes from Market Makers. We  make API calls to Market Makers when they request a price from the 0x API. This source of liquidity is exclusive to 0x, has 0 slippage, and better trade execution.
+RFQ stands for Request for Quote. It is a design pattern that allows traders to get real time quotes from Market Makers. We make API calls to Market Makers when they request a price from the 0x API. This source of liquidity is exclusive to 0x, has 0 slippage, and better trade execution.
 
 ### Slippage
 
 The price difference between when a transaction is submitted and when the transaction is confirmed on the blockchain.
 
-This occurs because AMMs price their assets along bonding curves that are a function of the size of the relative amounts of each asset, and this price can change if the relative trade size is large. 
+This occurs because AMMs price their assets along bonding curves that are a function of the size of the relative amounts of each asset, and this price can change if the relative trade size is large.
 
 ### Smart Order Routing
 
@@ -88,4 +89,4 @@ The 0x API helps users get the best price on their swap via Smart Order Routing 
 
 ### Taker
 
-This is the Demand side of the the ecosystem. Takers fill 0x orders by agreeing to trade their asset for the Maker's asset; in other words, _consume the 0x liquidity_. Examples of Takers include Metamask, Coinbase, Zapper, dydx, Matcha, etc. 
+This is the Demand side of the the ecosystem. Takers fill 0x orders by agreeing to trade their asset for the Maker's asset; in other words, _consume the 0x liquidity_. Examples of Takers include Metamask, Coinbase, Zapper, dydx, Matcha, etc.
