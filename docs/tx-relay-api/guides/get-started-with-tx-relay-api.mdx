@@ -12,21 +12,39 @@ _Send your first [Tx Relay API](/tx-relay-api/introduction) request._
 
 [Tx Relay API](/tx-relay-api/introduction) allows developers to create the smoothest trading experience in DeFi by abstracting away the complexities related to approvals, allowances, and swaps for their users.
 
-Build more intuitive user interfaces and user flows in your applications, improve your conversion funnel drop-offs due to insufficient gas, and set yourself up to easily onboard the next wave of users into Web3.
+Enabling Tx Relay in your app allows you to:
 
-Make sure to read [Understanding Tx Relay API](http://localhost:3000/docs/tx-relay-api/guides/understanding-tx-relay-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
+- build more intuitive user interfaces and user flows in your applications
+- improve your conversion funnel drop-offs due to insufficient gas, and
+- set yourself up to easily onboard the next wave of users into Web3.
 
-This guide will walk you through the scenario of using Tx Relay API when you are:
+Make sure to read [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
 
-- selling a non-native, ERC-20 token, where,
+This guide will walk you through the scenario of using Tx Relay API when a user is:
+
+- selling [USDC](https://polygonscan.com/address/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174), a non-native, ERC-20 token on Polygon that supports Permit ([EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)),
 - no prior token allowance has been set and approval is required,
-- and we can perform gasless approvals because the token supports Permit ([EIP-2612](https://eips.ethereum.org/EIPS/eip-2612))
+- the token is on the [gasless approvals token list](/tx-relay-api/gasless-approvals-token-list), so we can perform gasless approvals
 
 See other user flows [here](/tx-relay-api/guides/understanding-tx-relay-api#technical-flow-charts).
 
-## 0. Get a 0x API key
+## 0. Before you begin
+
+### Get a 0x API key
 
 Every call to a 0x API must include a 0x API secret key. [Create a 0x account](https://dashboard.0x.org/) or [sign in](https://dashboard.0x.org/) get a live API key. See the [guide here](/introduction/getting-started) to get setup.
+
+### Enable Tx Relay from your dashboard
+
+If you have been granted access to Tx Relay, you will be able to enable Tx Relay in your app from "App Settings" in your [0x dashboard](https://dashboard.0x.org/). You can enable it for any active apps you have (see screenshot).
+
+```mdx-code-block
+import EnableTxRelayImg from '/static/img/tx-relay-api/enable-tx-relay-dashboard.png';
+
+<center>
+    <img src={EnableTxRelayImg} width="50%"/>
+</center>
+```
 
 ## 1. Get an indicative price
 
@@ -34,42 +52,221 @@ Use [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swa
 
 This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a full transaction that can be submitted to the Ethereum network (you must use [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) for this). Think of `/price` as the the "read-only" version of `/quote`.
 
+### Example request
+
+Here is an example indicative price request to sell 100 USDC (supports Permit) for WETH (does not support Permit) using `/price` on Polygon (137):
+
+```
+https://api.0x.org/tx-relay/v1/swap/price              // Request an indicative price
+?sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa8417   // Sell USDC
+&sellAmount=100000000                                  // Sell amount 100 USDC (6 decimals)
+&buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270   // Buy WMATIC
+&takerAddress=$USER_TAKER_ADDRESS                      // Address that will make the trade
+--header '0x-api-key: [API_KEY]'                       // Replace with your own API key
+--header '0x-chain-id: 137'                            // Supports Ethereum (1) & Polygon (137)
+```
+
+### Sample cURL request
+
+```bash
+curl 'https://api.0x.org/tx-relay/v1/swap/price?buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellAmount=100000000&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&takerAddress=<TAKER_ADDRESS>&priceImpactProtectionPercentage=0.95&feeType=volume&feeSellTokenPercentage=0.01&feeRecipient=<FEE_RECIPIENT_ADDRESS>' \
+--header '0x-api-key: <API_KEY>' \
+--header '0x-chain-id: 137'
+```
+
 ### Example response
 
-### Example request
+```json
+{
+  "liquidityAvailable": true,
+  "buyAmount": "99887369",
+  "buyTokenAddress": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+  "estimatedPriceImpact": "0",
+  "price": "0.998873",
+  "sellAmount": "100000000",
+  "sellTokenAddress": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+  "grossBuyAmount": "100005950",
+  "grossSellAmount": "100000000",
+  "grossPrice": "1.000059",
+  "grossEstimatedPriceImpact": "0",
+  "sources": [
+    {
+      "name": "DODO",
+      "proportion": "1"
+    }
+  ],
+  "fees": {
+    "zeroExFee": {
+      "feeType": "volume",
+      "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "feeAmount": "100000",
+      "billingType": "on-chain"
+    },
+    "gasFee": {
+      "feeType": "gas",
+      "feeToken": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "feeAmount": "18574",
+      "billingType": "on-chain"
+    }
+  },
+  "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+}
+```
 
 ## 2. Get a firm quote
 
 When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Tx Relay API using the [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](https://0x.org/docs/developer-resources/glossary#maker) if they do not.
 
 :::tip
-To ensure the quotes stay fresh, they expire in ~ 30 sec. Make sure to take this into account when building your app with a timer and/or automatic refresh.
+Quote expire in ~ 30s in order to ensure freshness.Make sure to take this into account when building your app with a timer and/or automatic refresh.
 :::
-
-### checkApproval parameter
-
-The request parameters for `/quote` are the same as `/price` except with an extra field [`checkApproval`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#request-params).
-
-This boolean checks for approval and potentially utilizes gasless approval feature. Its allowed values are `true` or `false`, the default to `false` if not provided.
-
-`/tx-relay/v1/swap/quote` responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
-
-### Example response
 
 ### Example request
 
+Here is an example to fetch a firm quote to sell 100 USDC (supports Permit) for WETH (does not support Permit) using `/quote` on Polygon (137):
+
+```
+https://api.0x.org/tx-relay/v1/swap/quote              // Request a firm quote
+?sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa8417   // Sell USDC
+&sellAmount=100000000                                  // Sell amount 100 USDC (6 decimals)
+&buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270   // Buy WMATIC
+&checkApproval=true                                    // Checks for approval and uses gasless approval feature
+&takerAddress=$USER_TAKER_ADDRESS                      // Address that will make the trade
+--header '0x-api-key: [API_KEY]'                       // Replace with your own API key
+--header '0x-chain-id: 137'                            // Supports Ethereum (1) & Polygon (137)
+```
+
+### Sample cURL request
+
+```bash
+curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellAmount=100000000&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&takerAddress=<TAKER_ADDRESS>&priceImpactProtectionPercentage=0.95&feeType=volume&feeSellTokenPercentage=0.01&feeRecipient=<FEE_RECIPIENT_ADDRESS>' \
+--header '0x-api-key: <API_KEY>' \
+--header '0x-chain-id: 137'
+```
+
+#### checkApproval parameter
+
+The request parameters for `/quote` are the same as `/price` except with an extra field [`checkApproval`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#request-params).
+
+This optional boolean checks for approval and potentially utilizes gasless approval feature. Its allowed values are `true` or `false`, the default to `false` if not provided.
+
+[`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) responds with a full 0x order, which can be submitted to an Ethereum node by the client. Therefore it is expected that the maker has reserved the maker assets required to settle the trade, leaving the order unlikely to revert.
+
+### Example responses
+
+If liquidity is available, 2 objects are returned:
+
+- `trade`: this object which contains the necessary information to process a trade, for example, which of the 2 possible types this trade is (`metatransaction_v2` or `otc`). Read more [here](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response-params).
+
+- `approval`: this object contains the necessary information to process a trade. Read more [here](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response-params).
+
+See here for examples of possible responses:
+
+- [Liquidity Unavalable Responses](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#liquidity-unavailable-response)
+- [Example Meta-Transaction V2 Response](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#example-meta-transaction-v2-response)
+- [Example OTC Response](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#example-otc-response)
+
 ## 3. Submit transaction
 
-- Sign EIP 712 object
-- **POST /submit**
-- Example response
-- Example request
+When user accepts the quote and wants to submit the trade, use [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) to send both signatures back along with the payload from `/quote`.
+
+### Gasless approvals
+
+If the token supports [gasless approvals](/tx-relay-api/gasless-approvals-token-list), which our example USDC does, the approval object may be submitted along with the Meta-Transaction V2 or OTC trade object returned by [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#example-responses). You will be able to tell if the sell token supports gasless approvals by checking the response of `/quote` and looking for
+
+```tsx
+const { approval } = response;
+approval.isRequired; // whether an approval is required for the trade
+approval.isGaslessAvailable; // whether gasless approval is available for the sell token
+```
+
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params” .
+
+### Trade
+
+Similar to gasless approval, to submit the trade, you must have your user sign `trade.eip712` object returned at the time of the `/quote`. All the instructions and caveats are the same as for gasless approvals.
+
+### Example request
+
+```bash
+curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key: <API_KEY>' --header '0x-chain-id: 137' --data '{
+ "trade": {
+   "type": "metatransaction_v2", // this is trade.type from the /quote endpoint
+   "eip712": { /* this is trade.eip712 from the /quote endpoint */ },
+   "signature": {
+     "v": 27,
+     "r": "0xeaac9ddbbf9b251a384eb4a545a2800a6d7aca4ceb5e5a3154ddd0d2923533d2",
+     "s": "0x601deadfd33bd8b0ad35468613eabcac0a250a7a32035e261a13e2dcbc462e49",
+     "signatureType": 2
+    }
+  },
+ "approval":{
+     "type": "permit", // this is approval.type from the /quote endpoint
+     "eip712": {/* this is approval.eip712 from the /quote endpoint */},
+     "signature": {
+       "v": 28,
+       "r": "0x55c26901285d5cb4d9d1ebb2828122fd6c334b343901944d34a810b3d2d79773",
+       "s": "0x20854d829e3118c3f780228ca83fac6154060328a90d2a21267c9f7d1ae9e53b",
+       "signatureType": 2
+    }
+  }
+}'
+```
+
+### Example response
+
+```json
+{
+  "type": "metatransaction_v2",
+  "tradeHash": "0xde5a11983edd012047dd3107532f007a73ae488bfb354f35b8a40580e2a775a1"
+}
+```
+
+More information on signing 0x orders is available [here](https://docs.0xprotocol.org/en/latest/basics/orders.html#how-to-sign).
 
 ## 4. Check trade status
 
-- Once user submits signed meta txn (+ maybe sign approval), app should continuously check the status of the trade
-- Once successful ( `200` if successful)
-- **GET /tx-relay/v1/swap/status/:trade-hash**
-- Example response
-- Example request
-- Display confirmation to use
+Once the user has signed and submitted both signatures (gasless approval and meta-transaction), you can poll [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) to check the status of the trade.
+
+### Example request
+
+```bash
+curl '<https://api.0x.org/tx-relay/v1/swap/status/0xd114c77249bb3a137634afeba1ea1c8d6080c687c1a00cc4137fd9cb905a5fb6>' \\
+--header '0x-api-key: <API_KEY>' --header '0x-chain-id: 137'
+```
+
+### Example response
+
+```jsx
+// confirmed
+{
+    "status": 'confirmed',
+    "transactions": [{
+        "hash": "0x...",
+        "timestamp": 1624290253193
+    }]
+}
+
+// failed due to transaction reverted
+{
+    "status": "failed",
+    "transactions": [{
+        "hash": "0x...",
+        "timestamp": 1624290253193
+    }],
+    "reason": "transaction_reverted"
+}
+```
+
+See here for:
+
+- [Shape of Response](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#shape-of-response)
+- [Possible Reasons for Failure](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#possible-reasons-for-failure)
+- [Status Codes](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#status-code)
+
+Once the trade is successful, you can display the transaction confirmation to your user.
+
+## Learn more
+
+- [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
+- [Tx Relay FAQ](/tx-relay-api/tx-relay-faq)

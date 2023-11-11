@@ -10,7 +10,7 @@ If your user accepts the quote and wants to trade, `POST` to `/tx-relay/v1/swap/
 
 ## Gasless Approvals
 
-If a token supports gasless approvals, a meta-transaction / otc may be submitted along with an approval object. You will be able to tell if the sell token is supported by gasless approvals by checking the response of `/quote` and looking for
+If a token supports [gasless approvals](/tx-relay-api/gasless-approvals-token-list), a meta-transaction / otc may be submitted along with an approval object. You will be able to tell if the sell token is supported by gasless approvals by checking the response of `/quote` and looking for
 
 ```tsx
 const { approval } = response;
