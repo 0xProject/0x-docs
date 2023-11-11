@@ -190,13 +190,15 @@ Keep in mind that the `domain` field of this object must follow a strict orderin
 
 The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
 
+Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
+
 #### Computing a trade hash 
 
 You can verify that the hash we provide in our request matches the meta-transaction provided.
 
 If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
 
-Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
+Read more about [computing a trade hash](/tx-relay-api/api-references/overview#computing-a-trade-hash).
 
 ### Trade
 
