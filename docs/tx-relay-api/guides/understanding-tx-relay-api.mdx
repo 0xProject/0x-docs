@@ -10,9 +10,13 @@ _This guide contains information about how Tx Relay API works, key terms, and te
 
 ## How does it work?
 
-Tx Relay API to provide a “gasless” user experience. This API returns liquidity—prices and quotes—to end users. If a user is happy with a quote, they can sign an [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) for the approval and trade. Then, Tx Relay API can submit the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
+A major source of friction in Web3 is the need for users to hold a small amount of the chain's native token to pay for token approvals and subsequent transactions (aka paying "gas" fees). 
 
-The term "gasless" refers to the ability for users to trade without needing to pay the gas cost at that moment. Instead, a third party like 0x can submit the transaction(s) to the blockchain and pay the gas fee. So, in practice, there is still gas involved—it's just being paid by someone else. The user doesn't have to pay upfront for the gas cost when submitting a transaction. A suggested implementation is to use Tx Relay API to pay for the gas on behalf of the user with the trade's input token (sell token).
+Tx Relay API provides a “gasless” ERC-20 token swap experience for your end users.
+
+This API returns liquidity—prices and quotes—to end users. If a user is happy with a quote the API has provided, they can sign an [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) for the approval and trade. Then, Tx Relay API can submit the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
+
+The term "gasless" refers to the ability for users to trade without needing to pay the gas cost at that moment. Instead, a third party like 0x can submit the transaction(s) to the blockchain and pay the gas fee. So, in practice, there is still gas involved—it's just being paid by someone else. The user doesn't have to worry about holding the chain's native token in order to pay for gas cost upfront when submitting a transaction. A suggested implementation is to use Tx Relay API to pay for the gas on behalf of the user with the trade's input token (sell token).
 
 ## Technical Flow Charts
 
