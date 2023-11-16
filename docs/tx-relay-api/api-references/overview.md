@@ -53,7 +53,7 @@ In order to do so, you will need the following:
 
 The `message` will be `MetaTransactionDataV2` that is returned at the time of `/quote`. However, you will also need the other fields.
 
-The Domain will change per chain, but the `name` and `version` fields are consistent. Example:
+The `domain` will change per chain, but the `name` and `version` fields are consistent. Example:
 
 ```jsx
 const domain = {
