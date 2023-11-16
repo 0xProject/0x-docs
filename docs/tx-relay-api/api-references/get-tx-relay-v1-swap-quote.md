@@ -49,11 +49,11 @@ curl 'https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99
 
 ### Example Responses
 
-There are 2 possible types of the response: `metatransaction_v2` and `otc`.
+There are 2 possible `trade` types in a response: `metatransaction_v2` and `otc`.
 
 Thus, please don’t assume particular shapes of `trade.eip712.types`, `trade.eip712.domain`, `trade.eip712.primaryType` and `trade.eip712.message` as they will change based on types returned, namely `metatransaction_v2` and `otc`. More types might also be added in the future.
 
-Similarly for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as there are different types of gasless approval standards.
+Similarly, don't assume particular shapes for `approval.eip712.types`, `approval.eip712.domain`, `approval.eip712.primaryType` and `approval.eip712.message` as there are different types of gasless approval standards.
 
 **Note that:**
 
