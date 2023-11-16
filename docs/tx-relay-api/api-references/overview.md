@@ -40,14 +40,18 @@ Addresses of `permitAndCall` contracts
 
 ### Presenting EIP-712 Signatures for `signTypedData`
 
-If you are integrating with Metamask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or another user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. In order to do so, you will need the following:
+If you are user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. Some commonly used tools for this include: 
+* integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
+* using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data
+
+In order to do so, you will need the following:
 
 * `domain`
 * `types`
 * `primaryType`
 * `message`
 
-The message will be `MetaTransactionDataV2` that is returned at the time of `/quote`. However, you will also need the other fields.
+The `message` will be `MetaTransactionDataV2` that is returned at the time of `/quote`. However, you will also need the other fields.
 
 The Domain will change per chain, but the `name` and `version` fields are consistent. Example:
 
