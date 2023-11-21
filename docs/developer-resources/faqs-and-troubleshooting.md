@@ -150,7 +150,7 @@ Use the API endpoint [`/swap/v1/sources`](/0x-swap-api/api-references/get-swap-v
 
 0x supports trades for all ERC20 tokens that are aggregated from our aggregated liquidity sources. Note that the Swap API does not support fee-on-transfer tokens.
 
-To see the tokens that 0x supports for trading, you can refer to the CoinGecko tokenlist. This tokenlist provides a list of all available ERC20 tokens that are supported by 0x. You can access the CoinGecko tokenlist at [tokenlist.org](http://tokenlist.org/), specifically the [CoinGecko tokenlist ](https://tokenlists.org/token-list?url=https://tokens.coingecko.com/uniswap/all.json)for a list of all available ERC20 tokens.
+To see the tokens that 0x supports for trading, you can refer to the CoinGecko tokenlist. This tokenlist provides a list of all available ERC20 tokens that are supported by 0x. You can access the CoinGecko tokenlist at [tokenlists.org](https://tokenlists.org/), specifically the [CoinGecko tokenlist](https://tokenlists.org/token-list?url=https://tokens.coingecko.com/uniswap/all.json)for a list of all available ERC20 tokens.
 
 </details>
 
