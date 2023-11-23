@@ -41,15 +41,17 @@ Want to see a live implementation of Tx Relay + Swap API? Try out the flow in th
 ### Token Allowances
 A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens. In our case, we would like the [0x Exchange Proxy smart contract](/introduction/0x-cheat-sheet#exchange-proxy-addresses) to trade our ERC20 tokens for us, so we need to write to the ERC20 contract of that token, and approve an allowance for 0x Exchange Proxy (i.e. allow it to move a certain amount of tokens on our behalf us).
 
-Read more about [setting a token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances#revoking-allowances).
+For tokens that do not support gasless approvals, we needed to set the token allowance via the messages listed [here](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances). 
 
 ### EIP-712: Human Readable Messages
 
-[EIP-712](https://eips.ethereum.org/EIPS/eip-712) standard for typed message signing.This EIP allows wallets to display data in signing prompts in a human readable and not just a blind hash.
+[EIP-712](https://eips.ethereum.org/EIPS/eip-712) is the standard for typed message signing. This EIP allows wallets to display data in signing prompts in a human readable and not just a blind hash. 
+
+Tx Relay leverages EIP-712 messages to enable [gasless approvals](/tx-relay-api/guides/understanding-tx-relay-api#gasless-approvals) and [gasless transactions](/tx-relay-api/guides/understanding-tx-relay-api#gasless-transactions).  
 
 ### EIP-2612: Gasless Approvals
 
-[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) unlocked gasless token approvals.
+[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) unlocked gasless token approvals by introducting a new Permit function to ERC-20 tokens. The Permit function enables enables users to grant permission to others to spend their tokens in a single transaction which offer more efficient token approvals and enabled gasless transactions.
 
 ### Meta Transactions
 
