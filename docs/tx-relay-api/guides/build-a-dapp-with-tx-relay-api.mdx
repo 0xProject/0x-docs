@@ -1,0 +1,306 @@
+---
+sidebar_label: Build a dApp with Tx Relay API
+sidebar_position: 3
+description: Learn how to implement Tx Relay API to build gasless approvals and swaps into your dApp.
+---
+
+# How to build a dApp with Tx Relay API
+
+_Learn how use Tx Relay API to build gasless approvals and swaps into your dApp._
+
+---
+
+## Overview
+
+This guide will walk-through the demo app [TODO: Insert LINK] that demonstrates best practices when implementing gasless approvals and swap functionality into your ERC-20 token swapping dApp using Tx Relay API. The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
+
+TODO: Insert gif of final app
+
+Enabling Tx Relay in your app allows you to:
+
+- build more intuitive user interfaces and user flows in your applications
+- improve your conversion funnel drop-offs due to insufficient gas, and
+- set yourself up to easily onboard the next wave of users into Web3.
+
+## Pre-requisites
+
+:::tip
+Tx Relay API is currently in Beta Access. To obtain access, request it directly through the 0x Dashboard - [login or signup here](https://dashboard.0x.org/create-account). Once access is granted, you can utilize your existing API key to access Tx Relay API Beta
+:::
+
+Before diving into this walk-through, it's essential to ensure you have the familiarity with the following tools and concepts:
+
+- React
+- Next.js 13, App Router
+- Viem
+- Wagmi
+- An understanding of how Tx Relay API works. If not, read:
+  - [Introduction to Tx Relay](/tx-relay-api/introduction)
+  - [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
+
+Currently, Tx Relay API is supported on Mainnet and Polygon. This demo is built on Polygon to provide a cost-effective environment for experimentation. You can always modify this app to support Mainnet by adjusting the [chain id](/tx-relay-api/api-references/overview#overview) header for each endpoint.
+
+:::info
+Here is the github repo, feel free to use it to get started quickly for your own project:
+[TODO: Insert LINK]
+:::
+
+## How does it work?
+
+TODO: insert diagram
+
+## Project structure
+
+This demo app is setup using [Next.js 13 App Router](https://nextjs.org/docs). Here is an explanation of the structure of the app and key files.
+
+```
+app
+├── layout.tsx
+├── page.tsx
+├── providers.tsx
+│
+├── api
+│   ├── price
+│   │    └── route.ts
+│   ├── quote
+│   │    └── route.ts
+│   ├── status
+│   │   └── route.ts
+│   └── submit
+│        └── route.ts
+│
+├── components
+│   ├── price.tsx
+│   ├── quote.tsx
+│   └── status.tsx
+│
+└─── src
+    ├── supports-permit
+    │   └── 137.json
+    └── utils
+        ├── eip712_utils.types.ts
+        ├── schema.ts
+        ├── signature.ts
+        └── constants.ts
+```
+
+- `/app/` - The root directory that contains global structure of the application that contains shared layouts and additional configuration
+- `/app/layout.tsx/` - Contains the global layout components that wrap all our pages
+- `/app/page.tsx/` - Contains all the components (PageView, QuoteView, StatusView) for our app and the logic for when each should show in the UI
+- `/app/providers.tsx/` - Sets up global context providers such as [RainbowKitProvider and WagmiConfig](https://www.rainbowkit.com/docs/installation#wrap-providers)
+- `/api/` - Contains the API routes (/price, /quote, /submit, /status)
+- `/components/` - Contains the the components that are used as the UI in our app(PageView, QuoteView, StatusView)
+- `/src/` - Contains non-component or non-API routes files. Contains token lists (e.g. tokens that support gasless approvals/Permit) and utility files
+
+## Core concepts
+
+To start, let’s cover the following core concepts used in the app:
+
+- [🌈 RainbowKit](https://www.rainbowkit.com/)
+
+  - A React library that makes it easy to add wallet connection to your dapp.
+
+- 🪙 Token lists
+
+  - (1) Gasless approvals token list - Gasless approvals are available for ERC-20 token that supports Permit (EIP-2612). You can find a list of these tokens in the [gasless approvals list](/tx-relay-api/gasless-approvals-token-list) or you can also use [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response) to check if `isGaslessAvailable = true`
+  - (2) Supported sell tokens - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon, all Swap API supported tokens (Polygon)
+
+- 🏷 PriceView
+  - Component for users to browse for a price without committing to a trade (i.e. get indicative price)
+  - Check if token allowance as been set
+  - Check if token supports Permit -> if yes, gasless approval; otherwise, pay for approval
+  - Fetch indicative with GET `/tx-relay/v1/swap/price`
+    - Wrap API call behind `/app/api/price/route.ts`
+- 💸 QuoteView
+  - Component for users to review final quote and submit trade
+  - Fetch firm quote with GET `/tx-relay/v1/swap/quote`
+    - Wrap API call behind `/app/api/quote/route.ts`
+  - Sign gasless approval (if needed) and sign trade objects
+  - Submit the trade via POST `/tx-relay/v1/swap/submit`
+    - Wrap API call behind `/app/api/submit/route.ts`
+- ✅ StatusView
+  - Component to check the status of the trade
+  - Uses GET `/tx-relay/v1/swap/status/:trade-hash` if the submitted trade was successful
+
+## RainbowKit
+
+### What is it?
+
+[RainbowKit](https://www.rainbowkit.com/) is a React library that makes it easy to add wallet connection to your dapp. We are using their [Next.js App Router example](https://www.rainbowkit.com/docs/installation#further-examples) in our app.
+
+Check out their [installation instructions](https://www.rainbowkit.com/docs/installation) to understand the configurations. You can [configure](https://www.rainbowkit.com/docs/installation#configure) your desired chains and generate the required connectors.
+
+### Code
+
+#### Setup WalletConnect `projectId` in providers.tsx [TODO].
+
+RainbowKit relies on WalletConnect. Obtain a projectId from [WalletConnect Cloud](https://cloud.walletconnect.com/app) andThis is absolutely free and only takes a few minutes.
+
+## Token lists
+
+### What is it?
+
+There are two token lists to be aware of when using Tx Relay API:
+
+- **Gasless approvals tokens list** - You can find a list of tokens that work with gasless approvals in the gasless approvals token list. Generally, these are tokens that support EIP-2612. You can also examine a token’s eligibility at trade time, by observing the response from requests to [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response). If the variable `isGaslessAvailable = true`, the token the user is selling supports gasless approvals.
+
+- **Supported sell tokens list** - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon, all Swap API supported tokens (Polygon)
+
+This demo how to utilize these two lists for a specific use case - trading a [gasless approved token](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list#polygon) (USDC) for a non-gasless approved token (WMATIC) on Polygon (137).
+
+### Code
+
+#### Setup a .json list of all the gasless approved tokens (i.e. ERC-20 tokens that support Permit).
+
+Here we’ve setup a list of tokens that support Permit on Polygon. We will check `sellToken` against this list to see if it is eligible for gasless approvals.
+
+```typescript
+import MATIC_PERMIT_TOKENS from "../../src/supports-permit/137.json";
+…
+ const isSellTokenPermit = Boolean(maticPermitTokensDataTyped[sellToken]);
+
+```
+
+## PriceView
+
+### What is it?
+
+This component is for users to browse for a price without committing to a trade, aka, get the indicative price. The code for the component lives in `/app/components/price.tsx` [TODO: link to code]. The logic for when this component appears in the UI is in `/app/page.tsx`, it is displayed if the user has not clicked "Review Trade" and finalizes the price.
+
+### UI/UX Walk-through
+
+- User selects **sell** and **buy tokens** from the token selectors
+- Users inputs a **sellAmount**
+- Users can **“Connect Wallet”** powered by Rainbowkit
+- Whenever sellAmount changes, the **app fetches a price** even if a wallet is not connect
+- Displays returned **buyAmount**
+- When users find a price they like, they can connect their wallet, and switch to the correct network (e.g. Polygon), the button now says **“Review Trade”** if the user has enough of the sell token; otherwise, it reads **“Insufficient Balance”**
+- Allowance checks
+  - Checks if the user has a **sufficient allowance** for the selected token
+  - Checks if the **sellToken supports Permit** -> if yes, gasless approval; otherwise, pay for approval via standard [token approval route](https://0x.org/docs/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)
+  - Sets `checkApproval` depending if user has sufficient allowance and if sellToken supports Permit
+- When user clicks **“Review Trade”**, they are take to the QuoteView component
+
+### Code
+
+#### Fetch price with GET /tx-relay/v1/swap/price
+
+Fetch `/tx-relay/v1/swap/price` is wrapped behind `/app/api/price/route.ts`
+This protects our API keys because all API requests are viewable by if someone inspects the browser, but we don’t want them inspecting an finding our keys. Instead, when the user queries for an indicative price, it pings our API setup in `app/api/price/route.ts`and that pings the 0x Tx Relay API using our API key in the header.
+
+In addition, we use Next.js App Router's built-in data fetching pattern and the `useEffect` hook to make the request. Using `useEffect`, we will get a stream of data updates constantly and automatically, and the UI will quickly respond to any changes, such as when the user inputs a new sellAmount.
+
+#### Display formatted `sellAmount` and `buyAmount`
+
+- [`parseUnits`](https://docs.ethers.org/v5/api/utils/display-logic/) - Parses a string representing ether, such as the string 1.1 into a BigNumber in wei. This is useful to convert a user inputted value into a value used for API requests.
+- [`formatUnits`](https://docs.ethers.org/v5/api/utils/display-logic/) - Formats a BigNumberish into a string, which is useful when displaying a balance or displaying a value returned from an API response.
+
+#### Set `checkApproval`
+
+The `checkApproval` flag is a boolean that indicates whether or not to check for approval and potentially utilizes gasless approval feature. The value `checkApproval` is determined by whether or not the user has already set a token allowance (if so, is it sufficient) and if the token supports permit.
+
+`checkApproval` will be passed to [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response).
+
+```typescript
+const checkApproval = isSellTokenPermit && !hasSufficientAllowance;
+```
+
+[TODO: Insert diagram]
+
+Note that only one flow requires checkApproval:true, when token supports permit and no allowance has been set, this is only when we need a gasless approval
+
+## QuoteView
+
+### What is it?
+
+This component fetches a firm quote for users to review and submit trade. The logic for when this component appears in the UI is in `/app/page.tsx`, it is displayed after the user has clicked "Review Trade".
+
+In this component, the use can sign the gasless approval (if applicable), sign the gasless swap, and submit the order. Although gasless approvals and gasless swap are bundled in the same transaction when returned by [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response), they each require a signature for the corresponding EIP-712 object, `approval.eip712` and `trade.eip712` respectively. This demo app separates signing these two objects for clarity; however, you may elect to create a front-end experience wherein it appears to the user that they are signing only one transaction.
+
+### UI/UX Walk-through
+
+- Display the **sell** and **buy Amounts** that the user pays and receives
+- If the user likes the quote, they can:
+  - **“Sign Approval”** - `approval.eip712` is the “approval” object which contains the necessary information to process a gasless approval. It is requested via `checkApproval` (set in PriceView). You will only be able to initiate a gasless approval for the sell token if the response has both `isRequired` and `isGaslessAvailable` set to `true`.
+  - **“Sign Trade”** - `trade.eip712` is the “trade” object which contains the necessary information to process a trade.
+  - **“Submit Order”** - When all returned objects are signed, use can submit the trade
+- Be aware the quote is time sensitive, valid for ~30s. Recommend adding timer that refreshes the quote to ensure it stays fresh.
+
+### Code
+
+#### Fetch quote with GET /tx-relay/v1/swap/quote with `checkApproval`
+
+The `/tx-relay/v1/swap/quote` fetch is wrapped behind `/app/api/quote/route.ts`, similar to what we did for PriceView.
+
+We also use the `useEffect` hook to make the request.
+
+The value of `checkApproval` is passed from PriceView. This is a boolean that indicates whether or not to check for approval and potentially utilize gasless approval features.
+
+#### Sign objects, split signatures
+
+To take advantage of gases approvals, user must sign `approval.eip712` and the `trade.eip712` objects returned by `/quote`. These objects contain everything you need to sign (domain, types, primaryType, message). We use wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook to sign the objects. The returned signature is an Ethereum signature hex string.
+
+```typescript
+const { isSuccess, signTypedDataAsync } = useSignTypedData({
+  domain: approvalEip712.domain,
+  message: approvalEip712.message,
+  primaryType: approvalEip712.primaryType,
+  types: approvalEip712.types,
+});
+...
+const { isSuccess, signTypedDataAsync } = useSignTypedData({
+  domain: tradeEip712.domain,
+  message: tradeEip712.message,
+  primaryType: tradeEip712.primaryType,
+  types: tradeEip712.types,
+});
+```
+
+Once signed, the signature need to be split to its individual components (v, r, s) in order to be submitted. We use a variation of this [`splitSignature`](https://github.com/wevm/viem/discussions/458#discussioncomment-5842564) implementation. Our implementation is set up in `/src/utils/signature.ts`.
+
+We then setup the signed approval and trade data so they are ready to POST to [`/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request).
+
+#### Submit order with POST /tx-relay/v1/swap/submit
+
+Once the signed approval and trade data are set up, we POST them to `/tx-relay/v1/swap/submit` which is wrapped behind `/app/api/quote/submit.ts`. `/submit` will return whether or not the order was successful or if there is an error. The demo app has generaleError handling, for production-level apps, it's recommended to include more robust error handling depdning on the returned [status code](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request).
+
+## StatusView
+
+### What is it?
+
+This component checks and displsy the status of the trade to the user. The logic for when this component appears in the UI is in `/app/page.tsx`, it is displayed if `tradeHash` has been set in QuoteView. To retrieve this, we setup a callback function `onSubmitSuccess={setTradeHash}` inside QuoteView that is called when `tradeHash` has been set.
+
+### UI/UX Walk-through
+
+- Display the trade status
+  - **“Transaction Pending ⏳” **if transaction submission has not confirmed, or
+  - **“Transaction Completed! 🎉”** if transaction successfully mined
+
+### Code
+
+#### Check trade status with GET /tx-relay/v1/swap/status/:trade-hash
+
+Use GET `/tx-relay/v1/swap/status/:trade-hash` to check if the submitted trade was successful.
+
+In `/page` , we add a third component, StatusView, that displays if the tradeHash has been set in QuoteView. To retrieve this, we setup a callback function `onSubmitSuccess={setTradeHash}` inside QuoteView that is called when `tradeHash` has been set.
+
+`/status` will continously respond with the [status of the transaction (e.g. pending, failed, success, submitted, confirmed)](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#shape-of-response), so we need to contiously poll the endpoint to check the current status. We do so using `setInterval(callback function, delay in ms)` and `useEffect` to continuously ping `/status` until the status is confirmed
+
+:::tip
+Reminder: `/tx-relay/v1/swap/status/:trade-hash` doesn’t take `trade-hash` as a query param, just concatenate it on as part of the query
+:::
+
+### Try it out
+
+:::info
+Here is code for the demo app, feel free to use it to get started quickly for your own project:
+[TODO: Insert LINK]
+:::
+
+### Conclusion
+
+Building with Tx Relay API allows you to efficiently and securly implement gasless swaps and gasless approvals into your dApp and workflow, helping grow your user base with seamless onboarding and increasing retention.
+
+By following the best practices outlined in this guide and demo, you can create a user-friendly and robust dApp that enables trustless token swapping across various networks.
+
+Smooth swapping!
