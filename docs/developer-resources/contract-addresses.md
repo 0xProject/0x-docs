@@ -22,12 +22,12 @@ You can find the full list of addresses here: [https://github.com/0xProject/prot
 - ExchangeProxyLiquidityProviderSandbox: [0x407b4128e9ecad8769b2332312a9f655cb9f5f3a](https://etherscan.io/address/0x407b4128e9ecad8769b2332312a9f655cb9f5f3a)
 - ExchangeProxyTransformerDeployer: [0x39dce47a67ad34344eab877eae3ef1fa2a1d50bb](https://etherscan.io/address/0x39dce47a67ad34344eab877eae3ef1fa2a1d50bb)
 
-### Goerli Testnet (Chain ID: 5)
+### Sepolia Testnet (Chain ID: 11155111)
 
-- ExchangeProxy: [0xf91bb752490473b8342a3e964e855b9f9a2a668e](https://goerli.etherscan.io/address/0xf91bb752490473b8342a3e964e855b9f9a2a668e)
-- ExchangeProxyFlashWallet: [0xF15469C80a1965f5f90bE5651FCB6C6F3392B2a1](https://mumbai.polygonscan.com/address/0xF15469C80a1965f5f90bE5651FCB6C6F3392B2a1)
-- ExchangeProxyGovernor: [0xf289F8a9d26F9a32ecC8602e92E634d71a91d490](https://mumbai.polygonscan.com/address/0xf289F8a9d26F9a32ecC8602e92E634d71a91d490)
-- ExchangeProxyTransformerDeployer: [0x7b4f0063cc0097C19c6B8CC74eCaF630621e2Be6](https://mumbai.polygonscan.com/address/0x7b4f0063cc0097C19c6B8CC74eCaF630621e2Be6)
+- ExchangeProxy: [0xdef1c0ded9bec7f1a1670819833240f027b25eff](https://sepolia.etherscan.io/address/0xdef1c0ded9bec7f1a1670819833240f027b25eff)
+- ExchangeProxyFlashWallet: [0xdb6f1920a889355780af7570773609bd8cb1f498](https://sepolia.etherscan.io/address/0xdb6f1920a889355780af7570773609bd8cb1f498)
+- ExchangeProxyGovernor: [0x5c1f7772ce24d942b85e9b6576f7b5ef70686f5a](https://sepolia.etherscan.io/address/0x5c1f7772ce24d942b85e9b6576f7b5ef70686f5a)
+- ExchangeProxyTransformerDeployer: [0x58bca53ebba1aaf25f0edcd8dad6421872fe20b2](https://sepolia.etherscan.io/address/0x58bca53ebba1aaf25f0edcd8dad6421872fe20b2)
 
 ### Binance Smart Chain (Chain ID: 56)
 
