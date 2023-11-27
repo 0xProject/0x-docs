@@ -15,7 +15,7 @@ We offer hosted versions for different EVM-compatible networks.
 | **Network**         | **Endpoint**                  |
 | ------------------- | ----------------------------- |
 | Ethereum (Mainnet)  | https://api.0x.org/           |
-| Ethereum (Goerli)   | https://goerli.api.0x.org/    |
+| Ethereum (Sepolia)  | https://sepolia.api.0x.org/   |
 | Polygon             | https://polygon.api.0x.org/   |
 | Polygon (Mumbai)    | https://mumbai.api.0x.org/    |
 | Binance Smart Chain | https://bsc.api.0x.org/       |

@@ -16,7 +16,7 @@ We are currently on v4 of the 0x protocol
 ### Swap API Endpoints
 
 - Ethereum (Mainnet): [https://api.0x.org/](https://api.0x.org/)
-- Ethereum (Goerli): [https://goerli.api.0x.org/](https://goerli.api.0x.org/)
+- Ethereum (Sepolia): [https://seplia.api.0x.org/](https://sepolia.api.0x.org/)
 - Arbitrum: [https://arbitrum.api.0x.org/](https://arbitrum.api.0x.org/)
 - Avalanche: [https://avalanche.api.0x.org/](https://avalanche.api.0x.org/)
 - Base [https://base.api.0x.org/](https://base.api.0x.org/)
@@ -43,7 +43,7 @@ We are currently on v4 of the 0x protocol
 This is the primary contract for all interactions with the protocol. It is also the allowance-target/spender/operator for any ERC20, ERC721, and ERC1155 assets being traded. For most networks the address is identical, but be aware that a small number (marked with a \*) are slightly different. The ABI can be found in the protocol repo's [IZeroEx.json](https://github.com/0xProject/protocol/blob/development/packages/contract-artifacts/artifacts/IZeroEx.json) file. All 0x contract addresses can be found in the protocol repo's [addresses.json](https://github.com/0xProject/protocol/blob/development/packages/contract-addresses/addresses.json) file.
 
 - Ethereum (Mainnet): `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
-- Ethereum (Goerli): `0xf91bb752490473b8342a3e964e855b9f9a2a668e`\*
+- Ethereum (Sepolia): `0xdef1c0ded9bec7f1a1670819833240f027b25eff`\*
 - Polygon: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 - Polygon (Mumbai): `0xf471d32cb40837bf24529fcf17418fc1a4807626`\*
 - Binance Smart Chain: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
