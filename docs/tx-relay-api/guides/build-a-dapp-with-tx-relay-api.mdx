@@ -122,7 +122,7 @@ To start, let’s cover the following core concepts used in the app:
   - Component to check the status of the trade
   - Uses GET `/tx-relay/v1/swap/status/:trade-hash` if the submitted trade was successful
 
-## RainbowKit
+## 🌈 RainbowKit
 
 ### What is it?
 
@@ -136,7 +136,7 @@ Check out their [installation instructions](https://www.rainbowkit.com/docs/inst
 
 RainbowKit relies on WalletConnect. Obtain a projectId from [WalletConnect Cloud](https://cloud.walletconnect.com/app) andThis is absolutely free and only takes a few minutes.
 
-## Token lists
+## 🪙 Token lists
 
 ### What is it?
 
@@ -161,7 +161,7 @@ import MATIC_PERMIT_TOKENS from "../../src/supports-permit/137.json";
 
 ```
 
-## PriceView
+## 🏷 PriceView
 
 ### What is it?
 
@@ -209,7 +209,7 @@ const checkApproval = isSellTokenPermit && !hasSufficientAllowance;
 
 Note that only one flow requires checkApproval:true, when token supports permit and no allowance has been set, this is only when we need a gasless approval
 
-## QuoteView
+## 💸 QuoteView
 
 ### What is it?
 
@@ -264,7 +264,7 @@ We then setup the signed approval and trade data so they are ready to POST to [`
 
 Once the signed approval and trade data are set up, we POST them to `/tx-relay/v1/swap/submit` which is wrapped behind `/app/api/quote/submit.ts`. `/submit` will return whether or not the order was successful or if there is an error. The demo app has generaleError handling, for production-level apps, it's recommended to include more robust error handling depdning on the returned [status code](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request).
 
-## StatusView
+## ✅ StatusView
 
 ### What is it?
 
