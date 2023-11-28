@@ -12,7 +12,12 @@ _Learn how use Tx Relay API to build gasless approvals and swaps into your dApp.
 
 ## Overview
 
-This guide will walk-through the demo app [TODO: Insert LINK] that demonstrates best practices when implementing gasless approvals and swap functionality into your ERC-20 token swapping dApp using Tx Relay API. The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
+This guide will walk-through the demo app built on [Next.js 13](https://nextjs.org/) with [0x Tx Relay API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
+
+The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
+
+> [!WARNING]  
+> This is a demo, and is not ready for production use. The code has not been audited and does not account for all error handling. Use at your own risk.
 
 TODO: Insert gif of final app
 
@@ -132,9 +137,9 @@ Check out their [installation instructions](https://www.rainbowkit.com/docs/inst
 
 ### Code
 
-#### Setup WalletConnect `projectId` in providers.tsx [TODO].
+#### Setup WalletConnect `projectId` in providers.tsx
 
-RainbowKit relies on WalletConnect. Obtain a projectId from [WalletConnect Cloud](https://cloud.walletconnect.com/app) andThis is absolutely free and only takes a few minutes.
+RainbowKit relies on WalletConnect. Obtain a `projectId` from [WalletConnect Cloud](https://cloud.walletconnect.com/app). This is absolutely free and only takes a few minutes.
 
 ## 🪙 Token lists
 
