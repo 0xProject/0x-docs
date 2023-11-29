@@ -8,7 +8,23 @@ description: Learn how to use POST /tx-relay/v1/swap/submit
 
 If your user accepts the quote and wants to trade, `POST` to `/tx-relay/v1/swap/submit` to submit the trade.
 
-## Gasless Approvals
+## Overview
+
+In order to submit the trade, we must:
+
+- Sign the `approval.eip712` object (if applicable)
+- Sign the `trade.eip712` object
+- Split signatures for both signed objects
+- Package both signed objects in a format that is acceptable to POST to /submit
+- Optional, compute trade hash
+
+## Signing Objects
+
+To take advantage of gases approvals, user must sign `approval.eip712` and the `trade.eip712` objects returned by [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote). These objects contain everything you need needed to sign these objects (domain, types, primaryType, message).
+
+We use wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook to sign the objects. The returned signature is an Ethereum signature hex string.
+
+### Sign Gasless Approvals
 
 If a token supports [gasless approvals](/tx-relay-api/gasless-approvals-token-list), a meta-transaction / otc may be submitted along with an approval object. You will be able to tell if the sell token is supported by gasless approvals by checking the response of `/quote` and looking for
 
@@ -18,7 +34,7 @@ approval.isRequired; // whether an approval is required for the trade
 approval.isGaslessAvailable; // whether gasless approval is available for the sell token
 ```
 
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”. 
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”.
 
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
 
@@ -28,19 +44,89 @@ Keep in mind that the `domain` field of this object must follow a strict orderin
 
 The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
 
+Example code to [sign approval object](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L283)
+
+```typescript
+// Inside /app/components/quote.tsx
+const { isSuccess, signTypedDataAsync } = useSignTypedData({
+  domain: approvalEip712.domain,
+  message: approvalEip712.message,
+  primaryType: approvalEip712.primaryType,
+  types: approvalEip712.types,
+});
+```
+
 Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
 
-### Computing a trade hash
-
-If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
-
-Read more about [computing a trade hash](/tx-relay-api/api-references/overview#computing-a-trade-hash).
-
-## Trade
+### Sign Trade Object
 
 Similar to gasless approval, to submit a trade, you must have your user sign `trade.eip712` object returned at the time of the `/quote`. All the instructions & caveats are the same as previous section.
 
-### Example Request
+Example to [sign trade object](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L285-L322)
+
+```typescript
+// Inside /app/components/quote.tsx
+const { isSuccess, signTypedDataAsync } = useSignTypedData({
+  domain: tradeEip712.domain,
+  message: tradeEip712.message,
+  primaryType: tradeEip712.primaryType,
+  types: tradeEip712.types,
+});
+```
+
+## Split Signatures
+
+Once signed, the signature needs to be split to its individual components (v, r, s) and to be formatted in an object that can be POST to `/submit` (see object format [here](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request)).
+
+For splitting signatures, we use a variation of this [`splitSignature`](https://github.com/wevm/viem/discussions/458#discussioncomment-5842564) implementation. Our implementation is set up in [`/src/utils/signature.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/src/utils/signature.ts).
+
+Example code to [split signature for approval](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L181-L193)
+
+```typescript
+// Inside /app/components/quote.tsx
+// if approval exists, split signature for approval and then format data to submit
+if (gaslessApprovalSignature) {
+const approvalSplitSig = splitSignature(gaslessApprovalSignature);
+console.log(approvalSplitSig, "<-approvalSplitSig");
+
+approvalDataToSubmit = {
+type: approvalType,
+eip712: approvalEip712,
+signature: {
+...approvalSplitSig,
+v: Number(approvalSplitSig.v),
+signatureType: SignatureType.EIP712,
+},
+```
+
+Example code to [split signature for trade](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L196-L208)
+
+```typescript
+// Inside /app/components/quote.tsx
+// split signature for trade and then format data to submit
+if (tradeSignature) {
+const tradeSplitSig = splitSignature(tradeSignature);
+console.log(tradeSplitSig, "<-tradeSplitSig");
+
+tradeDataToSubmit = {
+type: tradeType,
+eip712: tradeEip712,
+signature: {
+...tradeSplitSig,
+v: Number(tradeSplitSig.v),
+signatureType: SignatureType.EIP712,
+},
+```
+
+### Computing a trade hash
+
+If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field. Same for `trade.eip712`, it should match `trade.hash`.
+
+Read more about [computing a trade hash](/tx-relay-api/api-references/overview#computing-a-trade-hash).
+
+## Example Request
+
+In order to POST to `/submit`, the signed, split, and formatted `approval` and `trade` objects must contain the following key/value pairs.
 
 ```bash
 curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key: <API_KEY>' --header '0x-chain-id: 137' --data '{
@@ -67,7 +153,9 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 }'
 ```
 
-### Example Response
+## Example Response
+
+If the submitted trade is successful, and object with `type` and `tradeHash` are returned.
 
 ```json
 {
@@ -76,7 +164,10 @@ curl -X POST '<https://api.0x.org/tx-relay/v1/swap/submit>' --header '0x-api-key
 }
 ```
 
-More information on signing 0x orders is available [here](https://docs.0xprotocol.org/en/latest/basics/orders.html#how-to-sign).
+Read more about:
+
+- Order Types - [Meta Transaction V2](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#meta-transaction-v2) and [OTC](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#otc)
+- [How Signed Orders are Settled by 0x Protocol Smart Contracts](https://0x.org/docs/tx-relay-api/api-references/overview#signed-orders-are-settled-by-0x-protocol-smart-contracts)
 
 ## Status Code
 

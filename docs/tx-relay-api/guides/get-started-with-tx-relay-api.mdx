@@ -180,7 +180,7 @@ approval.isRequired; // whether an approval is required for the trade
 approval.isGaslessAvailable; // whether gasless approval is available for the sell token
 ```
 
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”. 
+To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”.
 
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
 
@@ -192,7 +192,7 @@ The `approval.eip712` object will present the correct ordering, but make sure th
 
 Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
 
-#### Computing a trade hash 
+#### Computing a trade hash
 
 You can verify that the hash we provide in our request matches the meta-transaction provided.
 
@@ -286,5 +286,6 @@ Once the trade is successful, you can display the transaction confirmation to yo
 
 ## Learn more
 
+- [Tx Relay API Demo App (Next.js)](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)
 - [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
 - [Tx Relay FAQ](/tx-relay-api/tx-relay-faq)
