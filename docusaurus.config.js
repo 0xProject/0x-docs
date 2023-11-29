@@ -114,7 +114,7 @@ const config = {
             position: "right",
           },
           {
-            href: "https://github.com/0xProject/0x-nextjs-demo-app/tree/main",
+            href: "https://github.com/0xProject/0x-examples",
             className: "header-github-link",
             position: "right",
           },
