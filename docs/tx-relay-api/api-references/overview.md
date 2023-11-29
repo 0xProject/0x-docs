@@ -19,7 +19,7 @@ Tx Relay API is supported on Mainnet and Polygon, available via https://api.0x.o
 
 ## Signed Orders are Settled by 0x Protocol Smart Contracts
 
-Once signed orders hit the blockchain, 
+Once signed orders hit the blockchain,
 
 - If the orders are swap only, they are settled by [0x Protocol smart contracts](https://0x.org/docs/introduction/0x-cheat-sheet) directly,
 - For meta-transaction v2 orders, they are settled by the contract `MetaTransactionsFeatureV2` and filled by the `executeMetaTransactionV2` function, available [here](https://github.com/0xProject/protocol/blob/main/contracts/zero-ex/contracts/src/features/MetaTransactionsFeatureV2.sol).
@@ -40,16 +40,17 @@ Addresses of `permitAndCall` contracts
 
 ### Presenting EIP-712 Signatures for `signTypedData`
 
-If you are user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. Some commonly used tools for this include: 
-* integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
-* using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data
+If you are user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. Some commonly used tools for this include:
+
+- integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
+- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see how it's implemented in the Tx Relay Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](http://localhost:3000/docs/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
 
 In order to do so, you will need the following:
 
-* `domain`
-* `types`
-* `primaryType`
-* `message`
+- `domain`
+- `types`
+- `primaryType`
+- `message`
 
 The `message` will be `MetaTransactionDataV2` that is returned at the time of `/quote`. However, you will also need the other fields.
 

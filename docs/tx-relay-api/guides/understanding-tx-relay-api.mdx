@@ -10,7 +10,7 @@ _This guide contains information about how Tx Relay API works, key terms, and te
 
 ## How does it work?
 
-A major source of friction in Web3 is the need for users to hold a small amount of the chain's native token to pay for token approvals and subsequent transactions (aka paying "gas" fees). 
+A major source of friction in Web3 is the need for users to hold a small amount of the chain's native token to pay for token approvals and subsequent transactions (aka paying "gas" fees).
 
 Tx Relay API provides a “gasless” ERC-20 token swap experience for your end users.
 
@@ -18,36 +18,19 @@ This API returns liquidity—prices and quotes—to end users. If a user is happ
 
 The term "gasless" refers to the ability for users to trade without needing to pay the gas cost at that moment. Instead, a third party like 0x can submit the transaction(s) to the blockchain and pay the gas fee. So, in practice, there is still gas involved—it's just being paid by someone else. The user doesn't have to worry about holding the chain's native token in order to pay for gas cost upfront when submitting a transaction. A suggested implementation is to use Tx Relay API to pay for the gas on behalf of the user with the trade's input token (sell token).
 
-## Technical Flow Charts
-
-### Gasless Approval + Tx Relay Flow
-
-Below is an image showing the ideal path when implementing both gasless approvals and Tx Relay. [![Click here to expand the image]](/img/tx-relay-api/gasless-approval-tx-relay.png).
-
-![Gasless Approval + Tx Relay Flow Tx Relay Happy Path](/img/tx-relay-api/gasless-approval-tx-relay.png)
-
-### Composing Gasless Approval + Tx Relay API + Swap API
-
-Tx Relay API is composable with Swap API if you want to offer execution optionality. Devs can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience. [![Click here to expand the image]](/img/tx-relay-api/tx-relay-swap-api-flow.png)
-
-![Composing Gasless Approval + Tx Relay API + Swap API Happy Path](/img/tx-relay-api/tx-relay-swap-api-flow.png)
-
-:::tip
-Want to see a live implementation of Tx Relay + Swap API? Try out the flow in the Matcha Auto feature 👉 https://matcha.xyz/
-:::
-
 ## Key Terms
 
 ### Token Allowances
+
 A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens. In our case, we would like the [0x Exchange Proxy smart contract](/introduction/0x-cheat-sheet#exchange-proxy-addresses) to trade our ERC20 tokens for us, so we need to write to the ERC20 contract of that token, and approve an allowance for 0x Exchange Proxy (i.e. allow it to move a certain amount of tokens on our behalf us).
 
-For tokens that do not support gasless approvals, we needed to set the token allowance via the messages listed [here](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances). 
+For tokens that do not support gasless approvals, we needed to set the token allowance via the messages listed [here](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances).
 
 ### EIP-712: Human Readable Messages
 
-[EIP-712](https://eips.ethereum.org/EIPS/eip-712) is the standard for typed message signing. This EIP allows wallets to display data in signing prompts in a human readable and not just a blind hash. 
+[EIP-712](https://eips.ethereum.org/EIPS/eip-712) is the standard for typed message signing. This EIP allows wallets to display data in signing prompts in a human readable and not just a blind hash.
 
-Tx Relay leverages EIP-712 messages to enable [gasless approvals](/tx-relay-api/guides/understanding-tx-relay-api#gasless-approvals) and [gasless transactions](/tx-relay-api/guides/understanding-tx-relay-api#gasless-transactions).  
+Tx Relay leverages EIP-712 messages to enable [gasless approvals](/tx-relay-api/guides/understanding-tx-relay-api#gasless-approvals) and [gasless transactions](/tx-relay-api/guides/understanding-tx-relay-api#gasless-transactions).
 
 ### EIP-2612: Gasless Approvals
 
@@ -72,3 +55,21 @@ This represents one of two types of gasless transactions returned by the Tx Rela
 ### OTC
 
 This represents the other type of transaction returned by the Tx Relay API [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#example-responses) endpoint. OTC transactions allow market makers to provide indicative pricing and quotes. In these transactions, a market maker submits the transaction to the blockchain on behalf of the user.
+
+## Technical Flow Charts
+
+### Gasless Approval + Tx Relay API Flow
+
+Below is an image showing the ideal path when implementing both gasless approvals and Tx Relay. [![Click here to expand the image]](/img/tx-relay-api/gasless-approval-tx-relay.png).
+
+![Gasless Approval + Tx Relay Flow Tx Relay Happy Path](/img/tx-relay-api/gasless-approval-tx-relay.png)
+
+### Composing Gasless Approval + Tx Relay API + Swap API
+
+Tx Relay API is composable with Swap API if you want to offer execution optionality. Devs can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience. [![Click here to expand the image]](/img/tx-relay-api/tx-relay-swap-api-flow.png)
+
+![Composing Gasless Approval + Tx Relay API + Swap API Happy Path](/img/tx-relay-api/tx-relay-swap-api-flow.png)
+
+:::tip
+Want to see a live implementation of Tx Relay + Swap API? Try out the flow in the Matcha Auto feature 👉 https://matcha.xyz/
+:::
