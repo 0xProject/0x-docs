@@ -16,7 +16,7 @@ We are currently on v4 of the 0x protocol
 ### Swap API Endpoints
 
 - Ethereum (Mainnet): [https://api.0x.org/](https://api.0x.org/)
-- Ethereum (Sepolia): [https://seplia.api.0x.org/](https://sepolia.api.0x.org/)
+- Ethereum (Sepolia): [https://sepolia.api.0x.org/](https://sepolia.api.0x.org/)
 - Arbitrum: [https://arbitrum.api.0x.org/](https://arbitrum.api.0x.org/)
 - Avalanche: [https://avalanche.api.0x.org/](https://avalanche.api.0x.org/)
 - Base [https://base.api.0x.org/](https://base.api.0x.org/)
