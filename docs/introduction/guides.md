@@ -10,8 +10,10 @@ This page lists the most popular guides to get started building with 0x based on
 
 ## Code Examples
 
-- **[(Next.js) 0x demo app](https://github.com/0xProject/0x-nextjs-demo-app)**
-- **[(HTML, CSS, JavaScript) 0x demo app](https://github.com/0xProject/swap-demo-tutorial)**
+- **[0x Examples Repo](https://github.com/0xProject/0x-examples)**
+- **[(Next.js) Tx Relay API demo app](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)**
+- **[(Next.js) Swap API app](https://github.com/0xProject/0x-nextjs-demo-app)**
+- **[(HTML, CSS, JavaScript) Swap API demo app](https://github.com/0xProject/swap-demo-tutorial)**
 - **[0x Command line examples](https://github.com/0xProject/0x-starter-project)**
 
 ## Tutorials
@@ -21,6 +23,7 @@ This page lists the most popular guides to get started building with 0x based on
 - **[How to use 0x Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api)**
 - **[How to build a token swap dapp with Next.js, 0x, ConnectKit](https://www.youtube.com/watch?v=P1ECx9zKQiU&t)**
 - **[How to build a token swap dapp with HTML, CSS, JavaScript](/docs/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)**
+- **[How to build a dApp with Tx Relay API](/docs/tx-relay-api/guides/build-a-dapp-with-tx-relay-api)**
 - **[How to set your token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)**
 
 ### Beyond the Basics
