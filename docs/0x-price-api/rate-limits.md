@@ -16,7 +16,7 @@ Rate limiting is used by the API to prevent abuse and ensure a reliable experien
 
 ## What are the rate limits for the 0x APIs?
 
-The current limit for the Free Tier of our APIs is approximately 1 Request Per Second (RPS) and 200K API calls per month globally. You can view rate limits for all tiers on the [pricing page](https://0x.org/pricing).
+The current limit for the Free Tier of our APIs is approximately 1 Request Per Second (RPS) and 100K API calls per month globally. You can view rate limits for all tiers on the [pricing page](https://0x.org/pricing).
 
 ## How are rates calculated?
 
