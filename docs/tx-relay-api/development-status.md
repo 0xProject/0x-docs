@@ -10,6 +10,8 @@ description: Development Status for Tx Relay. Get access to Sandbox.
 
 Tx Relay API is currently in Beta Access. The goal of the Beta is for developers and builders of prospective integrations to experiment with the product, consider how they might use it in their application, and help shape the future roadmap of Tx Relay by providing feedback to the 0x team.
 
+Tx Relay API is currently supported on Mainnet (1) and Polygon (137). Read more accessing the [API endpoints](https://0x.org/docs/tx-relay-api/api-references/overview).
+
 :::info
 Interested in experimenting with Tx Relay API now? Request access directly through the 0x Dashboard - [login or signup here](https://dashboard.0x.org/). Once access is granted, you can utilize your existing API key to access Tx Relay API Beta - please see the [API References](/tx-relay-api/api-references/overview) for more details.
 
