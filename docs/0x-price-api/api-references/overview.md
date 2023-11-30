@@ -10,6 +10,10 @@ description: Learn how to use the Price API, the most efficient liquidity for we
 
 **The Price API provides access to real-time DEX prices for token pairs.** It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests.
 
+:::info
+Price API is in beta. Its recommended use is for checking prices, not be be used for trading purposes. For example, if you plan to use this in a trading workflow that is triggered by price changes of USDC, be aware this is subject to the risk that the stablecoin may depeg.
+:::
+
 We offer hosted versions for different EVM-compatible networks.
 
 | **Network**         | **Endpoint**                  |

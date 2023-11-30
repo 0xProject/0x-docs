@@ -6,19 +6,26 @@ description: Learn how to use GET /swap/v1/price to get real-time DEX prices for
 
 # GET /swap/v1/price
 
-`/swap/v1/price` can be used to acquire real-time DEX prices for token pairs
+`/swap/v1/price` can be used to acquire real-time DEX prices for token pairs.
+
+The Price API lets you find real-time prices of **any market pair**, which you specify via the `sellToken` and `buyToken` parameters.
+
+**If you’re trying to fetch the equivalent USD price of a token**, we recommend using a stablecoin as `sellToken` with an arbitrarily low amount. For example, set `sellToken = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` for USDC on Ethereum and `sellAmount = 10000000` for 10 USDC. This will give you the price of the token in USD terms. **Beware:** this is subject to the risk that the stablecoin may depeg.
+
+:::info
+Price API is in beta. Its recommended use is for checking prices, not be be used for trading purposes. For example, if you plan to use this in a trading workflow that is triggered by price changes of USDC, be aware this is subject to the risk that the stablecoin may depeg.
+:::
 
 ### Request
 
-| **Query Param**   | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | **Example**                                          |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `sellToken`       | The ERC20 token address of the token you want to receive. It is recommended to always use the token address instead of token symbols (e.g. ETH ) which may not be recognized by the API.                                                                                                                                                                                                                                                                                                            | sellToken=0x6b175474e89094c44da98b954eedeac495271d0f |
-| `buyToken`        | The ERC20 token address of the token you want to receive. It is recommended to always use the token address instead of token symbols (e.g. ETH ) which may not be recognized by the API.                                                                                                                                                                                                                                                                                                            | buyToken=0x6b175474e89094c44da98b954eedeac495271d0f  |
-| `sellAmount`      | (Optional) The amount of `sellToken` (in `sellToken` base units) you want to send. Either `sellAmount` or `buyAmount` must be present in a request. Specifying `sellAmount` is the recommended way to interact with 0x API as it covers all on-chain sources. <br/><br/> If you’re interested in knowing the real time price according to a specific liquidity depth, specify it here. Otherwise, we recommend checking the price against a low amount of stablecoin (e.g. $10 USDC).               | sellAmount=100000000000                              |
-| `buyAmount`       | (Optional) The amount of `buyToken`(in `buyToken` base units) you want to receive. Either `sellAmount` or `buyAmount` must be present in a request. Note that some on-chain sources do not allow specifying `buyAmount`, when using `buyAmount` these sources are excluded. <br/><br/> If you’re interested in knowing the real time price according to a specific liquidity depth, specify it here. Otherwise, we recommend checking the price against a low amount of stablecoin (e.g. $10 USDC). | buyAmount=100000000000                               |
-| `gasPrice`        | (Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.                                                                                                                                                                                                                                                                                                                       | gasPrice=1000000                                     |
-| `excludedSources` | (Optional) When used, only the specified [liquidity sources](/0x-price-api/api-references/get-swap-v1-sources) (`Uniswap`, `SushiSwap`, `0x`, `Curve`, etc) will be included in the provided quote. <br/><br/> This parameter cannot be combined with `includedSources`.                                                                                                                                                                                                                            | excludedSources=Uniswap,SushiSwap,Curve              |
-| `includedSources` | (Optional) Typically used to filter for RFQ liquidity without any other DEX orders which this is useful for [testing your RFQ integration](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#testing-your-rfq-integration-recommended). To do so, set it to `0x`. <br/><br/> This parameter cannot be combined with `excludedSources`.                                                                                                                                     | includedSources=0x                                   |
+| **Query Param**   | **Description**                                                                                                                                                                                                                                                                                                                                                                                                            | **Example**                                          |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `sellToken`       | The ERC20 token address of the token you want to receive. If you’re trying to fetch the equivalent USD price of a token, specify a stablecoin using this parameter. We recommend using USDC. <br/><br/>It is recommended to always use the token address instead of token symbols (e.g. USDC) which may not be recognized by the API.                                                                                      | sellToken=0x6b175474e89094c44da98b954eedeac495271d0f |
+| `buyToken`        | The ERC20 token address of the token you want to receive. If you’re trying to fetch the equivalent USD price of a token, specify that token using this parameter. <br/><br/>It is recommended to always use the token address instead of token symbols (e.g. USDC) which may not be recognized by the API.                                                                                                                 | buyToken=0x6b175474e89094c44da98b954eedeac495271d0f  |
+| `sellAmount`      | (Required) The amount of `sellToken` (in `sellToken` base units). To get the real-time price of the `buyToken`, set the `sellAmount` to a low amount of the stablecoin that you set as the `sellToken` (e.g. $10 USDC) <br/><br/> Example: For $10 of USDC, set `sellAmount=10000000` Otherwise, if you'd like to know the real-time price according to a specific liquidity depth, please specify that token amount here. | sellAmount=10000000                                  |
+| `gasPrice`        | (Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.                                                                                                                                                                                                                                              | gasPrice=1000000                                     |
+| `excludedSources` | (Optional) When used, only the specified [liquidity sources](/0x-price-api/api-references/get-swap-v1-sources) (`Uniswap`, `SushiSwap`, `0x`, `Curve`, etc) will be included in the provided quote. <br/><br/> This parameter cannot be combined with `includedSources`.                                                                                                                                                   | excludedSources=Uniswap,SushiSwap,Curve              |
+| `includedSources` | (Optional) Typically used to filter for RFQ liquidity without any other DEX orders which this is useful for [testing your RFQ integration](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#testing-your-rfq-integration-recommended). To do so, set it to `0x`. <br/><br/> This parameter cannot be combined with `excludedSources`.                                                            | includedSources=0x                                   |
 
 ### Response
 
@@ -51,37 +58,42 @@ Identical to the response schema for `/swap/v1/quote`, with the execption that t
 
 ### Example
 
-#### Get the real-time price for Selling WETH to Buy DAI
+#### Get the real-time price for Selling USDC to Buy WETH
 
-Specify a `sellToken`, `buyToken` and `sellAmount` to get a simple quote of 1 WETH for DAI.
+Specify a `sellToken`, `buyToken`, and `sellAmount` to get the price to buy WETH when selling 10 USDC
 
 **Request**
 
 GET
 
 ```http
-curl https://api.0x.org/swap/v1/price?sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&buyToken=0x6b175474e89094c44da98b954eedeac495271d0f&sellAmount=1000000000000000000   --header '0x-api-key: <API_KEY>'
+curl https://api.0x.org/swap/v1/price?sellToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&buyToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&sellAmount=10000000   --header '0x-api-key: <API_KEY>'
 ```
 
 #### Response
 
 ```json
 {
-  "price": "391.1643362",
-  "value": "11340000000000000",
-  "gasPrice": "81000000000",
-  "gas": "605952",
-  "estimatedGas": "504960",
-  "protocolFee": "11340000000000000",
-  "minimumProtocolFee": "5670000000000000",
-  "buyTokenAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",
-  "buyAmount": "391164336200000000000",
-  "sellTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-  "sellAmount": "1000000000000000000",
+  "chainId": 1,
+  "price": "0.000486899453497844",
+  "grossPrice": "0.000487623574505985",
+  "estimatedPriceImpact": "0.4359",
+  "value": "0",
+  "gasPrice": "49000000000",
+  "gas": "151000",
+  "estimatedGas": "151000",
+  "protocolFee": "0",
+  "minimumProtocolFee": "0",
+  "buyTokenAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "buyAmount": "4868994534978446",
+  "grossBuyAmount": "4876235745059859",
+  "sellTokenAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "sellAmount": "10000000",
+  "grossSellAmount": "10000000",
   "sources": [
     {
       "name": "0x",
-      "proportion": "1"
+      "proportion": "0"
     },
     {
       "name": "Uniswap",
@@ -89,40 +101,105 @@ curl https://api.0x.org/swap/v1/price?sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9
     },
     {
       "name": "Uniswap_V2",
-      "proportion": "0"
-    },
-    {
-      "name": "Eth2Dai",
-      "proportion": "0"
-    },
-    {
-      "name": "Kyber",
-      "proportion": "0"
+      "proportion": "1"
     },
     {
       "name": "Curve",
       "proportion": "0"
     },
     {
-      "name": "LiquidityProvider",
-      "proportion": "0"
-    },
-    {
-      "name": "MultiBridge",
-      "proportion": "0"
-    },
-    {
       "name": "Balancer",
+      "proportion": "0"
+    },
+    {
+      "name": "Balancer_V2",
+      "proportion": "0"
+    },
+    {
+      "name": "BancorV3",
+      "proportion": "0"
+    },
+    {
+      "name": "SushiSwap",
+      "proportion": "0"
+    },
+    {
+      "name": "DODO",
+      "proportion": "0"
+    },
+    {
+      "name": "DODO_V2",
+      "proportion": "0"
+    },
+    {
+      "name": "CryptoCom",
+      "proportion": "0"
+    },
+    {
+      "name": "Lido",
+      "proportion": "0"
+    },
+    {
+      "name": "MakerPsm",
+      "proportion": "0"
+    },
+    {
+      "name": "KyberDMM",
+      "proportion": "0"
+    },
+    {
+      "name": "Uniswap_V3",
+      "proportion": "0"
+    },
+    {
+      "name": "Curve_V2",
+      "proportion": "0"
+    },
+    {
+      "name": "ShibaSwap",
+      "proportion": "0"
+    },
+    {
+      "name": "Synapse",
+      "proportion": "0"
+    },
+    {
+      "name": "Synthetix",
+      "proportion": "0"
+    },
+    {
+      "name": "Aave_V2",
+      "proportion": "0"
+    },
+    {
+      "name": "Compound",
+      "proportion": "0"
+    },
+    {
+      "name": "KyberElastic",
+      "proportion": "0"
+    },
+    {
+      "name": "Maverick_V1",
+      "proportion": "0"
+    },
+    {
+      "name": "PancakeSwap_V3",
       "proportion": "0"
     }
   ],
-  "estimatedGasTokenRefund": "252480",
   "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+  "sellTokenToEthRate": "2041.82322",
+  "buyTokenToEthRate": "1",
+  "expectedSlippage": "-0.00003836285924298198283753149243586624",
+  "auxiliaryChainData": {},
   "fees": {
-    "zeroExFee": null
-  },
-  "grossPrice": "391.1643362",
-  "grossBuyAmount": "391164336200000000000",
-  "grossSellAmount": "1000000000000000000"
+    "zeroExFee": {
+      "feeType": "volume",
+      "feeToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "feeAmount": "7241210081413",
+      "billingType": "on-chain"
+    }
+  }
 }
 ```
