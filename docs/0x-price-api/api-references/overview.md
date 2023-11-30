@@ -8,7 +8,7 @@ description: Learn how to use the Price API, the most efficient liquidity for we
 
 ## Introduction
 
-**The Swap API is the liquidity and data endpoint for DeFi.** It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests for your application and your users.
+**The Price API provides access to real-time DEX prices for token pairs.** It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests.
 
 We offer hosted versions for different EVM-compatible networks.
 
@@ -90,12 +90,12 @@ Some interactions with 0x require or are improved by setting [token allowances](
 
 ### Addresses by Network
 
-The following table includes commonly used contract addresses. For a full list of our smart contract deployments address, see the[0x Cheat Sheet](/introduction/0x-cheat-sheet).
+The following table includes commonly used contract addresses. For a full list of our smart contract deployments address, see the [0x Cheat Sheet](/introduction/0x-cheat-sheet).
 
 | Network             | ExchangeProxy Address                        | ERC20Proxy Address                           | StakingProxy Address                         |
 | ------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
 | Ethereum (mainnet)  | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x95e6f48254609a6ee006f7d493c8e5fb97094cef` | `0xa26e80e7dea86279c6d778d702cc413e6cffa777` |
-| Ethereum (ropsten)  | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0xf1ec7d0ba42f15fb5c9e3adbe86431973e44764c` | `0x6acab4c9c4e3a0c78435fdb5ad1719c95460a668` |
+| Ethereum (sepolia)  | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0xf1ec7d0ba42f15fb5c9e3adbe86431973e44764c` | `0x6acab4c9c4e3a0c78435fdb5ad1719c95460a668` |
 | Polygon             | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 | Binance Smart Chain | `0xdef1c0ded9bec7f1a1670819833240f027b25eff` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
 | Optimism            | `0xdef1abe32c034e558cdd535791643c58a13acc10` | `0x0000000000000000000000000000000000000000` | `0x0000000000000000000000000000000000000000` |
