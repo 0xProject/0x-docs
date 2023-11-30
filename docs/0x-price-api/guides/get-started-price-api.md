@@ -26,7 +26,7 @@ In this example, we want the price of WETH in terms of USDC. To do this, we will
 - `buyToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2` - [WETH token address](https://etherscan.io/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
 - `sellAmount=10000000` - 10 USDC (USDC has a base unit of 6)
 
-**Request**
+#### Request
 
 GET
 
