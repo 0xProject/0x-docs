@@ -7,7 +7,7 @@ description: Rate limits
 # Rate limits
 
 :::info
-Want higher rate limits? Check out all our [available options](https://0x.org/pricing)
+To get higher rate limits for the Price API, purchase our flexible [Price API plan](https://0x.org/pricing) starting at $19 monthly.
 :::
 
 ## Why do we have rate limits?

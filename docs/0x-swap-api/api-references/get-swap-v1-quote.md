@@ -65,7 +65,7 @@ Either a `sellAmount` or `buyAmount` is required.
 
 ## Examples
 
-### Simple Sell WETH to Buy DAI
+### Simple quote to Sell WETH to Buy DAI
 
 Specify a `sellToken`, `buyToken` and `sellAmount` to get a simple quote of 1 WETH for DAI.
 

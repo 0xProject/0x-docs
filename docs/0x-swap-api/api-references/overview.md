@@ -32,7 +32,7 @@ Learn more about the different endpoints of Swap API:
 
 - [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote) - Get an easy-to-consume quote for buying or selling any ERC20 token. Returns a transaction that can be submitted to an Ethereum node.
 - [GET /swap/v1/price](/0x-swap-api/api-references/get-swap-v1-price) - `/price` is nearly identical to `/quote,` but with a few key differences. /price does not return a transaction that can be submitted on-chain; it simply provides us the same information. Think of it as the "read-only" version of `/quote`.
-- [GET /swap/v1/source](/0x-swap-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for the chain.
+- [GET /swap/v1/source](/0x-swap-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for a specific chain.
 
 ## Authentication
 
@@ -82,7 +82,7 @@ If a query provides an unreasonable (ie. too high) `perPage` value, the response
 
 ## Allowance Targets
 
-Some interactions with 0x require or are improved by setting [token allowances](https://tokenallowance.io/), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some examples include -
+Some interactions with 0x require or are improved by setting [token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some examples include -
 
 - Submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the contract address. This address can be found either as the value of `allowanceTarget` returned in the quote response or in the ExchangeProxy Address column in the "Addresses by Network" table below.
 - Trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract.
