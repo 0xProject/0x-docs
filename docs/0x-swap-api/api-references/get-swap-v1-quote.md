@@ -65,7 +65,7 @@ Either a `sellAmount` or `buyAmount` is required.
 
 ## Examples
 
-### Simple quote to Sell WETH to Buy DAI
+### Simple Quote to Sell WETH to Buy DAI
 
 Specify a `sellToken`, `buyToken` and `sellAmount` to get a simple quote of 1 WETH for DAI.
 
@@ -657,7 +657,7 @@ If the [`eth_call`](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_call) fai
 }
 ```
 
-### Wrapping and unwrapping between ETH and WETH
+### Wrapping and Unwrapping between ETH and WETH
 
 Easily wrap and unwrap between ETH and WETH by requesting a swap quote by setting `sellToken` and `buyToken` as either `WETH` or `ETH`. The swap quote returned will provide the calldata to directly interact with the `WETH9` contract and not with 0x exchange contracts.
 

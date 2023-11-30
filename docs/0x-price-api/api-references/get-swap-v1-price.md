@@ -6,17 +6,15 @@ description: Learn how to use GET /swap/v1/price to get real-time DEX prices for
 
 # GET /swap/v1/price
 
-`/swap/v1/price` can be used to acquire real-time DEX prices for token pairs.
+`/swap/v1/price` can be used to acquire real-time prices of **any market pair**, which you specify via the `sellToken` and `buyToken` parameters.
 
-The Price API lets you find real-time prices of **any market pair**, which you specify via the `sellToken` and `buyToken` parameters.
-
-**If you’re trying to fetch the equivalent USD price of a token**, we recommend using a stablecoin as `sellToken` with an arbitrarily low amount. For example, set `sellToken = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` for USDC on Ethereum and `sellAmount = 10000000` for 10 USDC. This will give you the price of the token in USD terms. **Beware:** this is subject to the risk that the stablecoin may depeg.
+**If you’re trying to fetch the equivalent USD price of a token**, we recommend using a stablecoin as `sellToken` with an arbitrarily low amount. For example, set `sellToken = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` for USDC on Ethereum and `sellAmount = 10000000` for 10 USDC. This will give you the price of the token in USD terms. See the [example query](/0x-price-api/api-references/get-swap-v1-price#example). **Beware:** this is subject to the risk that the stablecoin may depeg.
 
 :::info
 Price API is in beta. Its recommended use is for checking prices, not be be used for trading purposes. For example, if you plan to use this in a trading workflow that is triggered by price changes of USDC, be aware this is subject to the risk that the stablecoin may depeg.
 :::
 
-### Request
+## Request
 
 | **Query Param**   | **Description**                                                                                                                                                                                                                                                                                                                                                                                                            | **Example**                                          |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
@@ -24,10 +22,9 @@ Price API is in beta. Its recommended use is for checking prices, not be be used
 | `buyToken`        | The ERC20 token address of the token you want to receive. If you’re trying to fetch the equivalent USD price of a token, specify that token using this parameter. <br/><br/>It is recommended to always use the token address instead of token symbols (e.g. USDC) which may not be recognized by the API.                                                                                                                 | buyToken=0x6b175474e89094c44da98b954eedeac495271d0f  |
 | `sellAmount`      | (Required) The amount of `sellToken` (in `sellToken` base units). To get the real-time price of the `buyToken`, set the `sellAmount` to a low amount of the stablecoin that you set as the `sellToken` (e.g. $10 USDC) <br/><br/> Example: For $10 of USDC, set `sellAmount=10000000` Otherwise, if you'd like to know the real-time price according to a specific liquidity depth, please specify that token amount here. | sellAmount=10000000                                  |
 | `gasPrice`        | (Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.                                                                                                                                                                                                                                              | gasPrice=1000000                                     |
-| `excludedSources` | (Optional) When used, only the specified [liquidity sources](/0x-price-api/api-references/get-swap-v1-sources) (`Uniswap`, `SushiSwap`, `0x`, `Curve`, etc) will be included in the provided quote. <br/><br/> This parameter cannot be combined with `includedSources`.                                                                                                                                                   | excludedSources=Uniswap,SushiSwap,Curve              |
-| `includedSources` | (Optional) Typically used to filter for RFQ liquidity without any other DEX orders which this is useful for [testing your RFQ integration](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity#testing-your-rfq-integration-recommended). To do so, set it to `0x`. <br/><br/> This parameter cannot be combined with `excludedSources`.                                                            | includedSources=0x                                   |
+| `excludedSources` | (Optional) When used, only the specified [liquidity sources](/0x-price-api/api-references/get-swap-v1-sources) (`Uniswap`, `SushiSwap`, `0x`, `Curve`, etc) will be included in the provided quote.                                                                                                                                                                                                                        | excludedSources=Uniswap,SushiSwap,Curve              |
 
-### Response
+## Response
 
 Identical to the response schema for `/swap/v1/quote`, with the execption that the `orders` property, `guaranteedPrice`, `to` and `data` fields will always be undefined
 
@@ -56,11 +53,17 @@ Identical to the response schema for `/swap/v1/quote`, with the execption that t
 | `fees`                 | Fees that would be charged. It can contain `zeroExFee`. See details about this fee type below.                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `zeroExFee`            | Related to `fees` param above. <br></br><br></br>Fee that 0x charges:<br></br>&ensp;&ensp;- `feeType`: `volume` which means 0x would charge a certain percentage of the trade. <br></br>&ensp;&ensp;- `feeToken`: The ERC20 token address to charge fee. <br></br>&ensp;&ensp;- `feeAmount`: The amount of `feeToken` to be charged as the 0x fee. <br></br>&ensp;&ensp;- `billingType`: The method that 0x fee is transferred. It can currently only be `on-chain` which means the fee would be charged on-chain. |
 
-### Example
+## Example
 
-#### Get the real-time price for Selling USDC to Buy WETH
+### Get Price of WETH in terms of USDC
 
-Specify a `sellToken`, `buyToken`, and `sellAmount` to get the price to buy WETH when selling 10 USDC
+Use the [`/swap/v1/price`](/0x-price-api/api-references/get-swap-v1-price) endpoint to get the real-time price of the token pair.
+
+In this example, we want the price of WETH in terms of USDC. To do this, we will use the stable coin USDC as the `sellToken`. We use the following params:
+
+- `sellToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` - [USDC token address](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)
+- `buyToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2` - [WETH token address](https://etherscan.io/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+- `sellAmount=10000000` - 10 USDC (USDC has a base unit of 6)
 
 **Request**
 

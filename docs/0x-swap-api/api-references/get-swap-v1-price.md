@@ -67,7 +67,7 @@ Identical to the response schema for `/swap/v1/quote`, with the execption that t
 
 ### Example
 
-#### Get the Real-Time Price for Selling WETH to Buy DAI
+#### Get Price for Selling WETH to Buy DAI
 
 Specify a `sellToken`, `buyToken` and `sellAmount` to get a simple quote of 1 WETH for DAI.
 
