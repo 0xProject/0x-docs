@@ -1,6 +1,6 @@
 ---
 sidebar_label: GET /swap/v1/quote
-sidebar_position: 2
+sidebar_position: 3
 description: Learn how to use GET /swap/v1/quote
 ---
 

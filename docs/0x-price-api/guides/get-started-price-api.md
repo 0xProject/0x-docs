@@ -16,7 +16,7 @@ Price API provides access to real-time market prices for any token pair across 4
 Price API is in beta. Its recommended use is for checking prices, not be be used for trading purposes. For example, if you plan to use this in a trading workflow that is triggered by price changes of USDC, be aware this is subject to the risk that the stablecoin may depeg.
 :::
 
-## Get Price of WETH in terms of USDC
+## Get a token price in USD terms via stablecoins
 
 Use the [`/swap/v1/price`](/0x-price-api/api-references/get-swap-v1-price) endpoint to get the real-time price of the token pair.
 
@@ -25,6 +25,14 @@ In this example, we want the price of WETH in terms of USDC. To do this, we will
 - `sellToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` - [USDC token address](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)
 - `buyToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2` - [WETH token address](https://etherscan.io/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
 - `sellAmount=10000000` - 10 USDC (USDC has a base unit of 6)
+
+:::important
+The price returned is in `buyToken` terms, (`sellToken`/`buyToken` = `USDC`/`WETH` = `0.000486899453497844`).
+
+To obtain the price in USD terms, simply take the inverse (`WETH`/`USDC` = `1/0.000486899453497844` = `2053`).
+
+Do not explicity set `buyAmount` in the request; it will not return back the desired result.
+:::
 
 #### Request
 
