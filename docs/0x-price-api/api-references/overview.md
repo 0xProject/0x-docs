@@ -1,14 +1,18 @@
 ---
 sidebar_label: Overview
 sidebar_position: 1
-description: Learn how to use the Swap API, the most efficient liquidity for web3 tokens through a single API.
+description: Learn how to use the Price API, the most efficient liquidity for web3 tokens through a single API.
 ---
 
 # API References
 
 ## Introduction
 
-**The Swap API is the liquidity and data endpoint for DeFi.** It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests for your application and your users.
+**The Price API provides access to real-time DEX prices for token pairs.** It lets you access aggregated liquidity from tens of on-chain and off-chain decentralized exchange networks, across multiple blockchains. It comes with many parameters to customize your requests.
+
+:::info
+Price API is in beta. Its recommended use is for checking prices, not be be used for trading purposes. For example, if you plan to use this in a trading workflow that is triggered by price changes of USDC, be aware this is subject to the risk that the stablecoin may depeg.
+:::
 
 We offer hosted versions for different EVM-compatible networks.
 
@@ -30,9 +34,8 @@ We offer hosted versions for different EVM-compatible networks.
 
 Learn more about the different endpoints of Swap API:
 
-- [GET /swap/v1/quote](/0x-swap-api/api-references/get-swap-v1-quote) - Get an easy-to-consume quote for buying or selling any ERC20 token. Returns a transaction that can be submitted to an Ethereum node.
-- [GET /swap/v1/price](/0x-swap-api/api-references/get-swap-v1-price) - `/price` is nearly identical to `/quote,` but with a few key differences. /price does not return a transaction that can be submitted on-chain; it simply provides us the same information. Think of it as the "read-only" version of `/quote`.
-- [GET /swap/v1/source](/0x-swap-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for a specific chain.
+- [GET /swap/v1/price](/0x-price-api/api-references/get-swap-v1-price) - Used to acquire real-time DEX prices for token pairs.
+- [GET /swap/v1/source](/0x-price-api/api-references/get-swap-v1-source) - Returns the liquidity sources enabled for a specified chain.
 
 ## Authentication
 
@@ -44,7 +47,7 @@ You can create, access or revoke your API keys via the **[0x Dashboard](https://
 
 Each 0x HTTP API `path` is versioned independently using URI versioning. The format is: `https://api.0x.org/<path>/<version>/<endpoint>`.
 
-For example, you can request `https://api.0x.org/swap/v1/quote` which represents `v1` of the `quote` endpoint in the `swap` path. URLs not adhering to this format are not supported.
+For example, you can request `https://api.0x.org/swap/v1/price` which represents `v1` of the `price` endpoint in the `swap` path. URLs not adhering to this format are not supported.
 
 A major version bump occurs whenever a backwards incompatible change occurs to an `endpoint`, in which case every `endpoint` in that `path` will be on the next version. Old versions of the API will be deprecated and new features will be rolled out to them on a best-effort basis.
 
@@ -79,14 +82,6 @@ And will only document the objects in the `records` field.
 | `records` | The actual `records` returned for this page of the collection.                        |
 
 If a query provides an unreasonable (ie. too high) `perPage` value, the response can return a validation error as specified in the errors section. If the query specifies a `page` that does not exist (ie. there are not enough `records`), the response will return an empty `records` array.
-
-## Allowance Targets
-
-Some interactions with 0x require or are improved by setting [token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some examples include -
-
-- Submitting a 0x API quote selling ERC20 tokens, you will need to give an allowance to the contract address. This address can be found either as the value of `allowanceTarget` returned in the quote response or in the ExchangeProxy Address column in the "Addresses by Network" table below.
-- Trading ERC20 tokens using the Exchange contract, you will have to give an allowance to the ERC20Proxy contract.
-- **Note:** For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH" or unwrapping "WETH" to "ETH" no allowance is needed, a null address of `0x0000000000000000000000000000000000000000` is then returned instead.
 
 ### Addresses by Network
 
@@ -174,39 +169,6 @@ For all 400 responses, see the [error response schema](https://github.com/0xProj
 ## Common Objects
 
 This section outlines API JSON objects that are common to many endpoints.
-
-### Signed Order
-
-A [0x Limit Order](https://protocol.0x.org/en/latest/basics/orders.html#limit-orders) with additional fields and ready to be consumed by our tooling and sent to the [0x exchange proxy contract](https://protocol.0x.org/en/latest/architecture/proxy.html).
-
-| Field                 | Description                                                                                                                                                                                                                |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `maker`               | The address of the party that creates the order. The maker is also one of the two parties that will be involved in the trade if the order gets filled.                                                                     |
-| `taker`               | The address of the party that is allowed to fill the order. If set to a specific party, the order cannot be filled by anyone else. If left unspecified, anyone can fill the order.                                         |
-| `makerToken`          | The address of the ERC20 token the maker is selling to the taker.                                                                                                                                                          |
-| `takerToken`          | The address of the ERC20 token the taker is selling to the maker.                                                                                                                                                          |
-| `makerAmount`         | The amount of makerToken being sold by the maker                                                                                                                                                                           |
-| `takerAmount`         | The amount of takerToken being sold by the taker                                                                                                                                                                           |
-| `expiry`              | Timestamp in seconds of when the order expires. Expired orders cannot be filled.                                                                                                                                           |
-| `salt`                | A value that can be used to guarantee order uniqueness. Typically it is set to a random number.                                                                                                                            |
-| `feeRecipient`        | The address of the entity that will receive any fees stipulated by the order. This is typically used to incentivize off-chain order relay.                                                                                 |
-| `pool`                | The staking pool to attribute the 0x protocol fee from this order. Set to zero to attribute to the default pool, not owned by anyone.                                                                                      |
-| `takerTokenFeeAmount` | Amount of takerToken paid by the taker to the feeRecipient.                                                                                                                                                                |
-| `sender`              | An advanced field that doesn't need to be set. It allows the maker to enforce that the order flow through some additional logic before it can be filled (e.g., a KYC whitelist) -- more on the ability to extend 0x later. |
-| `verifyingContract`   | Address of the contract where the transaction should be sent, usually this is the [0x exchange proxy contract](https://protocol.0x.org/en/latest/architecture/proxy.html).                                                 |
-| `chainId`             | The ID of the Ethereum chain where the `verifyingContract` is located.                                                                                                                                                     |
-| `signature`           | A JSON object with the signature of the fields above using the private key of `maker`. The fields of the signature object are documented in the table below.                                                               |
-
-### Signature
-
-A structured object containing the signature data for the order. For more info see [How to sign](https://protocol.0x.org/en/latest/basics/orders.html#how-to-sign).
-
-| Field           | Description                                                                                                      |
-| --------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `signatureType` | A number representing the signature method used for signing the order, EIP712 (2) and EthSign (3) are supported. |
-| `r`             | A hexadecimal string with signature data.                                                                        |
-| `s`             | A hexadecimal string with signature data.                                                                        |
-| `v`             | An integer number with signature data.                                                                           |
 
 ## Misc.
 

@@ -16,6 +16,8 @@ In this guide, we walk-through the [Tx Relay API demo app](https://github.com/0x
 
 The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
 
+This demo showcases trading USDC (a gasless approved token that is on the Polygon-supported sell list) for WMATIC (a non-gasless approved token). An expanded version of this app that handles more token support is coming soon.
+
 Checkout the live demo 👉 [here](https://0x-examples.vercel.app/)
 
 ![](/img/tx-relay-api/tx-relay-demo-screen-recording.gif)
@@ -171,7 +173,7 @@ This demo how to utilize these two lists for a specific use case on the Polygon 
 
 ### Code
 
-#### Verify against sellToken against gasless approved token list
+#### Verify `sellToken` against gasless approved token list
 
 To check if the `sellToken` supports gasless approvals, we setup a .json file of all the [tokens that support permit on Polygon](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list#polygon) in the [`/supports-permit/137.json`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/src/supports-permit/137.json) file.
 

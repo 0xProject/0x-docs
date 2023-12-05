@@ -8,13 +8,13 @@ description: This is your launchpad to learn about 0x - Trusted exchange infrast
 
 :::tip
 
-Prefer to watch a video instead? Jump to [0x Concept Videos](0x-concept-videos.md).
+Prefer to watch a video instead? Jump to [0x Videos](/introduction/guides#videos).
 
 :::
 
 ## What is 0x?
 
-0x is developers’ one-stop shop to build financial products on crypto rails. 0x empowers hundreds of developers with essential web3 tools to enable faster trading, better prices and superior UX. Our suite of APIs has processed over 52 million transactions and $125B in volume from more than 6 million users trading on apps like Coinbase Wallet, Robinhood Wallet, Metamask, Zerion, Zapper, and more.
+0x is a developer's one-stop shop to build financial products on crypto rails. 0x provides a suite of APIs that enable developers to build faster, find the best prices, and create superior UX for their customers. Our suite of APIs has processed over 52 million transactions and $125B in volume from more than 6 million users and is used by many of the top trading apps including Coinbase Wallet, Robinhood Wallet, Matcha, Metamask, Zerion, Zapper, and [more](https://explorer.0xprotocol.org/apps).
 
 :::tip
 
@@ -33,7 +33,7 @@ Prefer to watch a video instead? Jump to [0x Concept Videos](0x-concept-videos.m
 
 The diagram below shows an overview of the 0x Ecosystem, which includes applications who supply liquidity (**[Makers](/introduction/introduction-to-0x#supply-aka-makers)**), applications who demand liquidity (**[Takers](/introduction/introduction-to-0x#demand-aka-takers)**).
 
-![0x is an open-source, decentralized exchange infrastructure that enables the exchange of tokenized assets on multiple blockchains.](/img/introduction/0x-ecosystem.png)
+![0x Protocol is an open-source, decentralized exchange infrastructure that enables the exchange of tokenized assets on multiple blockchains.](/img/introduction/0x-ecosystem.png)
 
 ### Makers and Takers
 

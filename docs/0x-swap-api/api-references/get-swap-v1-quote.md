@@ -1,6 +1,6 @@
 ---
 sidebar_label: GET /swap/v1/quote
-sidebar_position: 2
+sidebar_position: 3
 description: Learn how to use GET /swap/v1/quote
 ---
 
@@ -14,10 +14,10 @@ Either a `sellAmount` or `buyAmount` is required.
 
 | **Query Param**                   | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | **Example**                                                         |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `sellToken`                       | The ERC20 token address or symbol of the token you want to send. Native token such as "ETH" can be provided as a valid `sellToken`. If the symbol given is not supported, try using token address instead.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | sellToken=ETH, sellToken=0x6b175474e89094c44da98b954eedeac495271d0f |
-| `buyToken`                        | The ERC20 token address or symbol of the token you want to receive. Native token such as "ETH" can be provided as a valid `buyToken`.If the symbol given is not supported, try using token address instead.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | buyToken=ETH, buyToken=0x6b175474e89094c44da98b954eedeac495271d0f   |
-| `sellAmount`                      | (Optional) The amount of `sellToken` (in `sellToken` base units) you want to send.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | sellAmount=100000000000                                             |
-| `buyAmount`                       | (Optional) The amount of `buyToken`(in `buyToken` base units) you want to receive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | buyAmount=100000000000                                              |
+| `sellToken`                       | The ERC20 token address of the token you want to receive. It is recommended to always use the token address instead of token symbols (e.g. ETH ) which may not be recognized by the API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | sellToken=0x6b175474e89094c44da98b954eedeac495271d0f                |
+| `buyToken`                        | The ERC20 token address of the token you want to receive. It is recommended to always use the token address instead of token symbols (e.g. ETH ) which may not be recognized by the API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | buyToken=0x6b175474e89094c44da98b954eedeac495271d0f                 |
+| `sellAmount`                      | (Optional) The amount of `sellToken` (in `sellToken` base units) you want to send. Either `sellAmount` or `buyAmount` must be present in a request. Specifying `sellAmount` is the recommended way to interact with 0x API as it covers all on-chain sources.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | sellAmount=100000000000                                             |
+| `buyAmount`                       | (Optional) The amount of `buyToken`(in `buyToken` base units) you want to receive. Either `sellAmount` or `buyAmount` must be present in a request. Note that some on-chain sources do not allow specifying `buyAmount`, when using `buyAmount` these sources are excluded.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | buyAmount=100000000000                                              |
 | `slippagePercentage`              | (Optional, default is 0.01 for 1%) The maximum acceptable slippage of the `buyToken` amount if `sellAmount` is provided; The maximum acceptable slippage of the `sellAmount` amount if `buyAmount` is provided (e.g. 0.03 for 3% slippage allowed). The lowest possible value that can be set for this parameter is 0; in other words, no amount of slippage would be allowed. If no value for this optional parameter is provided in the API request, the default slippage percentage is 1%.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | slippagePercentage=0.03                                             |
 | `gasPrice`                        | (Optional, defaults to ethgasstation "fast") The target gas price (in wei) for the swap transaction. If the price is too low to achieve the quote, an error will be returned.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | gasPrice=1000000                                                    |
 | `takerAddress`                    | (Optional) The address which will fill the quote. While optional, we highly recommend providing this parameter if possible so that the API can more accurately estimate the gas required for the swap transaction. This helps when vaildating the entire transaction for success, and catches revert issues. If the validation fails, a Revert Error will be returned in the response. The quote should be fillable if this address is provided. <br/><br/> Also, make sure this address has enough token balance. Additionally, including the takerAddress is required if you want to [integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity).                                                                                                                                                                                                                                                                                                                                                                                                                             | takerAddress=0xa8aac589a67ecfade31efde49a062cc21d68a64e             |
@@ -65,16 +65,16 @@ Either a `sellAmount` or `buyAmount` is required.
 
 ## Examples
 
-### Simple DAI Buy with WETH
+### Simple Quote to Sell WETH to Buy DAI
 
-Specify a `buyToken`, `sellToken` and either a `sellAmount` to get a simple quote of 1 WETH for DAI.
+Specify a `sellToken`, `buyToken` and `sellAmount` to get a simple quote of 1 WETH for DAI.
 
 #### Request
 
-Get
+GET
 
 ```markup
-curl https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=100000000000000000  --header '0x-api-key: <API_KEY>'
+curl https://api.0x.org/swap/v1/quote?buyToken=0x6b175474e89094c44da98b954eedeac495271d0f&sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&sellAmount=100000000000000000  --header '0x-api-key: <API_KEY>'
 ```
 
 #### Response
@@ -257,16 +257,16 @@ curl https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=WETH&sellAmount=100
 }
 ```
 
-### Excluding liquidity sources
+### Excluding liquidity sources (Sell ETH to Buy DAI, Exclude 0x, Kyber)
 
 Supply a comma delimited list of liquidty source names to exclude them from the aggregator logic. See [here](/0x-swap-api/api-references/get-swap-v1-sources) for a full list of sources.
 
 #### Request
 
-Get
+GET
 
 ```http
-curl https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=1000000000000000000&excludedSources=0x,Kyber  --header '0x-api-key: <API_KEY>'
+curl https://api.0x.org/swap/v1/quote?buyToken=0x6b175474e89094c44da98b954eedeac495271d0f&sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&sellAmount=1000000000000000000&excludedSources=0x,Kyber  --header '0x-api-key: <API_KEY>'
 ```
 
 #### Response
@@ -449,16 +449,16 @@ curl https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=1000
 }
 ```
 
-### Supplying a Taker Address
+### Supplying a Taker Address (Sell ETH to Buy DAI)
 
 Supply a `takerAddress` to use an [`eth_call`](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_call) to perform additional validation, and an accurate gas estimate.
 
 #### Request
 
-Get
+GET
 
 ```
-curl https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=1000000000000000000&takerAddress=0xab5801a7d398351b8be11c439e05c5b3259aec9b   --header '0x-api-key: <API_KEY>'
+curl https://api.0x.org/swap/v1/quote?buyToken=0x6b175474e89094c44da98b954eedeac495271d0f&sellToken=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&sellAmount=1000000000000000000&takerAddress=0xab5801a7d398351b8be11c439e05c5b3259aec9b   --header '0x-api-key: <API_KEY>'
 ```
 
 #### Response
@@ -657,9 +657,9 @@ If the [`eth_call`](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_call) fai
 }
 ```
 
-### Wrapping and unwrapping between ETH and WETH
+### Wrapping and Unwrapping between ETH and WETH
 
-Easily wrap and unwrap between ETH and WETH by requesting a swap quote by setting `sellToken` and 'buyToken' as either 'WETH' or 'ETH'. The swap quote returned will provide the calldata to directly interact with the `WETH9` contract and not with 0x exchange contracts.
+Easily wrap and unwrap between ETH and WETH by requesting a swap quote by setting `sellToken` and `buyToken` as either `WETH` or `ETH`. The swap quote returned will provide the calldata to directly interact with the `WETH9` contract and not with 0x exchange contracts.
 
 #### Wrap ETH
 
@@ -668,7 +668,7 @@ Easily wrap and unwrap between ETH and WETH by requesting a swap quote by settin
 Get
 
 ```
-curl https://api.0x.org/swap/v1/quote?buyToken=ETH&sellToken=WETH&buyAmount=10000000   --header '0x-api-key: <API_KEY>'
+curl https://api.0x.org/swap/v1/quote?buyToken=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&buyAmount=10000000   --header '0x-api-key: <API_KEY>'
 ```
 
 #### Response
@@ -744,7 +744,7 @@ RFQ liquidity can only be accessed if the request supplies a taker address and a
 Get
 
 ```
-curl https://api.0x.org/swap/v1/quote?sellToken=WETH&buyToken=DAI&sellAmount=1000000000000000000&takerAddress=0xffffffffffffffffffffffffffffffffffffffff   --header '0x-api-key: <API_KEY>'
+curl https://api.0x.org/swap/v1/quote?sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&buyToken=0x6b175474e89094c44da98b954eedeac495271d0f&sellAmount=1000000000000000000&takerAddress=0xffffffffffffffffffffffffffffffffffffffff   --header '0x-api-key: <API_KEY>'
 ```
 
 #### Response

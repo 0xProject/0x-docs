@@ -44,7 +44,7 @@ Suppose a user wants to sell 10 token A for token B.
 
 ## How does Price Impact Protection work?
 
-We added Price Impact Protection as an optional feature of the Swap API to make it easier to protect users from getting rekt by illiquid markets. Despite Swap API enabling access to the deepest liquidity from over 70+ exchanges, there are still some long-tailed token pairs that suffer from suboptimal liquidity on decentralized exchanges.
+We added Price Impact Protection as an optional feature of the Swap API to make it easier to protect users from getting rekt by illiquid markets. Despite Swap API enabling access to the deepest liquidity from over 100+ exchanges, there are still some long-tailed token pairs that suffer from suboptimal liquidity on decentralized exchanges.
 
 When we are able to calculate price impact estimates, users leveraging the Swap API will be notified when their trade faces a price impact over a certain threshold. The API will return an error of insufficient liquidity due to the price impact being higher than the defined limit. The threshold is easily customizable by setting `priceImpactProtectionPercentage` anywhere from 0-1, so we encourage every Swap API user to customize this parameter based on their needs and tolerance.
 
@@ -56,7 +56,7 @@ Given X is set by the `priceImpactProtectionPercentage` parameter, if the price 
 
 Price Impact Protection is an optional feature - the default threshold will be set at 1 which means that every transaction is passed without triggering an error. Developers and API users who want to take advantage of it will need to opt-in by adjusting this setting.
 
-Developers can also surface this information in their UI so users can see the potential price impact of a trade prior to submitting an order (example image shown below). Developers can simply ping the Swap API \[[swap/v1/quote](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote#request)] and use the returned `estimatedPriceImpact` information.
+Developers can also surface this information in their UI so users can see the potential price impact of a trade prior to submitting an order (example image shown below). Developers can simply ping the Swap API [`/quote`](/0x-api-swap/api-references/get-swap-v1-quote#request) endpoint and use the returned `estimatedPriceImpact` information.
 
 ## How do I setup Price Impact Protection when using the Swap API? <a href="#what-is-price-impact" id="what-is-price-impact"></a>
 

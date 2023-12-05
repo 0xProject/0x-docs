@@ -17,7 +17,7 @@ An API key should always be specified when requesting all possible sources of li
 :::
 
 :::info
-`sellToken`, `buyToken`, `takerAddres` and one of \[`sellAmount` ,`buyAmount` ] must be present
+`sellToken`, `buyToken`, `takerAddress` and one of [`sellAmount` ,`buyAmount`] must be present
 :::
 
 ```bash
