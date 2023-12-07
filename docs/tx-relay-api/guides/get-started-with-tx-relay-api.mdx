@@ -130,7 +130,7 @@ https://api.0x.org/tx-relay/v1/swap/quote              // Request a firm quote
 ?sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa8417   // Sell USDC
 &sellAmount=100000000                                  // Sell amount 100 USDC (6 decimals)
 &buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270   // Buy WMATIC
-&checkApproval=true                                    // Checks for approval and uses gasless approval feature
+&checkApproval=true                                    // If true, check for approval and uses gasless approval feature
 &takerAddress=$USER_TAKER_ADDRESS                      // Address that will make the trade
 --header '0x-api-key: [API_KEY]'                       // Replace with your own API key
 --header '0x-chain-id: 137'                            // Supports Ethereum (1) & Polygon (137)
@@ -154,11 +154,11 @@ This optional boolean checks for approval and potentially utilizes gasless appro
 
 ### Example responses
 
-If liquidity is available, 2 objects are returned:
+If liquidity is available, 2 objects may be returned:
 
-- `trade`: this object which contains the necessary information to process a trade, for example, which of the 2 possible types this trade is (`metatransaction_v2` or `otc`). Read more [here](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response-params).
+- `trade`: this object will contains the necessary information to process a trade, for example, which of the 2 possible types this trade is (`metatransaction_v2` or `otc`). Read more [here](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response-params).
 
-- `approval`: this object contains the necessary information to process a trade. Read more [here](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response-params).
+- `approval`: if `checkApproval=true` was passed to `/quote`, this object will be returned. If we are able to initiate a gasless approval for the sell token, this object will contain the necessary information to process a gasless approval. Read more [here](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response-params).
 
 See here for examples of possible responses:
 
@@ -170,39 +170,13 @@ See here for examples of possible responses:
 
 When user accepts the quote and wants to submit the trade, use [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) to send both signatures back along with the payload from `/quote`.
 
-### Gasless approvals
+In order to submit the trade, we must complete the following:
 
-If the token supports [gasless approvals](/tx-relay-api/gasless-approvals-token-list), which our example USDC does, the approval object may be submitted along with the Meta-Transaction V2 or OTC trade object returned by [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#example-responses). You will be able to tell if the sell token supports gasless approvals by checking the response of `/quote` and looking for
-
-```tsx
-const { approval } = response;
-approval.isRequired; // whether an approval is required for the trade
-approval.isGaslessAvailable; // whether gasless approval is available for the sell token
-```
-
-To take advantage of gasless approvals, you must also have your user sign the `approval.eip712`object returned at the time of the `/quote`. You can pass the `approval.eip712` object to `eth_signTypedData_v4` (see [MetaMask docs](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4)) or function of your choice as the “params”.
-
-Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712:
-
-- `name` , `version`, `chainId`, `verifyingContract`, `salt`
-  - Contracts may not utilize all of these fields (i.e. one or more may be missing), but if they are present, they must be in this order
-- Any other field must follow in alphabetical order
-
-The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature.
-
-Read more about [presenting EIP-712 signatures for `signTypedData`](/tx-relay-api/api-references/overview#presenting-eip-712-signatures-for-signtypeddata).
-
-#### Computing a trade hash
-
-You can verify that the hash we provide in our request matches the meta-transaction provided.
-
-If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field.
-
-Read more about [computing a trade hash](/tx-relay-api/api-references/overview#computing-a-trade-hash).
-
-### Trade
-
-Similar to gasless approval, to submit the trade, you must have your user sign `trade.eip712` object returned at the time of the `/quote`. All the instructions and caveats are the same as for gasless approvals.
+- [Sign the gasless approval](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#sign-gasless-approvals) (if applicable)
+- [Sign the trade object](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#sign-gasless-approvals)
+- [Split signatures for both signed objects](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#split-signatures)
+- [Package both signed objects in a format that is acceptable to POST to /submit](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#split-signatures)
+- Optional, [compute trade hash](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#computing-a-trade-hash)
 
 ### Example request
 
@@ -244,7 +218,7 @@ More information on signing 0x orders is available [here](https://docs.0xprotoco
 
 ## 4. Check trade status
 
-Once the user has signed and submitted both signatures (gasless approval and meta-transaction), you can poll [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) to check the status of the trade.
+Once the user has signed and submitted both signatures (gasless approval and meta-transaction), and a `tradeHash` is returned from `/quote`, you can poll [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) to check the status of the trade.
 
 ### Example request
 
@@ -286,7 +260,9 @@ Once the trade is successful, you can display the transaction confirmation to yo
 
 ## Learn more
 
-- [Tx Relay API Demo App (Next.js)](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)
-- [How to build a dApp with Tx Relay API](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api)
+To see an example of how to integrate Tx Relay API, checkout [this guide](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api) along with the code for the [Demo App (Next.js)](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app).
+
+Also read,
+
 - [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
 - [Tx Relay FAQ](/tx-relay-api/tx-relay-faq)
