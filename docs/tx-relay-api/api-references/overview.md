@@ -43,7 +43,7 @@ Addresses of `permitAndCall` contracts
 If you are user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. Some commonly used tools for this include:
 
 - integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
-- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see how it's implemented in the Tx Relay Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](http://localhost:3000/docs/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
+- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see an example implementation in the Tx Relay Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
 
 In order to do so, you will need the following:
 
@@ -192,6 +192,8 @@ For `types` and `primaryTypes`, it will depend on the message format.
     ],
   };
   ```
+
+  More information on signing 0x orders is available [here](https://docs.0xprotocol.org/en/latest/basics/orders.html#how-to-sign).
 
 ### Computing a trade hash
 

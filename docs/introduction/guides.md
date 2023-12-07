@@ -37,9 +37,10 @@ This page lists the most popular guides to get started building with 0x based on
 
 ### Fundamentals
 
-- **[🛠️ Tutorial: How to use Swap API](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-how-to-use-swap-api)**
-- **[🛠️ Tutorial: Build a Token Swap Dapp With Next.js, 0x, ConnectKit](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-build-a-token-swap-dapp-with-nextjs-0x-connectkit)**
-- **[🛠️ Tutorial: Build a Token Swap Dapp With Swap API with HTML, CSS, Javascript](/introduction/0x-concept-videos#%EF%B8%8F-tutorial-build-a-token-swap-dapp-with-swap-api)**
+- **[🛠️ Tutorial: How to use Swap API](https://www.youtube.com/watch?v=APXjSGLaoRw)**
+- **[🛠️ Tutorial: Build a Token Swap Dapp With Next.js, 0x, ConnectKit](https://www.youtube.com/watch?v=P1ECx9zKQiU)**
+- **[🛠️ Tutorial: Build a Token Swap Dapp With Swap API with HTML, CSS, Javascript](https://www.youtube.com/watch?v=tVvZ1ivp4X0)**
+- **[🛠️ Tx Relay API Explainer + Code + Demo App](https://youtu.be/0d0tVwJCbiw?si=MeFS25wHX1ylVsb3)**
 
 ### Beyond the Basics
 

@@ -22,7 +22,10 @@ In order to submit the trade, we must:
 
 To take advantage of gases approvals, user must sign `approval.eip712` and the `trade.eip712` objects returned by [`/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote). These objects contain everything you need needed to sign these objects (domain, types, primaryType, message).
 
-We use wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook to sign the objects. The returned signature is an Ethereum signature hex string.
+There are different EIP-712 signing strategies if you are user facing wallet that shows the users the details of what they are signing. Some commonly used tools for this include:
+
+- integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
+- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see an example implementation in the Tx Relay Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
 
 ### Sign Gasless Approvals
 
@@ -118,7 +121,9 @@ signatureType: SignatureType.EIP712,
 },
 ```
 
-### Computing a trade hash
+More information on signing 0x orders is available [here](https://docs.0xprotocol.org/en/latest/basics/orders.html#how-to-sign).
+
+## Computing a trade hash
 
 If you choose to compute the approval hash from `approval.eip712`, it should match `approval.hash` field. Same for `trade.eip712`, it should match `trade.hash`.
 

@@ -8,7 +8,11 @@ description: Learn how to implement Tx Relay API to build gasless approvals and 
 
 _Learn how to use Tx Relay API to build gasless approvals and swaps into your dApp._
 
----
+:::tip
+
+Prefer to watch a video or see a code demo instead? Check out [this explainer video](https://youtu.be/0d0tVwJCbiw?si=6RBxZ8ZmGblXLP-E) or [0x Code Examples](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app).
+
+:::
 
 ## Overview
 
@@ -16,7 +20,7 @@ In this guide, we walk-through the [Tx Relay API demo app](https://github.com/0x
 
 The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
 
-This demo showcases trading USDC (a gasless approved token that is on the Polygon-supported sell list) for WMATIC (a non-gasless approved token). An expanded version of this app that handles more token support is coming soon.
+This demo showcases trading USDC (a gasless approved token that is on the Polygon-supported sell list) for WMATIC (a non-gasless approved token), **[![(see here for diagram)]](/img/tx-relay-api/technical-flow-specific-path.png)**. An expanded version of this app that handles more token support is coming soon.
 
 Checkout the live demo 👉 [here](https://0x-examples.vercel.app/)
 
@@ -60,6 +64,9 @@ As covered in [Understanding Tx Relay API](https://0x.org/docs/tx-relay-api/guid
 
 This demo app covers the flow outlined in the [Gasless Approval + Tx Relay API Flow](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#gasless-approval--tx-relay-flow).
 
+This demo app showcases trading USDC (a gasless approved token that is on the Polygon-supported sell list) for WMATIC (a non-gasless approved token), specifically this flow:
+![Demo app flow](/img/tx-relay-api/technical-flow-specific-path.png).
+
 Note, Tx Relay API is composable with Swap API if you want to offer execution optionality (for example native tokens which is not supported by Tx Relay API). You can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience. Check out [Composing Gasless Approval + Tx Relay API + Swap API Flow](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#composing-gasless-approval--tx-relay-api--swap-api) if you would include this functionality.
 
 ## Project structure
@@ -67,34 +74,35 @@ Note, Tx Relay API is composable with Swap API if you want to offer execution op
 This demo app is setup using [Next.js 13 App Router](https://nextjs.org/docs). Here is an explanation of the structure of the app and key files.
 
 ```
-app
-├── layout.tsx
-├── page.tsx
-├── providers.tsx
-│
-├── api
-│   ├── price
-│   │    └── route.ts
-│   ├── quote
-│   │    └── route.ts
-│   ├── status
-│   │   └── route.ts
-│   └── submit
-│        └── route.ts
-│
-├── components
-│   ├── price.tsx
-│   ├── quote.tsx
-│   └── status.tsx
+tx-relay-next-app
+├── app
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── providers.tsx
+│   │
+│   ├── api
+│   │   ├── price
+│   │   │   └── route.ts
+│   │   ├── quote
+│   │   │   └── route.ts
+│   │   ├── status
+│   │   │   └── route.ts
+│   │   └── submit
+│   │       └── route.ts
+│	│
+│	└── components
+│	      ├── price.tsx
+│	      ├── quote.tsx
+│	      └── status.tsx
 │
 └─── src
-    ├── supports-permit
-    │   └── 137.json
-    └── utils
-        ├── eip712_utils.types.ts
-        ├── schema.ts
-        ├── signature.ts
-        └── constants.ts
+     ├── supports-permit
+     │   └── 137.json
+     └── utils
+         ├── eip712_utils.types.ts
+         ├── schema.ts
+         ├── signature.ts
+         └── constants.ts
 ```
 
 - `/app/` - The root directory that contains global structure of the application that contains shared layouts and additional configuration
@@ -396,7 +404,7 @@ signatureType: SignatureType.EIP712,
 
 #### Submit order with POST /tx-relay/v1/swap/submit
 
-Once the signed, split, and formatted approval and trade data objects are set up, we POST them to [`/tx-relay/v1/swap/submit`](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) which is wrapped behind [`/app/api/quote/submit.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/submit/route.ts). This code is called from the "Submit Order" button in the UI ([code](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L217-L239)).
+Once the signed, split, and formatted approval and trade data objects are set up, we POST them to [`/tx-relay/v1/swap/submit`](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) which is wrapped behind [`/app/api/submit/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/submit/route.ts). This code is called from the "Submit Order" button in the UI ([code](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L217-L239)).
 
 If the submssion is successful, `/submit` responds with the order `type` and the `tradeHash`. Learn more about [submit responses](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-response):
 
@@ -413,7 +421,7 @@ If the submssion is successful, `/submit` responds with the order `type` and the
 
 ### What is it?
 
-This component checks and displays the status of the trade to the user. The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/page.tsx#L30-L35), it is displayed if `tradeHash` has been in QuoteView.
+This component checks and displays the status of the trade to the user. The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/page.tsx#L30-L35), it is displayed if `tradeHash` has been set in QuoteView.
 
 ![StatusView Pending Screenshot](/img/tx-relay-api/status-view-pending.png)
 
@@ -452,7 +460,7 @@ In [`/page`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-ap
 />
 ```
 
-[`/status`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) will continously respond with the [status of the transaction (e.g. pending, failed, success, submitted, confirmed)](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#shape-of-response), so we need to contiously poll the endpoint to check the current status. We do so using `setInterval(callback function, delay in ms)` and `useEffect` to continuously ping `/status` until the status is confirmed
+[`/status`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) will continously respond with the [status of the transaction (e.g. pending, failed, success, submitted, confirmed)](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#shape-of-response), so we need to contiously poll the endpoint to check the current status. We do so using `setInterval(callback function, delay in ms)` and `useEffect` to continuously ping `/status` until the status is confirmed ([code here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/status.tsx#L15-L38)).
 
 :::tip
 Reminder: `/tx-relay/v1/swap/status/:trade-hash` doesn’t take `trade-hash` as a query param, just concatenate it on as part of the query
