@@ -29,7 +29,7 @@ This page lists the most popular guides to get started building with 0x based on
 ### Beyond the Basics
 
 - **[Use 0x API liquidity in your smart contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts)**
-- **[Working in the testnet](/0x-limit-orders/guides/working-in-the-testnet)**
+- **[Working in the testnet](/0x-swap-api/guides/working-in-the-testnet)**
 - **[How to integrate RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity/how-to-integrate-rfq-liquidity)**
 - **[How to monetize your swap app](/0x-swap-api/guides/monetize-your-app-using-swap)**
 

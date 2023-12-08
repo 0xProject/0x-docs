@@ -46,7 +46,7 @@ This is the entity who creates [0x orders](/introduction/0x-cheat-sheet#0x-order
 - On-chain liquidity - DEXs, AMMs (e.g. Uniswap, Curve, Bancor)
 - Off-chain liquidity - Professional Market Makers, 0x's Open Orderbook network
 - _Relevant Docs:_
-  - [Market Makers](/market-makers/docs/introduction) - Professional Market Making With Limit Orders
+  - [Market Makers](/developer-resources/glossary#maker) - Professional Market Making With Limit Orders
   - [Orderbook API](/0x-orderbook-api/introduction) - Sharing Limit Orders
   - [Limit Orders (Advanced Traders)()](/0x-limit-orders/docs/introduction) - Filling and Managing Limit Orders
 
@@ -74,7 +74,7 @@ Let’s look into how a 0x order is executed.
 
 ## What can I build on 0x?
 
-Below is a non-exhaustive list of projects that have been built on 0x. Note that 0x can also be integrated into any existing application where exchange is not the core purpose of the application. For more examples this [blog post](https://blog.0x.org/exploring-the-0x-defi-ecosystem/).
+Below is a non-exhaustive list of projects that have been built on 0x. Note that 0x can also be integrated into any existing application where exchange is not the core purpose of the application. For more examples this [blog post](https://0x.org/post/inspiration-for-building-with-swap-api).
 
 ### Demand (Takers)
 

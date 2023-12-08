@@ -114,6 +114,11 @@ const config = {
             position: "right",
           },
           {
+            href: "https://discord.com/invite/official0x",
+            className: "header-discord-link",
+            position: "right",
+          },
+          {
             href: "https://github.com/0xProject/0x-examples",
             className: "header-github-link",
             position: "right",
