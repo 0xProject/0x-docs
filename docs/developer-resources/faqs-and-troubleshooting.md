@@ -107,7 +107,7 @@ For insufficient balance errors, check the following:
 
 <summary>I received an `INSUFFICIENT_ASSET_LIQUIDITY` error. Help!</summary>
 
-This error indicates there is not enough of the asset on the network to make this trade. This is common for very long-tail tokens or if you are building in a testnet (e.g. Goerli). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
+This error indicates there is not enough of the asset on the network to make this trade. This is common for very long-tail tokens or if you are building in a testnet (e.g. Sepolia, Mumbai). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
 
 </details>
 
@@ -255,13 +255,19 @@ Read our full guide on [monetizing your swap integration](/0x-swap-api/guides/mo
 
 <summary>I'm building on a testnet, but have issues with certain liquidity pairs. Are there certain pairs I should test when building on a testnet? </summary>
 
-A hosted Swap API for the Goerli testnet is available at https://goerli.api.0x.org/ which offers a subset of DEX sources available on Ethereum mainnet.
+At the time of writing this guide the following liquidity sources are supported on Sepolia: `MultiHop` and `Uniswap_V3`. The token you want to use for testing must have liquidity on at least one of these sources; otherwise, you will receive an error.
 
-To view the currently supported sources on Goerli refer to https://goerli.api.0x.org/swap/v1/sources. At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3`. The token you want to use for testing must have liquidity on at least one of these sources.
+In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is `WETH <> UNI` deployed by Uniswap on Sepolia.
 
-In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is WETH < > UNI deployed by Uniswap on Goerli.
+To view all currently supported sources on each network, you can use the [/sources](/0x-swap-api/api-references/get-swap-v1-sources) endpoint.
 
-Also, see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet) for additional information.
+Note the following:
+
+- Testnet liquidity is more limited than on mainnet
+- Liquidity sources are also different between mainnets and testnets
+- Not all pairs on mainnet are deployed on testnet, so the token pair availability is more limited
+
+See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-sepolia) and [Mumbai](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-mumbai) in the our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet).
 
 </details>
 
@@ -269,13 +275,10 @@ Also, see our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-
 
 <summary>Where can I get testnet funds? </summary>
 
-- [Goerli Faucet](https://goerlifaucet.com/)
-- [Goerli POW Faucet](https://goerli-faucet.pk910.de/)
+- [List of Sepolia Faucets](https://faucetlink.to/sepolia)
 - [Sepolia Faucet](https://sepoliafaucet.com/)
-- [Mumbai Faucet](https://mumbaifaucet.com/)
-- [Gwei Calculator](https://www.alchemy.com/gwei-calculator)
-- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/)
-  - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
+- [Sepolia POW Faucet](https://sepolia-faucet.pk910.de/)
+- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/) - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
 - Also see our [Working in Testnet Guide](/0x-swap-api/guides/working-in-the-testnet)
 
 </details>

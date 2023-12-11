@@ -42,18 +42,6 @@ const CardList: CardItem[] = [
     buttonName: "Build",
     buttonType: "success",
   },
-  {
-    title: "Linea Block Explorer",
-    link: "https://explorer.goerli.linea.build/",
-    description: (
-      <>
-        View Linea transactions and find deployed contracts and wallet addresses
-        on BlockScout!
-      </>
-    ),
-    buttonName: "Explore",
-    buttonType: "info",
-  },
 ];
 
 function Card({ title, link, description, buttonName, buttonType }: CardItem) {

@@ -176,8 +176,8 @@ const config = {
                 to: "https://status.0x.org/",
               },
               {
-                label: "Goerli Faucet",
-                to: "https://goerlifaucet.com/",
+                label: "Sepolia Faucet",
+                to: "https://sepoliafaucet.com/",
               },
               {
                 label: "Gwei Calculator",
