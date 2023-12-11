@@ -12,19 +12,19 @@ Here's a quick pre-flight checklist of things that need to be in order for a swa
 
 ## Working in Testnet
 
-If you are building in a testnet (e.g. Goerli), be aware that only a subset of DEX sources available on Ethereum mainnet are available on testnet. This may cause errors, such as `INSUFFICIENT_ASSET_LIQUIDITY` error.
+If you are building on a testnet (e.g. Sepolia, Mumbai), be aware that only a subset of DEX sources available on Ethereum mainnet are available on testnet. This may cause errors, such as `INSUFFICIENT_ASSET_LIQUIDITY` error.
 
-At the time of writing this guide the following liquidity sources are supported on Goerli: `0x`, `MultiHop`, `SushiSwap`, `Uniswap`, `Uniswap_V2` and `Uniswap_V3`. Be aware that token you want to use for testing _must_ have liquidity on at least one of these sources; otherwise, you will receive an error.
+At the time of writing this guide the following liquidity sources are supported on Sepolia: `MultiHop` and `Uniswap_V3`. Be aware that token you want to use for testing _must_ have liquidity on at least one of these sources; otherwise, you will receive an error.
 
-To view the currently supported sources on Goerli refer to https://goerli.api.0x.org/swap/v1/sources.
+To view the currently supported sources on any network refer to https://0x.org/docs/0x-swap-api/api-references/get-swap-v1-sources.
 
-In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is `WETH <> UNI` deployed by Uniswap on Goerli.
+In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is `WETH <> UNI` deployed by Uniswap on Sepolia.
 
-See the [Working in Testnet](/0x-swap-api/guides/working-in-the-testnet) for more token pairs available on Goerli and Mumbai.
+See the [Working in Testnet](/0x-swap-api/guides/working-in-the-testnet) for more token pairs available on Sepolia and Mumbai.
 
 ## Sufficient Liquidity
 
-You may receive the `INSUFFICIENT_ASSET_LIQUIDITY` error if there is not enough of the asset on the network to make the trade. This is common for very long-tail tokens or if you are building in a testnet (e.g. Goerli). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
+You may receive the `INSUFFICIENT_ASSET_LIQUIDITY` error if there is not enough of the asset on the network to make the trade. This is common for very long-tail tokens or if you are building on a testnet (e.g. Sepolia, Mumbai). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
 
 ## Balances and Allowances
 
