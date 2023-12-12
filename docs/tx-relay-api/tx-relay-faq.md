@@ -120,6 +120,14 @@ See the flow charts [here](/tx-relay-api/guides/understanding-tx-relay-api#techn
 
 <details>
 
+<summary>What is the minimum amount users can trade with Tx Relay API?</summary>
+
+The minimum amount will vary across chains, trade sizes and current gas conditions. When attempting to trade an amount that is too small, the API response will return an error message with the estimated minimum amount for that trade. In general, we recommend setting a minimum of $10 on Mainnet, and $1 on other chains for the best experience.
+
+</details>
+
+<details>
+
 <summary>I received a `No liquidity` error. Help!</summary>
 
 This error is typically triggered when there is no good market for the token pairs selected. 
