@@ -16,11 +16,22 @@ Through 2023, Ethereum Mainnet and Polygon….more chains to come
 
 <details>
 
-<summary>What pairs are supported?</summary>
+<summary>What tokens are supported?</summary>
 
-_Tx Relay aggregates liquidity from 29 sources on Mainnet, and 24 sources on Polygon. A comprehensive set of liquidity sources is available_ [_here_](https://explorer.0x.org/liquiditySources?chains=Polygon&chains=Ethereum)_. Users will have access to any pair supported by those liquidity sources._
+Tx Relay API offers gasless approvals and gasless swaps for supported tokens.
 
-The only trades Tx Relay CANNOT support on those wherein the end-user is trying to sell a native token from their wallet (eg: selling ETH for USDC, on Mainnet). This is because native tokens are typically not ERC-20s, so they do not support the `transferFrom` function, which the metatransaction relay system underlying Tx Relay utilizes.
+For gasless approvals:
+
+- You can find a list of tokens that work with gasless approvals in the [gasless approvals token list](/tx-relay-api/gasless-approvals-token-list)
+- Generally, these are tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). In otherwords, these are ERC-20s with the Permit function
+- You can also examine if a token supports gasless approvals at trade time, by observing the response from requests to [/tx-relay/v1/swap/quote](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response). If the variable `isGaslessAvailable = true`, the token the user is selling supports gasless approvals.
+
+For gasless swaps, the following **sell** token lists are supported:
+
+- On Ethereum Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap's Token List](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). Note, you can **buy** any token on Ethereum, provided the `sellToken` is on Uniswap Tokenlist
+- On Polygon, Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports on Polygon
+
+Note, the only trades Tx Relay CANNOT support are those where end-user is trying to sell a native token from their wallet (eg: selling ETH on Mainnet, or selling MATIC on Polygon). This is because native tokens are typically not ERC-20s, so they do not support the `transferFrom` function, which the metatransaction relay system underlying Tx Relay utilizes. In this case, we’d recommend using the [Swap API](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote), wherein the user will pay for the gas of the transaction, with the chain’s native token. Otherwise, you can recommend your users to wrap their ETH into WETH (or equivalent, in other chains).
 
 </details>
 
@@ -37,7 +48,9 @@ Gas fees are paid by 0x, but a fee to cover the gas costs are included by defaul
 
 <summary>Why is the support limited to some tokens?</summary>
 
-For gasless swaps, we support all tokens that [Swap API](/0x-swap-api/introduction) supports on Polygon, while we currently only support tokens on the [Uniswap Token List](https://tokenlists.org/) on Ethereum. Gasless approvals, however, depend on the token's support (generally, for [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)). You can find the list of tokens supported for gasless approvals [here](/tx-relay-api/gasless-approvals-token-list).
+Since 0x is covering the gas cost via the sell-side token, we are taking exposure on the price movements of the `sellToken`. When gas is high, that risk can be sizable. On highly volatile tokens (long tail), this can also be sizable.
+
+The cost of gas on Polygon is much less than on Ethereum Mainnet, thus, we are able to support more tokens on Polygon.
 
 </details>
 
@@ -101,10 +114,27 @@ Although gasless approvals and gasless swap are bundled in the same transaction,
 
 <summary>What does a gasless approve + swap happy path look like, using Tx Relay?</summary>
 
-[![Click here to expand the image:]](/img/tx-relay-api/gasless-approval-tx-relay.png)
-[Click here to expand the image:]: /img/tx-relay-api/gasless-approval-tx-relay.png
-<img src="/img/tx-relay-api/gasless-approval-tx-relay.png" alt="" data-size="original"></img>
+See the flow charts [here](/tx-relay-api/guides/understanding-tx-relay-api#technical-flow-charts).
 
-![Tx Relay happy path diagram](/img/tx-relay-api/gasless-approval-tx-relay.png)
+</details>
+
+<details>
+
+<summary>I received a `No liquidity` error. Help!</summary>
+
+This error is typically triggered when there is no good market for the token pairs selected. It might also indicate
+
+</details>
+
+<details>
+
+<summary>I received a `Token X is currently unsupported` error. Help!</summary>
+
+This error is triggered when the token does not support gasless swaps.
+
+For gasless swaps, the following **sell** token lists are supported on Tx Relay:
+
+- On Ethereum Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap's Token List](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). Note, you can **buy** any token on Ethereum, provided the `sellToken` is on [Uniswap's Token List](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org).
+- On Polygon, Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports on Polygon
 
 </details>
