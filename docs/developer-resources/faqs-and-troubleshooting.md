@@ -1,10 +1,10 @@
 ---
-sidebar_label: FAQs & Troubleshooting
+sidebar_label: FAQ & Troubleshooting
 sidebar_position: 2
-description: FAQs & Troubleshooting
+description: FAQ & Troubleshooting
 ---
 
-# 🤔 FAQs & Troubleshooting
+# 🤔 FAQ & Troubleshooting
 
 **Categories**
 
