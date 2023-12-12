@@ -122,7 +122,7 @@ See the flow charts [here](/tx-relay-api/guides/understanding-tx-relay-api#techn
 
 <summary>I received a `No liquidity` error. Help!</summary>
 
-This error is typically triggered when there is no good market for the token pairs selected. It might also indicate
+This error is typically triggered when there is no good market for the token pairs selected. 
 
 </details>
 
