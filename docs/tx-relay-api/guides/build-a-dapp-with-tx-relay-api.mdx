@@ -1,22 +1,16 @@
 ---
-sidebar_label: Build a dApp with Tx Relay API
+sidebar_label: Build a dApp with Tx Relay (Next.js)
 sidebar_position: 3
 description: Learn how to implement Tx Relay API to build gasless approvals and swaps into your dApp.
 ---
 
-# How to build a dApp with Tx Relay API
+# How to build a dApp with Tx Relay API (Next.js)
 
 _Learn how to use Tx Relay API to build gasless approvals and swaps into your dApp._
 
-:::tip
-
-Prefer to watch a video or see a code demo instead? Check out [this explainer video](https://youtu.be/0d0tVwJCbiw?si=6RBxZ8ZmGblXLP-E) or [0x Code Examples](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app).
-
-:::
-
 ## Overview
 
-In this guide, we walk-through the [Tx Relay API demo app](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) built with [Next.js](https://nextjs.org/) and [0x Tx Relay API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
+In this guide, we walk-through the Tx Relay API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)) built with [Next.js](https://nextjs.org/) and [0x Tx Relay API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
 
 The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
 
@@ -26,19 +20,27 @@ Checkout the live demo 👉 [here](https://0x-examples.vercel.app/)
 
 ![](/img/tx-relay-api/tx-relay-demo-screen-recording.gif)
 
-:::info
-This is a demo, and is not ready for production use. The code has not been audited and does not account for all error handling. Use at your own risk.
-:::
-
 Enabling Tx Relay in your app allows you to:
 
 - build more intuitive user interfaces and user flows in your applications
 - improve your conversion funnel drop-offs due to insufficient gas, and
 - set yourself up to easily onboard the next wave of users into Web3.
 
+Video tutorial version here:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/0d0tVwJCbiw?si=gY-tgTDJo7h4t4aH"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
+
 ## Pre-requisites
 
-:::tip
+:::info
 Tx Relay API is currently in Beta Access. To obtain access, request it directly through the 0x Dashboard - [login or signup here](https://dashboard.0x.org/create-account). Once access is granted, you can utilize your existing API key to access Tx Relay API Beta
 :::
 
@@ -56,6 +58,8 @@ Currently, Tx Relay API is supported on Mainnet and Polygon. This demo is built 
 
 :::info
 Here is the github repo, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app
+
+This is a demo, and is not ready for production use. The code has not been audited and does not account for all error handling. Use at your own risk.
 :::
 
 ## How does it work?
@@ -466,13 +470,26 @@ In [`/page`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-ap
 Reminder: `/tx-relay/v1/swap/status/:trade-hash` doesn’t take `trade-hash` as a query param, just concatenate it on as part of the query
 :::
 
-### Try it out
+## Monetization your swap integration
+
+And as your business grows, Swap API offers low-friction ways to monetize your products.
+
+Web3 teams can leverage Swap API to unlock new revenue streams by easily tapping into affiliate fee and trade surplus features. Regardless of whether you’re on a [free or paid plan](https://0x.org/pricing), monetization options are available to all integrators.
+
+0x APIs offers two monetization options out-of-the-box:
+
+- Collect affiliate fees (i.e. trading fee or commission)
+- Collect trade surplus (i.e. positive slippage)
+
+For more details about monetizing, check out the [How to monetize your app using 0x Swap API](/0x-swap-api/guides/monetize-your-app-using-swap) guide which discusses pricing considerations and shows code samples for how to easily implement these options.
+
+## Try it out
 
 :::info
 Here is code for the demo app, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app
 :::
 
-### Conclusion
+## Conclusion
 
 Building with Tx Relay API allows you to efficiently and securly implement gasless swaps and gasless approvals into your dApp and workflow, helping grow your user base with seamless onboarding and increasing retention.
 
