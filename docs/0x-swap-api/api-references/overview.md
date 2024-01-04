@@ -48,38 +48,6 @@ For example, you can request `https://api.0x.org/swap/v1/quote` which represents
 
 A major version bump occurs whenever a backwards incompatible change occurs to an `endpoint`, in which case every `endpoint` in that `path` will be on the next version. Old versions of the API will be deprecated and new features will be rolled out to them on a best-effort basis.
 
-## Pagination
-
-Requests that return potentially large collections are paginated and respond to the `page` and `perPage` parameters. For example:
-
-```
-https://api.0x.org/sra/v4/orders?page=3&perPage=20
-```
-
-Any endpoint that follows this convention will display the following:
-
-`This endpoint is paginated.`
-
-And will only document the objects in the `records` field.
-
-#### Request
-
-| Query Param | Description                                                                                   |
-| ----------- | --------------------------------------------------------------------------------------------- |
-| `page`      | (Optional, defaults to "1") The page index (1-indexed) requested in the collection.           |
-| `perPage`   | (Optional, defaults to "20") The amount of records to return per page. The maximum is "1000". |
-
-#### Response
-
-| Field     | Description                                                                           |
-| --------- | ------------------------------------------------------------------------------------- |
-| `page`    | The page index (1-indexed) of returned in the response (same as request if provided). |
-| `perPage` | The amount of `records` requested in the pagination, but not necessarily returned.    |
-| `total`   | The total amount of `records` in the collection (across all pages).                   |
-| `records` | The actual `records` returned for this page of the collection.                        |
-
-If a query provides an unreasonable (ie. too high) `perPage` value, the response can return a validation error as specified in the errors section. If the query specifies a `page` that does not exist (ie. there are not enough `records`), the response will return an empty `records` array.
-
 ## Allowance Targets
 
 Some interactions with 0x require or are improved by setting [token allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances), or in other words, giving 0x's smart contracts permission to move certain tokens on your behalf. Some examples include -
