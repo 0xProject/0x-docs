@@ -99,7 +99,7 @@ import ExplorerTag from '/static/img/introduction/0x-dashboard-0x-explorer-tag.p
 
 On the final screen, copy your API key! This key is unique and tied to your app. **Do not share it**. You can also create additional API keys for the app if you need them.
 
-Your API keys will allow you to authenticate requests on 0x. Remembmer to specify the key in your requests vai the `0x-api-key` header parameter:
+Your API keys will allow you to authenticate requests on 0x. Remember to specify the key in your requests via the `0x-api-key` header parameter:
 
 ```mdx-code-block
 import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-key.png';
@@ -111,13 +111,13 @@ import DashboardCopyAPIKey from '/static/img/introduction/0x-dashboard-copy-api-
 
 <br></br>
 
-This key will allow you to authenticate requests on 0x. Remember to specify the key in your requests via the `0x-api-key` header parameter:
 
 <br></br>
 
 ```bash
 // Replace the API key in the header with your sample key
-curl --location --request GET 'https://api.0x.org/swap/v1/quote?buyToken=DAI&sellToken=ETH&sellAmount=100000&excludedSources=Kyber' --header '0x-api-key: [api-key]'
+curl https://api.0x.org/swap/v1/quote?buyToken=0x6B175474E89094C44Da98b954EedeAC495271d0F&sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&sellAmount=100000&excludedSources=Kyber&takerAddress=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045  --header '0x-api-key: [api-key]'
+
 ```
 
 ## 4. Manage Your App

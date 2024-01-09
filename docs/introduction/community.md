@@ -16,7 +16,11 @@ As a first step in your troubleshooting, we recommend asking our AI-powered sear
 
 The 0x developer support team is available to quickly answer your technical questions.
 
-Please create an account on [0x Dashboard](https://dashboard.0x.org/) to contact the support team through the [Intercom messenger](https://0x.org/docs/introduction/getting-started#6-have-a-question) in the bottom right corner of the page
+Contant the support team either through the "Intercom messenger" in the bottom right corner throughout the [0x.org website](https://0x.org/):
+
+![Intercom Messenger Website](/img/introduction/intercom-website.gif)
+
+or directly from your [0x Dashboard](https://dashboard.0x.org/):
 
 ![Intercom Messenger](/img/introduction/intercom-messenger.gif)
 
