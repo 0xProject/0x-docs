@@ -11,7 +11,7 @@ description: Development Status for Tx Relay. Get access to Sandbox.
 Tx Relay API is currently supported on Mainnet (1) and Polygon (137). Read more accessing the [API endpoints](https://0x.org/docs/tx-relay-api/api-references/overview).
 
 :::info
-To create an account, and get your live API keys to access the Tx Relay, visit the **[0x Dashboard](https://dashboard.0x.org/)**.
+To create an account, and get your live API keys to access the Tx Relay, visit the **[0x Dashboard](https://go.0x.org/create-account-txrelay-z)**.
 :::
 
 Tx Relay allows you to implement:
