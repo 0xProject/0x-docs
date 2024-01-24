@@ -10,7 +10,7 @@ description: Tx Relay FAQ
 
 <summary>What chains will Tx Relay be on?</summary>
 
-Through 2023, Ethereum Mainnet and Polygon….more chains to come
+Ethereum Mainnet (1) and Polygon (137) ….more chains to come
 
 </details>
 
@@ -40,7 +40,9 @@ Note, the only trades Tx Relay CANNOT support are those where end-user is trying
 <summary>Who pays for the gas fees to allow those swaps to happen?
 </summary>
 
-Gas fees are paid by 0x, but a fee to cover the gas costs are included by default to the end user. In other words, while the gas is technically paid by 0x, users will cover the costs in terms of fees. An application may choose to sponsor transactions, in which case they will pay 0x directly, and users will not be billed on chain
+0x covers the gas fee up front. This cost is then wrapped into the trade and paid for in the form of the token the user is trading. 
+
+Applications may choose to sponsor transactions, in which case they will pay 0x directly, and users will not be billed on chain
 
 </details>
 
