@@ -10,6 +10,10 @@ description: Addressing common issues that come up with Swap API.
 
 Here's a quick pre-flight checklist of things that need to be in order for a swap to properly execute.
 
+## Error Codes
+
+See [Error codes](/introduction/error-codes) for a full list of common 0x error codes and how to resolve them.
+
 ## Working in Testnet
 
 If you are building on a testnet (e.g. Sepolia, Mumbai), be aware that only a subset of DEX sources available on Ethereum mainnet are available on testnet. This may cause errors, such as `INSUFFICIENT_ASSET_LIQUIDITY` error.

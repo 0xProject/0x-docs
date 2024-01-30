@@ -14,6 +14,7 @@ const sidebars = {
         "introduction/guides",
         "introduction/community",
         "introduction/0x-cheat-sheet",
+        "introduction/error-codes",
         "developer-resources/faqs-and-troubleshooting",
       ],
       collapsed: false,
