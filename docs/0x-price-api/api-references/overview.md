@@ -70,69 +70,7 @@ The following table includes commonly used contract addresses. For a full list o
 
 ## Errors
 
-Unless the spec defines otherwise, errors to bad requests should respond with HTTP 4xx or status codes.
-
-### Common Error Codes
-
-| Code | Reason                                   |
-| ---- | ---------------------------------------- |
-| 400  | Bad Request – Invalid request format     |
-| 404  | Not found                                |
-| 429  | Too many requests - Rate limit exceeded  |
-| 500  | Internal Server Error                    |
-| 501  | Not Implemented                          |
-| 503  | Server Error - Too many open connections |
-
-### Error reporting format
-
-For all 400 responses, see the [error response schema](https://github.com/0xProject/0x-monorepo/blob/development/packages/json-schemas/schemas/relayer_api_error_response_schema.json#L1).
-
-```json
-{
-  "code": 101,
-  "reason": "Validation failed",
-  "validationErrors": [
-    {
-      "field": "maker",
-      "code": 1002,
-      "reason": "Invalid address"
-    }
-  ]
-}
-```
-
-#### General error codes
-
-| Code | Reason                              |
-| ---- | ----------------------------------- |
-| 100  | Validation Failed                   |
-| 101  | Malformed JSON                      |
-| 102  | Order submission disabled           |
-| 103  | Throttled                           |
-| 104  | Not Implemented                     |
-| 105  | Transaction Invalid                 |
-| 106  | Unable to Submit on Behalf Of Taker |
-| 107  | Invalid API Key                     |
-| 108  | Service Disabled                    |
-| 109  | Insufficient funds for transaction  |
-| 110  | ETH selling is not supported        |
-| 111  | Gas estimation failed               |
-
-#### Validation error codes
-
-| Code | Reason                    |
-| ---- | ------------------------- |
-| 1000 | Required field            |
-| 1001 | Incorrect format          |
-| 1002 | Invalid address           |
-| 1003 | Address not supported     |
-| 1004 | Value out of range        |
-| 1005 | Invalid signature or hash |
-| 1006 | Unsupported option        |
-| 1007 | Invalid 0x order          |
-| 1008 | Internal error            |
-| 1009 | Token is not supported    |
-| 1010 | Field is invalid          |
+See [Error codes](/introduction/error-codes) for a full list of common 0x error codes and how to resolve them.
 
 ## Common Objects
 

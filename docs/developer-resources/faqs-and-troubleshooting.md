@@ -24,6 +24,14 @@ description: FAQ & Troubleshooting
 
 <details>
 
+<summary>I received an error code. Help!</summary>
+
+See [Error codes](/introduction/error-codes) for a full list of common 0x error codes and how to resolve them.
+
+</details>
+
+<details>
+
 <summary>Why does my 0x transaction revert?</summary>
 
 If your 0x quote is reverting, besides the standard revert issues related to ETH transactions, we recommend check the following are set correctly:
