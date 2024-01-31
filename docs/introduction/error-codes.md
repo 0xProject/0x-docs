@@ -18,8 +18,8 @@ Unless the spec defines otherwise, errors to bad requests should respond with HT
 | ---- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | 400  | Bad Request – Invalid request format    | Check that the API request was formatted properly.                                                                               |
 | 404  | Not found                               | Check that the API request was formatted properly.                                                                               |
-| 429  | Too many requests - Rate limit exceeded | You have exceeded your rate limit. Contact support to resolve the issue.                                                         |
-| 500  | Internal Server Error                   | An unexpected error has occurred. Contact support to resolve the issue.                                                          |
+| 429  | Too many requests - Rate limit exceeded | You have exceeded your rate limit. [Contact support](https://help.0x.org/en/articles/8230055-how-to-get-support-from-the-0x-team) to resolve the issue.                                                         |
+| 500  | Internal Server Error                   | An unexpected error has occurred. [Contact support](https://help.0x.org/en/articles/8230055-how-to-get-support-from-the-0x-team) to resolve the issue.                                                          |
 | 501  | Not Implemented                         | The API does not support the given endpoint you’ve requested. Please check the method (e.g. GET) and the endpoint you are using. |
 
 ### Error reporting format
