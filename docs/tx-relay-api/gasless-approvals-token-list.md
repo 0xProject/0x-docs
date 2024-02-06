@@ -6,7 +6,7 @@ description: Gasless Approvals Token List
 
 # Gasless Approvals Token List
 
-The following tokens work with gasless approvals on [Ethereum Mainnet](/tx-relay-api/gasless-approvals-token-list#ethereum-mainnet) and [Polygon](/tx-relay-api/gasless-approvals-token-list#polygon) for [Tx Relay API](/tx-relay-api/introduction).
+The following tokens work with gasless approvals on [Ethereum Mainnet](/tx-relay-api/gasless-approvals-token-list#ethereum-mainnet), [Polygon](/tx-relay-api/gasless-approvals-token-list#polygon) and [Arbitrum](/tx-relay-api/gasless-approvals-token-list#arbitrum) for [Tx Relay API](/tx-relay-api/introduction).
 
 You can also examine a token’s eligibility at trade time, by observing the response from requests to `/tx-relay/v1/swap/quote`. If the variable `isGaslessAvailable` = `true`, the token the user is selling supports gasless approvals.
 
@@ -147,3 +147,91 @@ You can also examine a token’s eligibility at trade time, by observing the res
 | SHIBA INU (PoS)             | 0x6f8a06447ff6fcf75d803135a7de15ce88c1d4ec |
 | Dogelon (PoS)               | 0xe0339c80ffde91f3e20494df88d4206d86024cdf |
 | GLM                         | 0x0B220b82F3eA3B7F6d9A1D8ab58930C064A2b5Bf |
+
+### Arbitrum
+
+| Token Name                                   | Address                                    |
+|----------------------------------------------|--------------------------------------------|
+| Wrapped Ether                                | 0x82af49447d8a07e3bd95bd0d56f35241523fbab1 |
+| USD Coin (Arb1)                              | 0xff970a61a04b1ca14834a43f5de4533ebddb5cc8 |
+| Tether USD                                   | 0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9 |
+| USD Coin                                     | 0xaf88d065e77c8cc2239327c5edb3a432268e5831 |
+| Arbitrum                                     | 0x912ce59144191c1204e64559fe8253a0e49e6548 |
+| Wrapped BTC                                  | 0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f |
+| Dai Stablecoin                               | 0xda10009cbd5d07dd0cecc66161fc93d7c9000da1 |
+| ChainLink Token                              | 0xf97f4df75117a78c1a5a0dbb814af92458539fb4 |
+| Pendle                                       | 0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8 |
+| MAGIC                                        | 0x539bde0d7dbd336b79148aa742883198bbf60342 |
+| Axelar Wrapped USDC                          | 0xeb466342c4d449bc9f53a865d5cb90586f405215 |
+| Rocket Pool ETH                              | 0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8 |
+| agEUR                                        | 0xfa5ed56a203466cbbc2430a43c66b9d8723528e7 |
+| Balancer Aave v3 Boosted Pool (WETH)         | 0xda1cd1711743e57dd57102e9e61b75f3587703da |
+| Balancer Aave v3 Boosted Pool (USDC)         | 0x7c82a23b4c48d796dee36a9ca215b641c6a8709d |
+| Balancer Aave v3 Boosted Pool (USDC)         | 0xbd724eb087d4cc0f61a5fed1fffaf937937e14de |
+| Wootrade Network                             | 0xcafcd85d8ca7ad1e1c6f82f651fa15e33aefd07b |
+| LUSD Stablecoin                              | 0x93b346b6bc2548da6a1e7d98e9a421b42541425b |
+| Dopex Governance Token                       | 0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55 |
+| Arbitrum tBTC v2                             | 0x6c84a8f1c29108f47a79964b5fe888d4f4d0de40 |
+| Lido DAO Token                               | 0x13ad51ed4f1b7e9dc168d8a00cb3f4ddd85efa60 |
+| Balancer Aave v3 Boosted Pool (DAI)          | 0x9e34631547adcf2f8cefa0f5f223955c7b137571 |
+| Balancer Aave v3 Boosted Pool (USDT)         | 0x4739e50b59b552d490d3fdc60d200977a38510c0 |
+| Balancer Aave v3 Boosted Pool (WETH)         | 0xad28940024117b442a9efb6d0f25c8b59e1c950b |
+| Axelar Wrapped wstETH                        | 0x9cfb13e6c11054ac9fcb92ba89644f30775436e4 |
+| Magic Internet Money                         | 0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a |
+| Balancer Aave v3 Boosted Pool (USDT)         | 0xc46be4b8bb6b5a3d3120660efae9c5416318ed40 |
+| Sperax USD                                   | 0xd74f5255d557944cf7dd0e45ff521520002d5748 |
+| Balancer Aave v3 Boosted Pool (USDCe)        | 0x40af308e3d07ec769d85eb80afb116525ff4ac99 |
+| Uniswap                                      | 0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0 |
+| nan                                          | 0x033f193b3fceb22a440e89a2867e8fee181594d9 |
+| Choke                                        | 0x6fc2680d8ad8e8312191441b4eca9eff8d06b45a |
+| Equilibria Token                             | 0xbfbcfe8873fe28dfa25f1099282b088d52bbad9c |
+| Kujira native asset                          | 0x3a18dcc9745edcd1ef33ecb93b0b6eba5671e7ca |
+| GenomesDAO                                   | 0x59a729658e9245b0cf1f8cb9fb37945d2b06ea27 |
+| Livepeer Token                               | 0x289ba1701c2f088cf0faf8b3705246331cb8a839 |
+| Frax                                         | 0x17fc002b466eec40dae837fc4be5c67993ddbd6f |
+| Kyber Network Crystal v2                     | 0xe4dddfe67e7164b0fe14e218d80dc4c08edc01cb |
+| Hegic                                        | 0x431402e8b9de9aa016c743880e04e517074d8cec |
+| Governance OHM                               | 0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1 |
+| Plutus ARB                                   | 0x7a5d193fe4ed9098f7eadc99797087c96b002907 |
+| Balancer Aave v3 Boosted Pool (DAI)          | 0x6cb787a419c3e6ee2e9ff365856c29cd10659113 |
+| Coinbase Wrapped Staked ETH                  | 0x1debd73e752beaf79865fd6446b0c970eae7732f |
+| Fluid USDC                                   | 0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a |
+| Balancer                                     | 0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8 |
+| Vesta                                        | 0xa684cd057951541187f288294a1e1c2646aa2d24 |
+| Umami                                        | 0x1622bf67e6e5747b81866fe0b85178a93c7f86e3 |
+| Silo Governance Token                        | 0x0341c0c0ec423328621788d4854119b97f44e391 |
+| GMBL COMPUTER CHiP                           | 0xe9a5af50874c0ef2748b5db70104b5ccb5557f6d |
+| Aury                                         | 0x11bf4f05eb28b802ed3ab672594decb20ffe2313 |
+| Hydranet                                     | 0x3404149e9ee6f17fb41db1ce593ee48fbdcd9506 |
+| Dola USD Stablecoin                          | 0x6a7661795c374c0bfc635934efaddff3a7ee23b6 |
+| Matic Token                                  | 0x561877b6b3dd7651313794e5f2894b2f18be0766 |
+| Curve DAO Token                              | 0x11cdb42b0eb46d95f990bedd4695a6e3fa034978 |
+| Jones DAO                                    | 0x10393c20975cf177a3513071bc110f7962cd67da |
+| USDV                                         | 0x323665443cef804a3b5206103304bd4872ea4253 |
+| Mobox                                        | 0xda661fa59320b808c5a6d23579fcfedf1fd3cf36 |
+| Army of Fortune Coin                         | 0x4568ca00299819998501914690d6010ae48a59ba |
+| Y2K                                          | 0x65c936f008bc34fe819bce9fa5afd9dc2d49977f |
+| Premia                                       | 0x51fc0f6660482ea73330e414efd7808811a57fa2 |
+| SushiToken                                   | 0xd4d42f0b6def4ce0383636770ef773390d85c61a |
+| Aave Token                                   | 0xba5ddd1f9d7f570dc94a51479a000e3bce967196 |
+| Frax Share                                   | 0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7 |
+| New Crypto Space                             | 0x9842989969687f7d249d01cae1d2ff6b7b6b6d35 |
+| Thales DAO Token                             | 0xe85b662fe97e8562f4099d8a1d5a92d4b453bf30 |
+| Vertex                                       | 0x95146881b86b3ee99e63705ec87afe29fcc044d9 |
+| Balancer Aave v3 Boosted StablePool          | 0xee02583596aee94cccb7e8ccd3921d955f17982a |
+| Elk                                          | 0xeeeeeb57642040be42185f49c52f7e9b38f8eeee |
+| Olympus                                      | 0xf0cb2dc0db5e6c66b9a70ac27b06b878da017028 |
+| Lumerin                                      | 0x0fc0c323cf76e188654d63d62e668cabec7a525b |
+| noiseGPT                                     | 0xadd5620057336f868eae78a451c503ae7b576bad |
+| Axelar Wrapped KNC                           | 0xb448ec505c924944ca8b2c55ef05c299ee0781df |
+| Spell Token                                  | 0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af |
+| Flashstake                                   | 0xc628534100180582e43271448098cb2c185795bd |
+| Modular                                      | 0x244ae62439c1ef3187f244d8604ac2c391ef2b53 |
+| Balancer wstETH-Boosted Aave WETH StablePool | 0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7 |
+| GOVI                                         | 0x07e49d5de43dda6162fa28d24d5935c151875283 |
+| EUROe Stablecoin                             | 0xcf985aba4647a432e60efceeb8054bbd64244305 |
+| Balancer Aave v3 Boosted StablePool          | 0xc6eee8cb7643ec2f05f46d569e9ec8ef8b41b389 |
+| STFX                                         | 0x7dd747d63b094971e6638313a6a2685e80c7fb2e |
+| Cap                                          | 0x031d35296154279dc1984dcd93e392b1f946737b |
+| Hop                                          | 0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc |
+| Lyra Token                                   | 0x079504b86d38119f859c4194765029f692b7b7aa |
