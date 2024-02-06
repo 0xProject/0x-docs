@@ -55,7 +55,7 @@ Before diving into this walk-through, it's essential to ensure you are familiar 
   - [Introduction to Tx Relay](/tx-relay-api/introduction)
   - [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
 
-Currently, Tx Relay API is supported on Mainnet and Polygon. This demo is built on Polygon to provide a cost-effective environment for experimentation. You can always modify this app to support Mainnet by adjusting the [chain id](/tx-relay-api/api-references/overview#overview) header for each endpoint.
+Currently, Tx Relay API is supported on Mainnet, Polygon and Arbitrum. This demo is built on Polygon to provide a cost-effective environment for experimentation. You can always modify this app to support Mainnet by adjusting the [chain id](/tx-relay-api/api-references/overview#overview) header for each endpoint.
 
 :::info
 Here is the github repo, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app
@@ -131,7 +131,7 @@ Here we cover a summary of core concepts and when each API endpoint is used in t
 - [🪙 Token lists](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#-token-lists)
 
   - (1) Gasless approvals token list - Gasless approvals are available for ERC-20 token that supports Permit (EIP-2612). You can find a list of these tokens in the [gasless approvals list](/tx-relay-api/gasless-approvals-token-list) or you can also use [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response) to check if `isGaslessAvailable = true`
-  - (2) Supported sell tokens - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon, all Swap API supported tokens (Polygon)
+  - (2) Supported sell tokens - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon and Arbitrum, all Swap API supported tokens are supported.
 
 - [🏷 PriceView](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#-priceview)
   - Component for users to browse for a price without committing to a trade (i.e. get indicative price)
@@ -180,7 +180,7 @@ Tx Relay API offers gasless approvals and gasless swaps, but for a subset of tok
 
 - **Gasless approvals tokens list** - You can find a list of tokens that work with gasless approvals in the [gasless approvals token list](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list). Generally, these are tokens that support EIP-2612. You can also examine a token’s eligibility at trade time, by observing the response from requests to [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response). If the variable `isGaslessAvailable = true`, the token the user is selling supports gasless approvals.
 
-- **Supported sell tokens list** - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon, all Swap API supported tokens (Polygon)
+- **Supported sell tokens list** - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon and Arbitrum, all Swap API supported tokens are supported.
 
 This demo how to utilize these two lists for a specific use case on the Polygon Network (137) - trading USDC (_[gasless approved token](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list#polygon)_ that is _on the Polygon-supported sell list_) for WMATIC (_a non-gasless approved token_)
 

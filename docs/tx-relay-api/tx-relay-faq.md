@@ -8,9 +8,9 @@ description: Tx Relay FAQ
 
 <details>
 
-<summary>What chains will Tx Relay be on?</summary>
+<summary>What chains does Tx Relay support?</summary>
 
-Ethereum Mainnet (1) and Polygon (137) ….more chains to come
+Ethereum Mainnet (1), Polygon (137) and Arbitrum (42161). Support for Optimism and Base is coming soon.
 
 </details>
 
@@ -29,7 +29,7 @@ For gasless approvals:
 For gasless swaps, the following **sell** token lists are supported:
 
 - On Ethereum Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap's Token List](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). Note, you can **buy** any token on Ethereum, provided the `sellToken` is on Uniswap Tokenlist
-- On Polygon, Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports on Polygon
+- On Polygon and Arbitrum, Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports.
 
 Note, the only trades Tx Relay CANNOT support are those where end-user is trying to sell a native token from their wallet (eg: selling ETH on Mainnet, or selling MATIC on Polygon). This is because native tokens are typically not ERC-20s, so they do not support the `transferFrom` function, which the metatransaction relay system underlying Tx Relay utilizes. In this case, we’d recommend using the [Swap API](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote), wherein the user will pay for the gas of the transaction, with the chain’s native token. Otherwise, you can recommend your users to wrap their ETH into WETH (or equivalent, in other chains).
 
@@ -52,7 +52,7 @@ Applications may choose to sponsor transactions, in which case they will pay 0x 
 
 Since 0x is covering the gas cost via the sell-side token, we are taking exposure on the price movements of the `sellToken`. When gas is high, that risk can be sizable. On highly volatile tokens (long tail), this can also be sizable.
 
-The cost of gas on Polygon is much less than on Ethereum Mainnet, thus, we are able to support more tokens on Polygon.
+The cost of gas on Polygon and Arbitrum is much less than on Ethereum Mainnet, thus, we are able to support more tokens on both.
 
 </details>
 
@@ -145,6 +145,6 @@ This error is triggered when the token does not support gasless swaps.
 For gasless swaps, the following **sell** token lists are supported on Tx Relay:
 
 - On Ethereum Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap's Token List](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). Note, you can **buy** any token on Ethereum, provided the `sellToken` is on [Uniswap's Token List](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org).
-- On Polygon, Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports on Polygon
+- On Polygon and Arbitrum, Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports.
 
 </details>
