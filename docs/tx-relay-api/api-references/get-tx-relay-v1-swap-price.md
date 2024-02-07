@@ -13,7 +13,7 @@ Indicative pricing can be obtained by submitting a GET request to `/tx-relay/v1/
 ### Example Request
 
 :::info
-An API key should always be specified when requesting all possible sources of liquidity. API keys are specified via a header parameter called `0x-api-key`. Chain ids are specified via a header parameter called `0x-chain-id` which currently supports `1` (Ethereum) and `137` (Polygon).
+An API key should always be specified when requesting all possible sources of liquidity. API keys are specified via a header parameter called `0x-api-key`. Chain ids are specified via a header parameter called `0x-chain-id` which currently supports `1` (Ethereum), `137` (Polygon), and `42161` (Arbitrum).
 :::
 
 :::info

@@ -63,7 +63,7 @@ https://api.0x.org/tx-relay/v1/swap/price              // Request an indicative 
 &buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270   // Buy WMATIC
 &takerAddress=$USER_TAKER_ADDRESS                      // Address that will make the trade
 --header '0x-api-key: [API_KEY]'                       // Replace with your own API key
---header '0x-chain-id: 137'                            // Supports Ethereum (1) & Polygon (137)
+--header '0x-chain-id: 137'                            // Supports Ethereum (1), Polygon (137) and Arbitrum (42161)
 ```
 
 ### Sample cURL request
@@ -133,7 +133,7 @@ https://api.0x.org/tx-relay/v1/swap/quote              // Request a firm quote
 &checkApproval=true                                    // If true, check for approval and uses gasless approval feature
 &takerAddress=$USER_TAKER_ADDRESS                      // Address that will make the trade
 --header '0x-api-key: [API_KEY]'                       // Replace with your own API key
---header '0x-chain-id: 137'                            // Supports Ethereum (1) & Polygon (137)
+--header '0x-chain-id: 137'                            // Supports Ethereum (1), Polygon (137) and Arbitrum (42161)
 ```
 
 ### Sample cURL request
