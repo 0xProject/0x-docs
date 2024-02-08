@@ -15,7 +15,11 @@ There are currently four endpoints involved in a tx relay transaction:
 - [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit)
 - [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md)
 
-Tx Relay API is supported on Mainnet, Polygon and Arbitrum, available via https://api.0x.org/ and providing the corresponding chain id in `0x-chain-id` header.
+Tx Relay API is supported on  Ethereum Mainnet (1), Polygon (137), and Arbitrum (42161) available via https://api.0x.org/ and providing the corresponding chain id in `0x-chain-id` header.
+
+- Ethereum (Mainnet): `0x-chain-id: 1`
+- Polygon: `0x-chain-id: 137`
+- Arbitrum One: `0x-chain-id: 42161`
 
 ## Signed Orders are Settled by 0x Protocol Smart Contracts
 
