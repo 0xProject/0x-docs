@@ -13,13 +13,24 @@ Questions? Feel free to reach us at the following:
 - Booth #317 at Futureverse Shillage
 - Join our [Discord `#❄┊ethdenver-2024` channel](https://discord.com/channels/435912040142602260/1209687550340632577)
 
-**TL;DR:** 0x has one “Feature Integration” bounty. We are offering 6 prizes to the best projects that use any one of 0x APIs (Swap, Tx Relay, Price). Read here for [judging criteria](/hackathons/ethdenver-guide#judging-criteria). Read here for [build resources & demo apps](http://localhost:3000/docs/hackathons/ethdenver-guide#resources).
+**TL;DR:**
+0x has one “Feature Integration” bounty. We are offering 6 prizes to the best projects that use any one of 0x APIs (Swap, Tx Relay, Price). Read here for [judging criteria](/hackathons/ethdenver-guide#judging-criteria). Read here for [build resources & demo apps](http://localhost:3000/docs/hackathons/ethdenver-guide#resources).
 
 ---
 
+## What is 0x?
+
+[0x](https://0x.org/) offers professional-grade APIs that aggregate and enable swaps at the best price on 5 million tokens across 130+ DEXes and 9 chains.
+
+- [Swap API](https://0x.org/products/swap) allows devs to easily add ERC-20 swap functionality into their dapps.
+- [Tx Realy API](https://0x.org/products/tx-relay) empowers a gasless swap experience with gasless approvals and gasless swaps.
+- [Price API](https://0x.org/docs/category/price-api) gives you access to realtime DEX prices.
+
+These are the same APIs that power many of the most popular dapps including - Coinbase Wallet, Matcha, Zapper, Metamask, and more.
+
 ## 0x Bounty Prizes
 
-0x is offering 6 prizes to the best projects that uses any one of 0x APIs (Swap, Tx Relay, Price) -
+0x is offering 6 prizes to the best projects that uses any one of 0x APIs ([Swap](https://0x.org/docs/category/swap-api), [Tx Relay](https://0x.org/docs/category/tx-relay-api), [Price](https://0x.org/docs/category/price-api)) -
 
 - 🥇 1st Place: $3,000
 - 🥈 2nd Place: $2,500
@@ -28,7 +39,7 @@ Questions? Feel free to reach us at the following:
 - 💡 Most Innovative: $1,000
 - 🌐 Most Scalable: $1,000
 
-**After the Hackathon, **prize winners and participants of the 0x bounty may be selected for future collaborations or partnerships. We love featuring our integrators and showcasing their work!
+**After the Hackathon,** prize winners and participants of the 0x bounty may be selected for future collaborations or partnerships. We love featuring our integrators and showcasing their work!
 
 ## Judging Criteria
 
