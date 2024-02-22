@@ -14,7 +14,7 @@ Questions? Feel free to reach us at the following:
 - Join our [Discord `#❄┊ethdenver-2024` channel](https://discord.com/channels/435912040142602260/1209687550340632577)
 
 **TL;DR:**
-0x has one “Feature Integration” bounty. We are offering 6 prizes to the best projects that use any one of 0x APIs - Swap, Tx Relay, Price. Read here for [judging criteria](/hackathons/ethdenver-guide#judging-criteria). Read here for [build resources & demo apps](http://localhost:3000/docs/hackathons/ethdenver-guide#resources).
+0x has one “Feature Integration” bounty. We are offering 6 prizes to the best projects that use any one of 0x APIs - Swap, Tx Relay, Price. Read here for [judging criteria](/hackathons/ethdenver-guide#judging-criteria). Read here for [build resources & demo apps](/hackathons/ethdenver-guide#resources).
 
 ---
 
