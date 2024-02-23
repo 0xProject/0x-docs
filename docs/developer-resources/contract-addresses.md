@@ -89,6 +89,13 @@ You can find the full list of addresses here: [https://github.com/0xProject/prot
 - ExchangeProxyGovernor: [0x1fe80d5ad9464dba2d60b88e449305f184823f8a](https://arbiscan.io/address/0x1fe80d5ad9464dba2d60b88e449305f184823f8a)
 - ExchangeProxyTransformerDeployer: [0x29f80c1f685e19ae1807063eda432f431ac623d0](https://arbiscan.io/address/0x29f80c1f685e19ae1807063eda432f431ac623d0)
 
+### Base (Chain ID: 8453)
+
+- ExchangeProxy: [0xdef1c0ded9bec7f1a1670819833240f027b25eff](https://basescan.org/address/0xdef1c0ded9bec7f1a1670819833240f027b25eff)
+- ExchangeProxyFlashWallet: [0xdb6f1920a889355780af7570773609bd8cb1f498](https://basescan.org/address/0xdb6f1920a889355780af7570773609bd8cb1f498)
+- ExchangeProxyGovernor: [0xecc4f2a8e0fd933623b2ea4ad84bffd12cb1286c](https://basescan.org/address/0xecc4f2a8e0fd933623b2ea4ad84bffd12cb1286c)
+- ExchangeProxyTransformerDeployer: [0x58bca53ebba1aaf25f0edcd8dad6421872fe20b2](https://basescan.org/address/0x58bca53ebba1aaf25f0edcd8dad6421872fe20b2)
+
 ## 0x v3
 
 ### Ethereum Mainnet (Chain ID: 1)
