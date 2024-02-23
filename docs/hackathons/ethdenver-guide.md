@@ -184,7 +184,7 @@ Below are some commonly asked questions at hackathons. For a full list of [0x FA
 
 <summary>Where can I get testnet funds? </summary>
 
-- [Sepolia Faucet](https://www.alchemy.com/faucets/ethereum-sepolia)
+- [Sepolia & Mumbai Faucets](https://www.alchemy.com/faucets/ethereum-sepolia)
 - Also see our [Working in the Testnet](https://0x.org/docs/0x-swap-api/guides/working-in-the-testnet) Guide for best practices on how to test with testnet tokens.
 
 </details>
