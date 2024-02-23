@@ -43,10 +43,12 @@ We are currently on v4 of the 0x protocol
 
 ### Tx Relay API Endpoints
 
-Tx Relay API is supported on Ethereum Mainnet (1), Polygon (137), and Arbitrum (42161) available via [https://api.0x.org/](https://api.0x.org/) and providing the corresponding chain id in `0x-chain-id` header.
+Tx Relay API is supported on the following chains available via [https://api.0x.org/](https://api.0x.org/) and providing the corresponding chain id in `0x-chain-id` header.
 - Ethereum (Mainnet): `0x-chain-id: 1`
-- Polygon: `0x-chain-id: 137`
 - Arbitrum One: `0x-chain-id: 42161`
+- Polygon: `0x-chain-id: 137`
+
+
 
 ### Orderbook API Endpoints
 

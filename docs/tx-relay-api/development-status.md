@@ -8,7 +8,12 @@ description: Development Status for Tx Relay.
 
 ## Current Status
 
-Tx Relay API is currently supported on Mainnet (1), Polygon (137) and Arbitrum One (42161). Read more accessing the [API endpoints](https://0x.org/docs/tx-relay-api/api-references/overview).
+Tx Relay API is supported on the following chains available via [https://api.0x.org/](https://api.0x.org/) and providing the corresponding chain id in `0x-chain-id` header.
+- Ethereum (Mainnet): `0x-chain-id: 1`
+- Arbitrum One: `0x-chain-id: 42161`
+- Polygon: `0x-chain-id: 137`
+
+Read more accessing the [API endpoints](https://0x.org/docs/tx-relay-api/api-references/overview).
 
 :::info
 To create an account, and get your live API keys to access the Tx Relay, visit the **[0x Dashboard](https://go.0x.org/create-account-txrelay-z)**.
