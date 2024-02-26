@@ -216,8 +216,3 @@ Received a quote with price 371.15289757586245518
 Filling the quote through the contract at 0x7382949f535C1bb4D64059b934d4A63A11D3DAa2...
 ✔ Successfully sold 0.1 WETH for 37.115276285540685651 DAI!
 ```
-
-## Next steps:
-
-- Refer to our [0x API swap specification](../../0x-orderbook-api/api-references/) for detailed documentation
-- If you need help building on 0x, please use[ Ethereum StackExchange](https://ethereum.stackexchange.com/questions/tagged/0x) with the '0x' tag so we're properly notified.&#x20;
