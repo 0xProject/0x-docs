@@ -30,7 +30,7 @@ Tx Relay API offers gasless approvals and gasless swaps for supported tokens.
 
 For gasless approvals:
 
-- Our list of supported tokens for gasless approvals on each chain served through the [/tx-relay/v1/swap/gasless-approval-tokens endpoint](https://api.0x.org/tx-relay/v1/swap/gasless-approval-tokens)
+- Our list of supported tokens for gasless approvals on each chain is served through the [/tx-relay/v1/swap/gasless-approval-tokens endpoint](https://api.0x.org/tx-relay/v1/swap/gasless-approval-tokens)
 - Generally, these are tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). In otherwords, these are ERC-20s with the Permit function
 - You can also examine if a token supports gasless approvals at trade time, by observing the response from requests to [/tx-relay/v1/swap/quote](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response). If the variable `isGaslessAvailable = true`, the token the user is selling supports gasless approvals.
 
