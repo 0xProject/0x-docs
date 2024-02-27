@@ -36,7 +36,7 @@ For gasless approvals:
 
 For gasless swaps, the following **sell** token lists are supported:
 
-- On Ethereum Mainnet, Tx Relay supports only selling ERC-20 tokens that are on our supoported tokens list [/tx-relay/v1/swap/supported-tokens](https://api.0x.org/tx-relay/v1/swap/supported-tokens). Note, you can **buy** any token on Ethereum, provided the `sellToken` is on Uniswap Tokenlist
+- On Ethereum Mainnet, Tx Relay supports only selling ERC-20 tokens that are on our supported tokens list [/tx-relay/v1/swap/supported-tokens](https://api.0x.org/tx-relay/v1/swap/supported-tokens). Note, you can **buy** any token on Ethereum, provided the `sellToken` is on the supported Token list
 - On all other supported chains (Polygon, Arbitrum, Base and Optimism), Tx Relay supports selling all tokens that [Swap API](/0x-swap-api/introduction) supports.
 
 Note, the only trades Tx Relay CANNOT support are those where end-user is trying to sell a native token from their wallet (eg: selling ETH on Mainnet, or selling MATIC on Polygon). This is because native tokens are typically not ERC-20s, so they do not support the `transferFrom` function, which the metatransaction relay system underlying Tx Relay utilizes. In this case, we’d recommend using the [Swap API](https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote), wherein the user will pay for the gas of the transaction, with the chain’s native token. Otherwise, you can recommend your users to wrap their ETH into WETH (or equivalent, in other chains).
