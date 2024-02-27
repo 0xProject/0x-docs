@@ -8,10 +8,16 @@ description: Development Status for Tx Relay.
 
 ## Current Status
 
-Tx Relay API is supported on the following chains available via [https://api.0x.org/](https://api.0x.org/) and providing the corresponding chain id in `0x-chain-id` header.
-- Ethereum (Mainnet): `0x-chain-id: 1`
-- Arbitrum One: `0x-chain-id: 42161`
-- Polygon: `0x-chain-id: 137`
+
+Tx Relay API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
+
+| Chain                     | Chain ID              |
+| --------------------------| ----------------------|
+| Ethereum (Mainnet)        | 1                     |
+| Polygon                   | 137                   |
+| Arbitrum                  | 42161                 |
+| Base                      | 84531                 |
+| Optimism                  | 10                    |
 
 Read more accessing the [API endpoints](https://0x.org/docs/tx-relay-api/api-references/overview).
 

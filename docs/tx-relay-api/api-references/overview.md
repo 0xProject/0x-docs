@@ -15,11 +15,21 @@ There are currently four endpoints involved in a tx relay transaction:
 - [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit)
 - [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md)
 
-Tx Relay API is supported on  Ethereum Mainnet (1), Polygon (137), and Arbitrum (42161) available via https://api.0x.org/ and providing the corresponding chain id in `0x-chain-id` header.
+Tx Relay also includes two additional endpoints to provide a list of supported tokens for each feature:
+- Gasless Approvals Token List [`/tx-relay/v1/swap/gasless-approval-tokens`](/tx-relay/v1/swap/gasless-approval-tokens)
+- Gasless Swaps Token List for Mainnet [`/tx-relay/v1/swap/supported-tokens`](/tx-relay/v1/swap/supported-tokens)
 
-- Ethereum (Mainnet): `0x-chain-id: 1`
-- Polygon: `0x-chain-id: 137`
-- Arbitrum One: `0x-chain-id: 42161`
+There is no Gasless Swaps Token List for other chains because we support swapping all tokens on those chains.
+
+Tx Relay API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
+
+| Chain                     | Chain ID              |
+| --------------------------| ----------------------|
+| Ethereum (Mainnet)        | 1                     |
+| Polygon                   | 137                   |
+| Arbitrum                  | 42161                 |
+| Base                      | 84531                 |
+| Optimism                  | 10                    |
 
 ## Signed Orders are Settled by 0x Protocol Smart Contracts
 
