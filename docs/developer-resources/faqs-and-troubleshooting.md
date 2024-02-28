@@ -284,9 +284,10 @@ See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in
 <summary>Where can I get testnet funds? </summary>
 
 - [List of Sepolia Faucets](https://faucetlink.to/sepolia)
-- [Sepolia Faucet](https://sepoliafaucet.com/)
+- [Alchemy Sepolia Faucet](https://sepoliafaucet.com/)
 - [Sepolia POW Faucet](https://sepolia-faucet.pk910.de/)
 - [Paradigm MultiFaucet](https://faucet.paradigm.xyz/) - Funds a wallet with ETH, WETH, DAI, and NFTS across 4 testnets
+- [Even more faucets](https://github.com/anettrolikova/Crypto/blob/master/README.md#faucets)
 - Also see our [Working in Testnet Guide](/0x-swap-api/guides/working-in-the-testnet)
 
 </details>
