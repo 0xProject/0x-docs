@@ -13,7 +13,7 @@ Indicative pricing can be obtained by submitting a GET request to `/tx-relay/v1/
 ### Example Request
 
 :::info
-An API key should always be specified when requesting any Tx Relay endpoint. API keys are specified via a header parameter called `0x-api-key`. Chain ids are specified via a header parameter called `0x-chain-id` which currently supports `1` (Ethereum), `137` (Polygon), `42161` (Arbitrum), `84531` (Base) and `10` (Optimism).
+An API key should always be specified when requesting any Tx Relay endpoint. API keys are specified via a header parameter called `0x-api-key`. Chain ids are specified via a header parameter called `0x-chain-id` which currently supports `1` (Ethereum), `137` (Polygon), `42161` (Arbitrum), `8453` (Base) and `10` (Optimism).
 :::
 
 :::info
