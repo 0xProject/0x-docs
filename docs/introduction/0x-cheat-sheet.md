@@ -50,7 +50,7 @@ Tx Relay API is supported on the following chains via https://api.0x.org/. Selec
 | Ethereum (Mainnet)        | 1                     |
 | Polygon                   | 137                   |
 | Arbitrum                  | 42161                 |
-| Base                      | 84531                 |
+| Base                      | 8453                  |
 | Optimism                  | 10                    |
 
 
