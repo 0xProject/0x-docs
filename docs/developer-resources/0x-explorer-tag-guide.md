@@ -10,7 +10,7 @@ description: Submitting a tag for your apps via the 0x Dashboard.
 
 Add a 0x Explorer Tag to your app on the 0x Dashboard to access on-chain transaction analytics for it on 0x Explorer.
 
-[0x Explorer](https://explorer.0x.org/?period=day) is a public dasbhoard that provides transaction tracking, liquidity source and chain breakdowns, and in-depth metrics for your apps. It also showcases your apps and their activity to the broader 0x ecosystem and potential users!
+[0x Explorer](https://explorer.0x.org/?period=day) is a public dashboard that provides transaction tracking, liquidity source and chain breakdowns, and in-depth metrics for your apps. It also showcases your apps and their activity to the broader 0x ecosystem and potential users!
 
 ![0x Explorer Screenshot](/img/developer-resources/explorer-screenshot.png)
 
