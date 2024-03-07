@@ -16,7 +16,7 @@ description: Learn about working in the testnet
 These testnets offers a subset of DEX sources available on Ethereum mainnet.
 To view the currently supported sources on each network, you can use the [/sources](/0x-swap-api/api-references/get-swap-v1-sources) endpoint.
 
-Altneratively, you can also fork Ethereum mainnet into your own testnet.
+Alternatively, you can also fork Ethereum mainnet into your own testnet.
 
 ## Available Token Pairs
 

@@ -16,11 +16,11 @@ _RFQ liquidity is currently available on Mainnet, Polygon, and Arbitrum via Swap
 
 ### An Exclusive Source of Liquidity
 
-In its role as a liqudity aggregator, 0x's APIs integrates both on- and off-chain liquidity. On-chain liquidity is sourced by sampling smart contract liquidity pools, such as Uniswap and Curve. Off-chain liquidity is sourced from professional market makers via the 0x Request-for-Quote (“RFQ”) System.
+In its role as a liquidity aggregator, 0x's APIs integrates both on- and off-chain liquidity. On-chain liquidity is sourced by sampling smart contract liquidity pools, such as Uniswap and Curve. Off-chain liquidity is sourced from professional market makers via the 0x Request-for-Quote (“RFQ”) System.
 
 The RFQ system allows traders to _request_ real time quotes from market makers. This source of liquidity is exclusive to 0x, has 0 slippage, and better trade execution.
 
-If integrators request a standard quote from the Swap API, part or all of their quote may be sourced via the **RFQ** system. In this system, the Swap API aggregates quotes from professional market makers, alongside quotes from AMMs. If the market maker quotes are more competitive than AMM quotes, they may be included in the aggreagated final price shown to the end-user. The end-user’s liquidity is ultimately provided by a combination of AMMs and professional market makers. _Everything happens under-the-hood!_
+If integrators request a standard quote from the Swap API, part or all of their quote may be sourced via the **RFQ** system. In this system, the Swap API aggregates quotes from professional market makers, alongside quotes from AMMs. If the market maker quotes are more competitive than AMM quotes, they may be included in the aggregated final price shown to the end-user. The end-user’s liquidity is ultimately provided by a combination of AMMs and professional market makers. _Everything happens under-the-hood!_
 
 ![RFQ Diagram](/img/0x-swap-api/rfq-diagram.png)
 

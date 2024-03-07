@@ -12,7 +12,7 @@ _Learn how to send your first [Swap API](/0x-swap-api/introduction) request._
 Looking for code samples and tutorials?
 
 - [Next.js 0x Demo App (TypeScript)](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s)
-- [How to Build a Token Swap DApp (HTML, CSS, Javscript)](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
+- [How to Build a Token Swap DApp (HTML, CSS, JavaScript)](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
 - [CodePen sandbox](https://codepen.io/0xProject/pen/abVJYra)
 
 :::
@@ -55,7 +55,7 @@ When setting the token allowance, make sure to provide enough allowance for the 
 
 Now, let's find the best price!
 
-The next step is to learn how to get an indiciative price which is used when a [taker](https://0x.org/docs/developer-resources/glossary#taker)(aka the user) is just _browsing_ for the price they could receive on the specified asset pair.
+The next step is to learn how to get an indicative price which is used when a [taker](https://0x.org/docs/developer-resources/glossary#taker)(aka the user) is just _browsing_ for the price they could receive on the specified asset pair.
 
 Use the [`/swap/v1/price`](/0x-swap-api/api-references/get-swap-v1-price) endpoint to get the indicative price. This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a full transaction that can be submitted to the Ethereum network (you must use [`/quote`](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-fetch-a-firm-quote) for this). Think of [`/price`](/0x-swap-api/api-references/get-swap-v1-price) as the the "read-only" version of [`/quote`](0x-swap-api/api-references/get-swap-v1-quote).
 
@@ -364,4 +364,4 @@ The `slippagePercentage` parameter determines the difference between the `price`
 ## Starter projects
 
 - [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-nextjs-demo-app) - A demo ERC20 swapping app made with 0x Swap API, Next.js, and ConnectKit
-- [(Video) Build a Token Swap dApp with 0x Swap API, ConnectKit, and Next.js](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s) - A video tutorial convering the core concepts when building any token swapping dApp.
+- [(Video) Build a Token Swap dApp with 0x Swap API, ConnectKit, and Next.js](https://www.youtube.com/watch?v=P1ECx9zKQiU&t=1s) - A video tutorial covering the core concepts when building any token swapping dApp.
