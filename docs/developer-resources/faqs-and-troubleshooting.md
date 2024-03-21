@@ -399,15 +399,7 @@ Developers can also surface this information in their UI so users can see the po
 
 <summary>What is the best way to query swap prices for many asset pairs without exceeding the rate limit?</summary>
 
-If you are looking for price data only (and do not need to submit any trades), you can get real time DEX prices for tokens pairs via our [Price API](/category/price-api).
-
-The Price API is $19 per 100k requests:
-
-- 100 RPS per app
-- 1 app
-- Pay as you go
-
-You can get started here: https://0x.org/pricing
+If you are looking for price data only (and do not need to submit any trades), you can get real time DEX prices for tokens pairs by leveraging our price endpoint as [Price API](/category/price-api). Check out our [Pricing Plans](/https://0x.org/pricing) to access higher rate limits.
 
 </details>
 
