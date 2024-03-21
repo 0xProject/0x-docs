@@ -92,7 +92,7 @@ const config = {
     ({
       image: "img/0x-social-card.jpg",
       colorMode: {
-        defaultMode: "light",
+        defaultMode: "dark",
         disableSwitch: false,
         respectPrefersColorScheme: false,
       },
