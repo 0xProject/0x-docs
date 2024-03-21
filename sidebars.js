@@ -40,6 +40,11 @@ const sidebars = {
       // collapsed: false,
     },
     {
+      type: "link",
+      label: "Token Registry API",
+      href: '/api',
+    },
+    {
       type: "category",
       label: "Tx Relay API",
       link: {

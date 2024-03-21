@@ -131,8 +131,8 @@ const config = {
           {
             to: '/api',
             label: 'API',
-            position: 'left' },
-
+            position: 'left'
+          },
           {
             href: "https://twitter.com/0xproject",
             className: "header-twitter-link",
