@@ -85,6 +85,26 @@ const config = {
         },
       }),
     ],
+    
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: 'https://token-registry.s3.amazonaws.com/schema/openapi.json',
+            route: '/api/',
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#1890ff',
+        },
+      },
+    ],
+
+
   ],
 
   themeConfig:
@@ -92,9 +112,9 @@ const config = {
     ({
       image: "img/0x-social-card.jpg",
       colorMode: {
-        defaultMode: "light",
+        defaultMode: "dark",
         disableSwitch: false,
-        respectPrefersColorScheme: false,
+        // respectPrefersColorScheme: false,
       },
       navbar: {
         title: "Docs",
@@ -108,6 +128,11 @@ const config = {
             label: "Dashboard",
             position: "left",
           },
+          {
+            to: '/api',
+            label: 'API',
+            position: 'left' },
+
           {
             href: "https://twitter.com/0xproject",
             className: "header-twitter-link",
