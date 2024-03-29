@@ -45,13 +45,6 @@ You can find the full list of addresses here: [https://github.com/0xProject/prot
 - ExchangeProxyLiquidityProviderSandbox: [0x4dd97080adf36103bd3db822f9d3c0e44890fd69](https://polygonscan.com/address/0x4dd97080adf36103bd3db822f9d3c0e44890fd69)
 - ExchangeProxyTransformerDeployer: [0xe6d9207df11c55bce2f7a189ae95e3222d5484d3](https://polygonscan.com/address/0xe6d9207df11c55bce2f7a189ae95e3222d5484d3)
 
-### Mumbai (Chain ID: **80001**)
-
-- ExchangeProxy: [0xf471d32cb40837bf24529fcf17418fc1a4807626](https://mumbai.polygonscan.com/address/0xf471d32cb40837bf24529fcf17418fc1a4807626)
-- ExchangeProxyFlashWallet: [0x64254Cf2F3AbD765BeE46f8445B76e2bB0aF5A2c](https://mumbai.polygonscan.com/address/0x64254Cf2F3AbD765BeE46f8445B76e2bB0aF5A2c)
-- ExchangeProxyGovernor: [0x30186B2e187AEDdaBf019089f9375a8DC53138E4](https://mumbai.polygonscan.com/address/0x30186B2e187AEDdaBf019089f9375a8DC53138E4)
-- ExchangeProxyTransformerDeployer: [0x05481589F447A0767DEF2b0Ed98A04Ea5f5eba50](https://mumbai.polygonscan.com/address/0x05481589F447A0767DEF2b0Ed98A04Ea5f5eba50)
-
 ### Avalanche (Chain ID: 43114)
 
 - ExchangeProxy: [0xdef1c0ded9bec7f1a1670819833240f027b25eff](https://snowtrace.io/address/0xdef1c0ded9bec7f1a1670819833240f027b25eff)

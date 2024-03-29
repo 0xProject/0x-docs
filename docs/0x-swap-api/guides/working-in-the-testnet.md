@@ -11,7 +11,6 @@ description: Learn about working in the testnet
 0x Swap API testnets can be accessed from:
 
 - Ethereum (Sepolia): https://sepolia.api.0x.org/
-- Polygon (Mumbai): https://mumbai.api.0x.org
 
 These testnets offers a subset of DEX sources available on Ethereum mainnet.
 To view the currently supported sources on each network, you can use the [/sources](/0x-swap-api/api-references/get-swap-v1-sources) endpoint.
@@ -32,8 +31,8 @@ Be aware that token you want to use for testing _must_ have liquidity on at leas
 
 Therefore, we recommend the following ways to find available testnet tokens:
 
-- See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-sepolia) and [Mumbai](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-mumbai) below
-- Using a blockchain explorer, look through transactions that have gone through the [0x Exchange Proxy](/developer-resources/contract-addresses#0x-v4) contract for your desired network, and check the token pairs that show up in "Tokens Transferred". See examples for how to do this for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#sepolia) and [Mumbai](/0x-swap-api/guides/working-in-the-testnet#mumbai) below.
+- See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-sepolia) below
+- Using a blockchain explorer, look through transactions that have gone through the [0x Exchange Proxy](/developer-resources/contract-addresses#0x-v4) contract for your desired network, and check the token pairs that show up in "Tokens Transferred". See examples for how to do this for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#sepolia) below.
 
 ### Sepolia
 
@@ -54,18 +53,6 @@ To find additional example pairs, you can use Etherscan and look at token pairs 
 **Example:** The following is [transaction](https://sepolia.etherscan.io/tx/0x8c637c6db2af88ddf5f8cbd3e881fad31593007f0bbf0fd0eb582bada1336297) that went through 0x Exchange Proxy on Sepolia. See addresses for the "ERC-20 Tokens Transferred" below.
 ![Sepolia tokens example](/img/0x-swap-api/sepolia-tokens.png)
 
-### Mumbai
-
-#### Example tokens available on Mumbai
-
-| Symbol | Address                                                                                                                         |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| WETH   | [0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa](https://mumbai.polygonscan.com/address/0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa) |
-| USDC   | [0x2058a9d7613eee744279e3856ef0eada5fcbaa7e](https://mumbai.polygonscan.com/address/0x2058a9d7613eee744279e3856ef0eada5fcbaa7e) |
-
-To find example pairs for each network, you can try using pairs found in "Tokens Transferred" for the transactions that have gone through the [0x Exchange Proxy](http://localhost:3000/docs/developer-resources/contract-addresses#0x-v4) contract on Mumbai, [0xf471d32cb40837bf24529fcf17418fc1a4807626](https://mumbai.polygonscan.com/address/0xf471d32cb40837bf24529fcf17418fc1a4807626).
-
-![Mumbai tokens example](/img/0x-swap-api/mumbai-tokens.png)
 
 ## Getting Testnet Funds
 
