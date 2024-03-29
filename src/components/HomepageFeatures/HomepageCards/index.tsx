@@ -31,7 +31,7 @@ const CardList: CardItem[] = [
     buttonType: "primary",
   },
   {
-    title: "Tx Relay API",
+    title: "Gasless API",
     link: "/developers/quickstart",
     description: (
       <>

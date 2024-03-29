@@ -8,20 +8,20 @@ description: Learn how to use the Swap API, the most efficient liquidity for web
 
 ## Overview
 
-There are currently four endpoints involved in a tx relay transaction:
+There are currently four endpoints involved in a Gasless API transaction:
 
 - [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price)
 - [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote)
 - [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit)
 - [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash.md)
 
-Tx Relay also includes two additional endpoints to provide a list of supported tokens for each feature:
+Gasless API also includes two additional endpoints to provide a list of supported tokens for each feature:
 - Gasless Approvals Token List [`/tx-relay/v1/swap/gasless-approval-tokens`](/tx-relay/v1/swap/gasless-approval-tokens)
 - Gasless Swaps Token List for Mainnet [`/tx-relay/v1/swap/supported-tokens`](/tx-relay/v1/swap/supported-tokens)
 
 There is no Gasless Swaps Token List for other chains because we support swapping all tokens on those chains.
 
-Tx Relay API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
+Gasless API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
 
 | Chain                     | Chain ID              |
 | --------------------------| ----------------------|
@@ -57,7 +57,7 @@ Addresses of `permitAndCall` contracts
 If you are user facing wallet that shows the users the details of what they are signing, then you will most likely want to use the EIP-712 signing strategy. Some commonly used tools for this include:
 
 - integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
-- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see an example implementation in the Tx Relay Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
+- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see an example implementation in the Gasless API Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
 
 In order to do so, you will need the following:
 

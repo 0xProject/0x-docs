@@ -1,7 +1,7 @@
 {
-  "label": "Tx Relay API",
+  "label": "Gasless API",
   "position": 4,
   "link": {
-    "description": "Learn about Tx Relay API"
+    "description": "Learn about Gasless API"
   }
 }

@@ -1,16 +1,16 @@
 ---
-sidebar_label: Build a dApp with Tx Relay (Next.js)
+sidebar_label: Build a dApp with Gasless API (Next.js)
 sidebar_position: 3
-description: Learn how to implement Tx Relay API to build gasless approvals and swaps into your dApp.
+description: Learn how to implement Gasless API to build gasless approvals and swaps into your dApp.
 ---
 
-# How to build a dApp with Tx Relay API (Next.js)
+# How to build a dApp with Gasless API (Next.js)
 
-_Learn how to use Tx Relay API to build gasless approvals and swaps into your dApp._
+_Learn how to use Gasless API to build gasless approvals and swaps into your dApp._
 
 ## Overview
 
-In this guide, we walk-through the Tx Relay API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)) built with [Next.js](https://nextjs.org/) and [0x Tx Relay API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
+In this guide, we walk-through the Gasless API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)) built with [Next.js](https://nextjs.org/) and [0x Gasless API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
 
 The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
 
@@ -20,7 +20,7 @@ Checkout the live demo 👉 [here](https://0x-examples.vercel.app/)
 
 ![](/img/tx-relay-api/tx-relay-demo-screen-recording.gif)
 
-Enabling Tx Relay in your app allows you to:
+Enabling Gasless in your app allows you to:
 
 - build more intuitive user interfaces and user flows in your applications
 - improve your conversion funnel drop-offs due to insufficient gas, and
@@ -51,11 +51,11 @@ Before diving into this walk-through, it's essential to ensure you are familiar 
 - Next.js 13, App Router
 - Viem
 - Wagmi
-- An understanding of how Tx Relay API works. If not, read:
-  - [Introduction to Tx Relay](/tx-relay-api/introduction)
-  - [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
+- An understanding of how Gasless API works. If not, read:
+  - [Introduction to Gasless](/tx-relay-api/introduction)
+  - [Understanding Gasless API](/tx-relay-api/guides/understanding-tx-relay-api)
 
-Currently, Tx Relay API is supported on Mainnet, Polygon and Arbitrum. This demo is built on Polygon to provide a cost-effective environment for experimentation. You can always modify this app to support Mainnet by adjusting the [chain id](/tx-relay-api/api-references/overview#overview) header for each endpoint.
+Currently, Gasless API is supported on Mainnet, Polygon and Arbitrum. This demo is built on Polygon to provide a cost-effective environment for experimentation. You can always modify this app to support Mainnet by adjusting the [chain id](/tx-relay-api/api-references/overview#overview) header for each endpoint.
 
 :::info
 Here is the github repo, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app
@@ -65,14 +65,14 @@ This is a demo, and is not ready for production use. The code has not been audit
 
 ## How does it work?
 
-As covered in [Understanding Tx Relay API](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api), this API returns liquidity—[prices](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) and [quotes](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote)—to end users. If a user is happy with a quote the API has provided, they can sign an EIP-712 message for the approval and trade (the approval object enables gasless approvals and the trade object enables gasless swaps). Then, Tx Relay API can [submit](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
+As covered in [Understanding Gasless API](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api), this API returns liquidity—[prices](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) and [quotes](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote)—to end users. If a user is happy with a quote the API has provided, they can sign an EIP-712 message for the approval and trade (the approval object enables gasless approvals and the trade object enables gasless swaps). Then, Gasless API can [submit](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
 
-This demo app covers the flow outlined in the [Gasless Approval + Tx Relay API Flow](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#gasless-approval--tx-relay-flow).
+This demo app covers the flow outlined in the [Gasless Approval + Gasless API Flow](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#gasless-approval--tx-relay-flow).
 
 This demo app showcases trading USDC (a gasless approved token that is on the Polygon-supported sell list) for WMATIC (a non-gasless approved token), specifically this flow:
 ![Demo app flow](/img/tx-relay-api/technical-flow-specific-path.png).
 
-Note, Tx Relay API is composable with Swap API if you want to offer execution optionality (for example native tokens which is not supported by Tx Relay API). You can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience. Check out [Composing Gasless Approval + Tx Relay API + Swap API Flow](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#composing-gasless-approval--tx-relay-api--swap-api) if you would include this functionality.
+Note, Gasless API is composable with Swap API if you want to offer execution optionality (for example native tokens which is not supported by Gasless API). You can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience. Check out [Composing Gasless Approval + Gasless API + Swap API Flow](https://0x.org/docs/tx-relay-api/guides/understanding-tx-relay-api#composing-gasless-approval--tx-relay-api--swap-api) if you would include this functionality.
 
 ## Project structure
 
@@ -120,7 +120,7 @@ tx-relay-next-app
 
 ## Core concepts overview
 
-Tx Relay API offers [four different endpoints](https://0x.org/docs/tx-relay-api/api-references/overview). It's important to understand how these endpoints are leverage by the UI/UX components and how they are related concepts such as the user's wallet and token lists.
+Gasless API offers [four different endpoints](https://0x.org/docs/tx-relay-api/api-references/overview). It's important to understand how these endpoints are leverage by the UI/UX components and how they are related concepts such as the user's wallet and token lists.
 
 Here we cover a summary of core concepts and when each API endpoint is used in this app:
 
@@ -131,7 +131,7 @@ Here we cover a summary of core concepts and when each API endpoint is used in t
 - [🪙 Token lists](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#-token-lists)
 
   - (1) Gasless approvals token list - Gasless approvals are available for ERC-20 token that supports Permit (EIP-2612). You can find a list of these tokens in the [gasless approvals list](/tx-relay-api/gasless-approvals-token-list) or you can also use [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response) to check if `isGaslessAvailable = true`
-  - (2) Supported sell tokens - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon and Arbitrum, all Swap API supported tokens are supported.
+  - (2) Supported sell tokens - On Mainnet, Gasless API supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon and Arbitrum, all Swap API supported tokens are supported.
 
 - [🏷 PriceView](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#-priceview)
   - Component for users to browse for a price without committing to a trade (i.e. get indicative price)
@@ -176,11 +176,11 @@ const projectId = "YOUR_PROJECTID"; // Replace with your own free key from Walle
 
 ### What is it?
 
-Tx Relay API offers gasless approvals and gasless swaps, but for a subset of tokens. It's important to understand which tokens are applicable and how to check for support availability.
+Gasless API offers gasless approvals and gasless swaps, but for a subset of tokens. It's important to understand which tokens are applicable and how to check for support availability.
 
 - **Gasless approvals tokens list** - You can find a list of tokens that work with gasless approvals in the [gasless approvals token list](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list). Generally, these are tokens that support EIP-2612. You can also examine a token’s eligibility at trade time, by observing the response from requests to [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote#response). If the variable `isGaslessAvailable = true`, the token the user is selling supports gasless approvals.
 
-- **Supported sell tokens list** - On Mainnet, Tx Relay supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon and Arbitrum, all Swap API supported tokens are supported.
+- **Supported sell tokens list** - On Mainnet, Gasless API supports only selling ERC-20 tokens that are on [Uniswap’s token list](https://tokenlists.org/token-list?url=https://gateway.ipfs.io/ipns/tokens.uniswap.org). On Polygon and Arbitrum, all Swap API supported tokens are supported.
 
 This demo how to utilize these two lists for a specific use case on the Polygon Network (137) - trading USDC (_[gasless approved token](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list#polygon)_ that is _on the Polygon-supported sell list_) for WMATIC (_a non-gasless approved token_)
 
@@ -256,7 +256,7 @@ This component is for users to browse for a price without committing to a trade,
 
 Fetch [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) is wrapped behind [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and triggered in the UI by `useEffect` here in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/price.tsx#L45-L74).
 
-Wrapping our API key protects it because all API requests are viewable by if someone inspects the browser, but we don’t want them inspecting an finding our keys. Instead, when the user queries for an indicative price, it pings our API setup in [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and that pings the 0x Tx Relay API using the API key in the header.
+Wrapping our API key protects it because all API requests are viewable by if someone inspects the browser, but we don’t want them inspecting an finding our keys. Instead, when the user queries for an indicative price, it pings our API setup in [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and that pings the 0x's Gasless API using the API key in the header.
 
 In addition, we use Next.js App Router's built-in data fetching pattern and the [`useEffect`](https://react.dev/reference/react/useEffect) hook to make the request. By using [`useEffect`](https://react.dev/reference/react/useEffect), we will get a stream of data updates constantly and automatically, and the UI will quickly respond to any changes, such as when the user inputs a new `sellAmount`.
 
@@ -293,7 +293,7 @@ const checkApproval = isSellTokenPermit && !hasSufficientAllowance;
 
 Below is a diagram to help understand different cases (i.e. if the sellToken supports Permit, if the sellToken has set an allowance already).
 
-![Tx Relay UI Diagram](/img/tx-relay-api/tx-relay-ui-diagram.jpg)
+![Gasless API UI Diagram](/img/tx-relay-api/tx-relay-ui-diagram.jpg)
 
 In our demo app, we cover Cases 1 & 2:
 
@@ -492,7 +492,7 @@ Here is code for the demo app, feel free to use it to get started quickly for yo
 
 ## Conclusion
 
-Building with Tx Relay API allows you to efficiently and securly implement gasless swaps and gasless approvals into your dApp and workflow, helping grow your user base with seamless onboarding and increasing retention.
+Building with Gasless API allows you to efficiently and securly implement gasless swaps and gasless approvals into your dApp and workflow, helping grow your user base with seamless onboarding and increasing retention.
 
 By following the best practices outlined in this guide and demo, you can create a user-friendly and robust dApp that enables trustless token swapping across various networks.
 

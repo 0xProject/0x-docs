@@ -147,7 +147,7 @@ const config = {
                 to: "/category/swap-api",
               },
               {
-                label: "Tx Relay API",
+                label: "Gasless API",
                 to: "/category/tx-relay-api",
               },
               {

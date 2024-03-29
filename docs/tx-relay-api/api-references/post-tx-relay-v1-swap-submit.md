@@ -25,7 +25,7 @@ To take advantage of gases approvals, user must sign `approval.eip712` and the `
 There are different EIP-712 signing strategies if you are user facing wallet that shows the users the details of what they are signing. Some commonly used tools for this include:
 
 - integrating with MetaMask (via [`signTypedData_v4`](https://docs.metamask.io/guide/signing-data.html#sign-typed-data-v4))
-- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see an example implementation in the Tx Relay Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
+- using wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook for signing typed data (see an example implementation in the Gasless API Demo App [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L320) and read the guide [here](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#sign-objects--split-signatures))
 
 ### Sign Gasless Approvals
 
