@@ -115,7 +115,7 @@ For insufficient balance errors, check the following:
 
 <summary>I received an `INSUFFICIENT_ASSET_LIQUIDITY` error. Help!</summary>
 
-This error indicates there is not enough of the asset on the network to make this trade. This is common for very long-tail tokens or if you are building in a testnet (e.g. Sepolia, Mumbai). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
+This error indicates there is not enough of the asset on the network to make this trade. This is common for very long-tail tokens or if you are building in a testnet (e.g. Sepolia). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
 
 </details>
 
@@ -275,7 +275,7 @@ Note the following:
 - Liquidity sources are also different between mainnets and testnets
 - Not all pairs on mainnet are deployed on testnet, so the token pair availability is more limited
 
-See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-sepolia) and [Mumbai](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-mumbai) in the our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet).
+See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in-the-testnet#example-tokens-available-on-sepolia) in the our [Working in the Testnet Guide](/0x-swap-api/guides/working-in-the-testnet).
 
 </details>
 

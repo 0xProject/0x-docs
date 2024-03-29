@@ -25,7 +25,6 @@ We are currently on v4 of the 0x protocol
 - Fantom: [https://fantom.api.0x.org/](https://fantom.api.0x.org/)
 - Optimism: [https://optimism.api.0x.org/](https://optimism.api.0x.org/)
 - Polygon: [https://polygon.api.0x.org/](https://polygon.api.0x.org/)
-- Polygon (Mumbai): [https://mumbai.api.0x.org](https://mumbai.api.0x.org/)
 
 ### Price API Endpoints
 
@@ -39,7 +38,6 @@ We are currently on v4 of the 0x protocol
 - Fantom: [https://fantom.api.0x.org/](https://fantom.api.0x.org/)
 - Optimism: [https://optimism.api.0x.org/](https://optimism.api.0x.org/)
 - Polygon: [https://polygon.api.0x.org/](https://polygon.api.0x.org/)
-- Polygon (Mumbai): [https://mumbai.api.0x.org](https://mumbai.api.0x.org/)
 
 ### Tx Relay API Endpoints
 
@@ -68,7 +66,6 @@ This is the primary contract for all interactions with the protocol. It is also 
 - Ethereum (Mainnet): `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 - Ethereum (Sepolia): `0xdef1c0ded9bec7f1a1670819833240f027b25eff`\*
 - Polygon: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
-- Polygon (Mumbai): `0xf471d32cb40837bf24529fcf17418fc1a4807626`\*
 - Binance Smart Chain: `0xdef1c0ded9bec7f1a1670819833240f027b25eff`
 - Optimism: `0xdef1abe32c034e558cdd535791643c58a13acc10`\*
 - Fantom: `0xdef189deaef76e379df891899eb5a00a94cbc250`\*

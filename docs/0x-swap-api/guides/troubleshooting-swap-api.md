@@ -16,7 +16,7 @@ See [Error codes](/introduction/error-codes) for a full list of common 0x error 
 
 ## Working in Testnet
 
-If you are building on a testnet (e.g. Sepolia, Mumbai), be aware that only a subset of DEX sources available on Ethereum mainnet are available on testnet. This may cause errors, such as `INSUFFICIENT_ASSET_LIQUIDITY` error.
+If you are building on a testnet (e.g. Sepolia), be aware that only a subset of DEX sources available on Ethereum mainnet are available on testnet. This may cause errors, such as `INSUFFICIENT_ASSET_LIQUIDITY` error.
 
 At the time of writing this guide the following liquidity sources are supported on Sepolia: `MultiHop` and `Uniswap_V3`. Be aware that token you want to use for testing _must_ have liquidity on at least one of these sources; otherwise, you will receive an error.
 
@@ -24,11 +24,11 @@ To view the currently supported sources on any network refer to https://0x.org/d
 
 In addition, only certain pairs are deployed on testnests and available for testing. At the time of writing, the recommended testing pair is `WETH <> UNI` deployed by Uniswap on Sepolia.
 
-See the [Working in Testnet](/0x-swap-api/guides/working-in-the-testnet) for more token pairs available on Sepolia and Mumbai.
+See the [Working in Testnet](/0x-swap-api/guides/working-in-the-testnet) for more token pairs available on Sepolia.
 
 ## Sufficient Liquidity
 
-You may receive the `INSUFFICIENT_ASSET_LIQUIDITY` error if there is not enough of the asset on the network to make the trade. This is common for very long-tail tokens or if you are building on a testnet (e.g. Sepolia, Mumbai). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
+You may receive the `INSUFFICIENT_ASSET_LIQUIDITY` error if there is not enough of the asset on the network to make the trade. This is common for very long-tail tokens or if you are building on a testnet (e.g. Sepolia). On testnets, only a subset of DEX sources available on Ethereum mainnet are available on testnet, so not all token pairs may be available.
 
 ## Balances and Allowances
 
