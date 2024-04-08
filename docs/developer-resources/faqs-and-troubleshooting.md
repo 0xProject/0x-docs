@@ -15,7 +15,7 @@ description: FAQ & Troubleshooting
   - [Working in the Testnet](faqs-and-troubleshooting.md#working-in-the-testnet)
   - [Parameter Questions](faqs-and-troubleshooting.md#parameter-questions)
   - [Best Practices](faqs-and-troubleshooting.md#best-practices)
-- [⛽️ Tx Relay API](faqs-and-troubleshooting.md#-tx-relay-api)
+- [⛽️ Gasless API](faqs-and-troubleshooting.md#-tx-relay-api)
 - [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 - [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
 - [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
@@ -447,9 +447,9 @@ Here is an example two-step transaction use case:
 
 </details>
 
-## ⛽️ Tx Relay API
+## ⛽️ Gasless API
 
-Tx Relay API FAQs found [here](/tx-relay-api/tx-relay-faq)
+Gasless API FAQs found [here](/tx-relay-api/tx-relay-faq)
 
 ## 💻 0x Dashboard
 

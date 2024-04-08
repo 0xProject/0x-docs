@@ -172,7 +172,7 @@ The logic to check if the user has approved a token allowance the selected sell 
 2. If there is no allowance, then we will write an approval to the sellToken's smart contract using wagmi's [usePrepareContractWrite()](https://wagmi.sh/react/prepare-hooks/usePrepareContractWrite).
 
 :::tip
-Be aware that approvals cost gas. _Looking for a gasless approach? check out [Tx Relay API](https://0x.org/docs/tx-relay-api/introduction)._
+Be aware that approvals cost gas. _Looking for a gasless approach? check out [Gasless API](https://0x.org/docs/tx-relay-api/introduction)._
 
 Need to quickly revoke an allowance while testing? To revoke an allowance, you can set the allowance to 0. This can be done programmatically or through a UI such as https://revoke.cash/ .
 :::

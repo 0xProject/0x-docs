@@ -39,9 +39,9 @@ We are currently on v4 of the 0x protocol
 - Optimism: [https://optimism.api.0x.org/](https://optimism.api.0x.org/)
 - Polygon: [https://polygon.api.0x.org/](https://polygon.api.0x.org/)
 
-### Tx Relay API Endpoints
+### Gasless API Endpoints
 
-Tx Relay API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
+Gasless API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
 
 | Chain                     | Chain ID              |
 | --------------------------| ----------------------|

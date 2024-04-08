@@ -1,26 +1,26 @@
 ---
-sidebar_label: Get started with Tx Relay API
+sidebar_label: Get started with Gasless API
 sidebar_position: 2
-description: Covers how Tx Relay API works, key terminology, and technical implementation flow
+description: Covers how Gasless API works, key terminology, and technical implementation flow
 ---
 
-# Get started with Tx Relay API
+# Get started with Gasless API
 
-_Learn how to send your first [Tx Relay API](/tx-relay-api/introduction) request._
+_Learn how to send your first Gasless API request._
 
-## About Tx Relay API
+## About Gasless API
 
-[Tx Relay API](/tx-relay-api/introduction) allows developers to create the smoothest trading experience in DeFi by abstracting away the complexities related to approvals, allowances, and swaps for their users.
+[Gasless API](/tx-relay-api/introduction) allows developers to create the smoothest trading experience in DeFi by abstracting away the complexities related to approvals, allowances, and swaps for their users.
 
-Enabling Tx Relay in your app allows you to:
+Enabling Gasless API in your app allows you to:
 
 - build more intuitive user interfaces and user flows in your applications
 - improve your conversion funnel drop-offs due to insufficient gas, and
 - set yourself up to easily onboard the next wave of users into Web3.
 
-Make sure to read [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
+Make sure to read [Understanding Gasless API](/tx-relay-api/guides/understanding-tx-relay-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
 
-This guide will walk you through the scenario of using Tx Relay API when a user is:
+This guide will walk you through the scenario of using Gasless API when a user is:
 
 - selling [USDC](https://polygonscan.com/address/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174), a non-native, ERC-20 token on Polygon that supports Permit ([EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)),
 - no prior token allowance has been set and approval is required,
@@ -34,9 +34,9 @@ See other user flows [here](/tx-relay-api/guides/understanding-tx-relay-api#tech
 
 Every call to a 0x API must include a 0x API secret key. Get one from the [0x Dashboard](https://go.0x.org/create-account-txrelay-z).
 
-### Enable Tx Relay from your dashboard
+### Enable Gasless API from your dashboard
 
-If you have been granted access to Tx Relay, you will be able to enable Tx Relay in your app from "App Settings" in your [0x dashboard](https://dashboard.0x.org/). You can enable it for any active apps you have (see screenshot).
+If you have been granted access to Gasless API, you will be able to enable Gasless API in your app from "App Settings" in your [0x dashboard](https://dashboard.0x.org/). You can enable it for any active apps you have (see screenshot).
 
 ```mdx-code-block
 import EnableTxRelayImg from '/static/img/tx-relay-api/enable-tx-relay-dashboard.png';
@@ -115,7 +115,7 @@ curl 'https://api.0x.org/tx-relay/v1/swap/price?buyToken=0x0d500B1d8E8eF31E21C99
 
 ## 2. Get a firm quote
 
-When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Tx Relay API using the [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](https://0x.org/docs/developer-resources/glossary#maker) if they do not.
+When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](https://0x.org/docs/developer-resources/glossary#maker) if they do not.
 
 :::tip
 Quote expire in ~ 30s in order to ensure freshness.Make sure to take this into account when building your app with a timer and/or automatic refresh.
@@ -260,9 +260,9 @@ Once the trade is successful, you can display the transaction confirmation to yo
 
 ## Learn more
 
-To see an example of how to integrate Tx Relay API, checkout [this guide](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api) along with the code for the [Demo App (Next.js)](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app).
+To see an example of how to integrate Gasless API, checkout [this guide](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api) along with the code for the [Demo App (Next.js)](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app).
 
 Also read,
 
-- [Understanding Tx Relay API](/tx-relay-api/guides/understanding-tx-relay-api)
-- [Tx Relay FAQ](/tx-relay-api/tx-relay-faq)
+- [Understanding Gasless API](/tx-relay-api/guides/understanding-tx-relay-api)
+- [Gasless FAQ](/tx-relay-api/tx-relay-faq)
