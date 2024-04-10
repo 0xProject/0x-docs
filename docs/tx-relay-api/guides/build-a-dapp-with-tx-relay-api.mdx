@@ -260,7 +260,7 @@ This component is for users to browse for a price without committing to a trade,
 
 #### Fetch price with GET /tx-relay/v1/swap/price
 
-Fetch [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) is wrapped behind [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and triggered in the UI by `useEffect` here in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/price.tsx#L116-L125).
+Fetch [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) is wrapped behind [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and triggered in the UI by `useEffect` here in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/price.tsx#L116-L155).
 
 Wrapping our API key protects it because all API requests are viewable by if someone inspects the browser, but we don’t want them inspecting an finding our keys. Instead, when the user queries for an indicative price, it pings our API setup in [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and that pings the 0x's Gasless API using the API key in the header.
 
