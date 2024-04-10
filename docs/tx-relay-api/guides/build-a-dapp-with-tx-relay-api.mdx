@@ -165,11 +165,17 @@ Check out their [installation instructions](https://www.rainbowkit.com/docs/inst
 
 #### Setup WalletConnect `projectId` in providers.tsx
 
-RainbowKit relies on WalletConnect. Obtain a free `projectId` from [WalletConnect Cloud](https://cloud.walletconnect.com/app) and replace the key [here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/providers.tsx#L39).
+RainbowKit relies on WalletConnect. Obtain a free `projectId` from [WalletConnect Cloud](https://cloud.walletconnect.com/app) and replace the key [here](https://github.com/0xProject/0x-examples/blob/0b8a1ae704002a6399b1f5c05b3ec8eec14754ae/tx-relay-next-app/.env.template#L1-L3).
 
 ```typescript
+// Inside /tx-relay-next-app/.env.template
+# To get a RainbowKit relies on WalletConnect, get a free projectId here:
+# https://cloud.walletconnect.com/app
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=
+```
+```typescript
 // Inside /app/providers/tsx
-const projectId = "YOUR_PROJECTID"; // Replace with your own free key from WalletConnect Cloud https://cloud.walletconnect.com/sign-in
+const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string; // Replace with your own free key from WalletConnect Cloud https://cloud.walletconnect.com/sign-in
 ```
 
 ## 🪙 Token lists
