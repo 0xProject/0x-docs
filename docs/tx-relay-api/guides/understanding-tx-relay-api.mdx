@@ -12,7 +12,7 @@ _This guide contains information about how Gasless API works, key terms, and tec
 
 A major source of friction in Web3 is the need for users to hold a small amount of the chain's native token to pay for token approvals and subsequent transactions (aka paying "gas" fees).
 
-Gasless API provides a “gasless” ERC-20 token swap experience for your end users.
+Gasless API can provide a gasless approval and gasless swap experience for supported ERC-20 token swaps (read more in ["What tokens are supported?"](https://0x.org/docs/tx-relay-api/tx-relay-faq)).
 
 This API returns liquidity—prices and quotes—to end users. If a user is happy with a quote the API has provided, they can sign an [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) for the approval and trade. Then, Gasless API can submit the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
 

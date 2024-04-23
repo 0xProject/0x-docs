@@ -7,7 +7,7 @@ description: Rate limits
 # Rate limits
 
 :::info
-Want higher rate limits? Check out all our [available options](https://0x.org/pricing)
+Want higher rate limits? Check out our [available options](https://0x.org/pricing)
 :::
 
 ## Why do we have rate limits?

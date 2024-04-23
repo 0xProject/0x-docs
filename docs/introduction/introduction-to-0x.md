@@ -14,14 +14,17 @@ Prefer to watch a video instead? Jump to [0x Videos](/introduction/guides#videos
 
 ## What is 0x?
 
-0x is a developer's one-stop shop to build financial products on crypto rails. 0x provides a suite of APIs that enable developers to build faster, find the best prices, and create superior UX for their customers. Our suite of APIs has processed over 52 million transactions and $125B in volume from more than 6 million users and is used by many of the top trading apps including Coinbase Wallet, Robinhood Wallet, Matcha, Metamask, Zerion, Zapper, and [more](https://explorer.0xprotocol.org/apps).
+0x is a developer's one-stop shop to build financial products on crypto rails. 0x provides a suite of APIs that enable developers to build faster, find the best prices, and create superior UX for their customers. Our suite of APIs has processed over 66 million transactions and $141B+ in volume from more than 6 million users and is used by many of the top trading apps including Coinbase Wallet, Robinhood Wallet, Matcha, Metamask, Zerion, Zapper, and [more](https://explorer.0xprotocol.org/apps).
 
-:::tip
+## Why use 0x?
 
-### ELI5 0x (Explain 0x like I'm 5 Years Old)
+At 0x, we believe all forms of value will eventually be tokenized and on chain. Because more and more forms of value are tokenized, liquidity is increasingly more fragmented across different blockchains and different DEX protocols on the chains. This makes it increasingly challenging to access tokens - not every liquidity source has every token, not every token is available on every chain.
 
-0x is like a big playground where people can trade different things like toys, candy, and stickers. But instead of toys and candy, they trade digital things like cryptocurrencies. There are two types of people in this playground: the ones who bring things to trade (we call them Makers) and the ones who want to trade for those things (we call them Takers). 0x helps these people find each other and make trades in a safe and fair way. It's like having a grown-up watching over the playground to make sure everyone is playing nicely.
-:::
+0x offers a suite of APIs to easily access and navigate this fragmented liquidity.
+
+- _Swap API_ - power crypto trading for thoughts of tokens with the deepest liquidity
+- _Gasless API_ - enable developers to build frictionless apps with end-to-end gasless infrastructure
+- _Price API_ - get real-time market prices for tokens pairs
 
 ## The 0x Ecosystem
 

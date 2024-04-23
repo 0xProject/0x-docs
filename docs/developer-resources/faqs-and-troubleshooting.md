@@ -15,10 +15,10 @@ description: FAQ & Troubleshooting
   - [Working in the Testnet](faqs-and-troubleshooting.md#working-in-the-testnet)
   - [Parameter Questions](faqs-and-troubleshooting.md#parameter-questions)
   - [Best Practices](faqs-and-troubleshooting.md#best-practices)
-- [⛽️ Gasless API](faqs-and-troubleshooting.md#-tx-relay-api)
+- [⛽️ Gasless API](faqs-and-troubleshooting.md#%EF%B8%8F-gasless-api)
 - [💻 0x Dashboard](faqs-and-troubleshooting.md#-0x-dashboard)
 - [🌐 Protocol](faqs-and-troubleshooting.md#-protocol)
-- [📬 Contact the 0x Team](faqs-and-troubleshooting.md#-contact-the-0x-team)
+- [🏗 Building with 0x](faqs-and-troubleshooting.md#-building-with-0x)
 
 ## 🧰 Troubleshooting
 
@@ -296,6 +296,12 @@ See our recommended lists of tokens for [Sepolia](/0x-swap-api/guides/working-in
 
 <details>
 
+<summary>What is gas?</summary>
+
+</details>
+
+<details>
+
 <summary>What is the significance of this address <code>0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE</code> ?</summary>
 
 `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is the contract address to use for native tokens. Native tokens are a blockchain’s foundational digital currency. Each blockchain has its own native token, such as ETH on Ethereum, BNB on Binance Smart Chain, and MATIC on Polygon.
@@ -475,13 +481,11 @@ An app is a self-contained unit for each individual application that you’re bu
 
 <summary>What is the <code>protocolFee</code> ?</summary>
 
-The community voted to remove protocol fees in [ZEIP-91](https://www.0x.org/zrx/vote/zeip-91) which decreased the protocol fee multiplier from the current value (70,000) to zero (0) for v3 onward.
+**The community voted to remove protocol fees in [ZEIP-91](https://www.0x.org/zrx/vote/zeip-91) which removed the the protocol fee, lowering it from the previous value (70,000) to zero (0) for v3 onward, for all order types.**
 
-<br/>
+_The following is kept for historical reference but no longer applies_
 
-_**The following is kept for historical reference but no longer applies**_
-
-_TLDR_ 0x API handled the heavy lifting related to protocol fees and provides a `value` field.
+TLDR; 0x API handled the heavy lifting related to protocol fees and provides a `value` field.
 
 A protocol fee was paid by takers and ultimately rebated to market makers when their orders are filled.
 

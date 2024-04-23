@@ -104,19 +104,20 @@ const sidebars = {
         type: "generated-index",
       },
       items: [
+        "developer-resources/audits",
+        "developer-resources/bounties",
+        "developer-resources/contract-addresses",
+        "introduction/error-codes",
+        "developer-resources/0x-explorer-tag-guide",
+        "developer-resources/faqs-and-troubleshooting",
+        "developer-resources/glossary",
+        "developer-resources/how-to-get-0x-and-matcha-data",
+        "developer-resources/0x-legal-guide",
         {
           type: "link",
           label: "System status",
           href: "https://status.0x.org/",
         },
-        "developer-resources/glossary",
-        "developer-resources/faqs-and-troubleshooting",
-        "developer-resources/contract-addresses",
-        "developer-resources/how-to-get-0x-and-matcha-data",
-        "developer-resources/0x-explorer-tag-guide",
-        "developer-resources/audits",
-        "developer-resources/bounties",
-        "developer-resources/0x-legal-guide",
         "developer-resources/white-paper",
       ],
       // collapsible: true,
@@ -129,6 +130,12 @@ const sidebars = {
         type: "generated-index",
       },
       items: [
+        {
+          type: "link",
+          label: "FAQ & Troubleshooting",
+          href: "developer-resources/faqs-and-troubleshooting",
+
+        },
         {
           type: "link",
           label: "Contact support",

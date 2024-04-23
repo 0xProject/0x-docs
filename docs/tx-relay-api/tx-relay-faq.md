@@ -12,13 +12,13 @@ description: Gasless API FAQ
 
 Gasless API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
 
-| Chain                     | Chain ID              |
-| --------------------------| ----------------------|
-| Ethereum (Mainnet)        | 1                     |
-| Polygon                   | 137                   |
-| Arbitrum                  | 42161                 |
-| Base                      | 8453                  |
-| Optimism                  | 10                    |
+| Chain              | Chain ID |
+| ------------------ | -------- |
+| Ethereum (Mainnet) | 1        |
+| Polygon            | 137      |
+| Arbitrum           | 42161    |
+| Base               | 8453     |
+| Optimism           | 10       |
 
 </details>
 
@@ -48,9 +48,36 @@ Note, the only trades Gasless API CANNOT support are those where end-user is try
 <summary>Who pays for the gas fees to allow those swaps to happen?
 </summary>
 
-0x covers the gas fee up front. This cost is then wrapped into the trade and paid for in the form of the token the user is trading. 
+0x covers the gas fee up front. This cost is then wrapped into the trade and paid for in the form of the token the user is trading.
 
 Applications may choose to sponsor transactions, in which case they will pay 0x directly, and users will not be billed on chain
+
+</details>
+
+<details>
+
+<summary>Can I monetize using Gasless API?
+</summary>
+
+You have full flexibility on the fees you collect on your trades.
+
+This can be done by setting the `feeRecipient` and `feeSellTokenPercentage` parameters in a Gasless API request.
+
+Fees can be charged if `feeType` is `volume`, then `feeSellTokenPercentage` must be provided. `feeSellTokenPercentage` is the percentage (on scale of 1) of `sellToken` integrator charges as fee. For example, setting it to `0.01` means `1%` of the `sellToken` would be charged as fee for the integrator.
+
+See the [Gasless API requst params](http://localhost:3000/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-price#request-params) for more details.
+
+```
+https://api.0x.org/tx-relay/v1/price                  // Request an indicative price
+?sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174 // Sell USDC
+&sellAmount=30000000                                  // Sell amount 30 USDC (6 decimals)
+&bbuyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270 // Buy ETH
+&takerAddress=$USER_TAKER_ADDRESS                     // Address that will make the trade
+&feeType=volume                                       // The type of integrator fee to charge
+&feeSellTokenPercentage=0.01                          // The percentage of sellToken integrator charges as fee
+&feeRecipient=<FEE_RECIPIENT_ADDRESS>                 // The address who receives the fee
+--header '0x-api-key: [API_KEY]'                      // Replace with your own API key
+```
 
 </details>
 
@@ -76,7 +103,7 @@ In this case, we’d recommend using the [Swap API](https://docs.0x.org/0x-api-s
 
 <summary>What tokens work with gasless approvals?</summary>
 
-Our list of supported tokens for gasless approvals on each chain is served through the [/tx-relay/v1/swap/gasless-approval-tokens endpoint](https://api.0x.org/tx-relay/v1/swap/gasless-approval-tokens). 
+Our list of supported tokens for gasless approvals on each chain is served through the [/tx-relay/v1/swap/gasless-approval-tokens endpoint](https://api.0x.org/tx-relay/v1/swap/gasless-approval-tokens).
 
 You can also examine a token’s eligibility at trade time, by observing the response from requests to `/tx-relay/v1/swap/quote`. If the variable `isGaslessAvailable` = `true`, the token the user is selling supports gasless approvals.
 
@@ -140,7 +167,7 @@ The minimum amount will vary across chains, trade sizes and current gas conditio
 
 <summary>I received a `No liquidity` error. Help!</summary>
 
-This error is typically triggered when there is no good market for the token pairs selected. 
+This error is typically triggered when there is no good market for the token pairs selected.
 
 </details>
 
