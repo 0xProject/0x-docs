@@ -44,15 +44,14 @@ In addition, only certain pairs are deployed on testnests and available for test
 
 | Symbol | Address                                                                                                                       |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| WETH   | [0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14](https://sepolia.etherscan.io/address/0xfff9976782d46cc05630d1f6ebab18b2324d6b14) |
-| UNI    | [0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984](https://sepolia.etherscan.io/address/0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) |
-| LINK   | [0x779877A7B0D9E8603169DdbD7836e478b4624789](https://sepolia.etherscan.io/address/0x779877a7b0d9e8603169ddbd7836e478b4624789) |
+| WETH   | [0xfff9976782d46cc05630d1f6ebab18b2324d6b14](https://sepolia.etherscan.io/address/0xfff9976782d46cc05630d1f6ebab18b2324d6b14) |
+| UNI    | [0x1f9840a85d5af5bf1d1762f925bdaddc4201f984](https://sepolia.etherscan.io/address/0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) |
+| LINK   | [0x779877a7b0d9e8603169ddbd7836e478b4624789](https://sepolia.etherscan.io/address/0x779877a7b0d9e8603169ddbd7836e478b4624789) |
 
-To find additional example pairs, you can use Etherscan and look at token pairs for transactions that have gone through the the [0x Exchange Proxy](/developer-resources/contract-addresses#0x-v4) contract on Sepolia, [0xDef1C0ded9bec7F1a1670819833240f027b25EfF](https://sepolia.etherscan.io/address/0xdef1c0ded9bec7f1a1670819833240f027b25eff).
+To find additional example pairs, you can use Etherscan and look at token pairs for transactions that have gone through the the [0x Exchange Proxy](/developer-resources/contract-addresses#0x-v4) contract on Sepolia, [0xdef1c0ded9bec7f1a1670819833240f027b25eff](https://sepolia.etherscan.io/address/0xdef1c0ded9bec7f1a1670819833240f027b25eff).
 
 **Example:** The following is [transaction](https://sepolia.etherscan.io/tx/0x8c637c6db2af88ddf5f8cbd3e881fad31593007f0bbf0fd0eb582bada1336297) that went through 0x Exchange Proxy on Sepolia. See addresses for the "ERC-20 Tokens Transferred" below.
 ![Sepolia tokens example](/img/0x-swap-api/sepolia-tokens.png)
-
 
 ## Getting Testnet Funds
 

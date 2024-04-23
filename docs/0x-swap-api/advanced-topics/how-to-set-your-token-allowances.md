@@ -6,7 +6,7 @@ description: Learn how to set your token allowances
 
 # How to set your token allowances
 
-A [token allowances](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens.
+A [token allowance](https://tokenallowance.io/) is required if you want a third-party to move funds on your behalf. In short, you are allowing them to move your tokens.
 
 In our case, we would like the 0x Exchange Proxy smart contract to trade our ERC20 tokens for us, so we need to write to the ERC20 contract of that token, and approve an allowance for 0x Exchange Proxy (i.e. allow it to move a certain amount of tokens on our behalf us).
 
@@ -85,7 +85,7 @@ import { BigNumber } from "@0x/utils";
   // Get a quote from 0x API which contains `allowanceTarget`
   // `allowanceTarget` is the contract that the user needs to set an ERC20 allowance for
   const res = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
+    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`
   );
   const quote = await res.json();
 
@@ -93,7 +93,7 @@ import { BigNumber } from "@0x/utils";
   const USDCaddress = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
   const USDCcontract = new ERC20TokenContract(
     USDCaddress,
-    web3.eth.currentProvider,
+    web3.eth.currentProvider
   );
   const maxApproval = new BigNumber(2).pow(256).minus(1); // This example sets the allowance amount to a large number, but you can adjust it to only the amount required for trading
 
@@ -101,7 +101,7 @@ import { BigNumber } from "@0x/utils";
   const chainId = 1;
   const approvalTxData = USDCcontract.approve(
     quote.allowanceTarget,
-    maxApproval,
+    maxApproval
   ).getABIEncodedTransactionData();
   await web3.eth.sendTransaction(approvalTxData);
 })();
