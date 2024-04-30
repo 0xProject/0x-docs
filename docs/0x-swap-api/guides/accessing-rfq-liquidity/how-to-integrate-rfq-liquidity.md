@@ -180,7 +180,6 @@ The response to an indicative quote will include a price and a buy/sell amount i
   "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
   "sellTokenToEthRate": "1808.68027",
   "buyTokenToEthRate": "2854.99025193368642365",
-  "expectedSlippage": "0",
   "auxiliaryChainData": {},
   "fees": {
     "zeroExFee": {
@@ -400,7 +399,6 @@ curl https://api.0x.org/swap/v1/quote?sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEe
   "grossBuyAmount": "180964660",
   "grossSellAmount": "100000000000000000",
   "auxiliaryChainData": {},
-  "expectedSlippage": "-0.0000731856321892383565"
 }
 ```
 
