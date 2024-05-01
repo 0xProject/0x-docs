@@ -35,12 +35,10 @@ Swap API watches out for your users, is easy for your developers, and your team 
 - ⛓️ Easily access **[multi-chain liquidity](/introduction/0x-cheat-sheet#swap-api-endpoints)** on the most popular networks
   - Ethereum, Sepolia, Polygon, BSC, Optimism, Fantom, Celo, Avalanche, Arbitrum, Base ([full list of endpoints](/introduction/0x-cheat-sheet#swap-api-endpoints))
 - 🤑 **[Earn revenue fees](/developer-resources/faqs-and-troubleshooting#monetizing-your-swap-integration)** through your app's swap integration
-- 🛡️ **Built-in user-protection features**, by default, including:
-  - **[Slippage Protection](advanced-topics/slippage-protection.md)** which **protects** users **against MEV-attacks**
-  - **[Price Impact Protection](advanced-topics/price-impact-protection.md)** which **protects** users **from getting rekt** by illiquid markets
+- 🛡️ **Built-in user-protection features**, including **[Price Impact Protection](advanced-topics/price-impact-protection.md)** which **protects** users **from getting rekt** by illiquid markets
 - ↩ Best execution with the **lowest reverts**
 - 💰 Exclusive built-in **[RFQ liquidity](/0x-swap-api/guides/accessing-rfq-liquidity-on-0x-api)** which is competitive with AMMs and comes with the added benefit of zero slippage and guaranteed MEV protection
-- 🚀 It is **easy-to-use!** For example, you can easily find the best price to buy DAI with WETH with this request
+- 🚀 It is **easy-to-use!** For example, you can easily find the best price to buy DAI with WETH with the following request:
 
 ## Try it out
 
@@ -70,7 +68,7 @@ You will receive a response that looks like this:{" "}
 }
 ```
 
-This is a valid unsigned Ethereum transaction that can be submitted directly to a node to complete the swap. Read more about the parameters [here](/0x-swap-api/api-references/get-swap-v1-quote).
+This is a valid unsigned Ethereum transaction that can be [submitted directly to a node](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#4-send-the-transaction-to-the-network) to complete the swap. GetRead more about the parameters [here](/0x-swap-api/api-references/get-swap-v1-quote).
 
 <br></br>
 
@@ -89,7 +87,7 @@ Below is a high-level diagram showing how Swap API works under the hood:
 1. Retail Trader Requests a quote
 2. Swap API simultaneously (a) retrieves quote from AMM and (b) requests quotes from Market Makers
 3. Market Makers responds with signed quote at their discretion
-4. Swap API aggregates the quotes it has received and compares the prices, taking into account [slippage](/0x-swap-api/advanced-topics/slippage-protection) and [price impact](/0x-swap-api/advanced-topics/price-impact-protection). It returns the best price to the Retail Trader.
+4. Swap API aggregates the quotes it has received and compares the prices, taking into account [price impact](/0x-swap-api/advanced-topics/price-impact-protection). It returns the best price to the Retail Trader.
 5. If the Retail Trader likes the quote, the Retail Trader signs the order. Swap API sends the signed order to the blockchain to be settled by the 0x Protocol.
 
 For more details about how 0x orders are executed, check out [How does 0x work?](/introduction/introduction-to-0x#how-does-0x-work).
@@ -98,7 +96,6 @@ Under the hood, Swap API performs a series of tasks:
 
 - **Queries prices** from multiple DEXs and market makers and **aggregates the liquidity** from the queried sources to provide the best price possible. Think of how Google flights aggregates flight prices for a certain time and date to help you find the best price, `/swap` similarly helps you find the best price across DeFi liquidity sources.
 - Swap API’s **smart order routing** algorithm splits up your transaction across different sources to maximize the overall return on your swap. Read more about smart order routing [here](https://medium.com/@merklejerk/0x-apis-smart-order-routing-7af0195515e5).
-- Swap API's **[Slippage Protection](/)** enables developers to surface more reliable quotes and consistently deliver the best executed price to users.
 - Swap API's **[Price Impact Protection](/0x-swap-api/advanced-topics/slippage-protection)** calculates price impact estimates, and allows developers to easily notify users if insufficient liquidity may negatively affect the price.
 - The response returned by Swap API is a valid unsigned Ethereum transaction that can be submitted directly to an Ethereum node. **[Easily execute using the transaction using the web3 library of your choice](/0x-swap-api/guides/swap-tokens-with-0x-swap-api#3-send-the-transaction-to-the-network)**.
 
@@ -131,7 +128,7 @@ Now that you're familiar with what Swap API offers, read [How to Use Swap API](/
 
 #### Guides
 
-- [How to Use Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api)
+- [Get started with Swap API](/0x-swap-api/guides/swap-tokens-with-0x-swap-api)
 - [How to Build a Token Swap DApp with Swap API](/0x-swap-api/guides/how-to-build-a-token-swap-dapp-with-0x-api)
 - [Use 0x API Liquidity in Your Smart Contracts](/0x-swap-api/guides/use-0x-api-liquidity-in-your-smart-contracts)
 - [Working in the Testnet](/0x-limit-orders/guides/working-in-the-testnet)
@@ -147,7 +144,6 @@ Now that you're familiar with what Swap API offers, read [How to Use Swap API](/
 
 - [Rate Limiting](/0x-swap-api/advanced-topics/rate-limiting)
 - [How to Set Your Token Allowances](/0x-swap-api/advanced-topics/how-to-set-your-token-allowances)
-- [Slippage Protection](/0x-swap-api/advanced-topics/slippage-protection)
 - [Price Impact Protection](/0x-swap-api/advanced-topics/price-impact-protection)
 
 **API FAQs**

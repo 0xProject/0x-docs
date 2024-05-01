@@ -164,33 +164,14 @@ To see the tokens that 0x supports for trading, you can refer to the CoinGecko t
 
 <details>
 
-<summary>What are the differences when quoting by sellAmount and buyAmount</summary>
-
-- If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
-- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0xAPI will not terminate early in the case where one order fills at a better price, so the user can in effect go over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
-
-Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), these sources are ignored when quoting for `buyAmounts`
+<summary>What are the differences when quoting by <code>sellAmount</code> vs by <code>buyAmount</code>?</summary>
 
 **TLDR** Whenever possible, use `sellAmount` over `buyAmount` to get more deterministic behavior.
 
-</details>
+- If `sellToken` is utilized, then any unused `sellToken` will be refunded to the user.
+- When `buyAmount` is used, the only guarantee is that **at least** the amount specified is bought. 0x API will not terminate early in the case where one order fills at a better price, so the user can in effect go over buy the specified amount. This is somewhat amplified by usage of `slippagePercentage` which underestimates the on-chain price by a percentage.
 
-<details>
-
-<summary>What is Slippage Protection ?</summary>
-
-Slippage Protection is a feature of the 0x API that finds the best routes for decentralized exchange (DEX) trades while avoiding [slippage](https://help.matcha.xyz/en/articles/6304010-what-is-slippage) and MEV attacks.
-<br/>
-
-Slippage Protection incorporates slippage forecasts into 0x API’s smart order routing algorithm to deliver the optimal trade route. With Slippage Protection activated, 0x API will enable developers to surface more reliable quotes and consistently deliver the best executed price to users.
-<br/>
-
-Slippage Protection is currently supported on Ethereum for the most active trading pairs (ETH-USDC, ETH-DAI, ETH-USDT, ETH-WBTC, WETH-USDC, WETH-DAI, WETH-USDT, WETH-WBTC)
-<br/>
-
-**Slippage Protection is an auto-enabled feature of the Swap API**, and no additional action is required to enable it in your API request.
-
-Read here for the [full details of Slippage Protection](/0x-swap-api/advanced-topics/slippage-protection.md).
+Also, some liquidity sources do not enable querying by `buyAmount` (i.e Kyber), these sources are ignored when quoting for `buyAmounts`
 
 </details>
 
@@ -348,7 +329,7 @@ To ensure that users will always have their swap executed within a reasonable pr
 
 <details>
 
-<summary>What are the differences when quoting by <code>sellAmount</code> <code>buyAmount</code> ?</summary>
+<summary>What are the differences when quoting by <code>sellAmount</code> vs by <code>buyAmount</code> ?</summary>
 
 **TLDR** Whenever possible, use `sellAmount` over `buyAmount` to get more deterministic behavior.
 
