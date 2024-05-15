@@ -133,7 +133,7 @@ const sidebars = {
         {
           type: "link",
           label: "FAQ & Troubleshooting",
-          href: "developer-resources/faqs-and-troubleshooting",
+          href: "https://0x.org/docs/developer-resources/faqs-and-troubleshooting",
 
         },
         {
