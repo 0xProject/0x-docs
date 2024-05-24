@@ -6,6 +6,10 @@ description: Learn how to use GET /orderbook/v1/fee_recipients
 
 # GET /orderbook/v1/fee_recipients
 
+:::note
+Please note the Orderbook API is not actively supported at this time. We're temporarily not accepting new integrators to post new orders.
+:::
+
 Retrieves a list of valid feeRecipient addresses.
 
 ## Request

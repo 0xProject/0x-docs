@@ -6,6 +6,10 @@ description: 0x API hosts an Orderbook of 0x Limit Orders for teams to take liqu
 
 # Introduction
 
+:::note
+Please note the Orderbook API is not actively supported at this time. We're temporarily not accepting new integrators to post new orders.
+:::
+
 Enable limit orders in your app or take liquidity directly from the 0x Orderbook.
 
 0x API has an Orderbook on the following chains:
