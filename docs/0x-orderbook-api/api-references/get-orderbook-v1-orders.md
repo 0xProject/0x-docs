@@ -6,6 +6,10 @@ description: Learn how to use GET /orderbook/v1/orders
 
 # GET /orderbook/v1/orders
 
+:::note
+Please note the Orderbook API is not actively supported at this time. We're temporarily not accepting new integrators to post new orders.
+:::
+
 Retrieves a list of orders given query parameters.
 
 :::info

@@ -6,6 +6,10 @@ description: Learn how to use the Websocket API
 
 # Websocket API
 
+:::note
+Please note the Orderbook API is not actively supported at this time. We're temporarily not accepting new integrators to post new orders.
+:::
+
 The Standard Relayer API also exposes a websocket server at the root endpoint.
 
 | Network          | Endpoint                      |

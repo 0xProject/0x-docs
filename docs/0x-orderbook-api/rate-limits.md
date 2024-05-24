@@ -6,8 +6,8 @@ description: Rate limits
 
 # Rate limits
 
-:::info
-Want higher rate limits? Check out all our [available options](https://0x.org/pricing)
+:::note
+Please note the Orderbook API is not actively supported at this time. We're temporarily not accepting new integrators to post new orders.
 :::
 
 ## Why do we have rate limits?

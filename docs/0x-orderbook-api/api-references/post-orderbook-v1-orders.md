@@ -6,8 +6,8 @@ description: Learn how to use POST /orderbook/v1/orders
 
 # POST /orderbook/v1/orders
 
-:::info
-All teams with a valid [API key](https://dashboard.0x.org/) are able to **GET /orderbook**, if you are interested to **POST /orderbook** please contact 0x via the [Intercom Messenger](/introduction/getting-started#6-have-a-question) in the bottom-right of your [0x Dashboard](https://dashboard.0x.org/), we will review your request promptly.
+:::note
+Please note the Orderbook API is not actively supported at this time. We're temporarily not accepting new integrators to post new orders.
 :::
 
 Submit a list of signed orders.
