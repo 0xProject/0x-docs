@@ -26,19 +26,6 @@ We are currently on v4 of the 0x protocol
 - Optimism: [https://optimism.api.0x.org/](https://optimism.api.0x.org/)
 - Polygon: [https://polygon.api.0x.org/](https://polygon.api.0x.org/)
 
-### Price API Endpoints
-
-- Ethereum (Mainnet): [https://api.0x.org/](https://api.0x.org/)
-- Ethereum (Sepolia): [https://sepolia.api.0x.org/](https://sepolia.api.0x.org/)
-- Arbitrum: [https://arbitrum.api.0x.org/](https://arbitrum.api.0x.org/)
-- Avalanche: [https://avalanche.api.0x.org/](https://avalanche.api.0x.org/)
-- Base [https://base.api.0x.org/](https://base.api.0x.org/)
-- Binance Smart Chain: [https://bsc.api.0x.org/](https://bsc.api.0x.org/)
-- Celo: [https://celo.api.0x.org/](https://celo.api.0x.org/)
-- Fantom: [https://fantom.api.0x.org/](https://fantom.api.0x.org/)
-- Optimism: [https://optimism.api.0x.org/](https://optimism.api.0x.org/)
-- Polygon: [https://polygon.api.0x.org/](https://polygon.api.0x.org/)
-
 ### Gasless API Endpoints
 
 Gasless API is supported on the following chains via https://api.0x.org/. Select the chain in your request by providing the corresponding chain id with the `0x-chain-id` header.
