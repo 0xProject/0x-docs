@@ -10,7 +10,7 @@ _Learn how to use Gasless API to build gasless approvals and swaps into your dAp
 
 ## Overview
 
-In this guide, we walk-through the Gasless API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app)) built with [Next.js](https://nextjs.org/) and [0x Gasless API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
+In this guide, we walk-through the Gasless API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/gasless-next-app)) built with [Next.js](https://nextjs.org/) and [0x Gasless API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
 
 The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
 
@@ -79,7 +79,7 @@ Note, Gasless API is composable with Swap API if you want to offer execution opt
 This demo app is setup using [Next.js 13 App Router](https://nextjs.org/docs). Here is an explanation of the structure of the app and key files.
 
 ```
-tx-relay-next-app
+gasless-next-app
 ├── app
 │   ├── layout.tsx
 │   ├── page.tsx
@@ -165,7 +165,7 @@ Check out their [installation instructions](https://www.rainbowkit.com/docs/inst
 
 #### Setup WalletConnect `projectId` in providers.tsx
 
-RainbowKit relies on WalletConnect. Obtain a free `projectId` from [WalletConnect Cloud](https://cloud.walletconnect.com/app) and replace the key [here](https://github.com/0xProject/0x-examples/blob/0b8a1ae704002a6399b1f5c05b3ec8eec14754ae/tx-relay-next-app/.env.template#L1-L3).
+RainbowKit relies on WalletConnect. Obtain a free `projectId` from [WalletConnect Cloud](https://cloud.walletconnect.com/app) and replace the key [here](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/.env.template#L1-L3).
 
 ```typescript
 // Inside /tx-relay-next-app/.env.template
@@ -238,7 +238,7 @@ const isSellTokenPermit = Boolean(maticPermitTokensDataTyped[sellToken]);
 
 ### What is it?
 
-This component is for users to browse for a price without committing to a trade, aka, get the indicative price. The code for the component lives in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/price.tsx). The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/page.tsx#L40-L55), it is displayed if the user has not clicked "Review Trade" and finalizes the price.
+This component is for users to browse for a price without committing to a trade, aka, get the indicative price. The code for the component lives in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/price.tsx). The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/page.tsx#L42-L63), it is displayed if the user has not clicked "Review Trade" and finalizes the price.
 
 ![PriceView Screenshot](/img/tx-relay-api/price-view-screenshot.png)
 
@@ -260,9 +260,9 @@ This component is for users to browse for a price without committing to a trade,
 
 #### Fetch price with GET /tx-relay/v1/swap/price
 
-Fetch [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) is wrapped behind [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and triggered in the UI by `useEffect` here in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/price.tsx#L116-L155).
+Fetch [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price) is wrapped behind [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/price/route.ts) and triggered in the UI by `useEffect` here in [`/app/components/price.tsx`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/price.tsx#L116-L155).
 
-Wrapping our API key protects it because all API requests are viewable by if someone inspects the browser, but we don’t want them inspecting an finding our keys. Instead, when the user queries for an indicative price, it pings our API setup in [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts) and that pings the 0x's Gasless API using the API key in the header.
+Wrapping our API key protects it because all API requests are viewable by if someone inspects the browser, but we don’t want them inspecting an finding our keys. Instead, when the user queries for an indicative price, it pings our API setup in [`app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/price/route.ts) and that pings the 0x's Gasless API using the API key in the header.
 
 In addition, we use Next.js App Router's built-in data fetching pattern and the [`useEffect`](https://react.dev/reference/react/useEffect) hook to make the request. By using [`useEffect`](https://react.dev/reference/react/useEffect), we will get a stream of data updates constantly and automatically, and the UI will quickly respond to any changes, such as when the user inputs a new `sellAmount`.
 
@@ -318,7 +318,7 @@ Note that only one flow sets `checkApproval:true`, this is when the token suppor
 
 ### What is it?
 
-This component fetches a firm quote for users to review and submit trade. The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/page.tsx), it is displayed after the user has clicked "Review Trade".
+This component fetches a firm quote for users to review and submit trade. The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/page.tsx), it is displayed after the user has clicked "Review Trade".
 
 In this component, the use can sign the gasless approval (if applicable), sign the gasless swap, and submit the order.
 
@@ -339,7 +339,7 @@ Although gasless approvals and gasless swap are bundled in the same transaction 
 
 #### Fetch quote with GET /tx-relay/v1/swap/quote with `checkApproval`
 
-The [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) fetch is wrapped behind [`/app/api/quote/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/quote/route.ts), triggered in the UI by the [`useEffect`](https://react.dev/reference/react/useEffect) hook here in [`/app/components/quote.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L55-L78), similar to what we did for PriceView.
+The [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote) fetch is wrapped behind [`/app/api/quote/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/quote/route.ts), triggered in the UI by the [`useEffect`](https://react.dev/reference/react/useEffect) hook here in [`/app/components/quote.tsx`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/quote.tsx#L55-L78), similar to what we did for PriceView.
 
 The value of `checkApproval` is passed from PriceView. Recall that this is a boolean that indicates whether or not to check for approval and potentially return the approval object.
 
@@ -347,7 +347,7 @@ The value of `checkApproval` is passed from PriceView. Recall that this is a boo
 
 To take advantage of gases approvals, user must sign `approval.eip712` and the `trade.eip712` objects returned by [`/quote`](<(/tx-relay-api/api-references/get-tx-relay-v1-swap-quote)>). These objects contain everything you need needed to sign these objects (domain, types, primaryType, message). We use wagmi's [`useSignTypedData`](https://wagmi.sh/react/hooks/useSignTypedData) hook to sign the objects. The returned signature is an Ethereum signature hex string.
 
-Code to [sign approval object](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L243-L283)
+Code to [sign approval object](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/quote.tsx#L243-L283)
 
 ```typescript
 // Inside /app/components/quote.tsx
@@ -359,7 +359,7 @@ const { isSuccess, signTypedDataAsync } = useSignTypedData({
 });
 ```
 
-Code to [sign trade object](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L285-L322)
+Code to [sign trade object](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/quote.tsx#L285-L322)
 
 ```typescript
 // Inside /app/components/quote.tsx
@@ -373,9 +373,9 @@ const { isSuccess, signTypedDataAsync } = useSignTypedData({
 
 Once signed, the signature needs to be split to its individual components (v, r, s) and to be formatted in an object that can be POST to `/submit` (see object format [here](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request)).
 
-For splitting signatures, we use a variation of this [`splitSignature`](https://github.com/wevm/viem/discussions/458#discussioncomment-5842564) implementation. Our implementation is set up in [`/src/utils/signature.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/src/utils/signature.ts).
+For splitting signatures, we use a variation of this [`splitSignature`](https://github.com/wevm/viem/discussions/458#discussioncomment-5842564) implementation. Our implementation is set up in [`/src/utils/signature.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/src/utils/signature.ts).
 
-Code to [split signature for approval](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L181-L193)
+Code to [split signature for approval](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/quote.tsx#L181-L193)
 
 ```typescript
 // Inside /app/components/quote.tsx
@@ -394,7 +394,7 @@ signatureType: SignatureType.EIP712,
 },
 ```
 
-Code to [split signature for trade](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L196-L208)
+Code to [split signature for trade](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/quote.tsx#L196-L208)
 
 ```typescript
 // Inside /app/components/quote.tsx
@@ -415,7 +415,7 @@ signatureType: SignatureType.EIP712,
 
 #### Submit order with POST /tx-relay/v1/swap/submit
 
-Once the signed, split, and formatted approval and trade data objects are set up, we POST them to [`/tx-relay/v1/swap/submit`](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) which is wrapped behind [`/app/api/submit/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/submit/route.ts). This code is called from the "Submit Order" button in the UI ([code](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/quote.tsx#L217-L239)).
+Once the signed, split, and formatted approval and trade data objects are set up, we POST them to [`/tx-relay/v1/swap/submit`](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit) which is wrapped behind [`/app/api/submit/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/submit/route.ts). This code is called from the "Submit Order" button in the UI ([code](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/quote.tsx#L217-L239)).
 
 If the submssion is successful, `/submit` responds with the order `type` and the `tradeHash`. Learn more about [submit responses](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-response):
 
@@ -426,13 +426,13 @@ If the submssion is successful, `/submit` responds with the order `type` and the
 }
 ```
 
-`/submit` return whether or not the order was successful or if there is an error. The demo app has general error handling, for production-level apps, it's recommended to include more robust error handling depdning on the returned [status code](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request) ([code](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/status.tsx#L15-L38)).
+`/submit` return whether or not the order was successful or if there is an error. The demo app has general error handling, for production-level apps, it's recommended to include more robust error handling depdning on the returned [status code](https://0x.org/docs/tx-relay-api/api-references/post-tx-relay-v1-swap-submit#example-request) ([code](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/status.tsx#L15-L38)).
 
 ## ✅ StatusView
 
 ### What is it?
 
-This component checks and displays the status of the trade to the user. The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/page.tsx#L30-L35), it is displayed if `tradeHash` has been set in QuoteView.
+This component checks and displays the status of the trade to the user. The logic for when this component appears in the UI is in [`/app/page.tsx`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/page.tsx#L30-L35), it is displayed if `tradeHash` has been set in QuoteView.
 
 ![StatusView Pending Screenshot](/img/tx-relay-api/status-view-pending.png)
 
@@ -450,7 +450,7 @@ This component checks and displays the status of the trade to the user. The logi
 
 Use GET [`/tx-relay/v1/swap/status/:trade-hash`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) to check if the submitted trade was successful.
 
-In [`/page`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/page.tsx), we add a third component, `StatusView`, that displays if the `tradeHash` has been set in QuoteView. To retrieve this, we setup a callback function `onSubmitSuccess={setTradeHash}` inside QuoteView that is called when `tradeHash` has been set.
+In [`/page`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/page.tsx), we add a third component, `StatusView`, that displays if the `tradeHash` has been set in QuoteView. To retrieve this, we setup a callback function `onSubmitSuccess={setTradeHash}` inside QuoteView that is called when `tradeHash` has been set.
 
 ```typescript
 // Inside /app/page.tsx
@@ -471,7 +471,7 @@ In [`/page`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-ap
 />
 ```
 
-[`/status`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) will continously respond with the [status of the transaction (e.g. pending, failed, success, submitted, confirmed)](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#shape-of-response), so we need to contiously poll the endpoint to check the current status. We do so using `setInterval(callback function, delay in ms)` and `useEffect` to continuously ping `/status` until the status is confirmed ([code here](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/components/status.tsx#L15-L38)).
+[`/status`](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) will continously respond with the [status of the transaction (e.g. pending, failed, success, submitted, confirmed)](/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash#shape-of-response), so we need to contiously poll the endpoint to check the current status. We do so using `setInterval(callback function, delay in ms)` and `useEffect` to continuously ping `/status` until the status is confirmed ([code here](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/components/status.tsx#L15-L38)).
 
 :::tip
 Reminder: `/tx-relay/v1/swap/status/:trade-hash` doesn’t take `trade-hash` as a query param, just concatenate it on as part of the query
@@ -493,7 +493,7 @@ For more details about monetizing, check out the [How to monetize your app using
 ## Try it out
 
 :::info
-Here is code for the demo app, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app
+Here is code for the demo app, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/gasless-next-app
 :::
 
 ## Conclusion
