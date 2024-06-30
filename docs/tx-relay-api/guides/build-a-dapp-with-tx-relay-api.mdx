@@ -10,7 +10,7 @@ _Learn how to use Gasless API to build gasless approvals and swaps into your dAp
 
 ## Overview
 
-In this guide, we walk-through the Gasless API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/gasless-next-app)) built with [Next.js](https://nextjs.org/) and [0x Gasless API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
+In this guide, we walk-through the Gasless API demo app ([live demo](https://github.com/0xProject/0x-examples/tree/main/gasless-next-app) | [code](https://github.com/0xProject/0x-examples/tree/main/gasless-next-app)) built with [Next.js](https://nextjs.org/) and [0x Gasless API](https://0x.org/docs/tx-relay-api/introduction). It covers best practices when implementing gasless approvals and swap functionality into your dApp or workflow.
 
 The principles covered are are the same ones used by production-level dApps, such as in the [Matcha Auto](https://help.matcha.xyz/en/articles/7939087-what-is-matcha-auto) feature of [Matcha.xyz](https://matcha.xyz/), in which Matcha submits the transactions and handles the gas on users behalf.
 
@@ -58,7 +58,7 @@ Before diving into this walk-through, it's essential to ensure you are familiar 
 Currently, Gasless API is supported on Mainnet, Polygon and Arbitrum. This demo is built on Polygon to provide a cost-effective environment for experimentation. You can always modify this app to support Mainnet by adjusting the [chain id](/tx-relay-api/api-references/overview#overview) header for each endpoint.
 
 :::info
-Here is the github repo, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/tx-relay-next-app
+Here is the github repo, feel free to use it to get started quickly for your own project: https://github.com/0xProject/0x-examples/tree/main/gasless-next-app
 
 This is a demo, and is not ready for production use. The code has not been audited and does not account for all error handling. Use at your own risk.
 :::
@@ -138,18 +138,18 @@ Here we cover a summary of core concepts and when each API endpoint is used in t
   - Check if token allowance as been set
   - Check if token supports Permit -> if yes, gasless approval; otherwise, pay for approval
   - Fetch indicative with GET [`/tx-relay/v1/swap/price`](/tx-relay-api/api-references/get-tx-relay-v1-swap-price)
-    - Wrap API call behind [`/app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/price/route.ts)
+    - Wrap API call behind [`/app/api/price/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/price/route.ts)
 - [💸 QuoteView](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#-quoteview)
   - Component for users to review final quote and submit trade
   - Fetch firm quote with GET [`/tx-relay/v1/swap/quote`](/tx-relay-api/api-references/get-tx-relay-v1-swap-quote)
-    - Wrap API call behind [`/app/api/quote/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/quote/route.ts)
+    - Wrap API call behind [`/app/api/quote/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/quote/route.ts)
   - Sign gasless approval (if needed) and sign trade objects
   - Submit the trade via POST [`/tx-relay/v1/swap/submit`](/tx-relay-api/api-references/post-tx-relay-v1-swap-submit)
-    - Wrap API call behind [`/app/api/submit/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/submit/route.ts)
+    - Wrap API call behind [`/app/api/submit/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/submit/route.ts)
 - [✅ StatusView](/tx-relay-api/guides/build-a-dapp-with-tx-relay-api#-statusview)
   - Component to check the status of the trade
   - Uses GET [`/tx-relay/v1/swap/status/:trade-hash`](https://0x.org/docs/tx-relay-api/api-references/get-tx-relay-v1-swap-status-trade-hash) if the submitted trade was successful
-    - Wrap API call behind [`/app/api/status/route.ts`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/app/api/status/route.ts)
+    - Wrap API call behind [`/app/api/status/route.ts`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/app/api/status/route.ts)
 
 ## Core concepts deep-dive
 
@@ -168,7 +168,7 @@ Check out their [installation instructions](https://www.rainbowkit.com/docs/inst
 RainbowKit relies on WalletConnect. Obtain a free `projectId` from [WalletConnect Cloud](https://cloud.walletconnect.com/app) and replace the key [here](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/.env.template#L1-L3).
 
 ```typescript
-// Inside /tx-relay-next-app/.env.template
+// Inside /gasless-next-app/.env.template
 # To get a RainbowKit relies on WalletConnect, get a free projectId here:
 # https://cloud.walletconnect.com/app
 NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=
@@ -194,7 +194,7 @@ This demo how to utilize these two lists for a specific use case on the Polygon 
 
 #### Verify `sellToken` against gasless approved token list
 
-To check if the `sellToken` supports gasless approvals, we setup a .json file of all the [tokens that support permit on Polygon](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list#polygon) in the [`/supports-permit/137.json`](https://github.com/0xProject/0x-examples/blob/main/tx-relay-next-app/src/supports-permit/137.json) file.
+To check if the `sellToken` supports gasless approvals, we setup a .json file of all the [tokens that support permit on Polygon](https://0x.org/docs/tx-relay-api/gasless-approvals-token-list#polygon) in the [`/supports-permit/137.json`](https://github.com/0xProject/0x-examples/blob/main/gasless-next-app/src/supports-permit/137.json) file.
 
 ```json
 // Inside /src/supports-permit/137.json, setup database of tokens that support Permit using token address as the key
