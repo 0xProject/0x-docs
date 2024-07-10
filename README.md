@@ -1,4 +1,8 @@
-# Website
+# (Deprecated) 0x Docs
+
+> [!WARNING] 
+> This repo is no longer maintained, and has been replaced by https://github.com/0xProject/0x-labs/tree/main/sites/0x-docs
+> This was previously the repo for that served `https://0x.org/docs/`. 
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
