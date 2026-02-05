@@ -1,0 +1,59 @@
+---
+title: Troubleshooting Swap API
+description: Addressing common issues that come up with Swap API.
+---
+
+## Swap Requirements
+
+Here's a quick pre-flight checklist of things that need to be in order for a swap to properly execute.
+
+## API Issues
+
+See [API Issues](/docs/introduction/api-issues-error-codes-error-codes) for a full list of common 0x issues and how to resolve them.
+
+## Sufficient Liquidity
+
+Check the value returned by the `liquidityAvailable` field that validates the availability of liquidity for a price or quote request. All other parameters will only be returned when this is returned as `true`.
+
+## Balances and Allowances
+
+The taker (the address which holds the `sellToken` balance and is executing the swap transaction) should hold at _least_ the `sellAmount` of `sellToken`. The taker also should approve the `issues.allowance.spender` (AllowanceHolder or Permit2 contracts) to spend at least the same amount for that token.
+
+<Note>
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) contracts, as indicated by the API responses.
+
+- The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
+
+</Note>
+## Gas Limits
+
+The transaction needs to be submitted with enough gas. Due to the nondeterministic nature of the on-chain settlement process, the swap may require more than what an `eth_estimateGas` RPC call returns. The quoted response will return `transacation.gas` which is the estimated limit that should be used to send the transaction to guarntee settlement. Any unused gas will be refunded to the transaction submitter.
+
+## Gas Price
+
+Swap quotes are based off liquidity available at quote time and the transactions are designed to revert if a change in liquidity causes the price to drop below a chosen threshold. This is more likely to happen as the the delay increases between generating a quote and the transaction being mined. Submitting with a "fast" gas price will typically give your transaction priority with miners so the price has less chance of moving.
+
+## Slippage Tolerance
+
+The slippage tolerance is determined by the `slippageBps` query parameter, whose possible values are [0...10000]. It indicates the maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps (= 1% slippage tolerance).
+
+Depending on the network/chain you're using and tokens you're swapping, liquidity may be more shallow or volatile and the default 1% slippage tolerance may be too low. You can experiment with higher `slippageBps` values until the transaction succeeds, but understand that this also exposes your swap to potentially settling at what may no longer be considered a fair price.
+
+## Generated Signature
+
+If using Permit2, before submitting the quote order to the blockchain, you need to sign the `permit2.eip712` object from your quote response. Make sure the generated siganture is formatted properly.
+
+The standard encoding of a signature in Ethereum decomposes the secp256k1 signature into 3 values: `r`, `s`, and `v`.
+_Typically_ these are ordered as `v`, `r`, `s`, but Permit2 requires that they be ordered as `r`, `s`, and `v`, where
+
+- `r` is less than `secp256k1n`
+- `s` is less than `secp256k1n / 2 + 1`, and
+- `v` is either `0` or `1` to indicate the sign (or equivalently the parity) of the `y` coordinate. _However_, the convention on the EVM is that `v` is actually encoded as `27 + v` (i.e. either 27 or 28). Make sure your signature adds 27 to `v`
+
+Then, all 3 values are packed and encoded as 65 bytes (bytes 0 through 31 represent `r`, 32 through 63 represent `s`, and byte 64 represents `v`).
+
+## More Resources
+
+For more troubleshooting resources, see the full [FAQ](/docs/introduction/faq).

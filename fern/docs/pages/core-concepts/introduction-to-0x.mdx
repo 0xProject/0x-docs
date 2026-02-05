@@ -1,0 +1,175 @@
+---
+title: What is 0x?
+description: Overview of how 0x works, the 0x APIs, and what you can build on 0x.
+---
+
+<Tip>
+
+Prefer to watch a video instead? Checkout the [0x Videos](https://www.youtube.com/watch?v=-iS0O0vBkuc&list=PLN51Tjs40v5MpBMfGxxiML9x2sd0uD94D).
+
+</Tip>
+
+## What is 0x?
+
+0x allows builders to embed swaps in their onchain apps. Tap into aggregated liquidity from 150+ sources, across 19+ EVM chains with the most efficient trade execution. Our suite of APIs has processed over 60M+ million transactions and $154B+ in volume from more than 9+ million users trading on apps like Matcha.xyz, Coinbase Wallet, Robinhood Wallet, Phantom, Metamask, Zerion, Zapper, and more.
+
+<Frame>
+  <img src="https://0x.org/docs/assets/images/swap-widget-7538362651668891622d3cffb2ea5edf.png" alt="0x swap widget" />
+</Frame>
+
+## Why use 0x?
+
+At 0x, we believe all forms of value will eventually be tokenized and settle on-chain. But as more value becomes tokenized, liquidity becomes increasingly fragmented — across chains, across liquidity sources, and across protocols.
+
+0x offers powerful APIs to simplify access to this fragmented liquidity:
+
+- [Swap API](/docs/swap-api/introduction) - The most efficient liquidity aggregator for ERC20 tokens through a single API.
+- [Gasless API](/docs/gasless-api/introduction) - Never lose a user trade because of gas. Easily build frictionless apps with end-to-end gasless infra.
+- [Trade Analytics API](/docs/swap-api/introduction) - Programatically access historical trades initiated through your apps via 0x Swap and Gasless APIs.
+
+<Frame>
+  <img src="https://0x.org/docs/assets/images/routing-fce4478b601d3246d22593f25f1e3827.png" alt="0x routing" />
+</Frame>
+
+<Tip>
+
+### ELI5 0x
+
+Just like Google Flights compares prices across airlines to help you find the best flight deal, 0x API scans multiple decentralized exchanges to get you the best price when trading tokens. Instead of hopping between exchanges yourself, 0x does the hard work for you — all through a simple API that developers can plug into their apps. It's fast, secure, and saves you time and money by finding the best route.
+
+</Tip>
+
+## The 0x Ecosystem
+
+### 0x Tech Stack
+
+0x’s professional-grade APIs are built on the [0x Settler](https://0x.org/docs/developer-resources/core-concepts/contracts#0x-settler-contracts), a secure, audited smart contract. Builders using these APIs are part of the growing 0x ecosystem.
+
+<Frame>
+  <img src="https://0x.org/docs/assets/images/0x-tech-stack-v2-b6789b1dcc674de32ceba05b4ac18339.png" alt="0x tech stack v2" />
+</Frame>
+
+### Makers and Takers
+
+Within the 0x Ecosystem, there are two sides to a trade - Makers and Takers:
+
+#### Supply Side (Makers)
+
+This is the entity who creates [0x orders](/docs/core-concepts/order-types) and _provides liquidity_ into the system for the Demand side (Takers) to consume. 0x aggregates liquidity from multiple sources including:
+
+- On-chain liquidity - DEXs, AMMs (e.g. Uniswap, Curve, Bancor)
+- Off-chain liquidity - Professional Market Makers, 0x's Open Orderbook network
+
+Relevant Docs:
+
+- [Market Makers](/docs/core-concepts/glossary#maker) - Professional Market Making With Limit Orders
+
+#### Demand Side (Takers)
+
+Takers consume token liquidity from Makers. They are applications or agents that initiate trades using the 0x protocol. This includes:
+
+- Wallets
+- Portfolio trackers
+- SocialFi platforms
+- AI agents
+- Token screeners
+- And [more](https://0x.org/case-studies)
+
+Relevant Docs:
+
+- [Swap API](/docs/swap-api/introduction) - The most efficient liquidity aggregator for ERC20 tokens through a single API.
+- [Gasless API](/docs/gasless-api/introduction) - enable developers to build frictionless apps with end-to-end gasless infrastructure
+
+## How does 0x work?
+
+Here's how a 0x order is created and settled:
+
+<Frame>
+  <img src="https://0x.org/docs/assets/images/onchainoffchain-52268508d5da884280e98f63efe34ad5.gif" alt="how does 0x work" />
+</Frame>
+<Steps>
+
+<Step>
+  **Order Creation**: A Maker creates a [0x
+  order](https://0x.org/docs/developer-resources/core-concepts/order-types), a
+  JSON object that follows a standard format.
+</Step>
+
+<Step>
+  **Maker Signature**: The Maker signs the order to cryptographically commit to
+  it.
+</Step>
+
+<Step>
+  **Order Sharing**: The order is shared with potential Takers (e.g., direcly
+  via an app)
+</Step>
+
+<Step>
+  **Aggregation**: 0x API aggregates liquidity across all supply sources and
+  surfaces the best price. - This is done using [off-chain relay, on-chain
+  settlement](/docs/core-concepts/glossary#off-chain-infrastructure,-on-chain-settlement),
+  saving gas and improving flexibility.
+</Step>
+
+<Step>
+  **Order Submissions**: A Taker fills the order onchain by signing it and
+  submitting it along with the fill amount.
+</Step>
+
+<Step>
+ **Order Settlement**: The **0x Settler** verifies the signature, checks trade conditions, and [atomically swaps](/docs/core-concepts/glossary#atomically-swapped) assets between Maker and Taker.
+</Step>
+</Steps>
+## What can I build on 0x?
+
+0x powers a wide variety of web3 applications. Whether you're building a product where trading is central — like an exchange — or adding seamless token swaps to an app where trading is just one feature, 0x makes it easy to plug in liquidity.
+
+<Note>
+  For more inspiration, check out this [blog
+  post](https://0x.org/post/inspiration-for-building-with-swap-api) and our
+  [case studies](https://0x.org/case-studies).
+</Note>
+### Demand-Side Use Cases (Takers)
+
+**Exchanges & Marketplaces**
+
+- Decentralized exchange for a specific asset or vertical
+- eBay-style marketplace for digital goods
+- Over-the-counter (OTC) trading desk
+
+**Wallets & Interfaces**
+
+- Crypto wallets that support in-app token swaps
+- Portfolio management dashboards
+- Token screeners with built-in trade execution
+
+**DeFi Protocols**
+
+- Options, lending, and derivatives platforms needing deep liquidity
+- Investment strategies like DeFi index funds or DCA (dollar-cost averaging) tools
+- Prediction markets
+
+**Social & Consumer Apps**
+
+- SocialFi platforms with embedded token swaps
+- Games with in-game currencies or tradable items
+- NFT marketplaces
+
+**Data & Analytics**
+
+- Multi-chain analytics dashboards
+- Real-time trade panels
+
+**Agents & Automation**
+
+- AI agents or bots that interact with DeFi
+- On-chain automation or smart contract wallets
+
+### Supply-Side Integrations (Makers)
+
+**Liquidity Sources**
+
+- On-chain order books
+- Automated market makers (AMMs)
+- Proprietary market-making or arbitrage bots

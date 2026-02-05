@@ -1,0 +1,135 @@
+---
+title: How It Works
+description: Learn how Gasless API works, key terms, and technical flow charts for how to implement in-app.
+---
+
+## Why Gasless API?
+
+In most Web3 flows, users must hold a balance of the network’s native token (e.g., ETH, POL) to pay gas at two points of the trade experience:
+
+1. **Approve** a token for spending.
+2. **Execute** the swap transaction.
+
+This requirement creates onboarding friction and hurts conversion. Gasless API removes that hurdle by letting a relayer (in this case 0x) pay the gas up‑front, so end‑users can swap ERC‑20 tokens without holding the native token.
+
+## How does it work?
+
+This API returns indicative prices and firm quotes to end users. If a user is happy with a quote the API has provided, they can sign an [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) message for the approval and trade. Then, Gasless API can submit the transaction to the blockchain on behalf of the user, eliminating the need for the end user to pay for gas manually.
+
+The term "gasless" refers to the ability for users to trade without needing to pay the gas cost at that moment. Instead, a third party like 0x can submit the transaction(s) to the blockchain and pay the gas fee. So, in practice, there is still gas involved—it's just being paid by someone else. The user doesn't have to worry about holding the chain's native token in order to pay for gas cost upfront when submitting a transaction. A suggested implementation is to use Gasless API to pay for the gas on behalf of the user with the trade's input token (sell token).
+
+Gasless swaps are now supported for selling all non-native tokens. Basically only native token are the ones that aren't supported.
+
+## Example: Swapping WETH with the Gasless API
+
+WETH does not support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612), so _gasless approvals are not possible_ — but a _gasless transaction_ still is.
+
+To perform a gasless swap from WETH to another token:
+
+1. **Approve Permit2** (Standard Approval Flow)
+
+   - Call `approve(address,uint256)` on the WETH contract, setting the spender to Permit2, `0x000000000022D473030F116dDEE9F6B43aC78BA3`
+   - The correct spender address is also returned in `issues.allowance.spender` or `allowanceTarget` from the quote response
+   - NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
+
+2. **Sign the EIP-712 message** (Gasless Transaction)
+   - Use the EIP-712–formatted message returned by the API to authorize the meta-transaction.
+
+Once these steps are complete, the Gasless API will execute the transaction without requiring the taker to pay gas directly.
+
+## Which tokens are supported by Gasless API?
+
+Gasless API provides a gasless experience at two points of the trade experience where the user normally needs to pay gas:
+
+- **Gasless approvals** work only for tokens listed in our [Gasless Approval Token endpoint](https://0x.org/docs/api#tag/Gasless/operation/gasless::getGaslessApprovalTokens). These are tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612).
+
+- **Gasless swaps** work for selling any non‑native token (anything that’s an ERC‑20 or similar).
+
+<Note>
+
+When using the [Standard Approval Flow](/docs/swap-api/additional-topics/how-to-set-token-allowances) (aka Gasless Approvals are not supported)
+
+- **Never** set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract).  
+  This can result in loss of tokens or security risks. The Settler contract does **not** require or support token allowances, and doing so may allow misuse by other parties.
+
+- **Only** set allowances on [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only), as specified in API responses.
+
+- Always use the allowance target provided in `issues.allowance.spender`.
+
+</Note>
+
+## Permit (EIP-2612) vs Permit2
+
+Understanding the difference between Permit (aka EIP-2612) and Permit2 is crucial to implementing a seamless gasless experience with the API.
+
+### What is Permit (EIP‑2612)?
+
+Permit aka [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) is an extension standard to ERC-20 that allows for gasless setting of allowances. If a token supports EIP-2612 (or one of a couple related non-standard ABIs with equivalent functionality), then it is possible to set allowances gaslessly through Gasless API. However, this requires built-in support in the token. For tokens that were deployed before ERC2612 or where the token developer didn't add ERC2612 support, approvals can only be set gasfully, by calling approve. For example, WETH is an ERC-20 token without EIP-2612 support
+
+### What is Permit2?
+
+[Permit2](https://docs.uniswap.org/contracts/permit2/overview) is a contract developed by Uniswap Labs, deployed to `0x000000000022D473030F116dDEE9F6B43aC78BA3` on all chains.
+
+Because it is a contract, Permit2 **cannot** move tokens without first receiving an allowance from the user. Once Permit2 has an allowance, other contracts (such as the 0x Settler) can instruct Permit2 to move tokens on the user’s behalf — but only after receiving an **EIP-712–signed message** from the user.
+
+In the case of the 0x Settler, this signed message is what enables **meta-transactions**.
+
+<Warning>
+When using the Standard Approval Flow (aka Gasless Approvals are not supported)
+
+- **Never** set an allowance directly on the Settler contract.
+- **Only** set allowances on [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only), as specified in API responses.
+- Always use the allowance target returned in `issues.allowance.spender`.
+
+</Warning>
+
+## Key Terms
+
+### Token Allowances
+
+A [token allowances](https://help.matcha.xyz/en/articles/8928084-what-are-token-allowances/) is needed for a third-party to move your funds. For our case, we need to approve the [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) to trade our ERC-20 tokens. This requires writing to the ERC-20 contract and approving an allowance for Permit2 to move a specified amount of tokens on our behalf.
+
+For tokens that do not support gasless approvals, you need to set the token allowance via the steps listed [here](/docs/swap-api/additional-topics/handling-native-tokens).
+
+### EIP-712: Human Readable Messages
+
+[EIP-712](https://eips.ethereum.org/EIPS/eip-712) is the standard for typed message signing. This EIP allows wallets to display data in signing prompts in a human readable and not just a blind hash.
+
+Gasless leverages EIP-712 messages to enable [gasless approvals](./understanding-gasless-api#gasless-approvals) and [gasless transactions](./understanding-gasless-api#gasless-transactions).
+
+### EIP-2612: Permit Extension for Gaslss Approvals
+
+[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) unlocked gasless token approvals by introducting a new Permit function to ERC-20 tokens. The Permit function enables enables users to grant permission to others to spend their tokens in a single transaction which offer more efficient token approvals and enabled gasless transactions.
+
+### Gasless Approvals
+
+Gasless approvals is possible when the user signs a [EIP-712 message](https://eips.ethereum.org/EIPS/eip-712) giving Gasless API permission to set an allowance on the token required for approval. In the current architecture 0x or the market maker pays for this gas fee, and the user has a “gasless” experience. This is possible for tokens that support the Permit Extension ([EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)).
+
+### Gasless Transactions
+
+By integrating Gasless API, your app can support gasless transactions — in which the user signs a EIP-712 message giving Gasless API permission to submit a transaction on behalf of the user to the blockchain. This is possible with Meta Transactions. In the current architecture, Gasless pays for the gas of the transaction using some of the user’s sell token.
+
+### Settler Metatransaction
+
+Metatransactions are messages that authorize smart contracts to perform actions on your behalf.
+
+Settler Metatransactions, `settler_metatransaction`, represents a type of gasless transactions returned by the Gasless API [`/gasless/quote`](/api-reference#tag/Gasless/operation/gasless::getQuote) endpoint. Settler Metatransaction leverages the [Swap API](/api-reference#tag/Swap) to fetch indicative pricing and quotes. 0x submits these transactions to the blockchain on behalf of the user.
+
+## Technical Flow Charts
+
+The Gasless API can be combined with the Swap API to provide flexible execution options. This allows for a seamless user experience where advanced users can choose to enable or disable Gasless execution without compromising their experience.
+
+For instance, you can design an app that uses Gasless by default, and automatically falls back to the Swap API for native tokens or there is not enough token to cover gas.
+
+[Click here to expand the image](../../assets/img/gasless-api/gasless-and-swap-flow-chart.jpg)
+
+![Composing Gasless Approval + Gasless Swaps + Swap API Flow Chart](../../assets/img/gasless-api/gasless-and-swap-flow-chart.jpg)
+
+<Tip>
+Want to see a live implementation of Gasless API + Swap API?
+
+👉 Try out the flow in the Matcha Auto feature: https://matcha.xyz/
+
+👉 Learn more about Matcha Auto: https://youtu.be/ziV3O9QLE5U?si=orPciAj00iOWKxd4
+
+</Tip>

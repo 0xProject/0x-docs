@@ -1,0 +1,18 @@
+/* Custom styles for 0x Docs */
+
+/* Hide the page title and toolbar on overview layout pages (home page) */
+.fern-layout-overview .fern-page-heading,
+.fern-layout-overview .fern-page-actions,
+.fern-layout-overview .fern-toolbar {
+  display: none !important;
+}
+
+/* Also hide the header container that wraps the title */
+.fern-layout-overview article > header.my-8 {
+  display: none !important;
+}
+
+/* Hide the "Was this page helpful" footer on overview pages */
+.fern-layout-overview .fern-layout-footer-toolbar {
+  display: none !important;
+}

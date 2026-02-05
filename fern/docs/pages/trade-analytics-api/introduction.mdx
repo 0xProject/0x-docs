@@ -1,0 +1,51 @@
+---
+title: Introduction
+---
+
+## Overview
+
+0x Trade Analytics API provides programmatic access to historical trades initiated through your apps via 0x Swap and Gasless APIs. Formatted for direct analytics use, this data enables you to derive actionable insights and business intelligence from your app's trading activity.
+
+The response includes comprehensive details for each trade, including the transaction hash, allowing you to verify the data on-chain.
+
+## Key benefits
+
+- **Data-Driven Insights**: Gain insights into traded volume, fees generated, and other key metrics to understand your business and product performance
+- **Granular Analysis:** Slice and dice data across chains, takers, tokens, and time periods to identify trends and product insight.
+- **Customization:** Build analytical dashboards that highlight the metrics that your team and business cares about.
+- **Streamlined Data**: The data is streamlined to be used for analytical purposes and contains trade details such as token amounts, token symbols, fees, gas used, slippage, USD volume etc.
+
+## Example use cases
+
+- **Tracking Historical Volume and Fees:** Monitor monthly volume and fees collected to evaluate business growth and profitability.
+- **Identifying Popular Trading Pairs:** Find the most actively traded tokens and pairs to optimize liquidity and trading experiences.
+- **Understanding User Behavior:** Analyze trading patterns and preferences to tailor product features and marketing efforts.
+
+<Tip>
+**TIP**
+
+Looking for trading insights without writing code?  
+👉 Use **Trade Insights** in the [0x Dashboard](https://dashboard.0x.org/).
+
+Need real-time transaction parsing instead?  
+👉 Check out [0x-parser](/docs/swap-api/additional-topics/handling-native-tokens0x-parser) — a TypeScript library for decoding onchain trade data.
+
+</Tip>
+
+## Using Trade Analytics API
+
+To start using the Trade Analytics API, use the [getSwapTrades](/api-reference/openapi-yaml/trade-analytics/trade-analytics-swap) and [getGaslessTrades](/api-reference/openapi-yaml/trade-analytics/trade-analytics-gasless) functions. Requests to the Trade Analytics APIs require a `0x-api-key`. Data will be returned for the app associated with API key in the request.
+
+## Data
+
+### Data Freshness & Finality
+
+The API updates with new settled trades roughly every 15 minutes. This data is however only considered final 48 hours after the trade is completed. This 48-hour finalization period accounts for potential latency from external providers, like token price sources, ensuring data accuracy and quality.
+
+To ensure that your trading data is up to date, we recommend that you fetch and update data from the preceding 2 days in addition to the current day.
+
+For downtime updates, you can track and subscribe [here](https://0x.statuspal.io/).
+
+### USD Values
+
+The API provides USD estimates for transaction volume and the fees generated from the swap. These values are based on an estimate of the token price at the time of the trade.

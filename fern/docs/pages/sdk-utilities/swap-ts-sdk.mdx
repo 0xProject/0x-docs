@@ -1,0 +1,98 @@
+---
+title: Swap SDK
+description: Learn how to use the Swap & Gasless TypeScript SDK.
+---
+
+We provide a TypeScript client to interact with 0x API. Currently [@0x/swap-ts-sdk](https://www.npmjs.com/package/@0x/swap-ts-sdk) supports 0x API v2 Swap (both AllowaceHolder and Permit2 flows) and Gasless endpoints.
+
+## Setup
+
+```
+pnpm add -E @0x/swap-ts-sdk
+```
+
+<Note>
+  Important: TypeScript needs to be configured with `compilerOptions.strict` set
+  to true. The client won't correctly type check if TypeScript is not in strict
+  mode.
+</Note>
+
+Visit the [0x dashboard](https://dashboard.0x.org/create-account) to get your API key.
+
+## Usage
+
+Create a "vanilla" Node client with `createClientV2`:
+
+```ts
+import { createClientV2 } from "@0x/swap-ts-sdk";
+
+const client = createClientV2({
+  apiKey: "33da2...91ebf9",
+});
+
+const price = await client.swap.permit2.getPrice.query({
+  buyToken: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+  chainId: 1,
+  sellAmount: "1000000000000000000",
+  sellToken: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+});
+```
+
+### Client documentation
+
+The `@0x/swap-ts-sdk` client is a wrapped & typed [tRPC](https://trpc.io/) v10.x client.
+
+Visit https://trpc.io/docs/v10/client for full documentation, including how to use the client with Next.js, React Query, or vanilla Node.
+
+### Aborting calls (timeout)
+
+```ts
+import { createClientV2 } from "@0x/swap-ts-sdk";
+
+const client = createClientV2({
+  apiKey: "33da2...91ebf9",
+});
+
+const quote = await client.gasless.getQuote.query(
+  {
+    buyToken: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    chainId: 1,
+    sellAmount: "1000000000000000000",
+    sellToken: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    taker: "0x60B4f0e1DF30c8c0f0b0c8BEc8787E7564647a80",
+    txOrigin: "0x60B4f0e1DF30c8c0f0b0c8BEc8787E7564647a80",
+  },
+  {
+    signal: AbortSignal.timeout(1000),
+  }
+);
+```
+
+### Using with Next.js
+
+You can use `@trpc/next` directly to use the SDK with Next.js. See the documentation here: https://trpc.io/docs/v10/client/nextjs/ssr.
+
+To type the client, the packages exports the router type:
+
+```ts
+import type { RouterV2 } from "@0x/swap-ts-sdk";
+import { httpLink } from "@trpc/client";
+import { createTRPCNext } from "@trpc/next";
+
+export const trpc = createTRPCNext<RouterV2>({
+  config(_opts) {
+    return {
+      links: [
+        httpLink({
+          headers: {
+            "0x-api-key": "your-api-key",
+            "0x-version": "v2",
+          },
+          url: "https://api.0x.org/trpc/swap",
+        }),
+      ],
+    };
+  },
+  ssr: true,
+});
+```

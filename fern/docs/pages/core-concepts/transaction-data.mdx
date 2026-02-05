@@ -1,0 +1,40 @@
+---
+title: Access 0x Transaction Data
+description: Learn how to get transaction data via Trade Analytics API and 0x-parser.
+---
+
+This guide covers two main approaches for accessing trade data from 0x: Trade Analytics API for historical analysis and 0x-parser for real-time transaction parsing.
+
+## Quick Comparison
+
+| Feature        | Trade Analytics API                                 | 0x-parser                         |
+| -------------- | --------------------------------------------------- | --------------------------------- |
+| Use Case       | Historical analysis & business intelligence         | Real-time transaction parsing     |
+| Data Freshness | ~15 min updates, final after 48 hours               | Immediate (on-chain)              |
+| Data Scope     | Comprehensive (volumes, fees, slippage, USD values) | Transaction-specific swap amounts |
+| Implementation | REST API calls                                      | JavaScript library                |
+| Reliability    | After 48-hour finalization                          | Direct blockchain data            |
+
+## Trade Analytics API
+
+Best for historical analysis and business intelligence. Provides comprehensive trade data including volumes, fees, and USD values.
+
+### Key Points
+
+- Updates every ~15 minutes
+- Data finalized after 48 hours
+- Includes USD value estimates
+
+[Read more about the Trade Analytics API](/docs/trade-analytics-api/introduction).
+
+## 0x-parser
+
+Best for real-time transaction data and displaying final swap amounts immediately after settlement.
+
+### Key Points
+
+- Real-time parsing of on-chain data
+- Handles AMM slippage calculations
+- Available as npm package: [`@0x/0x-parser`](https://www.npmjs.com/package/@0x/0x-parser)
+
+[Read more about the 0x-parser](/docs/swap-api/additional-topics/0-x-parser).

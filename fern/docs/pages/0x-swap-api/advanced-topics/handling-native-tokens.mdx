@@ -1,0 +1,127 @@
+---
+title: Handle Native Tokens
+description: This guide explains how to properly handle native tokens properly in swaps.
+---
+
+## Understanding Native Tokens
+
+Native tokens are the base currencies of their blockchains—for example, ETH on Ethereum, BNB on BNB Chain, and POL on Polygon. Because native tokens do not have contract addresses like ERC-20 tokens, the placeholder address: `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is commonly used to represent native tokens in blockchain transactions.
+
+### Notes on Native Token Representation
+
+For most of the EVM-compatible chains that we support, the native token is represented using the placeholder address `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`. This convention exists because native assets (e.g., ETH on Ethereum) do not have contract addresses like ERC-20 tokens.
+
+#### Mantle Network Exception
+
+Mantle’s native token, **MNT**, does not follow this convention. On the Mantle EVM chain, MNT has a designated contract address: `0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000`.
+
+This address applies only to the native `MNT` token on Mantle and should not be used for wrapped or bridged versions on other networks. Refer to the linked guide for additional [differences between Ethereum and Mantle](https://docs.mantle.xyz/network/for-developers/difference-between-ethereum-and-mantle).
+
+For more context on native token addresses:
+
+- [Discussion on native token address](https://www.reddit.com/r/ethereum/comments/iatr1d/what_is_the_significance_of_this_address/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+- [Stack Exchange explanation](https://ethereum.stackexchange.com/a/87444/85979).
+
+## Steps for Handling Native Tokens[​](/docs/swap-api/additional-topics/handling-native-tokens#steps-for-handling-native-tokens "Direct link to Steps for Handling Native Tokens")
+
+<Steps>
+  <Step title="Skip the allowance check:">
+    Unlike ERC-20 tokens, native tokens do not require an allowance or approval
+    step. Therefore, you can skip the `approve()` call when preparing to send
+    native tokens.
+  </Step>
+  <Step title="Set the transaction value:">
+    Ensure that the `value` field in your transaction parameters accurately
+    reflects the amount of native token (in wei) you intend to send.
+  </Step>
+</Steps>
+
+<Tip>
+
+See a full [Swap API headless example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example) that demonstrates how to handle native tokens.
+
+</Tip>
+
+## Code example
+
+Here's a code snippet of how you can implement the above steps:
+
+```typescript expandable
+import { createWalletClient, http, parseEther, sendTransaction } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { mainnet } from "viem/chains";
+
+// Create a wallet client using your private key
+const account = privateKeyToAccount("YOUR_PRIVATE_KEY");
+const client = createWalletClient({
+  account,
+  chain: mainnet,
+  transport: http("https://eth-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY"), // Provide an authenticated RPC URL to avoid rate-limiting
+});
+
+// Check if the sellToken is a native token (ETH) to skip the allowance check
+if (eth.address === "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE") {
+  console.log("Native token detected, no need for an allowance check");
+} else {
+  // Check if allowance is required for non-native tokens
+  if (price.issues.allowance !== null) {
+    try {
+      const { request } = await eth.simulate.approve([
+        price.issues.allowance.spender,
+        maxUint256,
+      ]);
+      // Remainder of code...
+    } catch (error) {
+      console.error("Error approving token:", error);
+    }
+  }
+}
+
+// Check if it's a native token (like ETH)
+if (eth.address === "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE") {
+  const nonce = await client.getTransactionCount({
+    address: client.account.address,
+  });
+  // Directly sign and send the native token transaction
+  const txHash = await client.sendTransaction({
+    account: client.account,
+    chain: client.chain,
+    gas: quote?.transaction.gas ? BigInt(quote.transaction.gas) : undefined,
+    to: quote?.transaction.to,
+    data: quote.transaction.data,
+    value: BigInt(quote.transaction.value), // Ensure value is set for native tokens
+    gasPrice: quote?.transaction.gasPrice
+      ? BigInt(quote.transaction.gasPrice)
+      : undefined,
+    nonce: nonce,
+  });
+  // Log the transaction hash
+  console.log("Transaction sent:", txHash);
+}
+```
+
+## Wrapping and Unwrapping between ETH and WETH
+
+Easily wrap and unwrap between ETH and WETH by requesting a swap quote by setting `sellToken` and `buyToken` as either the contract address for WETH or ETH. The swap quote returned will provide the calldata to directly interact with the WETH9 contract and not with 0x Settler contract.
+
+### Wrap ETH
+
+#### GET
+
+```bash
+curl --request GET \
+https://api.0x.org/swap/allowance-holder/quote?buyToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&buyAmount=10000000" \
+  --header '0x-api-key: YOUR_API_KEY' \
+  --header '0x-version: v2'
+```
+
+### Unwrap ETH
+
+#### GET
+
+```bash
+curl --request GET \
+https://api.0x.org/swap/allowance-holder/quote?buyToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&buyAmount=10000000" \
+  --header '0x-api-key: YOUR_API_KEY' \
+  --header '0x-version: v2'
+```

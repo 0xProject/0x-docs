@@ -1,0 +1,139 @@
+---
+title: Monetize Your App
+description: This guide covers how you can monetize your app by using the 0x Swap API.
+---
+
+## Introduction
+
+Integrate in-app swaps to let users trade seamlessly and at the best prices. As your app grows, you can monetize trades with low-friction strategies to generate revenue and build a sustainable Web3 business.
+
+See our [Monetization Report](https://0x.org/reports/monetization-across-defi-report) to learn how top DeFi apps are turning trading activity into millions.
+
+See below for pricing guidance, code examples, and a live demo.
+
+## Monetization Options
+
+Out-of-the-box, 0x Swap API offers two monetization options:
+
+1. [Affiliate fees](/docs/swap-api/guides/monetize-your-app#option-1:-collect-affiliate-fees) (aka trading fee or commission) – Available on all pricing plans.
+2. [Trade surplus](/docs/swap-api/guides/monetize-your-app#option-2:-collect-trade-surplus) (aka positive slippage) – Available to select integrators on custom plans. For assistance with setting up a custom plan, please [contact support](https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team).
+
+<Tip>
+### Demo Quicklinks
+
+⚡️ [Live demo](https://0x-swap-v2-demo-app.vercel.app/) showing monetization options.
+
+⚡️ [Demo code](https://github.com/0xProject/0x-examples/tree/main/swap-v2-next-app) for implementing affiliate fees and trade surplus.
+
+</Tip>
+
+## Option 1: Collect affiliate fees
+
+0x supports multiple affiliate fee (trading fees/commissions) within a single swap request. This allows you to route fees to multiple recipients with independently specified fee amounts — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
+
+To apply affiliate fees, include the following parameters in your [Swap API request](/api-reference/openapi-yaml/swap/allowanceholder-getprice):
+
+- `swapFeeRecipient` - The wallet address to receive the specified trading fees (supports single or multiple comma-separated values).
+- `swapFeeBps` - The fee amount(s), in basis points, to send to each corresponding `swapFeeRecipient`. Denoted in basis points (0–1000 Bps = 0–10%).
+- `swapFeeToken` - The contract address of token in which fees should be paid. This must be set to either the value of `buyToken` or the `sellToken`.
+
+### Example API call
+
+```bash
+https://api.0x.org/swap/allowance-holder/quote        // Request a firm quote
+?chainId=1                                            // Ethereum Mainnet
+&sellToken=0x6B175474E89094C44Da98b954EedeAC495271d0F // Sell DAI
+&sellAmount=4000000000000000000000                    // Sell amount: 4000 (18 decimal)
+&buyToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE  // Buy ETH
+&taker=$USER_TAKER_ADDRESS                            // Address that will make the trade
+&swapFeeRecipient=$INTEGRATOR_WALLET_ADDRESS // Wallet address that should receive the affiliate fees
+&swapFeeBps=100                              // Percentage of buyAmount that should be attributed as affiliate fees
+&swapFeeToken=0x6B175474E89094C44Da98b954EedeAC495271d0F // Receive trading fee in sellToken (DAI)
+--header '0x-api-key: [API_KEY]' // Replace with your own API key
+--header '0x-version: v2' // API version
+```
+
+When the transaction has gone through, the fee amount indicated by `swapFeeBps` will be sent to the `swapFeeRecipient` address you've set. The fee is received in the `swapFeeToken`.
+If you would like to receive a specific type of token (e.g. USDC), you will need to convert those on your own.
+
+### Displaying fees in the UI
+
+The fee `amount` is returned in the `fees.integratorFee` object. Two recommended methods to display the fees are:
+
+- display the `fee.integratorFee.amount` (make sure to consider the token's base units)
+- display the `swapFeeBps` and the `swapFeeToken` separately
+
+### A Note On How `fee.integratorFee.amount` Is Calculated
+
+<Accordion title="Read more">
+
+The `amount` is calculated from (`swapFeeBps`/10000) \* `sellAmount` (in the `sellToken` base unit).
+
+For example, to take a 1% fee on selling 100 USDC,
+
+- `sellToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` (USDC)
+- `sellAmount=100000000` (USDC has a base unit of 6 decimals)
+- `swapFeeBps=100` (1% fee)
+
+The fee amount would be `1000000`, which is `1` USDC.
+
+```json
+...
+"fees": {
+    "integratorFee": {
+      "amount": "1000000",
+      "token": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "type": "volume"
+    },
+...
+```
+
+  </Accordion>
+
+The following are examples from different apps that show these two options.
+
+![MonetizeSwap](../../../assets/img/0x-swap-api/monetize-swap.png)
+
+![AffiliateFeeExample3](../../../assets/img/0x-swap-api/affiliate-fee-example-3.png)
+
+![AffiliateFeeExample2](../../../assets/img/0x-swap-api/affiliate-fee-example-2.png)
+
+### Pricing considerations
+
+When deciding how much to set your fee amount, consider the following. We recommend setting your pricing in a way that strengthens your bottom line, aligning it with the value you provide to customers while considering any transaction costs. Note that the additional affiliate fee will impact the price for the end user, so find that sweet spot where your solution remains competitive and impactful.
+
+Be aware that `swapFeeBps` has a default limit of 1000 Bps for security. If your application requires a higher value, [please reach out to us](https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team).
+
+## Option 2: Collect trade surplus
+
+<Note>
+
+Collecting trade surplus (positive slippage) is only available for select integrators on a custom pricing plan. For assistance with setting up a custom plan, please [contact
+support](https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team).
+
+</Note>
+
+Trade surplus, also known as positive slippage, occurs when a user receives more tokens than their quoted amount. The `tradeSurplusRecipient` parameter lets you direct this surplus to a specific wallet. This parameter can be set in a [Swap API request](https://0x.org/docs/api) to automatically route surplus when applicable.
+
+### How it works
+
+- `tradeSurplusRecipient` — the wallet address that will receive any trade surplus. When set, 100% of the surplus is sent to this address.
+
+- **Token type** — surplus is always in the buyToken. If you want a different token (e.g., USDC), you must handle conversion yourself.
+
+- **Default behavior** — if `tradeSurplusRecipient` is not specified, the surplus goes to the `taker`. For integrators not on a custom plan, surplus is collected by 0x.
+
+### Example API call
+
+```bash
+https://api.0x.org/swap/allowance-holder/quote        // Request a firm quote
+?chainId=1                                            // Ethereum Mainnet
+&sellToken=0x6B175474E89094C44Da98b954EedeAC495271d0F // Sell DAI
+&sellAmount=4000000000000000000000                    // Sell amount: 4000 (18 decimal)
+&buyToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE  // Buy ETH
+&taker=$USER_TAKER_ADDRESS                            // Address that will make the trade
+&tradeSurplusRecipient=$INTEGRATOR_WALLET_ADDRESS     // The recipient of any trade surplus fees
+--header '0x-api-key: [API_KEY]'                     // Replace with your own API key
+--header '0x-version: v2'                            // Replace with your own API key
+
+```

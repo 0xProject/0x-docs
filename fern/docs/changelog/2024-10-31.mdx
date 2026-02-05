@@ -1,0 +1,48 @@
+---
+tags: []
+---
+
+#### New Features
+
+- **Trade Analytics API** is now available in limited access. [Contact us](https://0x.org/contact) for early access inquiries.
+- **Multi-user Access** for the 0x Dashboard is now live, allowing multiple users to manage account analytics and insights.
+- **Detailed API Error Codes** are now displayed in the 0x Dashboard Analytics to streamline error troubleshooting.
+- **Sell Entire Balance** option is now supported in Swap API v2. To enable, set `sellEntireBalance` to `true`. Supported for both allowance-holder and permit2 endpoints. [Learn more about implenting this feature](/docs/swap-api/additional-topics/handling-native-tokenssell-entire-balance).
+
+#### New Liquidity Sources
+
+- **Arbitrum:** Added Angle.
+- **Base:** Added Angle and Clober V2.
+- **BSC**: Added Maverick V2.
+- **Ethereum:** Added Angle, DeFi Swap, Sky Migration (SKY, USDS), and Stepn.
+- **Linea:** Added SyncSwap V2.
+- **Mantle:** Added Cleopatra V1, Dodo V2, and Stratum Exchange.
+- **Mode:** Added Balancer V2, iZiSwap, Kim V2, Kim V4, Morphex, SwapMode V2, SwapMode V3, Supswap V2, and Supswap V3.
+- **Scroll:** Added Uni V3 and Wombat.
+<Note>
+**Note:**
+
+*Want to add your liquidity source? Please fill out this [request form](https://forms.fillout.com/t/xrsvjHm85Hus).*
+</Note>
+#### New Chains
+
+- **Mantle (Beta)** is now live.
+- **Gasless API** support added for **BSC, Avalanche, Mantle, and Mode** chains.
+<Note>
+**Note:**
+
+*Interested to build on Mantle or with Gasless API? Reach out via our [contact form](https://0x.org/contact)!*
+</Note>
+#### Chores
+
+- **Latency Optimization:** Shipped a technical rewrite reducing /price endpoint response times—p95 latency dropped from ~1s to ~500ms, and p50 latency decreased from ~550ms to ~340ms—with no impact on pricing performance.
+
+#### Bug Fixes
+
+- **MNT and POL Compliance**: Improved support for MNT and POL tokens, which do not fully adhere to the ERC20 standard.
+- **Slippage Handling**: Slippage now correctly caps at the maximum specified basis points (bps).
+- **Meta-transaction Settler**: Fixed an RFQ handling issue in the meta-transaction flow.
+
+#### Documentation
+
+- New [guide](/docs/swap-api/additional-topics/handling-native-tokenshandling-native-tokens) on best practices for swapping native tokens (e.g., ETH).

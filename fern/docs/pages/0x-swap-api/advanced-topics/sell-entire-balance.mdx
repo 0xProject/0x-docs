@@ -1,0 +1,33 @@
+---
+title: Sell Entire Balance
+description: Learn how to use the sellEntireBalance parameter in the 0x Swap API to automatically sell a taker’s full token balance at execution time.
+---
+
+# Overview
+
+When building applications that involve composable smart contract interactions, such as Collateralized Debt Positions and Portfolio Rebalancing, the precise amount to sell via the Swap API is often determined by the output of a preceding onchain transaction. As a result, the actual amount to swap may be unknown at the time of requesting the quote and generating calldata.
+
+The 0x Swap API supports these kinds of transactions through the `sellEntireBalance` parameter. It enables developers to provide an estimate of the sell amount for the quote, and then determines the actual amount to sell based on the balance of the taker at the time of execution.
+
+### How it works
+
+To enable this feature, set the `sellEntireBalance` parameter on the API to `true` . This is supported by both our allowance-holder and permit2 endpoints.
+
+Example:
+
+```
+https://api.0x.org/swap/allowance-holder/quote?chainId=1&sellAmount=0xeeeeeeeeeeee&buyAmount=0x124363&taker=0xabcdef&sellEntireBalance=true
+```
+
+When set to true, the taker's balance during execution is used as the `sellAmount`. However, you must provide a `sellAmount` in the request so that we can determine the optimal route for the trade. The `sellAmount` provided should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. We recommend that the taker's balance does not deviate by more than 1% from the set `sellAmount`. Attempting to sell more than the `sellAmount` may cause the trade to revert.
+
+### How using this feature impacts your swap
+
+- **Slippage:** Since the taker's balance will be lower than the `sellAmount`, ensure that the slippage tolerance is adjusted for the possible variation.
+- **Routing**: Routing will be optimized for the provided `sellAmount`. Ensure to keep the `sellAmount` as close to the taker balance as possible.
+- **Fees:** Trade surplus <sup>1</sup> and swap fees will depend on the actual executed sell amount.
+
+We recommend using the `sellEntireBalance` feature only for minor deviations in the intended sell amount. Larger deviations may lead to inefficient routing, inflated surplus fees, or trade reverts.
+
+<sup>1</sup> Trade surplus is available only to select integrators on a custom pricing
+plan. For assistance with setting up a custom plan, please contact support.

@@ -1,0 +1,473 @@
+---
+title: Get Started with Swap API
+description: Learn how to send your first Swap API (AllowanceHolder) request.
+---
+
+## About Swap API
+
+Swap API is a DEX aggregation and smart order routing REST API that finds the best price for crypto trades. With one API integration, you can easily add trading to your app. Swap API aggregates liquidity from 150+ sources , including AMMs and professional market makers, across the [supported chains](/docs/introduction/supported-chains).
+
+![Swap API UI](https://res.cloudinary.com/dr5klrk9c/image/upload/v1761261077/swap-api-ui_q0jiyi.png)
+
+The API handles three key tasks:
+
+- Queries ERC20 prices from decentralized exchanges and market makers
+- Aggregates liquidity for the best possible price
+- Returns a trade format executable via your preferred web3 library
+
+## What You Will Learn
+
+This guide will cover the core steps to using Swap API, specifically using the [Swap AllowanceHolder](/api-reference/openapi-yaml/swap/allowanceholder-getprice) endpoint.
+
+<Note>
+  {" "}
+  Learn about the [difference between AllowanceHolder and Permit2 in Swap API](/docs/introduction/faq#allowanceholder-and-permit2){" "}
+</Note>
+
+## Playground
+
+Try this code example directly in your browser—no installation needed!
+
+<iframe
+  frameborder="0"
+  width="100%"
+  height="500px"
+  src="https://replit.com/@0xproject/0x-Swap-API-v2-AllowanceHolder-Headless-Example?embed=true"
+></iframe>
+
+## Swap Token in 4 Steps
+
+0. Get a 0x API key
+1. Get an indicative price
+2. (If needed) Set token allowance
+3. Fetch a firm quote
+4. Submit the transaction
+
+<Tip>
+  Follow along with the [Swap Code
+  Example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example).
+</Tip>
+
+## 0. Get a 0x API key
+
+Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0x.org/) to get your live API key. Follow the [setup guide](/docs/introduction/quickstart/create-a-0-x-api-key) for more details.
+
+## 1. Get an Indicative Price
+
+Let's find the best price!
+
+Use the [`/swap/allowance-holder/price`](/api-reference/openapi-yaml/swap/allowanceholder-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
+
+Think of `/price` as the "read-only" version of `/quote`, which you'll use in step 3.
+
+### Example Request
+
+Here is an example request to sell 100 WETH for DAI using `/price`.
+
+See [code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-allowance-holder-headless-example/index.ts#L60-L80):
+
+```js
+const priceParams = new URLSearchParams({
+  chainId: "1", // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0-x-cheat-sheet
+  sellToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", //ETH
+  buyToken: "0x6b175474e89094c44da98b954eedeac495271d0f", //DAI
+  sellAmount: "100000000000000000000", // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
+  taker: "$USER_TAKER_ADDRESS", //Address that will make the trade
+});
+
+const headers = {
+  "0x-api-key": "[api-key]", // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+  "0x-version": "v2",
+};
+
+const priceResponse = await fetch(
+  "https://api.0x.org/swap/allowance-holder/price?" + priceParams.toString(),
+  {
+    headers,
+  }
+);
+
+console.log(await priceResponse.json());
+```
+
+### Example Response
+
+You will receive a response that looks like this:
+
+<Accordion title="Expand to see response">
+
+```json
+{
+  "allowanceTarget": "0x0000000000001ff3684f28c67538d4d072c22734",
+  "blockNumber": "23234885",
+  "buyAmount": "458050129388884000000000",
+  "buyToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+  "fees": {
+    "integratorFee": null,
+    "zeroExFee": {
+      "amount": "688205446596484002742",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "type": "volume"
+    },
+    "gasFee": null
+  },
+  "gas": "1116817",
+  "gasPrice": "2558459858",
+  "issues": {
+    "allowance": {
+      "actual": "0",
+      "spender": "0x0000000000001ff3684f28c67538d4d072c22734"
+    },
+    "balance": {
+      "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "actual": "0",
+      "expected": "100000000000000000000"
+    },
+    "simulationIncomplete": false,
+    "invalidSourcesPassed": []
+  },
+  "liquidityAvailable": true,
+  "minBuyAmount": "453462747021444000000000",
+  "route": {
+    "fills": [
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "500"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "3251"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V4",
+        "proportionBps": "1250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V4",
+        "proportionBps": "500"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "0x_RFQ",
+        "proportionBps": "333"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V3",
+        "proportionBps": "499"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V3",
+        "proportionBps": "749"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V4",
+        "proportionBps": "749"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "0x_RFQ",
+        "proportionBps": "2169"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Ekubo",
+        "proportionBps": "4166"
+      },
+      {
+        "from": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "Maker_PSM",
+        "proportionBps": "10000"
+      }
+    ],
+    "tokens": [
+      {
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "symbol": "WETH"
+      },
+      {
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "symbol": "USDT"
+      },
+      {
+        "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "symbol": "DAI"
+      }
+    ]
+  },
+  "sellAmount": "100000000000000000000",
+  "sellToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "tokenMetadata": {
+    "buyToken": {
+      "buyTaxBps": "0",
+      "sellTaxBps": "0"
+    },
+    "sellToken": {
+      "buyTaxBps": "0",
+      "sellTaxBps": "0"
+    }
+  },
+  "totalNetworkFee": "2857331463231986",
+  "zid": "0x2450cc642b05b3cebfd9bf35"
+}
+```
+
+</Accordion>
+
+## 2. Set a Token Allowance
+
+Before proceeding with the swap, you'll need to set a token allowance.
+
+A [token allowance](https://help.matcha.xyz/en/articles/8928084-what-are-token-allowances) lets a third party move your tokens on your behalf. Approve an allowance for the [AllowanceHolder contract](/docs/core-concepts/contracts)—do not approve the Settler contract.
+
+Specify the amount of ERC20 tokens the contract can use.
+
+For step-by-step instructions, see [how to set your token allowances](/docs/swap-api/guides/build-token-swap-d-app-next-js).
+
+<Note>
+
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) contracts, as indicated by the API responses.
+
+- The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
+
+</Note>
+
+<Tip>
+  When setting the token allowance, make sure to provide enough allowance for
+  the buy or sell amount _as well as the gas;_ otherwise, you may receive a 'Gas
+  estimation failed' error.
+</Tip>
+
+### Example Code
+
+Here is an example of how to check and set token approvals.
+
+See [code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-allowance-holder-headless-example/index.ts#L82-L101).
+
+```ts
+// Set up contracts. Note abi and client setup not show in this snippet
+
+// Check if taker needs to set an allowance for AllowanceHolder
+if (price.issues.allowance !== null) {
+  try {
+    const { request } = await usdc.simulate.approve([
+      price.issues.allowance.spender,
+      maxUint256,
+    ]);
+    console.log("Approving AllowanceHolder to spend USDC...", request);
+    // Set approval
+    const hash = await usdc.write.approve(request.args);
+    console.log(
+      "Approved AllowanceHolder to spend USDC.",
+      await client.waitForTransactionReceipt({ hash })
+    );
+  } catch (error) {
+    console.log("Error approving AllowanceHolder:", error);
+  }
+} else {
+  console.log("USDC already approved for AllowanceHolder");
+}
+```
+
+## 3. Fetch a Firm Quote
+
+When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/allowance-holder/quote`](/api-reference/openapi-yaml/swap/allowanceholder-getquote). This signals a soft commitment to complete the trade.
+
+The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
+
+### Example Request
+
+Here is an example to fetch a firm quote sell 100 WETH for DAI using `/quote`.
+
+See [code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-allowance-holder-headless-example/index.ts#L103-L121).
+
+```javascript
+const qs = require('qs');
+
+const params = {
+    sellToken: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', //WETH
+    buyToken: '0x6b175474e89094c44da98b954eedeac495271d0f', //DAI
+    sellAmount: '100000000000000000000', // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
+    taker: '$USER_TAKER_ADDRESS', //Address that will make the trade
+    chainId: '1', // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0-x-cheat-sheet
+};
+
+const headers = {
+    '0x-api-key': '[api-key]',  // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    '0x-version': 'v2',         // Add the version header
+};
+
+const response = await fetch(
+    `https://api.0x.org/swap/allowance-holder/quote?${qs.stringify(params)}`, { headers }
+); /
+
+console.log(await response.json());
+```
+
+### Example Response
+
+You will receive a response that looks like this:
+
+<Accordion title="Expand to see response">
+
+```json
+{
+  "allowanceTarget": "0x0000000000001ff3684f28c67538d4d072c22734",
+  "blockNumber": "23234770",
+  "buyAmount": "454443538468285000000000",
+  "buyToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+  "fees": {
+    "integratorFee": null,
+    "zeroExFee": {
+      "amount": "682689324469874696651",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "type": "volume"
+    },
+    "gasFee": null
+  },
+  "issues": {
+    "allowance": {
+      "actual": "0",
+      "spender": "0x0000000000001ff3684f28c67538d4d072c22734"
+    },
+    "balance": {
+      "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "actual": "0",
+      "expected": "100000000000000000000"
+    },
+    "simulationIncomplete": false,
+    "invalidSourcesPassed": []
+  },
+  "liquidityAvailable": true,
+  "minBuyAmount": "449892276190185000000000",
+  "route": {
+    "fills": [
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Swaap_V2",
+        "proportionBps": "4667"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V4",
+        "proportionBps": "249"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Swaap_V2",
+        "proportionBps": "5084"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Ekubo",
+        "proportionBps": "2977"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V4",
+        "proportionBps": "2107"
+      },
+      {
+        "from": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "Maker_PSM",
+        "proportionBps": "10000"
+      }
+    ],
+    "tokens": [
+      {
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "symbol": "WETH"
+      },
+      {
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "symbol": "USDT"
+      },
+      {
+        "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "symbol": "DAI"
+      }
+    ]
+  },
+  "sellAmount": "100000000000000000000",
+  "sellToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "tokenMetadata": {
+    "buyToken": {
+      "buyTaxBps": "0",
+      "sellTaxBps": "0"
+    },
+    "sellToken": {
+      "buyTaxBps": "0",
+      "sellTaxBps": "0"
+    }
+  },
+  "totalNetworkFee": "1394929353342525",
+  "transaction": {
+    "to": "0x0000000000001ff3684f28c67538d4d072c22734",
+    "data": "0x2213bc0b000000000000000000000000df31a70a21a1931e02033dbba7deace6c45...truncated...",
+    "gas": "832055",
+    "gasPrice": "1676486955",
+    "value": "0"
+  },
+  "zid": "0x9c2d3156ecfc7dd6b4acc463"
+}
+```
+
+</Accordion>
+
+## 4. Submit the Transaction
+
+Finally, submit the transaction using your preferred web3 library. In this example, we use viem’s [`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction).
+
+This sends the prepared transaction data to the blockchain.
+
+See [code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-allowance-holder-headless-example/index.ts#L123-L133).
+
+```ts
+await client.sendTransaction({
+  to: quote?.transaction.to,
+  data: quote?.transaction.data,
+  value: quote?.transaction.value ? BigInt(quote.transaction.value) : undefined, // value is used for native tokens
+});
+```
+
+## Learn More
+
+This wraps up the Swap API AllowanceHolder quickstart. Check out the starter projects below:
+
+- [(Code) Swap API headless example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example)
+- [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app)
+- [(Code) Examples Repo](https://github.com/0xProject/0x-examples)
+- [(Guide) Build a Next.js dApp with 0x Swap API](./build-token-swap-dapp-nextjs)
