@@ -1,0 +1,269 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: 0x.docs.buildwithfern.com
+
+title: 0x Docs
+
+ai-search:
+  location:
+    - docs
+
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+
+# Tabs configuration
+tabs:
+  home:
+    display-name: Home
+    icon: home
+  docs:
+    display-name: Docs
+    icon: book
+  api-reference:
+    display-name: API Reference
+    icon: puzzle
+  sdks:
+    display-name: SDKs
+    icon: code
+  liquidity:
+    display-name: Liquidity Integration
+    icon: water
+  changelog:
+    display-name: Changelog
+    icon: clock
+    changelog: docs/changelog
+
+# Navigation structure
+navigation:
+  - tab: home
+    layout:
+      - page: Home
+        path: docs/pages/index.mdx
+
+  - tab: docs
+    layout:
+      - section: Introduction
+        icon: fa-regular fa-compass
+        contents:
+          - page: Welcome
+            path: docs/pages/introduction/welcome.mdx
+          - section: Quickstart
+            contents:
+              - page: Create a 0x API Key
+                path: docs/pages/introduction/getting-started.mdx
+              - page: Swap Tokens with Swap API
+                path: docs/pages/0x-swap-api/guides/swap-tokens-with-0x-swap-api.mdx
+          - section: Develop with AI
+            contents:
+              - page: Using AI with 0x
+                path: docs/pages/introduction/develop-with-ai/overview.mdx
+              - page: AI Project Showcase
+                path: docs/pages/introduction/develop-with-ai/ai-tools.mdx
+          - page: Supported Chains
+            path: docs/pages/introduction/supported-chains.mdx
+          - page: Demo Apps
+            path: docs/pages/introduction/demo-apps.mdx
+          - page: FAQ
+            path: docs/pages/introduction/faq.mdx
+          - page: API Issues & Error Codes
+            path: docs/pages/introduction/api-issues.mdx
+
+      - section: Swap API
+        icon: fa-regular fa-arrows-rotate
+        contents:
+          - page: Introduction
+            path: docs/pages/0x-swap-api/introduction.mdx
+          - section: Guides
+            contents:
+              - page: Swap Tokens with Swap API
+                path: docs/pages/0x-swap-api/guides/swap-tokens-with-0x-swap-api.mdx
+              - page: Build Token Swap DApp (Next.js)
+                path: docs/pages/0x-swap-api/guides/build-token-swap-dapp-nextjs.mdx
+              - page: Monetize Your App
+                path: docs/pages/0x-swap-api/guides/monetize-your-app-using-swap.mdx
+              - page: Troubleshooting
+                path: docs/pages/0x-swap-api/guides/troubleshooting-swap-api.mdx
+              - section: Permit2
+                contents:
+                  - page: Swap Tokens with Permit2
+                    path: docs/pages/0x-swap-api/guides/swap-tokens-with-0x-swap-api-permit2.mdx
+                  - page: Build DApp with Permit2 (Next.js)
+                    path: docs/pages/0x-swap-api/guides/build-token-swap-dapp-nextjs-permit2.mdx
+          - section: Additional Topics
+            contents:
+              - page: How to Set Token Allowances
+                path: docs/pages/0x-swap-api/advanced-topics/how-to-set-your-token-allowances.mdx
+              - page: Handling Native Tokens
+                path: docs/pages/0x-swap-api/advanced-topics/handling-native-tokens.mdx
+              - page: 0x Parser
+                path: docs/pages/0x-swap-api/advanced-topics/0x-parser.mdx
+              - page: Sell Entire Balance
+                path: docs/pages/0x-swap-api/advanced-topics/sell-entire-balance.mdx
+              - page: Buy/Sell Tax Support
+                path: docs/pages/0x-swap-api/advanced-topics/buy-sell-tax-support.mdx
+              - page: About the RFQ System
+                path: docs/pages/0x-swap-api/advanced-topics/about-the-rfq-system.mdx
+          - page: FAQ
+            path: docs/pages/introduction/faq.mdx
+
+      - section: Gasless API
+        icon: fa-regular fa-gas-pump
+        contents:
+          - page: Introduction
+            path: docs/pages/gasless-api/introduction.mdx
+          - section: Guides
+            contents:
+              - page: Get Started with Gasless API
+                path: docs/pages/gasless-api/guides/get-started-with-gasless-api.mdx
+              - page: Understanding Gasless API
+                path: docs/pages/gasless-api/understanding-gasless-api.mdx
+              - page: Technical Appendix
+                path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
+          - page: Gasless FAQ
+            path: docs/pages/gasless-api/gasless-faq.mdx
+
+      - section: Trade Analytics API
+        icon: fa-regular fa-chart-column
+        contents:
+          - page: Introduction
+            path: docs/pages/trade-analytics-api/introduction.mdx
+          - page: Transaction Data
+            path: docs/pages/core-concepts/transaction-data.mdx
+          - page: Trade Analytics FAQ
+            path: docs/pages/trade-analytics-api/trade-analytics-faq.mdx
+
+      - section: Core Concepts
+        icon: fa-regular fa-books
+        contents:
+          - page: Introduction to 0x
+            path: docs/pages/core-concepts/introduction-to-0x.mdx
+          - page: 0x Cheat Sheet
+            path: docs/pages/core-concepts/0x-cheat-sheet.mdx
+          - page: Contracts
+            path: docs/pages/core-concepts/contracts.mdx
+          - page: Order Types
+            path: docs/pages/core-concepts/order-types.mdx
+          - page: Glossary
+            path: docs/pages/core-concepts/glossary.mdx
+          - page: White Paper
+            path: docs/pages/core-concepts/white-paper.mdx
+          - page: Transaction Data
+            path: docs/pages/core-concepts/transaction-data.mdx
+
+      - section: Developer Resources
+        icon: fa-regular fa-screwdriver-wrench
+        contents:
+          - page: Bounties
+            path: docs/pages/developer-resources/bounties.mdx
+          - page: Rate Limits
+            path: docs/pages/developer-resources/rate-limits.mdx
+          - page: System Status
+            path: docs/pages/developer-resources/system-status.mdx
+
+      - section: Upgrading
+        icon: fa-regular fa-arrow-up
+        contents:
+          - page: Overview
+            path: docs/pages/upgrading/overview.mdx
+          - page: Upgrading to Swap v2
+            path: docs/pages/upgrading/upgrading-to-swap-v2.mdx
+          - page: Upgrading to Gasless v2
+            path: docs/pages/upgrading/upgrading-to-gasless-v2.mdx
+
+      - section: Need Help?
+        icon: fa-regular fa-circle-question
+        contents:
+          - page: FAQ
+            path: docs/pages/introduction/faq.mdx
+          - page: Contact Support
+            path: docs/pages/help/contact-support.mdx
+          - page: Contact Sales
+            path: docs/pages/help/contact-sales.mdx
+
+  - tab: api-reference
+    layout:
+      - page: API Overview
+        path: docs/pages/api-reference-overview.mdx
+        icon: fa-regular fa-book
+      - api: openapi.yaml
+
+  - tab: sdks
+    layout:
+      - section: SDK & Utilities
+        contents:
+          - page: Swap TypeScript SDK
+            path: docs/pages/sdk-utilities/swap-ts-sdk.mdx
+            icon: fa-brands fa-js
+          - page: 0x Parser
+            path: docs/pages/sdk-utilities/0x-parser.mdx
+
+  - tab: liquidity
+    layout:
+      - page: Liquidity Integrations
+        path: docs/pages/liquidity-integrations.mdx
+        icon: fa-regular fa-water
+
+  - tab: changelog
+
+# Navbar links
+navbar-links:
+  - type: minimal
+    text: Contact Support
+    url: https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team
+  - type: minimal
+    text: Community
+    url: https://discord.com/invite/official0x
+  - type: filled
+    text: Go to dashboard
+    url: https://dashboard.0x.org/create-account
+  - type: github
+    value: https://github.com/0xProject
+
+# Colors matching 0x branding
+colors:
+  accentPrimary:
+    dark: "#f3f4f5"
+    light: "#25272a"
+  background:
+    dark: "#181818"
+    light: "#f4f4f4"
+
+# Typography - using Neutral (regular weight) for both to avoid bold text
+typography:
+  headingsFont:
+    name: PolySans
+    path: docs/assets/fonts/PolySans-Neutral.woff2
+  bodyFont:
+    name: PolySans
+    path: docs/assets/fonts/PolySans-Neutral.woff2
+
+# Logo configuration
+logo:
+  dark: docs/assets/logo-dark.svg
+  light: docs/assets/logo-light.svg
+  height: 24
+  href: https://0x.org
+
+favicon: docs/assets/favicon.svg
+
+# Custom CSS
+css: docs/assets/styles.css
+
+# Theme settings
+theme:
+  page-actions: toolbar
+  footer-nav: minimal
+
+page-actions:
+  default: copy-page
+  options:
+    copy-page: true
+    view-as-markdown: true
+    ask-ai: true
+    chatgpt: true
+    cursor: true
+    vscode: true
+    claude: true

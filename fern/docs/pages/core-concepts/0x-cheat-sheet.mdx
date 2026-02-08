@@ -1,0 +1,759 @@
+---
+title: 0x Cheat Sheet
+description: A resource for supported chains, example calls, contracts, and order types supported by 0x.
+---
+
+## Supported Chains
+
+Swap and Gasless v2 APIs are currently supported on the following chains. Select the chain in your request by providing the corresponding `chainId` request parameter. To request support for a new chain, please submit a request [here](https://0x.canny.io/request-features).
+
+| Chain              | Chain ID | Swap API | Gasless API |
+| ------------------ | -------- | -------- | ----------- |
+| Ethereum (Mainnet) | 1        | ✅       | ✅          |
+| Arbitrum           | 42161    | ✅       | ✅          |
+| Avalanche          | 43114    | ✅       | ✅          |
+| Base               | 8453     | ✅       | ✅          |
+| Berachain          | 80094    | ✅       |             |
+| Blast              | 81457    | ✅       | ✅          |
+| BSC                | 56       | ✅       | ✅          |
+| Ink                | 57073    | ✅       |             |
+| Linea              | 59144    | ✅       |             |
+| Mantle             | 5000     | ✅       | ✅          |
+| Mode               | 34443    | ✅       | ✅          |
+| Monad              | 10143    | ✅       |             |
+| Optimism           | 10       | ✅       | ✅          |
+| Plasma             | 9745     | ✅       | ✅          |
+| Polygon            | 137      | ✅       | ✅          |
+| Scroll             | 534352   | ✅       | ✅          |
+| Sonic              | 146      | ✅       | ✅          |
+| Unichain           | 130      | ✅       |             |
+| World Chain        | 480      | ✅       |             |
+
+## Swap API v2
+
+### Sample Request and Response
+
+See full list of required query parameters and responses [here](/api-reference#tag/Swap).
+
+#### Request
+
+```bash
+curl --request GET \
+  --url "https://api.0x.org/swap/permit2/quote?sellAmount=100000000000000000000000&taker=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&chainId=1&sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&buyToken=0x6b175474e89094c44da98b954eedeac495271d0f" \
+  --header "0x-api-key: YOUR_API_KEY" \
+  --header "0x-version: v2"
+```
+
+#### Response
+
+<Accordion title="Expand to see response">
+
+```json
+{
+  "blockNumber": "21876249",
+  "buyAmount": "145110588712348756365465945",
+  "buyToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+  "fees": {
+    "integratorFee": null,
+    "zeroExFee": {
+      "amount": "207515265570963324735062",
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "type": "volume"
+    },
+    "gasFee": null
+  },
+  "issues": {
+    "allowance": {
+      "actual": "0",
+      "spender": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+    },
+    "balance": {
+      "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "actual": "16320309787715287566",
+      "expected": "100000000000000000000000"
+    },
+    "simulationIncomplete": false,
+    "invalidSourcesPassed": []
+  },
+  "liquidityAvailable": true,
+  "minBuyAmount": "143659482825225268801805400",
+  "permit2": {
+    "type": "Permit2",
+    "hash": "0xafb2c83591d83ec04d0792eaa00d36f5a509dfab6666fa787e310afa276bf379",
+    "eip712": {
+      "types": {
+        "PermitTransferFrom": [
+          {
+            "name": "permitted",
+            "type": "TokenPermissions"
+          },
+          {
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "name": "deadline",
+            "type": "uint256"
+          }
+        ],
+        "TokenPermissions": [
+          {
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ]
+      },
+      "domain": {
+        "name": "Permit2",
+        "chainId": 1,
+        "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+      },
+      "message": {
+        "permitted": {
+          "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "amount": "100000000000000000000000"
+        },
+        "spender": "0x0d0e364aa7852291883c162b22d6d81f6355428f",
+        "nonce": "2241959297937691820908574931991559",
+        "deadline": "1739918089"
+      },
+      "primaryType": "PermitTransferFrom"
+    }
+  },
+  "route": {
+    "fills": [
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "Uniswap_V3",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "Uniswap_V3",
+        "proportionBps": "749"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "Curve",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "Curve",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "SushiSwap",
+        "proportionBps": "500"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "Uniswap_V2",
+        "proportionBps": "251"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "Uniswap_V3",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "SushiSwap",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "Uniswap_V2",
+        "proportionBps": "500"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "499"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "749"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "249"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V2",
+        "proportionBps": "1583"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "SushiSwap",
+        "proportionBps": "499"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Fluid",
+        "proportionBps": "249"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V4",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+        "source": "Curve",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V3",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V3",
+        "proportionBps": "750"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V3",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "PancakeSwap_V3",
+        "proportionBps": "250"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "Uniswap_V2",
+        "proportionBps": "750"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "0x_RFQ",
+        "proportionBps": "83"
+      },
+      {
+        "from": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "source": "0x_RFQ",
+        "proportionBps": "84"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "Curve",
+        "proportionBps": "1942"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+        "source": "Curve",
+        "proportionBps": "323"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "Uniswap_V3",
+        "proportionBps": "86"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "0x_RFQ",
+        "proportionBps": "21"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "0x_RFQ",
+        "proportionBps": "21"
+      },
+      {
+        "from": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "to": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "source": "0x_RFQ",
+        "proportionBps": "22"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "0x_RFQ",
+        "proportionBps": "57"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "0x_RFQ",
+        "proportionBps": "57"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "38"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Uniswap_V3",
+        "proportionBps": "1696"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Curve",
+        "proportionBps": "343"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "0x_RFQ",
+        "proportionBps": "133"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "0x_RFQ",
+        "proportionBps": "19"
+      },
+      {
+        "from": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "0x_RFQ",
+        "proportionBps": "58"
+      },
+      {
+        "from": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+        "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "source": "Curve",
+        "proportionBps": "573"
+      },
+      {
+        "from": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "source": "Maker_PSM",
+        "proportionBps": "6944"
+      }
+    ],
+    "tokens": [
+      {
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "symbol": "WETH"
+      },
+      {
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "symbol": "USDT"
+      },
+      {
+        "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "symbol": "WBTC"
+      },
+      {
+        "address": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+        "symbol": "crvUSD"
+      },
+      {
+        "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "symbol": "DAI"
+      }
+    ]
+  },
+  "sellAmount": "100000000000000000000000",
+  "sellToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "tokenMetadata": {
+    "buyToken": {
+      "buyTaxBps": "0",
+      "sellTaxBps": "0"
+    },
+    "sellToken": {
+      "buyTaxBps": "0",
+      "sellTaxBps": "0"
+    }
+  },
+  "totalNetworkFee": "54779430334381092",
+  "transaction": {
+    "to": "0x0d0e364aa7852291883c162b22d6d81f6355428f",
+    "data": "0x1fff991f000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa...truncated...",
+    "gas": "53043726",
+    "gasPrice": "1032722142",
+    "value": "0"
+  },
+  "zid": "0x4394c57eeb18c52d02b7516f"
+}
+```
+
+</Accordion>
+
+## Gasless API v2
+
+### Sample Request and Response
+
+See full list of required query parameters and responses [here](/api-reference#tag/Gasless).
+
+#### Request
+
+```bash
+curl --request GET \
+  --url 'https://api.0x.org/gasless/quote?chainId=8453&sellToken=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&buyToken=0x4200000000000000000000000000000000000006&sellAmount=100000000&taker=0x4D2A422dB44144996E855ce15FB581a477dbB947' \
+  --header '0x-api-key: YOUR_API_KEY'
+  --header '0x-version: v2'
+```
+
+#### Response
+
+<details>
+
+<summary>Expand to see response</summary>
+
+```json
+{
+  "approval": {
+    "type": "permit",
+    "hash": "0x334281749a8d1c7e518024109ee8f31c5e55109764efa33b2864a6ab26d90889",
+    "eip712": {
+      "types": {
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ],
+        "Permit": [
+          {
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "name": "deadline",
+            "type": "uint256"
+          }
+        ]
+      },
+      "domain": {
+        "name": "USD Coin",
+        "version": "2",
+        "chainId": 8453,
+        "verifyingContract": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+      },
+      "message": {
+        "owner": "0x4d2a422db44144996e855ce15fb581a477dbb947",
+        "spender": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+        "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "nonce": 1,
+        "deadline": "1720033166"
+      },
+      "primaryType": "Permit"
+    }
+  },
+  "blockNumber": "16621609",
+  "buyAmount": "28520257810978",
+  "buyToken": "0x4200000000000000000000000000000000000006",
+  "fees": {
+    "integratorFee": null,
+    "zeroExFee": {
+      "amount": "150",
+      "token": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "type": "volume"
+    },
+    "gasFee": {
+      "amount": "5842",
+      "token": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "type": "gas"
+    }
+  },
+  "issues": {
+    "allowance": null,
+    "balance": null,
+    "simulationIncomplete": false,
+    "invalidSourcesPassed": []
+  },
+  "liquidityAvailable": true,
+  "minBuyAmount": "28434697037546",
+  "route": {
+    "fills": [
+      {
+        "from": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+        "to": "0x4200000000000000000000000000000000000006",
+        "source": "Solidly_V3",
+        "proportionBps": "10000"
+      }
+    ],
+    "tokens": [
+      {
+        "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+        "symbol": "USDC"
+      },
+      {
+        "address": "0x4200000000000000000000000000000000000006",
+        "symbol": "WETH"
+      }
+    ]
+  },
+  "sellAmount": "99850",
+  "sellToken": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+  "target": "0x5ce929ddb01804bff35b2f5c77b735bdb094aac8",
+  "trade": {
+    "type": "settler_metatransaction",
+    "hash": "0xf8b1cea260453fabbeb8d38195e3f034b638714553084753bbe83f4d2aaa45ba",
+    "eip712": {
+      "types": {
+        "PermitWitnessTransferFrom": [
+          {
+            "name": "permitted",
+            "type": "TokenPermissions"
+          },
+          {
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "name": "deadline",
+            "type": "uint256"
+          },
+          {
+            "name": "slippageAndActions",
+            "type": "SlippageAndActions"
+          }
+        ],
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ],
+        "TokenPermissions": [
+          {
+            "name": "token",
+            "type": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "SlippageAndActions": [
+          {
+            "name": "recipient",
+            "type": "address"
+          },
+          {
+            "name": "buyToken",
+            "type": "address"
+          },
+          {
+            "name": "minAmountOut",
+            "type": "uint256"
+          },
+          {
+            "name": "actions",
+            "type": "bytes[]"
+          }
+        ]
+      },
+      "domain": {
+        "name": "Permit2",
+        "chainId": 8453,
+        "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+      },
+      "message": {
+        "permitted": {
+          "token": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "amount": "100000"
+        },
+        "spender": "0x5ce929ddb01804bff35b2f5c77b735bdb094aac8",
+        "nonce": "2241959297937691820908574931991566",
+        "deadline": "1720032866",
+        "slippageAndActions": {
+          "recipient": "0x4d2a422db44144996e855ce15fb581a477dbb947",
+          "buyToken": "0x4200000000000000000000000000000000000006",
+          "minAmountOut": "28434697037546",
+          "actions": [
+            "0x0dfeb4190000000000000000000000005ce929ddb01804bff35b2f5c77b735bdb094aac8000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda0291300000000000000000000000000000000000000000000000000000000000186a00000000000000000000000000000000000006e898131631616b1779bad70bc0e0000000000000000000000000000000000000000000000000000000066859e62",
+            "0x38c9c147000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda029130000000000000000000000000000000000000000000000000000000000000257000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913000000000000000000000000000000000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000044a9059cbb0000000000000000000000009f6601854dee374b1bfaf6350ffd27a97309d431000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "0x38c9c147000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda029130000000000000000000000000000000000000000000000000000000000002710000000000000000000000000551a0e3d267bea87048f08cc94cc6035ad99221b000000000000000000000000000000000000000000000000000000000000004400000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000084c31b8d7a0000000000000000000000005ce929ddb01804bff35b2f5c77b735bdb094aac80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001860a000000000000000000000000fffd8963efd1fc6a506488495d951d5263988d2500000000000000000000000000000000000000000000000000000000"
+          ]
+        }
+      },
+      "primaryType": "PermitWitnessTransferFrom"
+    }
+  }
+}
+```
+
+</details>
+
+## 0x Contracts
+
+This section provides an overview of the three main contracts developers need to understand when working with the 0x API - AllowanceHolder, Permit2, 0x Settler. For more in-depth details, refer to the [0x Contracts](/docs/core-concepts/contracts) section.
+
+### A Note About Setting Token Allowances
+
+<Note>
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0-x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
+
+- The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
+
+</Note>
+
+### 0x Settler
+
+The 0x Settler contract is the core execution layer of 0x v2, designed for flexibility and security. It is responsible for executing swaps without requiring passive token allowances.
+
+⚠️ **Important:** Never set token allowances directly on the Settler contract — this will result in lost funds.
+
+Key Points:
+
+- When using `/swap/permit2`, Settler is the entry point contract (where you send `data`).
+- Its address changes dynamically per deployment. The correct contract address is always returned in `transaction.to` by the API.
+
+Further reading: [0x Settler](/docs/core-concepts/contracts#0x-settler-contracts)
+
+### AllowanceHolder (Recommended)
+
+AllowanceHolder is the default and recommended allowance contract for most integrators. It provides a better UX, lower gas costs, and is designed to minimize common integration pitfalls that can occur with using Permit2.
+
+Why use AllowanceHolder?
+
+- ✅ **Gas efficiency:** Lower approval and execution costs than Permit2.
+- ✅ **Safer defaults:** Reduces the chance of errors during integration.
+- ✅ **Simple UX:** Works with standard approval flows without requiring double signatures, unlike Permit2.
+- ✅ **Equal Safety:** Security guarantees are equivalent to Permit2.
+
+AllowanceHolder is recommended for most integrators, and it is especially well-suited for:
+
+- Teams aggregating multiple liquidity sources and aiming for a consistent user experience across wallets.
+- Developers upgrading from Swap v1 (similar integration flow).
+- Integration with advanced wallets (multisigs, smart contract wallets)
+
+Endpoints:
+
+- [/swap/allowance-holder/price](/api-reference/openapi-yaml/swap/allowanceholder-getprice)
+- [/swap/allowance-holder/quote](/api-reference/openapi-yaml/swap/allowanceholder-getquote)
+
+Key Points:
+
+- The correct allowance target will be returned in `issues.allowance.spender` or `allowanceTarget`.
+- More flexible than the traditional contract-wide approvals.
+- Contract addresses are chain-specific, and can be hardcoded. Always verify with the [official documentation](https://github.com/0xProject/0x-settler/blob/master/README.md#allowanceholder-addresses) before hardcoding:
+  - `0x0000000000001fF3684f28c67538d4D072C22734` — **Cancun hardfork chains** (Ethereum Mainnet, Arbitrum, Avalanche, Base, Berachain, Blast, BSC, Ink, Linea, Mode, Monad, Optimism, Plasma, Polygon, Scroll, Sonic, Unichain, World Chain)
+  - `0x0000000000005E88410CcDFaDe4a5EfaE4b49562` — **Shanghai hardfork chains** (Mantle)
+
+Further Reading: [AllowanceHolder Contract](/docs/core-concepts/contracts#allowanceholder-contract)
+
+### Permit2 (Advanced Use Only)
+
+Permit2, developed by Uniswap, enables flexible approvals with features like time-limited and granular allowances. It can be powerful, but it introduces **risks that new integrators must be careful with**
+
+**⚠️ Permit2 is for advanced integrators only.**
+
+If you use Permit2, ONLY set allowances on [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only). NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Setting an allowance on Settler WILL result in loss of funds.
+
+When to use Permit2:
+
+- Your app requires time-limited or granular approvals that AllowanceHolder does not support.
+- Your users already have infinite allowances set on Permit2 via another app — no reset is needed.
+
+Endpoints:
+
+- [/swap/permit2/price](/api-reference/openapi-yaml/swap/permit-2-getprice)
+- [/swap/permit2/quote](/api-reference/openapi-yaml/swap/permit-2-getquote)
+
+Key Points:
+
+- The correct allowance target will be returned in `issues.allowance.spender` or `allowanceTarget`.
+- Requires a double-signature flow. This is more complex to integrate but allows for features like time-limited approvals.
+- Permit2 is deployed to `0x000000000022D473030F116dDEE9F6B43aC78BA3` across all chains. You can hardcode this address in your integration.
+
+Further Reading: [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only)

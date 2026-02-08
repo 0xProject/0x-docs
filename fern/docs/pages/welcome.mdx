@@ -1,0 +1,120 @@
+---
+title: Welcome to Fern!
+subtitle: Everything you need to build the best developer experience
+slug: welcome
+---
+
+This repository is a starter template for building documentation with [Fern](https://buildwithfern.com). It includes a sample Plant Store API to demonstrate how Fern generates interactive API reference documentation from an OpenAPI specification.
+
+Use this template to get started quickly, then replace the sample content with your own API and documentation.
+
+## What's included
+
+This starter template contains everything you need to publish documentation:
+
+<Files>
+  <File name="docs.yml" comment="Configures navigation, theme, and hosting" />
+  <File name="fern.config.json" comment="Sets your organization name and CLI version" />
+  <File name="openapi.yaml" comment="Sample Plant Store API specification" />
+  <Folder name="docs" defaultOpen>
+    <Folder name="pages" comment="Markdown content for your documentation" />
+    <Folder name="assets" comment="Logos, favicon, and other assets" />
+  </Folder>
+</Files>
+
+## Getting started
+
+<Steps>
+<Step title="Clone this repository">
+
+```bash
+git clone <your-template-repo.git>
+cd docs-starter
+```
+
+</Step>
+
+<Step title="Install the Fern CLI">
+
+```bash
+npm install -g fern-api
+```
+
+</Step>
+
+<Step title="Preview locally">
+
+Start a local development server with hot-reloading:
+
+```bash
+fern docs dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see your docs.
+
+</Step>
+
+<Step title="Make it yours">
+
+Update `fern.config.json` with your organization name and `docs.yml` with your desired URL:
+
+```json title="fern.config.json"
+{
+  "organization": "your-org-name",
+  "version": "0.46.15"
+}
+```
+
+```yaml title="docs.yml"
+instances:
+  - url: your-org.docs.buildwithfern.com
+```
+
+</Step>
+
+<Step title="Publish">
+
+When you're ready to go live:
+
+```bash
+fern generate --docs
+```
+
+</Step>
+</Steps>
+
+## Next steps
+
+Replace the sample Plant Store API with your own OpenAPI specification, update the Markdown pages with your content, and customize the theme to match your brand. For detailed guidance, explore the pages in this documentation or visit the [Fern documentation](https://buildwithfern.com/learn).
+
+<CardGroup cols={2}>
+  <Card
+    title="Edit your docs"
+    icon="duotone pen-to-square"
+    href="/editing-your-docs"
+  >
+    Learn how to preview and publish changes using the CLI or Fern Editor
+  </Card>
+  <Card
+    title="Set up navigation"
+    icon="duotone sitemap"
+    href="/navigation"
+  >
+    Configure tabs, sections, and pages in your docs.yml file
+  </Card>
+  <Card
+    title="Customize your docs"
+    icon="duotone palette"
+    href="/customization"
+  >
+    Brand your documentation with colors, logos, and layouts
+  </Card>
+  <Card
+    title="API reference"
+    icon="duotone code"
+    href="/api-reference"
+  >
+    See how Fern generates interactive API documentation
+  </Card>
+</CardGroup>
+

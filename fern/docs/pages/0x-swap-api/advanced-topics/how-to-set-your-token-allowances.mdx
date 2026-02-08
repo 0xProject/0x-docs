@@ -1,0 +1,130 @@
+---
+title: Set Token Allowances
+description: Learn how to set token allowances when making swaps
+---
+
+To allow a third-party service—such as the 0x API—to move your ERC-20 tokens, you must first grant a [token allowance](https://help.matcha.xyz/en/articles/8928084-what-are-token-allowances). When using 0x APIs, this means approving either [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) to move tokens on your behalf.
+
+Which contract to approve depends on the API endpoint you're using:
+
+| API Endpoint                                                              | Allowance Target Contract |
+| ------------------------------------------------------------------------- | ------------------------- |
+| [`/swap/allowance-holder`](/api-reference/openapi-yaml/swap/allowanceholder-getquote) | AllowanceHolder           |
+| [`/swap/permit2`](/api-reference/openapi-yaml/swap/permit-2-getquote)                   | Permit2                   |
+
+The wallet holding the tokens (`taker`) must approve the contract address returned in `issues.allowance.spender` or `allowanceTarget` from the `/price` or `/quote` response.
+
+<Note>
+  No allowance is needed for wrapping/unwrapping ETH (e.g., WETH ⇄ ETH). In
+  these cases, allowance is `null`.
+</Note>
+
+## Allowance Target vs. Entry Point
+
+In API v2, **allowance management** and **swap execution** are handled by **different contracts**.
+
+#### 1. Allowance Target Contract
+
+- **Purpose:** The contract where token approvals are set.
+- **Which contract:** Permit2 (`/swap/permit2`) or AllowanceHolder (`/swap/allowance-holder`), depending on the approval method.
+- **How to find it:** Returned in `issues.allowance.spender` or `allowanceTarget`.
+
+#### 2. Entry Point Contract
+
+- **Purpose:** Executes swaps; send the `data` payload here.
+- **Which contract:** 0x Settler (`/swap/permit2`) or AllowanceHolder (`/swap/allowance-holder`), depending on the approval method.
+- **How to find it:** Returned in `transaction.to`.
+
+This separation enhances security by isolating allowance management from swap execution.
+
+<Note>
+
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) contracts, as indicated by the API responses.
+
+- The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
+
+</Note>
+
+Example response from `/swap/permit2/quote` will return back the contract address if an allowance needs to be set:
+
+```json
+"issues": {
+  "allowance": {
+  "actual": "0",
+  "spender": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+},
+```
+
+## How to Set a Token Allowance
+
+You can approve allowances programmatically or via UI:
+
+- [Using wagmi](#using-wagmi)
+- [Using viem](#using-viem)
+- [Using Etherscan](#using-etherscan)
+
+### Using wagmi
+
+wagmi provides a clean interface for reading and writing allowances:
+
+1. Read current allowance using [`useReadContract`](https://wagmi.sh/react/api/hooks/useReadContract).
+2. Simulate and write approval with [`useSimulateContract`](https://wagmi.sh/react/api/hooks/useSimulateContract#usesimulatecontract) and [`useWriteContract`](https://wagmi.sh/react/api/hooks/useWriteContract#usewritecontract).
+3. Wait for transaction confirmation using [`useWaitForTransactionReceipt`](https://wagmi.sh/vue/api/composables/useWaitForTransactionReceipt#usewaitfortransactionreceipt).
+
+Here’s a minimal example:
+
+```javascript
+const { data: allowance } = useReadContract({
+  address: sellTokenAddress,
+  abi: erc20Abi,
+  functionName: "allowance",
+  args: [taker, PERMIT2_ADDRESS],
+});
+
+const { data } = useSimulateContract({
+  address: sellTokenAddress,
+  abi: erc20Abi,
+  functionName: "approve",
+  args: [PERMIT2_ADDRESS, MAX_ALLOWANCE],
+});
+
+const { writeContractAsync } = useWriteContract();
+const { data: receipt } = useWaitForTransactionReceipt({
+  hash: writeContractResult,
+});
+```
+
+<Tip>
+  For a full implementation, see: 
+ - AllowanceHolder
+    - [Code example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example)  
+    - [Guide](http://localhost:3000/docs/introduction/quickstart/swap-tokens-with-swap-api)
+
+- Permit2
+  - [Code example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example)
+  - [Guide](http://localhost:3000/docs/introduction/quickstart/swap-tokens-with-swap-api-permit2)
+
+</Tip>
+
+### Using Etherscan
+
+You can manually set allowances via [Etherscan](http://etherscan.io/):
+
+1. Navigate to the token’s contract page (e.g., [WETH](https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2#writeContract)).
+2. Go to **Write Contract > approve**
+3. Enter:
+
+- `_spender`: the `issues.allowance.spender` address from the API.
+- `_value`: the maximum uint256 value (`2^256 - 1`).
+
+![Etherscan approve method](../../../assets/img/0x-swap-api/etherscan-token-allowance.png)
+
+## Revoking Allowances
+
+To revoke an allowance, you will need to set the allowance to 0. This can be done programmatically or through a UI such as https://revoke.cash/ .
+
+## Common Issues
+
+When setting the token allowance, make sure to provide enough allowance for the buy or sell amount _as well as the gas;_ otherwise, you may receive a 'Gas estimation failed' error.

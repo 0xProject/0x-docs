@@ -1,0 +1,13 @@
+---
+title: Order Types
+description: Learn about 0x order types.
+---
+
+# 0x Order Types
+
+An order is a message passed into the 0x Settler to facilitate a trade (see [How does 0x work?](./introduction-to-0x#how-does-0x-work)). The order types that we support include:
+
+| **Order Type**   | **Summary**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | **Supported Token Trade Types** |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| **Limit Orders** | These are the standard 0x Order, which encodes a possible trade between a maker and a taker at a fixed price. **Despite the name, these are _not_ the same as traditional financial “limit orders.”** In conventional markets, a limit order is an instruction to buy or sell an asset at a specified price or better. In contrast, a 0x Limit Order is an off-chain signed message representing a potential trade that can be filled on-chain by any taker, provided the price and conditions encoded in the order are met. | ERC20 ↔ ERC20 trade             |
+| **RFQ Orders**   | These are a stripped-down version of standard limit orders, supporting fewer fields and a leaner settlement process. These orders are fielded just-in-time from market makers during the construction of a swap quote on 0x API and can be filled through the `fillRfqOrder()` function on the Exchange Proxy. See [RFQ Order Structure](https://docs.0xprotocol.org/en/latest/basics/orders.html#rfq-orders).                                                                                                               | ERC20 ↔ ERC20 trade             |

@@ -1,0 +1,203 @@
+---
+title: Contracts
+description: Learn about 0x Settler, AllowanceHolder, and Permit2 contracts.
+---
+
+# 0x Contracts: Settler, AllowanceHolder & Permit2
+
+## A Note about Setting Token Allowances
+
+<Note>
+
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0-x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
+
+- The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
+
+</Note>
+
+## Allowance Target vs. Entry Point
+
+In API v2, **allowance management** and **swap execution** are handled by **different contracts**.
+
+#### 1. Allowance Target Contract
+
+- **Purpose:** The contract where token approvals are set.
+- **Which contract:** AllowanceHolder (`/swap/allowance-holder`) or Permit2 (`/swap/permit2`), depending on the approval method.
+- **How to find it:** Returned in `issues.allowance.spender` or `allowanceTarget`.
+
+#### 2. Entry Point Contract
+
+- **Purpose:** Executes swaps; send the `data` payload here.
+- **Which contract:** 0x Settler (`/swap/permit2`) or AllowanceHolder (`/swap/allowance-holder`), depending on the approval method.
+- **How to find it:** Returned in `transaction.to`.
+
+This separation enhances security by isolating allowance management from swap execution.
+
+## 0x Settler Contract
+
+0x v2 is built on [0x Settler](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#0x-settler), a new set of smart contracts designed to enable the secure and continuous deployment of new features. 0x Settler uses [Permit2](https://github.com/Uniswap/permit2) and the [AllowanceHolder](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#allowanceholder) contracts to perform swaps without any passive allowances to the contract.
+
+<Tip>
+  [Learn more about 0x
+  Settler](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#0x-settler).
+  These contracts have been fully audited with [four
+  audits](https://github.com/0xProject/0x-settler/tree/master/audits) from three
+  separate firms, including Ourovoros, Trail of Bits, OpenZeppelin, and Trail of
+  Bits a second time.
+</Tip>
+
+### Finding 0x Settler Contracts Addresses
+
+For v2, we strongly advise **against hardcoding** any entry point contract addresses. These addresses are dynamic and depend on the current Settler deployment. Below are the recommended and alternative ways to obtain the latest Settler address.
+
+#### Option 1: Recommended - Use value returned by `transaction.to`
+
+- This is the **recommended** and most reliable method.
+
+- The entry point contracts returned in the APIs as `transaction.to` (see the [API reference](/api-reference/)) will always reflect the current Settler deployment automatically. No manual updates are needed.
+
+#### Option 2: Check the dashboard
+
+- The 0x team maintains a dashboard with the latest deployed addresses: https://0x-settler-fe.vercel.app/
+
+#### Option 3: Query the Settler address registry
+
+- You can query the on-chain Settler address registry directly to find the latest deployment by running this [this code](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#examples).
+
+- This is the same trustless data source used by the dashboard above.
+
+#### Option 4: Advanced — Manual Address Reference (Not Recommended)
+
+- This is an **advanced and error-prone method**. Avoid hardcoding any Settler address in your integration, as addresses can change with new deployments. For accuracy and maintainability, we strongly recommend using [Option 1](/docs/core-concepts/contracts#option-1-recommended---use-value-returned-by-transactionto) to always get the latest Settler address automatically.
+
+- Below is a historical list of Settler addresses (past, current, and predicted next hundred).
+
+- For a comprehensive list of all Settler addresses, [download the list here (`.tar.xz` file)](/assets/settler_predictions.tar.xz).
+
+- Each chain includes the following address types:
+
+  - **Taker Address (tokenId = 2)** — Used by users or smart contracts submitting swaps or trades. This is the address used when the taker (caller or end user) submits the transaction.
+  - **Metatransaction Address (tokenId = 3)** — Used when transactions are relayed or batched—e.g., for Gasless API flows. This is the address used by the meta-tx relayer
+  - **Ignore (tokenId = 4)** - Ignore this address type. Not used for integrations.
+
+<Tip>
+  Read more about [What is the difference between using AllowanceHolder and
+  Permit2 for Swap API?](/docs/introduction/faq#allowanceholder-and-permit2)
+</Tip>
+
+## AllowanceHolder (Recommended)
+
+[AllowanceHolder](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#allowanceholder) is the default and recommended allowance contract for most integrators. It provides a better UX, lower gas costs, and is designed to minimize common integration pitfalls that can occur with using Permit2.
+
+### Key Benefits
+
+- ✅ **Gas efficiency:** Lower approval and execution costs than Permit2.
+- ✅ **Safer defaults:** Reduces the chance of errors during integration.
+- ✅ **Simple UX:** Works with standard approval flows without requiring double signatures, unlike Permit2.
+- ✅ **Equal Safety:** Security guarantees are equivalent to Permit2.
+
+### Endpoints
+
+- [/swap/allowance-holder/price](/api-reference/openapi-yaml/swap/allowanceholder-getprice)
+- [/swap/allowance-holder/quote](/api-reference/openapi-yaml/swap/allowanceholder-getquote)
+
+### Who Should Use AllowanceHolder?
+
+AllowanceHolder is recommended for most integrators, and it is especially well-suited for:
+
+- Teams aggregating multiple liquidity sources and aiming for a consistent user experience across wallets.
+- Developers upgrading from Swap v1 (similar integration flow).
+- Integration with advanced wallets (multisigs, smart contract wallets)
+
+### How AllowanceHolder Works
+
+The AllowanceHolder contract sits in front of 0x Settler and maintains a one-way trust relationship.
+
+When using the Swap API with AllowanceHolder, the AllowanceHolder contract is the **allowance target** (spender). It manages approvals while also serving as the **entry point contract** for executing swaps.
+
+If the taker doesn't have an allowance set to the contract, the AllowanceHolder contract address will be returned in the `issues` object. For example,
+
+```json
+"issues": {
+    "allowance": {
+        "actual": "0",
+        "spender": "0x0000000000001ff3684f28c67538d4d072c22734"
+    },
+}
+```
+
+### AllowanceHolder Addresses
+
+The AllowanceHolder contract has chain-specific addresses that can be safely hardcoded. Always verify with the [official documentation](https://github.com/0xProject/0x-settler/blob/master/README.md#allowanceholder-addresses) before doing so:
+
+- `0x0000000000001fF3684f28c67538d4D072C22734` — **Cancun hardfork chains** (Ethereum Mainnet, Arbitrum, Avalanche, Base, Berachain, Blast, BSC, Ink, Linea, Mode, Monad, Optimism, Plasma, Polygon, Scroll, Sonic, Unichain, World Chain)
+- `0x0000000000005E88410CcDFaDe4a5EfaE4b49562` — **Shanghai hardfork chains** (Mantle)
+
+<Tip>
+  Learn more in our [AllowanceHolder integration
+  guide](/docs/introduction/quickstart/swap-tokens-with-swap-api) and the
+  [AllowanceHolder example
+  code](https://github.com/0xProject/0x-examples/tree/main).
+</Tip>
+
+## Permit2 (Advanced Use Only)
+
+[Permit2](https://github.com/dragonfly-xyz/useful-solidity-patterns/tree/main/patterns/permit2) was developed by Uniswap, based on work from 0x alumnus [Lawrence Forman](https://github.com/merklejerk). It provides a secure and efficient way to manage token approvals across multiple smart contracts. Permit2 is immutable, thoroughly audited, trusted by protocols like Uniswap, and backed by a [$3M bug bounty](https://uniswap.org/bug-bounty).
+
+### Key Benefits
+
+Permit2 offers flexible approvals with features like time-limited and granular allowances. It can be powerful, but it introduces risks that new integrators must be careful with.
+
+⚠️ Permit2 is for advanced integrators only.
+
+### Endpoints
+
+- [/swap/permit2/price](/api-reference/openapi-yaml/swap/permit-2-getprice)
+- [/swap/permit2/quote](/api-reference/openapi-yaml/swap/permit-2-getquote)
+
+### Who Should Use Permit2?
+
+Consider Permit2 if:
+
+- Your app needs time-limited or granular approvals not supported by AllowanceHolder.
+- Your users already have infinite allowances set on Permit2 via another app — no reset is needed.
+
+**Note:** Each trade requires **two user signatures** — one for limited approval and one for the trade itself. This is more complex to integrate but allows for features like time-limited approvals.
+
+### How Permit2 Works
+
+Permit2 is made up of two modules:
+
+- **AllowanceTransfer** → Manages token approvals with limits on time and value, reducing user friction.
+- **SignatureTransfer** → Provides single-use approvals that virtually eliminate allowance risk.
+
+When using Swap API with Permit2:
+
+- The **Permit2 contract** is the **allowance target** (spender).
+- The **0x Settler contract** is the **entry point** for executing swaps.
+
+If the taker hasn’t granted an allowance, the Permit2 contract address will be returned in `issues.allowance.spender`. For example:
+
+```json
+"issues": {
+    "allowance": {
+        "actual": "0",
+        "spender": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+    },
+}
+```
+
+For more details, see this [Permit2 explanation](https://github.com/dragonfly-xyz/useful-solidity-patterns/tree/main/patterns/permit2).
+
+### Permit2 Address
+
+Permit2 is deployed to `0x000000000022D473030F116dDEE9F6B43aC78BA3` across all chains. You can hardcode this address in your integration.
+
+<Tip>
+  Learn more in our [Permit2 integration
+  guide](/docs/swap-api/guides/permit-2/swap-tokens-with-permit-2) and the
+  [Permit2 example
+  code](https://github.com/0xProject/0x-examples/tree/main/swap-v2-headless-example).
+</Tip>

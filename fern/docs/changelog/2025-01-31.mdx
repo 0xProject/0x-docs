@@ -1,0 +1,23 @@
+---
+tags: []
+---
+
+#### 📣 Announcements
+
+- **Reminder**: API v1 will be sunset on **April 11, 2025**. To avoid service disruptions, migrate to v2 before this date. For more information, see the [Migration Guide](https://0x.org/docs/upgrading).
+
+#### New Chains
+
+- **Monad Testnet (10143)**: Added support for Swap API.
+
+#### New Liquidity Sources
+
+- **Arbitrum:** Added Fluid and swapr.
+- **Base:** Added DeltaSwap, Kim V4, Rocket Swap, and SharkSwap.
+- **Ethereum:** Added Sushiswap v3.
+- **Linea:** Added Overnight.
+
+#### Chores
+
+- **Entry Point Contract Update**: The entry point contract address now supports the Uniswap v4 contract. Developers are strongly advised not to hardcode this address. Instead, use the value returned by `transaction.to` (see [API reference](https://0x.org/docs/api#tag/Swap)).
+- **Avalanche Uppdated the Cancun hardfork**: This means that the AllowanceHolder address on Avalanche is now `0x0000000000001fF3684f28c67538d4D072C22734` (see [0x Settler changelog](https://github.com/0xProject/0x-settler/blob/master/CHANGELOG.md#2025-01-23)).

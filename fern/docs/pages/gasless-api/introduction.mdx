@@ -1,0 +1,346 @@
+---
+title: "Introduction"
+description: "Gasless API enables developers to build gasless swaps and approvals into their dApps and workflows."
+---
+
+## Overview
+
+Welcome to 0x's Gasless API!
+
+Gasless API leverages the 0x relayer network to enable developers to build gasless approvals & swaps into their dApps & workflows.
+
+## The Problem
+
+> _"Gasless swaps have helped us create a simpler trading experience, where users can focus more on trading and less on network fees. Network fees have been a top pain point for the past few years, and giving users more flexibility around network fees is a huge UX unlock”. - Claudia Haddad, Coinbase Wallet Product Manager._
+
+A major source of friction in web3 is the need for users to hold and maintain balances for each chain’s native token in order to pay for transactions. Before today, users had to overcome this hurdle by preloading wallets, moving balances across apps, and sending tokens between addresses to complete transactions.
+
+This is not only a significant barrier to more widespread adoption, as well as a major source of friction for existing DeFi users when gas spikes, exploring new chains and ecosystems, or trying to make a mobile trade on the go.
+
+## The Solution
+
+The Gasless API allows developers to create the smoothest trading experience in DeFi by abstracting away the complexities related to approvals, allowances, and swaps for their users.
+
+Build more intuitive user interfaces and user flows in your applications, improve your conversion funnel drop-offs due to insufficient gas, and set yourself up to easily onboard the next wave of users into web3.
+
+<Frame>
+  <img src="https://0x.org/docs/assets/images/gasless-benefits-d65735c1fa0ce2f6f0a5fcbbd7aed1c1.png" alt="Gasless API Benefits" />
+</Frame>
+
+## The Benefits of Gasless API
+
+- **Improve your conversion funnel:** Add a gasless fall-back to your existing solution so users aren’t stuck with insufficient gas. Capture more trades when gas is spiking. Become the best places for users to explore DeFi.
+- **Build for crypto-native users:** Composable with Swap API if you want to offer execution optionality. Devs can design a UX where advanced users can opt in and opt out of gasless without sacrificing experience.
+- **Grow your user base with seamless onboarding:** Simplify user flows for your app and allow your users to start trading with any token that’s in their wallet. Users won’t be confronted with upfront requests for approvals and network fees, these are abstracted away into the backend.
+- **Deep liquidity for the best execution:** Unlock aggregated liquidity from 0x private market makers and 100+ exchanges including Uniswap for the most popular pairs on Ethereum, Polygon and Arbitrum.
+
+<Frame>
+  <img src="https://0x.org/docs/assets/images/gasless-and-swap-api-ec5336bdcc5ba098b39b5c4de15eb4a3.png" alt="Gasless API is composable with Swap API" />
+</Frame>
+
+<Tip>
+**TIP**
+
+Want to see a production-level implementation? 👉 Try out the composed Gasless API + Swap API flow live in Matcha Auto at [https://matcha.xyz/](https://matcha.xyz/)
+
+Want to see a demo app? 👉 Check out [Gasless API Demo App](https://github.com/0xProject/0x-examples/tree/main/gasless-next-app)
+
+</Tip>
+
+## Try It Out
+
+Run this curl request to see a live quote response for selling 100 USDC to buy WETH:
+
+```bash
+
+// Replace API key in the header with your own key from https://dashboard.0x.org/curl --request GET \  --url 'https://api.0x.org/gasless/quote?chainId=1&sellToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&buyToken=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&sellAmount=100000000&taker=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045' \  --header '0x-api-key: YOUR_API_KEY' \  --header '0x-version: v2'
+
+```
+
+You will receive a response that looks like this:
+
+<Accordion title="Expand to see response">
+```json
+  {
+    "approval": {
+        "type": "permit",
+        "hash": "0xb55ea370af5b719e1dc1c42b31cd3405acd383040d02a8d1c2802a22a2aee965",
+        "eip712": {
+            "types": {
+                "EIP712Domain": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "version",
+                        "type": "string"
+                    },
+                    {
+                        "name": "chainId",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "verifyingContract",
+                        "type": "address"
+                    }
+                ],
+                "Permit": [
+                    {
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "value",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "nonce",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "deadline",
+                        "type": "uint256"
+                    }
+                ]
+            },
+            "domain": {
+                "name": "USD Coin",
+                "version": "2",
+                "chainId": 1,
+                "verifyingContract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+            },
+            "message": {
+                "owner": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+                "spender": "0x000000000022d473030f116ddee9f6b43ac78ba3",
+                "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "nonce": 0,
+                "deadline": "1721167909"
+            },
+            "primaryType": "Permit"
+        }
+    },
+    "blockNumber": "20321928",
+    "buyAmount": "26634042862274658",
+    "buyToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "fees": {
+        "integratorFee": null,
+        "zeroExFee": {
+            "amount": "150000",
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "type": "volume"
+        },
+        "gasFee": {
+            "amount": "7901405",
+            "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "type": "gas"
+        }
+    },
+    "issues": {
+        "allowance": {
+            "actual": "0",
+            "spender": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+        },
+        "balance": null,
+        "simulationIncomplete": false,
+        "invalidSourcesPassed": []
+    },
+    "liquidityAvailable": true,
+    "minBuyAmount": "26554140733687834",
+    "route": {
+        "fills": [
+            {
+                "from": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "source": "PancakeSwap_V2",
+                "proportionBps": "10000"
+            }
+        ],
+        "tokens": [
+            {
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "symbol": "USDC"
+            },
+            {
+                "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                "symbol": "WETH"
+            }
+        ]
+    },
+    "sellAmount": "99850000",
+    "sellToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "target": "0xca11bde05977b3631167028862be2a173976ca11",
+    "trade": {
+        "type": "settler_metatransaction",
+        "hash": "0xf02495a1a408f0df83afe69902cd9888a390d612b88e03368280bbce144c2658",
+        "eip712": {
+            "types": {
+                "PermitWitnessTransferFrom": [
+                    {
+                        "name": "permitted",
+                        "type": "TokenPermissions"
+                    },
+                    {
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "name": "nonce",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "deadline",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "slippageAndActions",
+                        "type": "SlippageAndActions"
+                    }
+                ],
+                "EIP712Domain": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "chainId",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "verifyingContract",
+                        "type": "address"
+                    }
+                ],
+                "SlippageAndActions": [
+                    {
+                        "name": "recipient",
+                        "type": "address"
+                    },
+                    {
+                        "name": "buyToken",
+                        "type": "address"
+                    },
+                    {
+                        "name": "minAmountOut",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "actions",
+                        "type": "bytes[]"
+                    }
+                ],
+                "TokenPermissions": [
+                    {
+                        "name": "token",
+                        "type": "address"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ]
+            },
+            "domain": {
+                "name": "Permit2",
+                "chainId": 1,
+                "verifyingContract": "0x000000000022d473030f116ddee9f6b43ac78ba3"
+            },
+            "message": {
+                "permitted": {
+                    "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                    "amount": "100000000"
+                },
+                "spender": "0x7c39a136ea20b3483e402ea031c1f3c019bab24b",
+                "nonce": "2241959297937691820908574931991596",
+                "deadline": "1721167608",
+                "slippageAndActions": {
+                    "recipient": "0x0000000000000000000000000000000000000000",
+                    "buyToken": "0x0000000000000000000000000000000000000000",
+                    "minAmountOut": "0",
+                    "actions": [
+                        "0x0dfeb4190000000000000000000000007c39a136ea20b3483e402ea031c1f3c019bab24b000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000005f5e1000000000000000000000000000000000000006e898131631616b1779bad70bc2c000000000000000000000000000000000000000000000000000000006696eef8",
+                        "0x38c9c147000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000000325000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000000000000000000000000000000000000000002400000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000044a9059cbb0000000000000000000000009f6601854dee374b1bfaf6350ffd27a97309d431000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "0x103b48be000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4800000000000000000000000000000000000000000000000000000000000027100000000000000000000000002e8135be71230c6b1b4045696d41c09db04142260000000000000000000000000000000000000000000000000000000000001901000000000000000000000000000000000000000000000000005e56d9adbf481a"
+                    ]
+                }
+            },
+            "primaryType": "PermitWitnessTransferFrom"
+        }
+    },
+    "zid": "0xbfd8e6dd997b9d455f28d595"
+
+}
+
+```
+</Accordion>
+
+## Supported Chains
+
+Swap and Gasless v2 APIs are currently supported on the following chains. Select the chain in your request by providing the corresponding `chainId` request parameter. To request support for a new chain, please submit a request [here](https://0x.canny.io/request-features).
+
+| Chain              | Chain ID | Swap API | Gasless API |
+| :----------------- | :------- | :------- | :---------- |
+| Ethereum (Mainnet) | 1        | ✅       | ✅          |
+| Arbitrum           | 42161    | ✅       | ✅          |
+| Avalanche          | 43114    | ✅       | ✅          |
+| Base               | 8453     | ✅       | ✅          |
+| Berachain          | 80094    | ✅       |             |
+| Blast              | 81457    | ✅       | ✅          |
+| BSC                | 56       | ✅       | ✅          |
+| Ink                | 57073    | ✅       |             |
+| Linea              | 59144    | ✅       |             |
+| Mantle             | 5000     | ✅       | ✅          |
+| Mode               | 34443    | ✅       | ✅          |
+| Monad              | 10143    | ✅       |             |
+| Optimism           | 10       | ✅       | ✅          |
+| Polygon            | 137      | ✅       | ✅          |
+| Scroll             | 534352   | ✅       | ✅          |
+| Unichain           | 130      | ✅       |             |
+| World Chain        | 480      | ✅       |             |
+
+## Learn More
+
+### Videos
+
+**Gasless API Explained + Code + Next.js Demo App**
+
+<Frame>
+  <iframe
+    width="100%"
+    height="420"
+    src="https://www.youtube.com/embed/0d0tVwJCbiw"
+    title="How to Build a Gasless Token Swap Dapp"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</Frame>
+**Top 10 Gasless API Commonly Asked Questions**
+
+<Frame>
+  <iframe
+    width="100%"
+    height="420"
+    src="https://www.youtube.com/embed/M0i7YAX1RJI"
+    title="Top 10 Gasless API Commonly Asked Questions"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</Frame>
+
+### Code Examples
+
+- [Gasless API Headless example](https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example)
+
+### API Reference
+
+- See [Swap API reference](https://0x.org/docs/api#tag/Gasless)
+
+```

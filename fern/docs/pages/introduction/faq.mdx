@@ -1,0 +1,673 @@
+---
+title: FAQ
+description: Common issues and troubleshooting tips for 0x APIs
+---
+
+## CORS Errors
+
+<Accordion title="Why am I getting a CORS error when using the 0x API?">
+    <strong>TL;DR</strong> CORS errors happen because the 0x API enforces strict security policies. Avoid making API calls directly from the browser to prevent CORS issues and exposing your API keys. Instead, use a backend server, serverless functions, or a full-stack framework.
+
+    **Error Message**
+    You might see an error like this:
+
+```curl
+http://localhost:3000 has been blocked by CORS policy: Request header field 0x-version is not allowed by Access-Control-Allow-Headers in preflight response.
+```
+
+    <strong>Explanation</strong><br />
+    This error occurs because browsers block requests with custom headers (e.g., <code>0x-version</code>) unless explicitly allowed by the server. Making API calls from a browser is not recommended because it can expose your API keys.
+
+    **Recommended Solutions**
+    <ol>
+      <li><strong>Use a Backend Server</strong> — Proxy API calls through a backend server and handle API keys securely (e.g., <code>axios</code> in Node.js or <code>requests</code> in Python).</li>
+      <li><strong>Serverless Functions</strong> — Use AWS Lambda, Vercel Functions, or Netlify Functions.</li>
+      <li><strong>Full-Stack Framework</strong> — Implement backend logic in Next.js or Remix.</li>
+    </ol>
+
+  </Accordion>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="I received an API issue / error code. Help!">
+    See <a href="/docs/introduction/api-issues-error-codes-error-codes">Handling API issues and error codes</a> for a full list of common 0x issue types and error codes and how to resolve them.
+  </Accordion>
+
+  <Accordion title="Why does my 0x transaction revert?">
+    If your 0x quote is reverting, besides the standard revert issues related to ETH transactions, check the following:
+
+    <ul>
+      <li>Are allowances properly set for the user to trade the <code>sellToken</code>?</li>
+      <li>Does the user have enough <code>sellToken</code> balance to execute the swap?</li>
+      <li>Do users have enough to pay the gas?</li>
+      <li>The slippage tolerance may be too low if the liquidity is very shallow for the token the user is trying to swap. Read <a href="/docs/swap-api/guides/troubleshooting">this guide</a>.</li>
+      <li>Did the RFQ Quote expire? RFQ quotes are typically valid for ~60s on mainnet. See the RFQ expiry accordion below.</li>
+    </ul>
+
+    For more details, see <a href="/docs/swap-api/guides/troubleshooting">Troubleshooting</a>.
+
+  </Accordion>
+
+  <Accordion title="Did my order revert because the RFQ quote expired?">
+    RFQ quotes from Market Makers are only valid for a short period (roughly 60s on mainnet).
+
+    Two ways to check:
+    <ul>
+      <li>Use the Tenderly debugger on the transaction; look for <code>getOTCOrderInfo</code> in the trace and inspect <code>expiryAndNonce</code>.</li>
+      <li>You may need to reach out to <a href="https://help.0x.org/en/articles/8230055-how-to-get-support-from-the-0x-team">0x support</a> to help decode <code>expiryAndNonce</code>.</li>
+    </ul>
+
+    <strong>Best practice:</strong> refresh quotes about every 30s to prevent RFQ expiry. See <a href="https://matcha.xyz/">Matcha.xyz</a> for an example.
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="0x orders are reverting but my transaction is fine, what is happening?">
+  Some subset of 0x orders may revert (not fill) while the overall transaction
+  succeeds. This is expected: due to timing/pricing, some orders may be filled
+  or expired before a user attempts to fill. The protocol uses fallback orders
+  to compensate, resulting in a successful transaction even though internal
+  order reverts occurred.
+</Accordion>
+
+  <Accordion title="How does including `taker` in the API call help with catching issues?">
+    Passing a <code>taker</code> lets 0x API provide a bespoke quote and catch revert issues:
+
+    <ul>
+      <li>Estimate gas for <code>taker</code> to execute the quote.</li>
+      <li>If successful, <code>gas</code> in the quote reflects an accurate execution estimate.</li>
+      <li>If not, a gas estimation error hints at execution issues for that <code>taker</code>.</li>
+    </ul>
+
+    <strong>TL;DR</strong> Pass <code>taker</code> to validate quotes and avoid many revert cases.
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="I received an `INPUT_INVALID` error. Help!">
+  Verify that the API request is formatted properly. If the issue persists,{" "}
+  <a href="https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team">
+    contact support
+  </a>
+  .
+</Accordion>
+
+{" "}
+
+<Accordion title="I received `BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE` or `SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE`. Help!">
+  The buy token is not authorized for trade due to legal restrictions.
+</Accordion>
+
+  <Accordion title="I received an `INTERNAL_SERVER_ERROR` error. Help!">
+    An internal server error occurred.
+
+    <ul>
+      <li>Check that the API request is formatted properly.</li>
+      <li>Check <a href="https://0x.statuspal.io/">0x system status</a>.</li>
+      <li>If the issue persists, <a href="https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team">contact support</a>.</li>
+    </ul>
+
+  </Accordion>
+
+  <Accordion title="How will I know if the trade is not possible due to insufficient asset liquidity?">
+    The API will return <code>liquidityAvailable=false</code> and omit other response params if there isn’t enough liquidity available for the requested quote.
+
+    <br /><br />
+    <img src="../../assets/img/developer-resources/liquidityAvailable.png" alt="liquidityAvailable parameter" />
+
+  </Accordion>
+
+  <Accordion title="What does MEV protection mean?">
+    Use the <a href="https://0x.org/docs/api#tag/Sources">getSources</a> endpoint.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Swap API
+
+### About Swap API
+
+<AccordionGroup>
+  <Accordion title="How do I get a list of all the sources the API is sourcing from?">
+    Use the <a href="https://0x.org/docs/api#tag/Sources">getSources</a> endpoint.
+  </Accordion>
+
+{" "}
+
+<Accordion title="How do I find a list of supported chains for Swap?">
+  Use the <a href="/api-reference/openapi-yaml/swap/chains">getChains</a> endpoint to get
+  a list of supported chains for Swap.
+</Accordion>
+
+  <Accordion title="Is there a fee to use Swap API?">
+    We offer two transparent, flexible tiers for Web3 businesses of all sizes. You can get started <a href="https://0x.org/pricing">here</a>. If you are a high-volume app or have a unique business model, <a href="https://0x.org/contact">please contact us</a> to discuss a custom plan.
+
+    0x takes an on-chain fee on swaps for select tokens for teams on the Standard tier. This fee is charged on-chain to your users during the transaction. In cases where we charge a fee, we return the value in the API response as <code>zeroExFee</code>. See the <a href="/api-reference/swap/">Swap API reference</a> for details.
+
+  </Accordion>
+
+  <Accordion title="How does Swap API select the best orders for me?">
+    Swap API samples each liquidity source and adjusts for gas consumption (using your specified gas price, or a fast default) and any associated fees. It evaluates different compositions of sources to select the best set of orders, and also creates fallback orders to ensure executability.
+
+    Example: Curve’s nominal price may look best, but after factoring <code>gas * gasPrice</code> and fees, it may not be optimal.
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="How can I find the tokens that 0x supports for trading?">
+  0x supports all tokens by default except those blocked for compliance reasons.
+</Accordion>
+
+{" "}
+
+<Accordion title="Is it possible to use the Swap API to trade custom ERC-20 tokens or altcoins?">
+  If you’d like to trade a custom token, you’ll need to create liquidity by
+  deploying a pool on an AMM the API sources (e.g., Uniswap, SushiSwap, Curve).
+</Accordion>
+
+  <Accordion title="What does MEV protection mean?">
+    MEV protection applies to <a href="/docs/swap-api/additional-topics/about-the-rfq-system">RFQ orders</a>, which are filled privately and atomically to prevent sandwiching/front-running. It does not apply to AMM trades, which execute on public mempools and are subject to typical MEV risks.
+  </Accordion>
+</AccordionGroup>
+
+### Monetizing your Swap Integration
+
+<AccordionGroup>
+  <Accordion title="I am building a DEX app using Swap API. Can I charge my users a trading fee/commission?">
+    You can collect affiliate fees or trade surplus. Read the full guide: <a href="/docs/swap-api/guides/monetize-your-app">monetizing your swap integration</a>.
+  </Accordion>
+
+  <Accordion title="How is the trading fee/commission I charge returned by Swap API?">
+    If <code>swapFeeRecipient</code>, <code>swapFeeBps</code>, and <code>swapFeeToken</code> are set, the response includes <code>fees.integratorFee.amount</code> which you can display to users.
+
+```text
+amount = (swapFeeBps / 10000) * sellAmount  // in sellToken base units
+```
+
+    Example for 1% of 100 USDC:
+    <ul>
+      <li><code>sellToken=0xA0b8...eB48</code> (USDC)</li>
+      <li><code>swapFeeToken=0xA0b8...eB48</code></li>
+      <li><code>sellAmount=100000000</code> (USDC has 6 decimals)</li>
+      <li><code>swapFeeBps=100</code></li>
+    </ul>
+    Fee amount = <code>1000000</code> = <code>1</code> USDC.
+
+    See the guide: <a href="/docs/swap-api/guides/monetize-your-app">monetization</a>. In API v2, you can take fees on <code>buyToken</code> or <code>sellToken</code>.
+
+  </Accordion>
+
+  <Accordion title="Can I collect trade surplus (positive slippage)?">
+    Available to select integrators on a custom pricing plan. <a href="https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team">Contact support</a>. See <a href="/docs/swap-api/guides/monetize-your-app">the monetization guide</a>.
+  </Accordion>
+</AccordionGroup>
+
+### AllowanceHolder and Permit2
+
+<AccordionGroup>
+  <Accordion title="What is the difference between using AllowanceHolder and Permit2 for Swap API?">
+    0x Swap API supports two allowance methods: AllowanceHolder (recommended) and Permit2 (advanced).
+
+    <strong>AllowanceHolder (Recommended)</strong><br />
+    Better UX, lower gas, simpler integration, and safe defaults. Great for aggregators, teams upgrading from Swap v1, and advanced wallets (multisigs/smart accounts).
+
+    Endpoints:
+    <ul>
+      <li><a href="/api-reference#tag/Swap/operation/swap::allowanceHolder::getPrice">/swap/allowance-holder/price</a></li>
+      <li><a href="/api-reference#tag/Swap/operation/swap::allowanceHolder::getQuote">/swap/allowance-holder/quote</a></li>
+    </ul>
+
+    Allowance target is returned in <code>issues.allowance.spender</code> or <code>allowanceTarget</code>.
+
+    Chain-specific AllowanceHolder addresses (verify with <a href="https://github.com/0xProject/0x-settler/blob/master/README.md#allowanceholder-addresses">official docs</a> before hardcoding):
+    <ul>
+      <li><code>0x0000000000001fF3684f28c67538d4D072C22734</code> — Cancun (Ethereum Mainnet, Ethereum Sepolia, Polygon, Base, Optimism, Arbitrum, Avalanche, Blast, BNB)</li>
+      <li><code>0x0000000000005E88410CcDFaDe4a5EfaE4b49562</code> — Shanghai (Scroll, Mantle)</li>
+      <li><code>0x000000000000175a8b9bC6d539B3708EEd92EA6c</code> — London (Linea)</li>
+    </ul>
+
+    <strong>Permit2 (Advanced Only)</strong><br />
+    Enables time-limited/granular approvals but requires a double-signature flow. If you use Permit2, set allowances on Permit2 only — <strong>never</strong> on the Settler (funds may be lost).
+
+    Endpoints:
+    <ul>
+      <li><a href="/api-reference#tag/Swap/operation/swap::permit2::getPrice">/swap/permit2/price</a></li>
+      <li><a href="/api-reference#tag/Swap/operation/swap::permit2::getQuote">/swap/permit2/quote</a></li>
+    </ul>
+
+    Permit2 address (all chains): <code>0x000000000022D473030F116dDEE9F6B43aC78BA3</code>
+
+Read more about the contracts [here](/docs/core-concepts/contracts).
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="Should I use AllowanceHolder or Permit2 for my meta-aggregator project?">
+  Depends on UX and integration type:
+  <ul>
+    <li>
+      <strong>AllowanceHolder</strong>: single-signature UX, consistent across
+      sources, similar to Swap v1.
+    </li>
+    <li>
+      <strong>Permit2</strong>: universal approvals and time-limited/granular
+      allowances; requires an extra signature.
+    </li>
+  </ul>
+</Accordion>
+
+{" "}
+
+<Accordion title="If an allowance is needed when using AllowanceHolder, which contract will `issues.allowance.spender` or `allowanceTarget` return?">
+  The AllowanceHolder contract.
+</Accordion>
+
+  <Accordion title="How should the signed Permit2 EIP-712 (`permit2.eip712`) message look?">
+    Ethereum signatures: <code>r</code>, <code>s</code>, <code>v</code>, ordered as <code>r</code>, <code>s</code>, <code>v</code>, where:
+    <ul>
+      <li><code>r &lt; secp256k1n</code></li>
+      <li><code>s &lt; (secp256k1n / 2 + 1)</code></li>
+      <li><code>v</code> is 0 or 1; on EVM encode as <code>27 + v</code> (27 or 28)</li>
+    </ul>
+    Pack to 65 bytes: bytes 0–31 = <code>r</code>, 32–63 = <code>s</code>, 64 = <code>v</code>.
+  </Accordion>
+</AccordionGroup>
+
+### Parameter Questions
+
+<AccordionGroup>
+  <Accordion title="What is gas?">
+    Gas is the fee required to conduct a transaction on Ethereum, paid in ETH and denominated in Gwei (1 ETH = 1,000,000,000 Gwei).
+  </Accordion>
+
+  <Accordion title="What is the significance of `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`?">
+    It’s a standardized representation of native tokens (e.g., ETH, BNB, POL) which don’t have contract addresses like ERC-20s.
+
+    <br /><br />
+    <strong>On Mantle:</strong> $MNT is an exception with contract address <code>0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000</code> on Mantle EVM (not applicable to wrapped/bridged MNT). See <a href="/docs/swap-api/additional-topics/handling-native-tokens">Handling native tokens with 0x Swap API</a>.
+
+  </Accordion>
+
+  <Accordion title="Does the 0x API return `buyAmount` in base units?">
+    Yes. All <code>buyAmount</code> values are in the token’s base units.
+    <ul>
+      <li>18 decimals (e.g., WETH, DAI): <code>1000000000000000000</code> = 1.0</li>
+      <li>6 decimals (e.g., USDC): <code>1000000</code> = 1.0</li>
+    </ul>
+
+    Useful helpers:
+    <ul>
+      <li><a href="https://docs.ethers.org/v5/api/utils/display-logic/#utils-formatUnits"><code>ethers.js</code> → <code>formatUnits</code></a></li>
+      <li><a href="https://viem.sh/docs/utilities/formatUnits.html"><code>viem</code> → <code>formatUnits</code></a></li>
+    </ul>
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="Is it possible to quote by the `buyAmount`?">
+  No — in v2 only <code>sellAmount</code> is supported for more deterministic
+  behavior and broader liquidity support.
+</Accordion>
+
+{" "}
+
+<Accordion title="Can I skip validation for `/quote` by leaving the `taker` parameter blank?">
+  No — <code>taker</code> is required in v2 for <code>/quote</code>. It enables
+  us to return calldata and identify issues that would cause failures.
+</Accordion>
+
+  <Accordion title="Why does the value of the `to` field in `/swap/quote` vary?">
+    The Settler contract can be redeployed; the <code>to</code> target address will therefore change. See: <a href="/docs/core-concepts/contracts#0x-settler-contract">current/future Settler addresses</a>.
+  </Accordion>
+</AccordionGroup>
+
+### Best Practices
+
+<AccordionGroup>
+  <Accordion title="What is the best way to query swap prices for many asset pairs without exceeding the rate limit?">
+    <a href="https://0x.org/contact">Contact 0x</a> to discuss a solution that best suits your use case.
+  </Accordion>
+
+{" "}
+
+<Accordion title="How can I display the 0x Swap Fee to my end users?">
+  When applicable, the fee is returned as <code>zeroExFee</code> in quotes. You
+  are responsible for showing the <code>amount</code> and <code>token</code> to
+  users. See the <a href="https://0x.org/pricing">Pricing Page</a> and{" "}
+  <a href="/api-reference#tag/Swap/operation/swap::permit2::getQuote">
+    <code>/quote</code> response
+  </a>
+  .
+</Accordion>
+
+{" "}
+
+<Accordion title="Is there a way to sell assets via Swap API if the exact sellToken amount is not known before the transaction is executed?">
+  Not currently, but we’re exploring this feature.
+</Accordion>
+
+{" "}
+
+<Accordion title="How can I get the ABI for an ERC-20 contract via TypeScript?">
+  Options:
+  <ul>
+    <li>Copy from Etherscan (Contract tab → ABI).</li>
+    <li>Use the Etherscan API.</li>
+    <li>Fetch from the token’s GitHub repo if available.</li>
+    <li>
+      Import <code>erc20Abi</code> from{" "}
+      <a href="https://wagmi.sh/core/guides/migrate-from-v1-to-v2#removed-abi-exports">
+        viem
+      </a>
+      .
+    </li>
+  </ul>
+</Accordion>
+
+  <Accordion title="What’s the best way to access 0x trade data?">
+    Depends on your use case:
+    <ul>
+      <li><a href="/docs/trade-analytics-api/introduction">0x Trade Analytics API</a> — historical analysis, usage tracking, reporting.</li>
+      <li><a href="/sd-ks/sdk-utilities/0-x-parser">0x-parser</a> — TypeScript library for decoding real-time 0x transaction logs.</li>
+    </ul>
+
+    See the <a href="/docs/core-concepts/transaction-data">0x transaction data guide</a>.
+
+  </Accordion>
+
+  <Accordion title="Can I detect whether a transaction originated from the 0x API by parsing transaction receipts?">
+    Not directly via onchain data alone. While all 0x API trades settle through the Settler contract, transactions don’t include a unique tag that explicitly ties them to the API.
+
+    <br /><br />
+    <strong>Tracking your own app’s activity:</strong>
+    <ul>
+      <li>Use the <a href="/docs/trade-analytics-api/introduction">0x Trade Analytics API</a>.</li>
+      <li>Enable onchain tagging in the <a href="https://dashboard.0x.org/">0x Dashboard</a> (Settings → “Enable onchain tagging”).</li>
+    </ul>
+
+    <strong>Detecting any/all API-routed transactions:</strong>
+    <ul>
+      <li>You can monitor the Settler contract, but it includes non-API transactions.</li>
+      <li>For aggregated usage insights, <a href="https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team">reach out</a> and share your use case.</li>
+    </ul>
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Gasless API
+
+### About Gasless API
+
+<AccordionGroup>
+
+<Accordion title="How do I get a list of sources the API is sourcing from?">
+  Use the <a href="/api-reference/openapi-yaml/sources/getsources">getSources</a> endpoint.
+</Accordion>
+
+<Accordion title="What chains does Gasless API support?">
+  See the [full list of supported
+  chains](/docs/core-concepts/0-x-cheat-sheet#-chain-support)
+</Accordion>
+
+<Accordion title="Which tokens are supported by Gasless API?">
+
+    **Short answer:**
+
+    Gasless API provides a gasless experience at two points of the trade flow where users normally pay gas:
+    <ul>
+        <li><strong>Gasless approvals</strong> work only for tokens listed in our <a href="/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens">Gasless Approval Token endpoint</a> (tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>).</li>
+        <li><strong>Gasless swaps</strong> work for selling any non-native token (ERC-20 or similar).</li>
+    </ul>
+
+    **What doesn’t work:**
+
+    You can’t use Gasless API to sell a chain’s native coin (e.g., ETH on Mainnet, POL on Polygon). Native coins aren’t ERC-20s, so they lack <code>transferFrom</code> which the relay system uses. Use the <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">Swap API</a> instead (user pays gas in the native token) or have users wrap the coin (e.g., ETH → WETH).
+
+    **Work-arounds for tokens not supported by Gasless API:**
+
+    <ol>
+      <li>Use the regular Swap API — the user pays gas in the native coin.</li>
+      <li>Wrap the coin first (e.g., ETH → WETH), then use Gasless API.</li>
+    </ol>
+
+</Accordion>
+
+<Accordion title="What if my user wants to sell a native token (e.g., swap ETH for USDC) on Mainnet?">
+  Use the <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">Swap API</a>{" "}
+  (user pays gas in the native token), or have users wrap the native coin first
+  (e.g., ETH → WETH), then use Gasless API.
+</Accordion>
+
+<Accordion title="What is the minimum amount users can trade with Gasless API?">
+  It varies by chain, size, and gas conditions. If the amount is too small, the
+  API returns an error with the estimated minimum. As a guideline, set a minimum
+  of about $10 on Mainnet and $1 on other chains.
+</Accordion>
+
+<Accordion title="What’s the difference between Permit (EIP-2612) and Permit2?">
+  Both enable gasless-like UX, but they serve different purposes.
+  <br />
+  <br />
+  <strong>In short:</strong> <strong>Permit (EIP-2612)</strong> is an ERC-20 extension
+  enabling gasless approvals via an EIP-712 signature — <em>no on-chain tx</em> —
+  but only for tokens that implement EIP-2612. Many older tokens (e.g., WETH) don’t,
+  so they still need a regular <code>approve()</code>.<br />
+  <br />
+  <strong>Permit2</strong> (by Uniswap Labs) is a universal approval contract for
+  any ERC-20. Users first do a standard gasful <code>approve()</code> to Permit2,
+  then future moves can be authorized via EIP-712 signatures (gasless for subsequent
+  swaps). This is useful when tokens don’t support <code>permit()</code> but you
+  want a consistent meta-tx flow. Permit2 is deployed at
+  <code>0x000000000022D473030F116dDEE9F6B43aC78BA3</code> on major chains.
+</Accordion>
+
+</AccordionGroup>
+
+### Gas
+
+<Accordion title="Who pays for the gas fees to allow those swaps to happen?">
+  0x covers the gas fee up front. The cost is wrapped into the trade and paid in
+  the token the user is trading. Applications may choose to sponsor
+  transactions; in that case they pay 0x directly and users are not billed on
+  chain.
+</Accordion>
+
+### Monetizing Gasless API
+
+<Accordion title="Can I monetize using Gasless API?">
+    You have full flexibility on the fees you collect on trades.<br /><br />
+    Include these parameters when making a <a href="/api-reference/openapi-yaml/gasless/getprice">Gasless API</a> request:
+    <ul>
+      <li><code>swapFeeRecipient</code> — Wallet address to receive trading fees.</li>
+      <li><code>swapFeeBps</code> — Fee in basis points (0–1000; 1000 Bps = 10%).</li>
+      <li><code>swapFeeToken</code> — Contract address of the token to receive fees (must be <code>buyToken</code> or <code>sellToken</code>).</li>
+    </ul>
+
+```bash
+https://api.0x.org/gasless/quote                          # Request a firm quote
+?chainId=1                                                # Ethereum Mainnet
+&sellToken=0x6B175474E89094C44Da98b954EedeAC495271d0F     # Sell DAI
+&sellAmount=4000000000000000000000                        # Sell amount: 4000 (18 decimals)
+&buyToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE      # Buy ETH
+&taker=$USER_TAKER_ADDRESS                                # Trader address
+&swapFeeRecipient=$INTEGRATOR_WALLET_ADDRESS              # Recipient of affiliate fees
+&swapFeeBps=100                                           # 1% fee (100 bps)
+&swapFeeToken=0x6B175474E89094C44Da98b954EedeAC495271d0F  # Take fee in sellToken (DAI)
+--header '0x-api-key: [API_KEY]'                          # Your API key
+--header '0x-version: v2'                                 # API version
+```
+
+</Accordion>
+
+### Gasless Approvals
+
+<AccordionGroup>
+
+<Accordion title="What tokens work with gasless approvals?">
+  Gasless approvals are supported only for tokens listed in the [gasless
+  approval token
+  endpoint](https://0x.org/docs/api#tag/Gasless/operation/gasless::getGaslessApprovalTokens).
+</Accordion>
+
+<Accordion title="How do I know if an approval is required?">
+  Check the response from
+  [/gasless/quote](https://0x.org/docs/api#tag/Gasless/operation/gasless::getQuote),
+  <ul>
+    <li>
+      If <code>issues.allowance</code> is not <code>null</code>, an allowance
+      approval is required.
+    </li>
+    <li>
+      If <code>approval</code> is not <code>null</code>, a gasless approval is
+      possible.
+    </li>
+  </ul>
+</Accordion>
+
+<Accordion title="My user needs an approval before swapping — are these separate transactions? Do I need 2 signatures?">
+  Gasless approvals and gasless swap are bundled in the <em>same</em>{" "}
+  transaction, but each requires a signature for its EIP-712 object. You can
+  design the UI so it feels like a single step to the user.
+</Accordion>
+
+<Accordion title="What does a gasless approve + swap happy path look like?">
+  See the flow charts{" "}
+  <a href="/docs/gasless-api/guides/understanding-gasless-api#technical-flow-charts">
+    here
+  </a>
+  .
+</Accordion>
+
+</AccordionGroup>
+
+### Troubleshooting
+
+<Accordion title="I received one of these errors: INPUT_INVALID, BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE, INTERNAL_SERVER_ERROR. Help!">
+  Read more about{" "}
+  <a href="/docs/gasless-api/guides/technical-appendix#status-code">
+    Status Codes
+  </a>
+  .
+</Accordion>
+
+---
+
+## Trade Analytics API
+
+<AccordionGroup>
+  <Accordion title="What is the 0x Trade Analytics API?">
+    The Trade Analytics API gives integrators easy access to the history of trades initiated through 0x APIs and settled on 0x Smart Contracts. This API offers comprehensive transaction records, providing useful insights into user trading behavior.
+    </Accordion>
+
+{" "}
+
+<Accordion title="Whose data is returned?">
+  The Trade Analytics API will only return data for the app associated with the
+  API key that makes the request. While all trading data is publicly available
+  onchain, the Trade Analytics API provides a streamlined, well formatted data
+  for the specific app making the request.
+</Accordion>
+
+  <Accordion title="What is data finality in the context of the Trade Analytics API?">
+    The data accessed through the API is deemed final 48 hours after a trade is completed. This delay allows time for the data pipeline to capture all relevant information, including fees from proxy contracts and updated USD prices from Coingecko.
+
+    To ensure that your trading data is up to date, we recommend that you fetch and update data from the preceding 2 days in addition to the current day.
+
+  </Accordion>
+
+  <Accordion title="How quickly will a new trade show up in the Trade Analytics API?">
+    Data is updated roughly every 15 minutes. While generally reliable, data from these updates can sometimes be missing or incomplete, especially if they have a dependency on external sources such as token USD price providers. Each trade data is considered final 48 hours after it’s mined onchain – this enables us to address any gaps from earlier updates, ensuring data accuracy.
+
+    We don’t recommend using this API for use cases that require real time updates. If you’re interested in such data, please [submit a feature request](https://0x.canny.io/request-features).
+
+  </Accordion>
+
+  <Accordion title="Can I detect whether a transaction originated from the 0x API by parsing transaction receipts?">
+  
+    It's a common question — and the short answer is: **not directly via onchain data alone.**
+
+    While all 0x API trades are settled through the 0x Settler smart contract, these transactions don’t include a unique tag or flag that explicitly ties them to the API.
+
+    That said, there are a few ways to approach attribution, depending on what you're trying to track:
+
+    **🔍 If you're trying to track your own app's activity**
+
+    <ul>
+      <li>The <a href="/docs/trade-analytics-api/introduction">0x Trade Analytics API</a> is the best place to start. It allows you to query detailed trade data associated with your API key.</li>
+      <li>Enable onchain tagging. In your <a href="https://dashboard.0x.org/">0x Dashboard</a>, go to your app’s <strong>Settings</strong> and toggle on <strong>“Enable onchain tagging.”</strong> This makes it easier to filter and trace your transactions onchain later.</li>
+    </ul>
+
+    **🌍 If you're trying to detect any and all transactions routed via the 0x API**
+
+    <ul>
+      <li>You can monitor the 0x Settler contract for activity, but this includes all transactions — not just those initiated via the 0x API.</li>
+      <li>Currently, there is no canonical event that maps directly to “this came from the Swap API,” but we’re exploring ways to make API attribution more accessible in the future.</li>
+      <li>If you're interested in aggregated Swap API usage data, we may be able to share insights or internal tools depending on your use case. [Reach out to us](https://0x.org/contact) — we’d love to hear more about what you're trying to build.</li>
+    </ul>
+
+    We understand attribution is an important use case, whether you're tracking your own usage or seeking broader ecosystem insights. Don’t hesitate to <a href="https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team">contact us</a> to discuss how we can best support you.
+
+  </Accordion>
+
+  <Accordion title="What is the difference between using the Trade Analytics API vs the 0x-parser?">
+  Trade Analytics API is best for historical analysis and business intelligence. Provides comprehensive trade data including volumes, fees, and USD values.
+
+0x-parser is a best for real-time transaction data and displaying final swap amounts immediately after settlement.
+
+Read more about [accessing 0x transaction data here](/docs/core-concepts/transaction-data).
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## 0x Dashboard
+
+<AccordionGroup>
+  <Accordion title="Does the 0x Dashboard support having multiple user accounts for our team?">
+    For now we only support one user per team account, but we will add support for multiple users in the coming weeks.
+  </Accordion>
+
+  <Accordion title="What is an App?">
+    An app is a self-contained unit for each application that you’re building. You can set up multiple apps, each with unique API keys and configurations, on the <a href="https://dashboard.0x.org/">0x Dashboard</a>.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Smart Contracts
+
+<AccordionGroup>
+  <Accordion title="Are the smart contracts audited?">
+    Yes. See{" "}
+    <a href="https://github.com/0xProject/0x-settler/tree/master/audits">
+      audit reports
+    </a>
+    . Check out our <a href="/docs/developer-resources/bounties">
+      bounty program
+    </a>.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Building with 0x
+
+<AccordionGroup>
+  <Accordion title="My project would like to integrate 0x. How can I contact the 0x team?">
+    Create an account on the <a href="https://dashboard.0x.org/">0x Dashboard</a> to get an API key and start building for free. You can also review <a href="https://0x.org/pricing">plans</a> and <a href="https://www.0x.org/#contact">contact our team</a> for custom needs.
+  </Accordion>
+
+  <Accordion title="My project is interested to apply as a liquidity source in 0x ecosystem. How can I contact the 0x team?">
+    Thank you for your interest in providing liquidity to the 0x ecosystem. Please refer to the ["Liquidity Integrations"](/liquidity-integration/liquidity-integrations) tab.
+  </Accordion>
+</AccordionGroup>
