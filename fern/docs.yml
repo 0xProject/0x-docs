@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 
 instances:
-  - url: https://0x.docs.buildwithfern.com
+  - url: 0x.docs.buildwithfern.com
 
 title: 0x Docs
 
