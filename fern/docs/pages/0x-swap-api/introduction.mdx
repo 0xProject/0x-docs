@@ -13,7 +13,10 @@ Prefer to watch a video or see a code demo instead? Jump to [0x Videos](https://
 Swap API is a professional-grade DEX aggregation and smart order routing API that lets you add crypto trading with a single API. It sources the best real-time prices from 150+ public and private liquidity providers across [supported chains](/docs/introduction/supported-chains).
 
 <Frame>
-  <img src="https://0x.org/docs/assets/images/swap-api-ui-d28611dd5b85f518a34f7c0326f80034.png" alt="Swap API UI" />
+  <img
+    src="https://0x.org/docs/assets/images/swap-api-ui-d28611dd5b85f518a34f7c0326f80034.png"
+    alt="Swap API UI"
+  />
 </Frame>
 
 <Tip>
@@ -346,23 +349,24 @@ Swap API is a professional-grade DEX aggregator and smart order-routing API. It 
 Below is a high-level diagram showing how Swap API works under the hood:
 
 <Frame>
-  <img src="https://0x.org/docs/assets/images/swap-api-diagram-b557e01e96f8612c8da768aab6a0e1b6.png" alt="Swap API Diagram" />
+  <img
+    src="https://0x.org/docs/assets/images/swap-api-diagram-b557e01e96f8612c8da768aab6a0e1b6.png"
+    alt="Swap API Diagram"
+  />
 </Frame>
 <Steps>
+  <Step>A user requests a quote.</Step>
   <Step>
-    A user requests a quote.
+    Swap API simultaneously (a) fetches a quote from AMM and (b) requests quotes
+    from market makers.
   </Step>
-  <Step>
-    Swap API simultaneously (a) fetches a quote from AMM and (b) requests quotes from market makers.
-  </Step>
-  <Step>
-    Market makers respond with signed quotes at their discretion.
-  </Step>
+  <Step>Market makers respond with signed quotes at their discretion.</Step>
   <Step>
     Swap API aggregates all quotes, compares them, and returns the best price.
   </Step>
   <Step>
-    If the user accepts, the signed order is submitted on-chain and settled via 0x.
+    If the user accepts, the signed order is submitted on-chain and settled via
+    0x.
   </Step>
 </Steps>
 For more details about how 0x orders are executed, check out [How does 0x
@@ -381,6 +385,7 @@ Swap and Gasless v2 APIs are currently supported on the following chains. Select
 | Chain              | Chain ID | Swap API | Gasless API |
 | :----------------- | :------- | :------- | :---------- |
 | Ethereum (Mainnet) | 1        | ✅       | ✅          |
+| Abstract           | 2741     | ✅       |             |
 | Arbitrum           | 42161    | ✅       | ✅          |
 | Avalanche          | 43114    | ✅       | ✅          |
 | Base               | 8453     | ✅       | ✅          |

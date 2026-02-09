@@ -1,81 +1,120 @@
 ---
 title: API reference
-subtitle: Interactive documentation generated from your API specification
-slug: api-reference
+subtitle: Getting started with the 0x API
 ---
 
-Fern automatically generates interactive API reference documentation from your API specification. This starter template includes a sample Plant Store API to demonstrate the feature.
+# Introduction
 
-## Supported specifications
+The 0x API provides a unified interface for liquidity aggregation, token swap pricing, and onchain trading across major supported blockchains. It is designed to help developers easily integrate token swaps and routing logic without managing individual DEX integrations.
 
-Fern supports multiple API specification formats:
+The 0x API exposes endpoints for the following core capabilities:
 
-| Format | Description | Documentation |
-|--------|-------------|---------------|
-| **OpenAPI** | The most widely used REST API specification format (versions 2.0, 3.0, and 3.1) | [OpenAPI docs](https://buildwithfern.com/learn/api-definitions/openapi/overview) |
-| **AsyncAPI** | For event-driven and message-based APIs | [AsyncAPI docs](https://buildwithfern.com/learn/api-definitions/asyncapi) |
-| **gRPC** | Protocol buffer definitions for gRPC services | [gRPC docs](https://buildwithfern.com/learn/api-definitions/protobuf) |
+- **Swap**: Generate executable quotes and calldata for token swaps using either the AllowanceHolder (recommended) or Permit2 approval models. Learn more in the [FAQ](/docs/swap-api/faq#allowanceholder-and-permit2).
+- **Gasless**: Enable gasless swaps by sponsoring transaction fees on behalf of users, improving UX for end-user applications.
+- **Sources**: Retrieve supported liquidity sources, chains, and token metadata used by the 0x routing engine.
+- **Trade Analytics**: Query historical trade data, volumes, and execution details for monitoring and analytics use cases.
 
-## How it works
+Each API surface is documented in detail in the sections below.
 
-Place your API specification file in the `fern/` directory and reference it in your `docs.yml` navigation:
+## Base URL
 
-```yaml title="docs.yml"
-navigation:
-  - section: Documentation
-    contents:
-      - page: Overview
-        path: docs/pages/overview.mdx
-  - api: API Reference
+All requests to the 0x API must be made to the following base URL:
+
+```
+https://api.0x.org
+
 ```
 
-Fern parses your specification and generates:
+All requests must be sent over HTTPS. Requests made over HTTP will be rejected.
 
-- Endpoint documentation with request/response schemas
-- Interactive API Explorer for testing endpoints
-- Code snippets in multiple languages
-- Type definitions and examples
+## Authentication
 
-## API Explorer
+All 0x API requests require an API key. Include your API key in the following request header:
 
-The API Explorer lets users test API endpoints directly in the documentation. Users can fill in parameters, send requests, and see responses without leaving the page.
+<ParamField header="0x-api-key" type="string" example="YOUR_API_KEY" required>
+  Your 0x API key used to authenticate requests.
+</ParamField>
 
-<Note>
-For advanced API Explorer features like auto-populating API keys, see the [API Explorer documentation](https://buildwithfern.com/learn/docs/api-references/api-explorer/overview).
-</Note>
+<ParamField header="0x-version" type="string" example="v2" required>
+  0x API version.
+</ParamField>
 
-## Customizing the API reference
+Requests missing this header may be rate-limited or rejected.
 
-Control how your API reference appears using the `api` configuration in `docs.yml`:
+<Info>
+  You can generate and manage API keys from the [0x
+  Dashboard](https://dashboard.0x.org).
+</Info>
 
-```yaml title="docs.yml"
-navigation:
-  - api: API Reference
-    api-name: plantstore
-    paginated: true
-```
+## Chain Support
 
-You can also add custom content to API reference pages, organize endpoints into groups, customize section names, and control which endpoints are visible.
+The 0x API supports multiple EVM-compatible chains. Each request must specify a chain either via the request path or query parameters, depending on the endpoint.
 
-<Note>
-For detailed customization options, see the [API reference documentation](https://buildwithfern.com/learn/docs/api-references/generate-api-ref).
-</Note>
+Refer to the [Supported Chains](/docs/introduction/supported-chains) for a complete and up-to-date list.
 
-## SDK code snippets
+## Examples
 
-If you generate SDKs with Fern, code snippets automatically appear in your API reference showing how to call each endpoint using your SDK:
+<Tabs>
+  <Tab title="JavaScript">
+    ```javascript theme={"system"}
+    const params = new URLSearchParams({
+      sellAmount: "100000000000000000000000", // 100,000 WETH
+      taker: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
+      chainId: "1",
+      sellToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // WETH
+      buyToken: "0x6b175474e89094c44da98b954eedeac495271d0f",  // DAI
+    });
 
-```yaml title="generators.yml"
-groups:
-  python-sdk:
-    generators:
-      - name: fernapi/fern-python-sdk
-        version: 4.3.1
-        output:
-          location: pypi
-          package-name: plantstore
-```
+    fetch(`https://api.0x.org/swap/allowance-holder/quote?${params.toString()}`, {
+      headers: {
+        "0x-api-key": "YOUR_API_KEY",
+        "0x-version": "v2",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+    ```
 
-<Note>
-For more information on SDK generation, see the [SDK documentation](https://buildwithfern.com/learn/sdks/overview/introduction).
-</Note>
+  </Tab>
+
+  <Tab title="cURL">
+    ```bash theme={"system"}
+    # Sell 100,000 WETH for DAI
+    # Taker address is vitalik.eth
+    # Replace "YOUR_API_KEY" with your actual API key from https://dashboard.0x.org/create-account
+
+    curl --request GET \
+      --url "https://api.0x.org/swap/allowance-holder/quote?sellAmount=100000000000000000000000&taker=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&chainId=1&sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&buyToken=0x6b175474e89094c44da98b954eedeac495271d0f" \
+      --header "0x-api-key: YOUR_API_KEY" \
+      --header "0x-version: v2"
+    ```
+
+  </Tab>
+
+  <Tab title="Python">
+    ```python theme={"system"}
+    import requests
+
+    url = "https://api.0x.org/swap/allowance-holder/quote"
+    params = {
+        "sellAmount": "100000000000000000000000",  # 100,000 WETH
+        "taker": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",  # vitalik.eth
+        "chainId": "1",
+        "sellToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",  # WETH
+        "buyToken": "0x6b175474e89094c44da98b954eedeac495271d0f",   # DAI
+    }
+
+    headers = {
+        "0x-api-key": "YOUR_API_KEY",
+        "0x-version": "v2",
+        "Content-Type": "application/json",
+    }
+
+    response = requests.get(url, params=params, headers=headers)
+    data = response.json()
+    print(data)
+    ```
+
+  </Tab>
+</Tabs>

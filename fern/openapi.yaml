@@ -5,9 +5,6 @@ info:
   version: v2
 servers:
   - url: https://api.0x.org
-x-mint:
-  mcp:
-    enabled: true
 paths:
   /swap/allowance-holder/price:
     get:
@@ -100,36 +97,41 @@ paths:
           required: false
           schema:
             type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
+            pattern: ^\s*0x[a-fA-F0-9]{40}(\s*,\s*0x[a-fA-F0-9]{40})*\s*$
           description: >-
-            The wallet address to receive the specified trading fees. You must
-            also specify the `swapFeeToken` and `swapFeeBps` in the request to
-            use this feature. Learn more about setting up a trading
-            fee/commission in the FAQs
+            The wallet address to receive the specified trading fees (supports
+            single or multiple comma-separated values). You must also specify
+            the `swapFeeBps` in the request to use this feature. When multiple
+            values are provided, must match length of `swapFeeBps`.
         - name: swapFeeBps
           in: query
           required: false
           schema:
-            type: integer
-            minimum: 0
-            maximum: 10000
+            type: string
+            pattern: ^\s*\d+(\s*,\s*\d+)*\s*$
           description: >-
             The amount in Bps of the `swapFeeToken` to charge and deliver to the
-            `swapFeeRecipient`. You must also specify the `swapFeeRecipient` and
-            `swapFeeToken` in the request to use this feature. For security,
-            this field has a default limit of 1000 Bps. If your application
-            requires a higher value, please reach out to us.
+            `swapFeeRecipient` (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeRecipient` in the request
+            to use this feature. For security, this field has a default limit of
+            1000 Bps. If your application requires a higher value, please reach
+            out to us.
         - name: swapFeeToken
           in: query
           required: false
           schema:
             type: string
-            pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
+            pattern: >-
+              ^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$
           description: >-
-            The contract address of the token to receive trading fees in. This
+            The contract address of the token to receive trading fees in
+            (supports single or multiple comma-separated values). Each token
             must be set to the value of either the `buyToken` or the
-            `sellToken`. You must also specify the `swapFeeRecipient` and
-            `swapFeeBps` in the request to use this feature
+            `sellToken`. If omitted, the fee token will be determined by 0x with
+            preference to stablecoins and highly liquid assets. You must also
+            specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator
+            fees. When multiple values are provided, must match length of
+            `swapFeeBps`.
         - name: tradeSurplusRecipient
           in: query
           required: false
@@ -143,6 +145,17 @@ paths:
             integrators on a custom pricing plan. In other cases, the surplus
             will be collected by 0x. For assistance with a custom plan, please
             contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          description: >-
+            The maximum trade surplus (positive slippage) that can be collected
+            in Bps of the buy amount. If not provided, defaults to 10000 (100%).
+            Must be used together with `tradeSurplusRecipient`.
         - name: gasPrice
           in: query
           required: false
@@ -265,6 +278,38 @@ paths:
                             description: >-
                               The specified fee to charge and deliver to the
                               `swapFeeRecipient`.
+                          integratorFees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amount:
+                                  allOf:
+                                    - {}
+                                    - type: string
+                                      pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                  description: >-
+                                    The amount of token charged as the
+                                    integrator fee
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: >-
+                                    The address of the token charged as the
+                                    integrator fee
+                                type:
+                                  type: string
+                                  enum:
+                                    - volume
+                              required:
+                                - amount
+                                - token
+                                - type
+                              additionalProperties: false
+                            nullable: true
+                            description: >-
+                              The specified fees to charge and deliver to the
+                              `swapFeesRecipient`.
                           zeroExFee:
                             type: object
                             properties:
@@ -319,6 +364,7 @@ paths:
                               transaction.
                         required:
                           - integratorFee
+                          - integratorFees
                           - zeroExFee
                           - gasFee
                         additionalProperties: false
@@ -557,9 +603,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the buy token
                           sellToken:
@@ -589,9 +648,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the sell token
                         required:
@@ -610,9 +682,9 @@ paths:
                         description: >-
                           The estimated total network cost of the swap. On
                           chains where there is no L1 data cost, it is
-                          calculated as `gas` * `gasPrice. On chains where there
-                          is an L1 data cost, it is calculated as `gas` *
-                          `gasPrice + L1 data
+                          calculated as `gas` * `gasPrice`. On chains where
+                          there is an L1 data cost, it is calculated as `gas` *
+                          `gasPrice` + L1 data cost.
                       zid:
                         type: string
                         description: The unique ZeroEx identifier of the request
@@ -714,6 +786,8 @@ paths:
               schema:
                 anyOf:
                   - $ref: "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/XSTOCKS_NOT_AUTHORIZED"
         "422":
           description: 422 error response
           content:
@@ -819,36 +893,41 @@ paths:
           required: false
           schema:
             type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
+            pattern: ^\s*0x[a-fA-F0-9]{40}(\s*,\s*0x[a-fA-F0-9]{40})*\s*$
           description: >-
-            The wallet address to receive the specified trading fees. You must
-            also specify the `swapFeeToken` and `swapFeeBps` in the request to
-            use this feature. Learn more about setting up a trading
-            fee/commission in the FAQs
+            The wallet address to receive the specified trading fees (supports
+            single or multiple comma-separated values). You must also specify
+            the `swapFeeBps` in the request to use this feature. When multiple
+            values are provided, must match length of `swapFeeBps`.
         - name: swapFeeBps
           in: query
           required: false
           schema:
-            type: integer
-            minimum: 0
-            maximum: 10000
+            type: string
+            pattern: ^\s*\d+(\s*,\s*\d+)*\s*$
           description: >-
             The amount in Bps of the `swapFeeToken` to charge and deliver to the
-            `swapFeeRecipient`. You must also specify the `swapFeeRecipient` and
-            `swapFeeToken` in the request to use this feature. For security,
-            this field has a default limit of 1000 Bps. If your application
-            requires a higher value, please reach out to us.
+            `swapFeeRecipient` (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeRecipient` in the request
+            to use this feature. For security, this field has a default limit of
+            1000 Bps. If your application requires a higher value, please reach
+            out to us.
         - name: swapFeeToken
           in: query
           required: false
           schema:
             type: string
-            pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
+            pattern: >-
+              ^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$
           description: >-
-            The contract address of the token to receive trading fees in. This
+            The contract address of the token to receive trading fees in
+            (supports single or multiple comma-separated values). Each token
             must be set to the value of either the `buyToken` or the
-            `sellToken`. You must also specify the `swapFeeRecipient` and
-            `swapFeeBps` in the request to use this feature
+            `sellToken`. If omitted, the fee token will be determined by 0x with
+            preference to stablecoins and highly liquid assets. You must also
+            specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator
+            fees. When multiple values are provided, must match length of
+            `swapFeeBps`.
         - name: tradeSurplusRecipient
           in: query
           required: false
@@ -862,6 +941,17 @@ paths:
             integrators on a custom pricing plan. In other cases, the surplus
             will be collected by 0x. For assistance with a custom plan, please
             contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          description: >-
+            The maximum trade surplus (positive slippage) that can be collected
+            in Bps of the buy amount. If not provided, defaults to 10000 (100%).
+            Must be used together with `tradeSurplusRecipient`.
         - name: gasPrice
           in: query
           required: false
@@ -984,6 +1074,38 @@ paths:
                             description: >-
                               The specified fee to charge and deliver to the
                               `swapFeeRecipient`.
+                          integratorFees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amount:
+                                  allOf:
+                                    - {}
+                                    - type: string
+                                      pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                  description: >-
+                                    The amount of token charged as the
+                                    integrator fee
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: >-
+                                    The address of the token charged as the
+                                    integrator fee
+                                type:
+                                  type: string
+                                  enum:
+                                    - volume
+                              required:
+                                - amount
+                                - token
+                                - type
+                              additionalProperties: false
+                            nullable: true
+                            description: >-
+                              The specified fees to charge and deliver to the
+                              `swapFeesRecipient`.
                           zeroExFee:
                             type: object
                             properties:
@@ -1038,6 +1160,7 @@ paths:
                               transaction.
                         required:
                           - integratorFee
+                          - integratorFees
                           - zeroExFee
                           - gasFee
                         additionalProperties: false
@@ -1255,9 +1378,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the buy token
                           sellToken:
@@ -1287,9 +1423,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the sell token
                         required:
@@ -1308,9 +1457,9 @@ paths:
                         description: >-
                           The estimated total network cost of the swap. On
                           chains where there is no L1 data cost, it is
-                          calculated as `gas` * `gasPrice. On chains where there
-                          is an L1 data cost, it is calculated as `gas` *
-                          `gasPrice + L1 data
+                          calculated as `gas` * `gasPrice`. On chains where
+                          there is an L1 data cost, it is calculated as `gas` *
+                          `gasPrice` + L1 data cost.
                       transaction:
                         type: object
                         properties:
@@ -1468,6 +1617,8 @@ paths:
               schema:
                 anyOf:
                   - $ref: "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/XSTOCKS_NOT_AUTHORIZED"
         "422":
           description: 422 error response
           content:
@@ -1573,36 +1724,41 @@ paths:
           required: false
           schema:
             type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
+            pattern: ^\s*0x[a-fA-F0-9]{40}(\s*,\s*0x[a-fA-F0-9]{40})*\s*$
           description: >-
-            The wallet address to receive the specified trading fees. You must
-            also specify the `swapFeeToken` and `swapFeeBps` in the request to
-            use this feature. Learn more about setting up a trading
-            fee/commission in the FAQs
+            The wallet address to receive the specified trading fees (supports
+            single or multiple comma-separated values). You must also specify
+            the `swapFeeBps` in the request to use this feature. When multiple
+            values are provided, must match length of `swapFeeBps`.
         - name: swapFeeBps
           in: query
           required: false
           schema:
-            type: integer
-            minimum: 0
-            maximum: 10000
+            type: string
+            pattern: ^\s*\d+(\s*,\s*\d+)*\s*$
           description: >-
             The amount in Bps of the `swapFeeToken` to charge and deliver to the
-            `swapFeeRecipient`. You must also specify the `swapFeeRecipient` and
-            `swapFeeToken` in the request to use this feature. For security,
-            this field has a default limit of 1000 Bps. If your application
-            requires a higher value, please reach out to us.
+            `swapFeeRecipient` (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeRecipient` in the request
+            to use this feature. For security, this field has a default limit of
+            1000 Bps. If your application requires a higher value, please reach
+            out to us.
         - name: swapFeeToken
           in: query
           required: false
           schema:
             type: string
-            pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
+            pattern: >-
+              ^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$
           description: >-
-            The contract address of the token to receive trading fees in. This
+            The contract address of the token to receive trading fees in
+            (supports single or multiple comma-separated values). Each token
             must be set to the value of either the `buyToken` or the
-            `sellToken`. You must also specify the `swapFeeRecipient` and
-            `swapFeeBps` in the request to use this feature
+            `sellToken`. If omitted, the fee token will be determined by 0x with
+            preference to stablecoins and highly liquid assets. You must also
+            specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator
+            fees. When multiple values are provided, must match length of
+            `swapFeeBps`.
         - name: tradeSurplusRecipient
           in: query
           required: false
@@ -1616,6 +1772,17 @@ paths:
             integrators on a custom pricing plan. In other cases, the surplus
             will be collected by 0x. For assistance with a custom plan, please
             contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          description: >-
+            The maximum trade surplus (positive slippage) that can be collected
+            in Bps of the buy amount. If not provided, defaults to 10000 (100%).
+            Must be used together with `tradeSurplusRecipient`.
         - name: gasPrice
           in: query
           required: false
@@ -1738,6 +1905,38 @@ paths:
                             description: >-
                               The specified fee to charge and deliver to the
                               `swapFeeRecipient`.
+                          integratorFees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amount:
+                                  allOf:
+                                    - {}
+                                    - type: string
+                                      pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                  description: >-
+                                    The amount of token charged as the
+                                    integrator fee
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: >-
+                                    The address of the token charged as the
+                                    integrator fee
+                                type:
+                                  type: string
+                                  enum:
+                                    - volume
+                              required:
+                                - amount
+                                - token
+                                - type
+                              additionalProperties: false
+                            nullable: true
+                            description: >-
+                              The specified fees to charge and deliver to the
+                              `swapFeesRecipient`.
                           zeroExFee:
                             type: object
                             properties:
@@ -1792,6 +1991,7 @@ paths:
                               transaction.
                         required:
                           - integratorFee
+                          - integratorFees
                           - zeroExFee
                           - gasFee
                         additionalProperties: false
@@ -2030,9 +2230,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the buy token
                           sellToken:
@@ -2062,9 +2275,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the sell token
                         required:
@@ -2083,9 +2309,9 @@ paths:
                         description: >-
                           The estimated total network cost of the swap. On
                           chains where there is no L1 data cost, it is
-                          calculated as `gas` * `gasPrice. On chains where there
-                          is an L1 data cost, it is calculated as `gas` *
-                          `gasPrice + L1 data
+                          calculated as `gas` * `gasPrice`. On chains where
+                          there is an L1 data cost, it is calculated as `gas` *
+                          `gasPrice` + L1 data cost.
                       zid:
                         type: string
                         description: The unique ZeroEx identifier of the request
@@ -2187,6 +2413,8 @@ paths:
               schema:
                 anyOf:
                   - $ref: "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/XSTOCKS_NOT_AUTHORIZED"
         "422":
           description: 422 error response
           content:
@@ -2292,36 +2520,41 @@ paths:
           required: false
           schema:
             type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
+            pattern: ^\s*0x[a-fA-F0-9]{40}(\s*,\s*0x[a-fA-F0-9]{40})*\s*$
           description: >-
-            The wallet address to receive the specified trading fees. You must
-            also specify the `swapFeeToken` and `swapFeeBps` in the request to
-            use this feature. Learn more about setting up a trading
-            fee/commission in the FAQs
+            The wallet address to receive the specified trading fees (supports
+            single or multiple comma-separated values). You must also specify
+            the `swapFeeBps` in the request to use this feature. When multiple
+            values are provided, must match length of `swapFeeBps`.
         - name: swapFeeBps
           in: query
           required: false
           schema:
-            type: integer
-            minimum: 0
-            maximum: 10000
+            type: string
+            pattern: ^\s*\d+(\s*,\s*\d+)*\s*$
           description: >-
             The amount in Bps of the `swapFeeToken` to charge and deliver to the
-            `swapFeeRecipient`. You must also specify the `swapFeeRecipient` and
-            `swapFeeToken` in the request to use this feature. For security,
-            this field has a default limit of 1000 Bps. If your application
-            requires a higher value, please reach out to us.
+            `swapFeeRecipient` (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeRecipient` in the request
+            to use this feature. For security, this field has a default limit of
+            1000 Bps. If your application requires a higher value, please reach
+            out to us.
         - name: swapFeeToken
           in: query
           required: false
           schema:
             type: string
-            pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
+            pattern: >-
+              ^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$
           description: >-
-            The contract address of the token to receive trading fees in. This
+            The contract address of the token to receive trading fees in
+            (supports single or multiple comma-separated values). Each token
             must be set to the value of either the `buyToken` or the
-            `sellToken`. You must also specify the `swapFeeRecipient` and
-            `swapFeeBps` in the request to use this feature
+            `sellToken`. If omitted, the fee token will be determined by 0x with
+            preference to stablecoins and highly liquid assets. You must also
+            specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator
+            fees. When multiple values are provided, must match length of
+            `swapFeeBps`.
         - name: tradeSurplusRecipient
           in: query
           required: false
@@ -2335,6 +2568,17 @@ paths:
             integrators on a custom pricing plan. In other cases, the surplus
             will be collected by 0x. For assistance with a custom plan, please
             contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          description: >-
+            The maximum trade surplus (positive slippage) that can be collected
+            in Bps of the buy amount. If not provided, defaults to 10000 (100%).
+            Must be used together with `tradeSurplusRecipient`.
         - name: gasPrice
           in: query
           required: false
@@ -2457,6 +2701,38 @@ paths:
                             description: >-
                               The specified fee to charge and deliver to the
                               `swapFeeRecipient`.
+                          integratorFees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amount:
+                                  allOf:
+                                    - {}
+                                    - type: string
+                                      pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                  description: >-
+                                    The amount of token charged as the
+                                    integrator fee
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: >-
+                                    The address of the token charged as the
+                                    integrator fee
+                                type:
+                                  type: string
+                                  enum:
+                                    - volume
+                              required:
+                                - amount
+                                - token
+                                - type
+                              additionalProperties: false
+                            nullable: true
+                            description: >-
+                              The specified fees to charge and deliver to the
+                              `swapFeesRecipient`.
                           zeroExFee:
                             type: object
                             properties:
@@ -2511,6 +2787,7 @@ paths:
                               transaction.
                         required:
                           - integratorFee
+                          - integratorFees
                           - zeroExFee
                           - gasFee
                         additionalProperties: false
@@ -2816,9 +3093,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the buy token
                           sellToken:
@@ -2848,9 +3138,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the sell token
                         required:
@@ -3069,6 +3372,8 @@ paths:
               schema:
                 anyOf:
                   - $ref: "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/XSTOCKS_NOT_AUTHORIZED"
         "422":
           description: 422 error response
           content:
@@ -3249,36 +3554,41 @@ paths:
           required: false
           schema:
             type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
+            pattern: ^\s*0x[a-fA-F0-9]{40}(\s*,\s*0x[a-fA-F0-9]{40})*\s*$
           description: >-
-            The wallet address to receive the specified trading fees. You must
-            also specify the `swapFeeToken` and `swapFeeBps` in the request to
-            use this feature. Learn more about setting up a trading
-            fee/commission in the FAQs
+            The wallet address to receive the specified trading fees (supports
+            single or multiple comma-separated values). You must also specify
+            the `swapFeeBps` in the request to use this feature. When multiple
+            values are provided, must match length of `swapFeeBps`.
         - name: swapFeeBps
           in: query
           required: false
           schema:
-            type: integer
-            minimum: 0
-            maximum: 10000
+            type: string
+            pattern: ^\s*\d+(\s*,\s*\d+)*\s*$
           description: >-
             The amount in Bps of the `swapFeeToken` to charge and deliver to the
-            `swapFeeRecipient`. You must also specify the `swapFeeRecipient` and
-            `swapFeeToken` in the request to use this feature. For security,
-            this field has a default limit of 1000 Bps. If your application
-            requires a higher value, please reach out to us.
+            `swapFeeRecipient` (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeRecipient` in the request
+            to use this feature. For security, this field has a default limit of
+            1000 Bps. If your application requires a higher value, please reach
+            out to us.
         - name: swapFeeToken
           in: query
           required: false
           schema:
             type: string
-            pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
+            pattern: >-
+              ^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$
           description: >-
-            The contract address of the token to receive trading fees in. This
+            The contract address of the token to receive trading fees in
+            (supports single or multiple comma-separated values). Each token
             must be set to the value of either the `buyToken` or the
-            `sellToken`. You must also specify the `swapFeeRecipient` and
-            `swapFeeBps` in the request to use this feature
+            `sellToken`. If omitted, the fee token will be determined by 0x with
+            preference to stablecoins and highly liquid assets. You must also
+            specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator
+            fees. When multiple values are provided, must match length of
+            `swapFeeBps`.
         - name: tradeSurplusRecipient
           in: query
           required: false
@@ -3292,6 +3602,17 @@ paths:
             integrators on a custom pricing plan. In other cases, the surplus
             will be collected by 0x. For assistance with a custom plan, please
             contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          description: >-
+            The maximum trade surplus (positive slippage) that can be collected
+            in Bps of the buy amount. If not provided, defaults to 10000 (100%).
+            Must be used together with `tradeSurplusRecipient`.
         - name: slippageBps
           in: query
           required: false
@@ -3389,6 +3710,38 @@ paths:
                             description: >-
                               The specified fee to charge and deliver to the
                               `swapFeeRecipient`.
+                          integratorFees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amount:
+                                  allOf:
+                                    - {}
+                                    - type: string
+                                      pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                  description: >-
+                                    The amount of token charged as the
+                                    integrator fee
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: >-
+                                    The address of the token charged as the
+                                    integrator fee
+                                type:
+                                  type: string
+                                  enum:
+                                    - volume
+                              required:
+                                - amount
+                                - token
+                                - type
+                              additionalProperties: false
+                            nullable: true
+                            description: >-
+                              The specified fees to charge and deliver to the
+                              `swapFeesRecipient`.
                           zeroExFee:
                             type: object
                             properties:
@@ -3443,6 +3796,7 @@ paths:
                               transaction.
                         required:
                           - integratorFee
+                          - integratorFees
                           - zeroExFee
                           - gasFee
                         additionalProperties: false
@@ -3669,9 +4023,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the buy token
                           sellToken:
@@ -3701,9 +4068,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the sell token
                         required:
@@ -3819,6 +4199,8 @@ paths:
               schema:
                 anyOf:
                   - $ref: "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/XSTOCKS_NOT_AUTHORIZED"
         "422":
           description: 422 error response
           content:
@@ -3917,36 +4299,41 @@ paths:
           required: false
           schema:
             type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
+            pattern: ^\s*0x[a-fA-F0-9]{40}(\s*,\s*0x[a-fA-F0-9]{40})*\s*$
           description: >-
-            The wallet address to receive the specified trading fees. You must
-            also specify the `swapFeeToken` and `swapFeeBps` in the request to
-            use this feature. Learn more about setting up a trading
-            fee/commission in the FAQs
+            The wallet address to receive the specified trading fees (supports
+            single or multiple comma-separated values). You must also specify
+            the `swapFeeBps` in the request to use this feature. When multiple
+            values are provided, must match length of `swapFeeBps`.
         - name: swapFeeBps
           in: query
           required: false
           schema:
-            type: integer
-            minimum: 0
-            maximum: 10000
+            type: string
+            pattern: ^\s*\d+(\s*,\s*\d+)*\s*$
           description: >-
             The amount in Bps of the `swapFeeToken` to charge and deliver to the
-            `swapFeeRecipient`. You must also specify the `swapFeeRecipient` and
-            `swapFeeToken` in the request to use this feature. For security,
-            this field has a default limit of 1000 Bps. If your application
-            requires a higher value, please reach out to us.
+            `swapFeeRecipient` (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeRecipient` in the request
+            to use this feature. For security, this field has a default limit of
+            1000 Bps. If your application requires a higher value, please reach
+            out to us.
         - name: swapFeeToken
           in: query
           required: false
           schema:
             type: string
-            pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
+            pattern: >-
+              ^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$
           description: >-
-            The contract address of the token to receive trading fees in. This
+            The contract address of the token to receive trading fees in
+            (supports single or multiple comma-separated values). Each token
             must be set to the value of either the `buyToken` or the
-            `sellToken`. You must also specify the `swapFeeRecipient` and
-            `swapFeeBps` in the request to use this feature
+            `sellToken`. If omitted, the fee token will be determined by 0x with
+            preference to stablecoins and highly liquid assets. You must also
+            specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator
+            fees. When multiple values are provided, must match length of
+            `swapFeeBps`.
         - name: tradeSurplusRecipient
           in: query
           required: false
@@ -3960,6 +4347,17 @@ paths:
             integrators on a custom pricing plan. In other cases, the surplus
             will be collected by 0x. For assistance with a custom plan, please
             contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10000
+          description: >-
+            The maximum trade surplus (positive slippage) that can be collected
+            in Bps of the buy amount. If not provided, defaults to 10000 (100%).
+            Must be used together with `tradeSurplusRecipient`.
         - name: slippageBps
           in: query
           required: false
@@ -4149,6 +4547,38 @@ paths:
                             description: >-
                               The specified fee to charge and deliver to the
                               `swapFeeRecipient`.
+                          integratorFees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amount:
+                                  allOf:
+                                    - {}
+                                    - type: string
+                                      pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                  description: >-
+                                    The amount of token charged as the
+                                    integrator fee
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: >-
+                                    The address of the token charged as the
+                                    integrator fee
+                                type:
+                                  type: string
+                                  enum:
+                                    - volume
+                              required:
+                                - amount
+                                - token
+                                - type
+                              additionalProperties: false
+                            nullable: true
+                            description: >-
+                              The specified fees to charge and deliver to the
+                              `swapFeesRecipient`.
                           zeroExFee:
                             type: object
                             properties:
@@ -4203,6 +4633,7 @@ paths:
                               transaction.
                         required:
                           - integratorFee
+                          - integratorFees
                           - zeroExFee
                           - gasFee
                         additionalProperties: false
@@ -4426,9 +4857,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the buy token
                           sellToken:
@@ -4458,9 +4902,22 @@ paths:
                                   this field is best effort, meaning it would be
                                   set to `null` if the system is not able to
                                   determine the tax
+                              transferTaxBps:
+                                allOf:
+                                  - {}
+                                  - type: string
+                                    pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+                                nullable: true
+                                description: >-
+                                  The transfer tax in bps of the token. Since
+                                  each token could have arbitrary
+                                  implementation, this field is best effort,
+                                  meaning it would be set to `null` if the
+                                  system is not able to determine the tax
                             required:
                               - buyTaxBps
                               - sellTaxBps
+                              - transferTaxBps
                             additionalProperties: false
                             description: Swap-related metadata for the sell token
                         required:
@@ -4773,6 +5230,8 @@ paths:
               schema:
                 anyOf:
                   - $ref: "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                  - $ref: "#/components/schemas/XSTOCKS_NOT_AUTHORIZED"
         "422":
           description: 422 error response
           content:
@@ -5455,6 +5914,7 @@ paths:
                   - $ref: "#/components/schemas/META_TRANSACTION_EXPIRY_TOO_SOON"
                   - $ref: "#/components/schemas/META_TRANSACTION_INVALID"
                   - $ref: "#/components/schemas/PENDING_TRADES_ALREADY_EXIST"
+                  - $ref: "#/components/schemas/TRADE_ALREADY_SUBMITTED"
         "500":
           description: 500 error response
           content:
@@ -7089,6 +7549,52 @@ components:
         - message
         - data
       additionalProperties: false
+    RECIPIENT_NOT_AUTHORIZED_FOR_TRADE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+            - RECIPIENT_NOT_AUTHORIZED_FOR_TRADE
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+            - zid
+          additionalProperties: false
+      required:
+        - name
+        - message
+        - data
+      additionalProperties: false
+    XSTOCKS_NOT_AUTHORIZED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+            - XSTOCKS_NOT_AUTHORIZED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+            - zid
+          additionalProperties: false
+      required:
+        - name
+        - message
+        - data
+      additionalProperties: false
     TOKEN_NOT_SUPPORTED:
       type: object
       properties:
@@ -7152,6 +7658,33 @@ components:
               description: The unique ZeroEx identifier of the request
           required:
             - zid
+          additionalProperties: false
+      required:
+        - name
+        - message
+        - data
+      additionalProperties: false
+    TRADE_ALREADY_SUBMITTED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+            - TRADE_ALREADY_SUBMITTED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            tradeHash:
+              type: string
+              description: The hash of the trade that was already submitted
+          required:
+            - zid
+            - tradeHash
           additionalProperties: false
       required:
         - name

@@ -139,8 +139,8 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 {" "}
 
 <Accordion title="How do I find a list of supported chains for Swap?">
-  Use the <a href="/api-reference/openapi-yaml/swap/chains">getChains</a> endpoint to get
-  a list of supported chains for Swap.
+  Use the <a href="/api-reference/openapi-yaml/swap/chains">getChains</a>{" "}
+  endpoint to get a list of supported chains for Swap.
 </Accordion>
 
   <Accordion title="Is there a fee to use Swap API?">
@@ -226,9 +226,8 @@ amount = (swapFeeBps / 10000) * sellAmount  // in sellToken base units
 
     Chain-specific AllowanceHolder addresses (verify with <a href="https://github.com/0xProject/0x-settler/blob/master/README.md#allowanceholder-addresses">official docs</a> before hardcoding):
     <ul>
-      <li><code>0x0000000000001fF3684f28c67538d4D072C22734</code> — Cancun (Ethereum Mainnet, Ethereum Sepolia, Polygon, Base, Optimism, Arbitrum, Avalanche, Blast, BNB)</li>
-      <li><code>0x0000000000005E88410CcDFaDe4a5EfaE4b49562</code> — Shanghai (Scroll, Mantle)</li>
-      <li><code>0x000000000000175a8b9bC6d539B3708EEd92EA6c</code> — London (Linea)</li>
+      <li><code>0x0000000000001fF3684f28c67538d4D072C22734</code> — **Cancun hardfork chains** (Ethereum Mainnet, Arbitrum, Avalanche, Base, Berachain, Blast, BSC, Ink, Linea, Mode, Monad, Optimism, Plasma, Polygon, Scroll, Sonic, Unichain, World Chain)</li>
+      <li><code>0x0000000000005E88410CcDFaDe4a5EfaE4b49562</code> — **Shanghai hardfork chains** (Mantle)</li>
     </ul>
 
     <strong>Permit2 (Advanced Only)</strong><br />
@@ -410,7 +409,9 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 <AccordionGroup>
 
 <Accordion title="How do I get a list of sources the API is sourcing from?">
-  Use the <a href="/api-reference/openapi-yaml/sources/getsources">getSources</a> endpoint.
+  Use the{" "}
+  <a href="/api-reference/openapi-yaml/sources/getsources">getSources</a>{" "}
+  endpoint.
 </Accordion>
 
 <Accordion title="What chains does Gasless API support?">
@@ -442,7 +443,10 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 </Accordion>
 
 <Accordion title="What if my user wants to sell a native token (e.g., swap ETH for USDC) on Mainnet?">
-  Use the <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">Swap API</a>{" "}
+  Use the{" "}
+  <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">
+    Swap API
+  </a>{" "}
   (user pays gas in the native token), or have users wrap the native coin first
   (e.g., ETH → WETH), then use Gasless API.
 </Accordion>

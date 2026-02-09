@@ -25,9 +25,6 @@ tabs:
   api-reference:
     display-name: API Reference
     icon: puzzle
-  sdks:
-    display-name: SDKs
-    icon: code
   liquidity:
     display-name: Liquidity Integration
     icon: water
@@ -187,18 +184,7 @@ navigation:
     layout:
       - page: API Overview
         path: docs/pages/api-reference-overview.mdx
-        icon: fa-regular fa-book
       - api: openapi.yaml
-
-  - tab: sdks
-    layout:
-      - section: SDK & Utilities
-        contents:
-          - page: Swap TypeScript SDK
-            path: docs/pages/sdk-utilities/swap-ts-sdk.mdx
-            icon: fa-brands fa-js
-          - page: 0x Parser
-            path: docs/pages/sdk-utilities/0x-parser.mdx
 
   - tab: liquidity
     layout:
