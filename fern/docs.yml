@@ -2,6 +2,7 @@
 
 instances:
   - url: 0x.docs.buildwithfern.com
+    custom-domain: docs.0x.org
 
 title: 0x Docs
 
