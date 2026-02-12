@@ -1,0 +1,42 @@
+name: Generate and commit OpenAPI spec
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sites/0x-docs/src/generateOpenApiDocuments.ts'
+      - 'packages/swap-common/**'
+      - 'packages/trpc-toolbox/**'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: pnpm install
+
+      - name: Generate OpenAPI spec
+        run: |
+          cd sites/0x-docs
+          pnpm tsc
+          node ./__build__/generateOpenApiDocuments.js
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sites/0x-docs/openapi-generated/
+          git diff --staged --quiet || (git commit -m "chore: regenerate OpenAPI spec" && git push)
+
+      - name: Trigger docs rebuild
+        run: |
+          curl -f -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.DOCS_REPO_TOKEN }}" \
+            https://api.github.com/repos/0x-project/0x-docs/dispatches \
+            -d '{"event_type":"openapi-updated"}'
