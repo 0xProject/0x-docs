@@ -62,12 +62,15 @@ navigation:
                 path: docs/pages/introduction/develop-with-ai/ai-tools.mdx
           - page: Supported Chains
             path: docs/pages/introduction/supported-chains.mdx
-          - page: Demo Apps
-            path: docs/pages/introduction/demo-apps.mdx
+          - link: Demo Apps
+            href: https://github.com/0xProject/0x-examples
+            target: _blank
           - page: FAQ
             path: docs/pages/introduction/faq.mdx
           - page: API Issues & Error Codes
             path: docs/pages/introduction/api-issues.mdx
+          - page: Need Help?
+            path: docs/pages/help/contact-support.mdx
 
       - section: Swap API
         icon: fa-regular fa-arrows-rotate
@@ -78,7 +81,7 @@ navigation:
             contents:
               - page: Swap Tokens with Swap API
                 path: docs/pages/0x-swap-api/guides/swap-tokens-with-0x-swap-api.mdx
-              - page: Build Token Swap DApp (Next.js)
+              - page: Build Token Swap App (Next.js)
                 path: docs/pages/0x-swap-api/guides/build-token-swap-dapp-nextjs.mdx
               - page: Monetize Your App
                 path: docs/pages/0x-swap-api/guides/monetize-your-app-using-swap.mdx
@@ -88,7 +91,7 @@ navigation:
                 contents:
                   - page: Swap Tokens with Permit2
                     path: docs/pages/0x-swap-api/guides/swap-tokens-with-0x-swap-api-permit2.mdx
-                  - page: Build DApp with Permit2 (Next.js)
+                  - page: Build App with Permit2 (Next.js)
                     path: docs/pages/0x-swap-api/guides/build-token-swap-dapp-nextjs-permit2.mdx
           - section: Additional Topics
             contents:
@@ -120,8 +123,8 @@ navigation:
                 path: docs/pages/gasless-api/understanding-gasless-api.mdx
               - page: Technical Appendix
                 path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
-          - page: Gasless FAQ
-            path: docs/pages/gasless-api/gasless-faq.mdx
+          - link: Gasless FAQ
+            href: /docs/swap-api/faq#gasless-api
 
       - section: Trade Analytics API
         icon: fa-regular fa-chart-column
@@ -130,8 +133,8 @@ navigation:
             path: docs/pages/trade-analytics-api/introduction.mdx
           - page: Transaction Data
             path: docs/pages/core-concepts/transaction-data.mdx
-          - page: Trade Analytics FAQ
-            path: docs/pages/trade-analytics-api/trade-analytics-faq.mdx
+          - link: Trade Analytics FAQ
+            href: /docs/introduction/faq#trade-analytics-api
 
       - section: Core Concepts
         icon: fa-regular fa-books
@@ -158,8 +161,9 @@ navigation:
             path: docs/pages/developer-resources/bounties.mdx
           - page: Rate Limits
             path: docs/pages/developer-resources/rate-limits.mdx
-          - page: System Status
-            path: docs/pages/developer-resources/system-status.mdx
+          - link: System Status
+            href: https://0x.statuspal.io/
+            target: _blank
 
       - section: Upgrading
         icon: fa-regular fa-arrow-up
@@ -178,8 +182,9 @@ navigation:
             path: docs/pages/introduction/faq.mdx
           - page: Contact Support
             path: docs/pages/help/contact-support.mdx
-          - page: Contact Sales
-            path: docs/pages/help/contact-sales.mdx
+          - link: Contact Sales
+            href: https://0x.org/contact
+            target: _blank
 
   - tab: api-reference
     layout:
