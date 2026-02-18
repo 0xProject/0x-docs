@@ -204,9 +204,9 @@ navigation:
 navbar-links:
   - type: minimal
     text: Contact Support
-    url: https://help.0x.org/en/articles/8230055-how-to-get-dev-support-from-the-0x-team
+    url: https://0x.docs.buildwithfern.com/docs/need-help/contact-support
   - type: minimal
-    text: Community
+    text: Discord
     url: https://discord.com/invite/official0x
   - type: filled
     text: Go to dashboard
