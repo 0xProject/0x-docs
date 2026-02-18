@@ -682,7 +682,7 @@ This section provides an overview of the three main contracts developers need to
 <Note>
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
-- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0-x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
@@ -739,7 +739,7 @@ Permit2, developed by Uniswap, enables flexible approvals with features like tim
 
 **⚠️ Permit2 is for advanced integrators only.**
 
-If you use Permit2, ONLY set allowances on [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only). NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Setting an allowance on Settler WILL result in loss of funds.
+If you use Permit2, ONLY set allowances on [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only). NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Setting an allowance on Settler WILL result in loss of funds.
 
 When to use Permit2:
 
@@ -757,4 +757,4 @@ Key Points:
 - Requires a double-signature flow. This is more complex to integrate but allows for features like time-limited approvals.
 - Permit2 is deployed to `0x000000000022D473030F116dDEE9F6B43aC78BA3` across all chains. You can hardcode this address in your integration.
 
-Further Reading: [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only)
+Further Reading: [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only)
