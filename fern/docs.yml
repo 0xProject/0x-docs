@@ -259,7 +259,7 @@ navigation:
 navbar-links:
   - type: minimal
     text: Contact Support
-    url: https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help
+    url: https://docs.0x.org/docs/introduction/support#-contact-developer-support-fastest-direct-help
   - type: minimal
     text: Discord
     url: https://discord.com/invite/official0x
