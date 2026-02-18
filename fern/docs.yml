@@ -204,7 +204,7 @@ navigation:
 navbar-links:
   - type: minimal
     text: Contact Support
-    url: https://0x.docs.buildwithfern.com/docs/need-help/contact-support
+    url: https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help
   - type: minimal
     text: Discord
     url: https://discord.com/invite/official0x
