@@ -455,9 +455,9 @@ In v2, for [tokens that do not support gasless approvals](/api-reference/openapi
 <Note>
 When using the [Standard Approval Flow](/docs/swap-api/additional-topics/how-to-set-token-allowances) (aka Gasless Approvals are not supported)
 
-- NEVER set an allowance on the [Settler contract](/docs/core-concepts/0-x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
-- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0-x-cheat-sheet#allowanceholder-contract) or [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-contract) contracts, as indicated by the API responses.
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-contract) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-contract) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
@@ -474,7 +474,7 @@ Overview of how to update Gasless API price and quote to handle the new v2 endpo
 
 #### Step 0. Get 0x API key
 
-- [ ] [Get a 0x API key](../../docs/introduction/quickstart/create-a-0-x-api-key)
+- [ ] [Get a 0x API key](../../docs/introduction/quickstart/create-a-0x-api-key)
 
 #### Step 1. Get indicative price
 

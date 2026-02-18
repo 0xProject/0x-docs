@@ -11,7 +11,7 @@ description: Learn about 0x Settler, AllowanceHolder, and Permit2 contracts.
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
-- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0-x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0-x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 

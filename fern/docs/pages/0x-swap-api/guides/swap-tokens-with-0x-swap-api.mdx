@@ -50,7 +50,7 @@ Try this code example directly in your browser—no installation needed!
 
 ## 0. Get a 0x API key
 
-Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0x.org/) to get your live API key. Follow the [setup guide](/docs/introduction/quickstart/create-a-0-x-api-key) for more details.
+Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0x.org/) to get your live API key. Follow the [setup guide](/docs/introduction/quickstart/create-a-0x-api-key) for more details.
 
 ## 1. Get an Indicative Price
 
@@ -68,7 +68,7 @@ See [code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-al
 
 ```js
 const priceParams = new URLSearchParams({
-  chainId: "1", // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0-x-cheat-sheet
+  chainId: "1", // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0x-cheat-sheet
   sellToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", //ETH
   buyToken: "0x6b175474e89094c44da98b954eedeac495271d0f", //DAI
   sellAmount: "100000000000000000000", // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
@@ -312,7 +312,7 @@ const params = {
     buyToken: '0x6b175474e89094c44da98b954eedeac495271d0f', //DAI
     sellAmount: '100000000000000000000', // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     taker: '$USER_TAKER_ADDRESS', //Address that will make the trade
-    chainId: '1', // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0-x-cheat-sheet
+    chainId: '1', // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0x-cheat-sheet
 };
 
 const headers = {
