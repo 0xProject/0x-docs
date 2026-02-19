@@ -76,11 +76,11 @@ navigation:
             slug: faq
             path: docs/pages/introduction/faq.mdx
           - page: API Issues & Error Codes
-            slug: api-issue
+            slug: api-issues
             path: docs/pages/introduction/api-issues.mdx
           - page: Need Help?
-            slug: support
-            path: docs/pages/help/contact-support.mdx
+            slug: need-help
+            path: docs/pages/need-help/contact-support.mdx
 
       - section: Swap API
         slug: 0x-swap-api
@@ -120,7 +120,7 @@ navigation:
                 slug: how-to-set-your-token-allowances
                 path: docs/pages/0x-swap-api/additional-topics/how-to-set-your-token-allowances.mdx
               - page: Handling Native Tokens
-                slug: handling-native-token
+                slug: handling-native-tokens
                 path: docs/pages/0x-swap-api/additional-topics/handling-native-tokens.mdx
               - page: 0x Parser
                 slug: 0x-parser
@@ -158,7 +158,7 @@ navigation:
                 slug: gasless-api-technical-appendix
                 path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
           - link: Gasless FAQ
-            href: /docs/swap-api/faq#gasless-api
+            href: /docs/0x-swap-api/faq#gasless-api
 
       - section: Trade Analytics API
         slug: trade-analytics-api
@@ -228,15 +228,18 @@ navigation:
             path: docs/pages/upgrading/upgrading-to-gasless-v2.mdx
 
       - section: Need Help?
-        slug: help
+        slug: need-help
         icon: fa-regular fa-circle-question
         contents:
           - page: FAQ
             slug: faq
             path: docs/pages/introduction/faq.mdx
+          - page: API Issues & Error Codes
+            slug: api-issues
+            path: docs/pages/introduction/api-issues.mdx
           - page: Contact Support
             slug: contact-support
-            path: docs/pages/help/contact-support.mdx
+            path: docs/pages/need-help/contact-support.mdx
           - link: Contact Sales
             href: https://0x.org/contact
             target: _blank

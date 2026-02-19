@@ -7,7 +7,8 @@ description: Learn how to upgrade to the latest version (v2) of Gasless API.
 <Tip>
   0x API v1 was be sunset on April 11, 2025. To ensure uninterrupted service,
   please migrate to v2 before this date. If you have any questions, feel free to
-  [contact support](/docs/need-help/contact-support#contact-support).
+  [contact
+  support](/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
 </Tip>
 
 0x Gasless API has undergone a major upgrade that introduces new features that require a new integration. This new version offers:
@@ -15,10 +16,10 @@ description: Learn how to upgrade to the latest version (v2) of Gasless API.
 - improved swap pricing, especially on large trades
 - a new set of 0x smart contracts that offer secure upgradability
 - increased security via the [AllowanceHolder contract](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2 contract](/docs/core-concepts/contracts#permit2-advanced-use-only) for allowances
-- improved [monetization features](/docs/swap-api/guides/monetize-your-app)
+- improved [monetization features](/docs/0x-swap-api/guides/monetize-your-app-using-swap)
 - enhanced quote validation to provide accurate gas estimates without a user balance or allowance set
-- improved [error handling](../introduction/api-issues)
-- new [buy/sell tax support](/docs/swap-api/additional-topics/buy-sell-tax-support)
+- improved [error handling](/docs/introduction/api-issues)
+- new [buy/sell tax support](/docs/0x-swap-api/additional-topics/buy-sell-tax-support)
 - expanded token and chain coverage
 
 <Tip>
@@ -422,7 +423,7 @@ There is a new `liquidityAvailable` field that validates the availability of liq
 
 #### Issues Object
 
-To help provide developers a smooth build experience, 0x API v2 will do as much validation as it can and report all issues it finds in the new `issues` object. This object returns a list of potential validation issues detected with the quote. In rare cases where we are unable to validate the quote, we’ll return `true` in `issues.simulationIncomplete`. Learn more about the [new `issues` object](../introduction/api-issues) and how you can use it to provide a better experience for your users.
+To help provide developers a smooth build experience, 0x API v2 will do as much validation as it can and report all issues it finds in the new `issues` object. This object returns a list of potential validation issues detected with the quote. In rare cases where we are unable to validate the quote, we’ll return `true` in `issues.simulationIncomplete`. Learn more about the [new `issues` object](/docs/introduction/api-issues) and how you can use it to provide a better experience for your users.
 
 Note the following about the `issues` object for Price and Quote:
 
@@ -450,10 +451,10 @@ With the introduction of the `issues.allowance` field in Gasless API v2, some fi
 
 ### Standard Token Approval Flow
 
-In v2, for [tokens that do not support gasless approvals](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens), use the [standard token approval flow](/docs/swap-api/additional-topics/how-to-set-token-allowances).
+In v2, for [tokens that do not support gasless approvals](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens), use the [standard token approval flow](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
 <Note>
-When using the [Standard Approval Flow](/docs/swap-api/additional-topics/how-to-set-token-allowances) (aka Gasless Approvals are not supported)
+When using the [Standard Approval Flow](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances) (aka Gasless Approvals are not supported)
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
@@ -474,7 +475,7 @@ Overview of how to update Gasless API price and quote to handle the new v2 endpo
 
 #### Step 0. Get 0x API key
 
-- [ ] [Get a 0x API key](../../docs/introduction/quickstart/create-a-0x-api-key)
+- [ ] [Get a 0x API key](/docs/introduction/quickstart/getting-started)
 
 #### Step 1. Get indicative price
 

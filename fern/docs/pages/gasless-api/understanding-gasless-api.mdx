@@ -1,5 +1,5 @@
 ---
-title: How It Works
+title: Understanding Gasless API
 description: Learn how Gasless API works, key terms, and technical flow charts for how to implement in-app.
 ---
 
@@ -47,7 +47,7 @@ Gasless API provides a gasless experience at two points of the trade experience 
 
 <Note>
 
-When using the [Standard Approval Flow](/docs/swap-api/additional-topics/how-to-set-token-allowances) (aka Gasless Approvals are not supported)
+When using the [Standard Approval Flow](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances) (aka Gasless Approvals are not supported)
 
 - **Never** set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract).  
   This can result in loss of tokens or security risks. The Settler contract does **not** require or support token allowances, and doing so may allow misuse by other parties.
@@ -89,7 +89,7 @@ When using the Standard Approval Flow (aka Gasless Approvals are not supported)
 
 A [token allowances](https://help.matcha.xyz/en/articles/8928084-what-are-token-allowances/) is needed for a third-party to move your funds. For our case, we need to approve the [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) to trade our ERC-20 tokens. This requires writing to the ERC-20 contract and approving an allowance for Permit2 to move a specified amount of tokens on our behalf.
 
-For tokens that do not support gasless approvals, you need to set the token allowance via the steps listed [here](/docs/swap-api/additional-topics/handling-native-tokens).
+For tokens that do not support gasless approvals, such as native tokens, you need to set the token allowance via the steps listed [here](/docs/0x-swap-api/additional-topics/handling-native-tokens).
 
 ### EIP-712: Human Readable Messages
 

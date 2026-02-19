@@ -7,14 +7,15 @@ description: Learn how to upgrade to the latest version (v2) of Swap API.
 <Tip>
   0x API v1 was sunset on April 11, 2025. To ensure uninterrupted service,
   please migrate to v2 before this date. If you have any questions, feel free to
-  [contact support](/docs/need-help/contact-support#contact-support).
+  [contact
+  support](/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
 </Tip>
 
 0x Swap API has undergone a major upgrade that introduces new features that require a new integration. This new version offers:
 
 - improved swap pricing, especially on large trades
 - a new set of 0x smart contracts that offer secure upgradability
-- increased security via the [Permit2 contract](../introduction/0x-cheat-sheet#permit2-contract) or [AllowanceHolder contract](../introduction/0x-cheat-sheet#allowanceholder-contract) for allowances
+- increased security via the [AllowanceHolder contract](/docs/core-concepts/0x-cheat-sheet#allowanceholder-recommended) or [Permit2 contract](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only) for allowances
 - improved [monetization features](../0x-swap-api/guides/monetize-your-app-using-swap)
 - enhanced quote validation to provide accurate gas estimates without a user balance or allowance set
 - improved [error handling](../introduction/api-issues)
@@ -334,9 +335,9 @@ This separation enhances security by isolating allowance management from swap ex
 
 <Note>
 
-- NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
+- NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
-- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-contract) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-contract) contracts, as indicated by the API responses.
+- ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
@@ -397,7 +398,7 @@ We have removed the `skipValidation` field and will always validate the quote. W
 
 #### Issues Object
 
-To help provide developers a smooth build experience, 0x API v2 will do as much validation as it can and report all issues it finds in the new `issues` object. This object returns a list of potential validation issues detected with the quote. In rare cases where we are unable to validate the quote, we’ll return `true` in `issues.simulationIncomplete`. Learn more about the [new `issues` object](../introduction/api-issues) and how you can use it to provide a better experience for your users.
+To help provide developers a smooth build experience, 0x API v2 will do as much validation as it can and report all issues it finds in the new `issues` object. This object returns a list of potential validation issues detected with the quote. In rare cases where we are unable to validate the quote, we’ll return `true` in `issues.simulationIncomplete`. Learn more about the [new `issues` object](/docs/introduction/api-issues) and how you can use it to provide a better experience for your users.
 
 Note the following about the `issues` object for Price and Quote:
 
@@ -420,7 +421,7 @@ The following section overviews of how to update Swap API price and quote to han
 <Tip>
   Read more about [What is the difference between using Permit2 and
   AllowanceHolder for Swap
-  API?](../developer-resources/faqs-and-troubleshooting#parameter-questions).
+  API?](/docs/introduction/faq#allowanceholder-and-permit2).
 </Tip>
 
 ### Using Permit2
@@ -432,7 +433,7 @@ The following section overviews of how to update Swap API price and quote to han
 
 #### Step 0. Get 0x API key
 
-- [ ] [Get a 0x API key](../../docs/introduction/quickstart/create-a-0x-api-key)
+- [ ] [Get a 0x API key](/docs/introduction/quickstart/getting-started)
 
 #### Step 1. Get indicative price
 
@@ -480,7 +481,7 @@ The following section overviews of how to update Swap API price and quote to han
 
 #### Step 0. Get 0x API key
 
-- [ ] [Get a 0x API key](../../docs/introduction/quickstart/create-a-0x-api-key)
+- [ ] [Get a 0x API key](/docs/introduction/quickstart/getting-started)
 
 #### Step 1. Get indicative price
 
@@ -526,7 +527,7 @@ Evaluate your project’s needs and the desired user experience to make the best
 
 <Accordion title="How can I find the latest address for the AllowanceHolder contract, and how often will it be updated?">
 
-The AllowanceHolder contract is deployed at different addresses based on the chain’s latest supported EVM hardfork. You can find the most recent addresses in the [list of deployed addresses](https://0x.org/docs/core-concepts/0x-cheat-sheet#allowanceholder-address).
+The AllowanceHolder contract is deployed at different addresses based on the chain’s latest supported EVM hardfork. You can find the most recent addresses in the [list of deployed addresses](/docs/core-concepts/0x-cheat-sheet#allowanceholder-recommended).
 
 The AllowanceHolder address only changes when a chain adopts a higher hardfork.
 
