@@ -72,11 +72,9 @@ For v2, we strongly advise **against hardcoding** any entry point contract addre
 
 - This is an **advanced and error-prone method**. Avoid hardcoding any Settler address in your integration, as addresses can change with new deployments. For accuracy and maintainability, we strongly recommend using [Option 1](/docs/core-concepts/contracts#option-1-recommended---use-value-returned-by-transactionto) to always get the latest Settler address automatically.
 
-- Below is a historical list of Settler addresses (past, current, and predicted next hundred).
+- For a comprehensive list of all Settler addresses (past, current, and predicted next hundred), <Download src="../../assets/settler_predictions.tar.xz">download the list here</Download>.
 
-- For a comprehensive list of all Settler addresses, [download the list here (`.tar.xz` file)](/assets/settler_predictions.tar.xz).
-
-- Each chain includes the following address types:
+- In the list, each chain includes the following address types:
 
   - **Taker Address (tokenId = 2)** — Used by users or smart contracts submitting swaps or trades. This is the address used when the taker (caller or end user) submits the transaction.
   - **Metatransaction Address (tokenId = 3)** — Used when transactions are relayed or batched—e.g., for Gasless API flows. This is the address used by the meta-tx relayer
