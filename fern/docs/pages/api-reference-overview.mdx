@@ -9,10 +9,10 @@ The 0x API provides a unified interface for liquidity aggregation, token swap pr
 
 The 0x API exposes endpoints for the following core capabilities:
 
-- **Swap**: Generate executable quotes and calldata for token swaps using either the AllowanceHolder (recommended) or Permit2 approval models. Learn more in the [FAQ](/docs/swap-api/faq#allowanceholder-and-permit2).
-- **Gasless**: Enable gasless swaps by sponsoring transaction fees on behalf of users, improving UX for end-user applications.
-- **Sources**: Retrieve supported liquidity sources, chains, and token metadata used by the 0x routing engine.
-- **Trade Analytics**: Query historical trade data, volumes, and execution details for monitoring and analytics use cases.
+- **[Swap](/api-reference/openapi-yaml/swap/allowanceholder-getprice)**: Generate executable quotes and calldata for token swaps using either the AllowanceHolder (recommended) or Permit2 approval models. Learn more in the [FAQ](/docs/introduction/faq#allowanceholder-and-permit2).
+- **[Gasless](/api-reference/openapi-yaml/gasless/getprice)**: Enable gasless swaps by sponsoring transaction fees on behalf of users, improving UX for end-user applications.
+- **[Sources](/api-reference/openapi-yaml/sources/getsources)**: Retrieve supported liquidity sources, chains, and token metadata used by the 0x routing engine.
+- **[Trade Analytics](/api-reference/openapi-yaml/trade-analytics/trade-analytics-swap)**: Query historical trade data, volumes, and execution details for monitoring and analytics use cases.
 
 Each API surface is documented in detail in the sections below.
 

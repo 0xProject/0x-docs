@@ -12,12 +12,7 @@ Prefer to watch a video or see a code demo instead? Jump to [0x Videos](https://
 
 Swap API is a professional-grade DEX aggregation and smart order routing API that lets you add crypto trading with a single API. It sources the best real-time prices from 150+ public and private liquidity providers across [supported chains](/docs/introduction/supported-chains).
 
-<Frame>
-  <img
-    src="https://0x.org/docs/assets/images/swap-api-ui-d28611dd5b85f518a34f7c0326f80034.png"
-    alt="Swap API UI"
-  />
-</Frame>
+![Swap Widget](../../assets/img/introduction/swap-api-ui.svg)
 
 <Tip>
   Want to build a gasless trading app? Check out [Gasless
@@ -29,7 +24,7 @@ Swap API is a professional-grade DEX aggregation and smart order routing API tha
 Swap API is designed to protect your users, streamline integration for developers, and unlock new revenue opportunities for your team.
 
 - ⛓️ **Multi-chain liquidity**: Tap into deep liquidity across major networks. See [supported chains](/docs/introduction/supported-chains).
-- 🤑 **Built-in monetization**: [Earn fees](/docs/swap-api/guides/monetize-your-app) on every swap.
+- 🤑 **Built-in monetization**: [Earn fees](/docs/0x-swap-api/guides/monetize-your-app-using-swap) on every swap.
 - 🛡️ **User protection**: Our smart contracts reduce allowance risk by supporting modern standards like [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) and [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) for safer token approvals.
 - ↩️ **Reliable execution**: We offer some of the [lowest revert rates](https://twitter.com/0xProject/status/1750927465483289000) in the industry.
 - 💰 **Exclusive RFQ liquidity**: Access private, off-chain [RFQ quotes](http://localhost:3000/docs/0x-swap-api/advanced-topics/about-the-rfq-system) with **0 slippage**.
@@ -49,7 +44,7 @@ curl --request GET \
   --header "0x-version: v2"
 ```
 
-You’ll receive an unsigned Ethereum transaction that can be [signed and submitted](/docs/introduction/quickstart/swap-tokens-with-swap-api#4-submit-the-transaction) directly to a node.
+You’ll receive an unsigned Ethereum transaction that can be [signed and submitted](/docs/introduction/quickstart/getting-started#4-submit-the-transaction) directly to a node.
 Learn more about the response parameters in the [API docs](/api-reference/openapi-yaml/swap/allowanceholder-getprice).
 
 <Accordion title="Expand to see response">
@@ -348,12 +343,8 @@ Swap API is a professional-grade DEX aggregator and smart order-routing API. It 
 
 Below is a high-level diagram showing how Swap API works under the hood:
 
-<Frame>
-  <img
-    src="https://0x.org/docs/assets/images/swap-api-diagram-b557e01e96f8612c8da768aab6a0e1b6.png"
-    alt="Swap API Diagram"
-  />
-</Frame>
+![How 0x works](../../assets/img/introduction/swap-api-diagram.png)
+
 <Steps>
   <Step>A user requests a quote.</Step>
   <Step>
@@ -369,14 +360,13 @@ Below is a high-level diagram showing how Swap API works under the hood:
     0x.
   </Step>
 </Steps>
-For more details about how 0x orders are executed, check out [How does 0x
-work?](/docs/core-concepts/introduction-to-0x#how-does-0x-work)
+For more details about how 0x orders are executed, check out [How does 0x work?](/docs/core-concepts/introduction-to-0x#how-does-0x-work)
 
 Under the hood, Swap API performs a series of tasks:
 
 - **Queries prices** from multiple DEXs and market makers and **aggregates the liquidity** from the queried sources to provide the best price possible. Think of how Google flights aggregates flight prices for a certain time and date to help you find the best price, `/swap` similarly helps you find the best price across DeFi liquidity sources.
 - Swap API’s **smart order routing** algorithm splits up your transaction across different sources to maximize the overall return on your swap. Read more about smart order routing [here](https://medium.com/@merklejerk/0x-apis-smart-order-routing-7af0195515e5).
-- The response returned by Swap API is a valid unsigned Ethereum transaction that can be signed and submitted directly to an Ethereum node. **[Easily execute using the transaction using the web3 library of your choice](/docs/swap-api/guides/swap-tokens-with-swap-api#3-send-the-transaction-to-the-network)**.
+- The response returned by Swap API is a valid unsigned Ethereum transaction that can be signed and submitted directly to an Ethereum node. **[Easily execute using the transaction using the web3 library of your choice](/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api#4-submit-the-transaction)**.
 
 ## Supported Chains
 
@@ -407,4 +397,4 @@ Swap and Gasless v2 APIs are currently supported on the following chains. Select
 
 Create an account and get live API keys on the [0x Dashboard](https://dashboard.0x.org/apps).
 
-Next, [Get Started with Swap API](/docs/introduction/quickstart/swap-tokens-with-swap-api).
+Next, [Get Started with Swap API](/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api)

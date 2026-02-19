@@ -7,13 +7,13 @@ description: Advanced guide covering how to build a token swap app using 0x Swap
 
 ⚠️ The **Permit2** flow is intended for **advanced integrators only**.
 
-If you're new to 0x Swap API or want to avoid the double-signature UX, consider using [AllowanceHolder](/docs/swap-api/guides/build-token-swap-d-app-next-js) instead.
+If you're new to 0x Swap API or want to avoid the double-signature UX, consider using [AllowanceHolder](/docs/0x-swap-api/guides/build-token-swap-dapp-nextjs) instead.
 
 </Warning>
 
 This guide walks through a Next.js demo app that demonstrates a full token swap flow using **Permit2**, a contract designed for advanced integrators who are comfortable handling EIP-712 signatures and advanced token approvals.
 
-This guide is intended for advanced integrators only. If you are new to Swap API or want to avoid the double-signature flow, we recommend using the Swap API [AllowanceHolder](/docs/swap-api/guides/build-token-swap-d-app-next-js) flow.
+This guide is intended for advanced integrators only. If you are new to Swap API or want to avoid the double-signature flow, we recommend using the Swap API [AllowanceHolder](/docs/0x-swap-api/guides/build-token-swap-dapp-nextjs) flow.
 
 ## Try it Out
 
@@ -53,7 +53,7 @@ You should be familiar with:
 - [Next.js](https://nextjs.org/)
 - [wagmi](https://wagmi.sh/)
 - [viem](https://viem.sh/)
-- Swap API concepts ([intro](../introduction) or [video](https://www.youtube.com/watch?v=APXjSGLaoRw))
+- Swap API concepts ([intro](/docs/0x-swap-api/introduction) or [video](https://www.youtube.com/watch?v=APXjSGLaoRw))
 
 This demo uses **Base**, but works on all [supported chains](/docs/introduction/supported-chains).
 
@@ -149,7 +149,7 @@ Important: Read Before Using 0x API
 
 Before placing a trade on the PageView, users must set allowances on all tokens involved. A token allowance lets a third party move funds on your behalf. Essentially, you permit them to move your tokens.
 
-In our case, we want to approve an allowance for AllowanceHolder contract to trade our ERC20 tokens for us. To do this, we need to approve a specific allowance, allowing this contract to move a certain amount of our ERC20 tokens on our behalf. Read more about [token allowances](../advanced-topics/how-to-set-your-token-allowances).
+In our case, we want to approve an allowance for AllowanceHolder contract to trade our ERC20 tokens for us. To do this, we need to approve a specific allowance, allowing this contract to move a certain amount of our ERC20 tokens on our behalf. Read more about [token allowances](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
 ![token allowance ui](../../../assets/img/0x-swap-api/token-allowance-ui.png)
 
@@ -160,8 +160,8 @@ The logic to check if the user has approved a token allowance the selected sell 
 3. Wait for confirmation using `useWaitForTransactionReceipt`
 
 <Tip>
-  Be aware that approvals cost gas. _Looking for a gasless approach? Check out
-  [Gasless API](../../gasless-api/introduction)._
+  Be aware that approvals cost gas. Looking for a gasless approach? Check out
+  [Gasless API](/docs/gasless-api/introduction).
 </Tip>
 
 <Tip>
@@ -287,7 +287,7 @@ Swap API provides two built-in ways to monetize your swap integration—availabl
 - **Affiliate fees:** Earn a commission on each trade (demonstrated in this example app).
 - **Trade surplus:** trade surplus (i.e. positive slippage) <sup>1</sup>
 
-For implementation details and pricing considerations, see the [how to monetize your app using 0x Swap API](./monetize-your-app-using-swap).
+For implementation details and pricing considerations, see the [how to monetize your app using 0x Swap API](/docs/0x-swap-api/guides/monetize-your-app-using-swap).
 
 <sup>1</sup> Trade surplus is available only to select integrators on a custom plan.
 Contact support for access.

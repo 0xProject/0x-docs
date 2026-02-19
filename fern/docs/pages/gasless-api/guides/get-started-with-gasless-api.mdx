@@ -13,7 +13,7 @@ Enabling Gasless API in your app allows you to:
 - improve your conversion funnel drop-offs due to insufficient gas, and
 - set yourself up to easily onboard the next wave of users into Web3.
 
-Make sure to read [How it Works - Gasless API](/docs/gasless-api/guides/understanding-gasless-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
+Make sure to read [Understanding Gasless API](/docs/gasless-api/guides/understanding-gasless-api) for an in-depth understanding of how it works, key terms, and technical flow charts for how to implement in-app.
 
 ## Try It Out
 
@@ -160,7 +160,7 @@ curl --request GET \
 
 ## 2. Fetch Quote
 
-When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/gasless/quote`](/api-reference/openapi-yaml/gasless/getquote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](../../developer-resources/glossary#maker) if they do not.
+When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/gasless/quote`](/api-reference/openapi-yaml/gasless/getquote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](/docs/core-concepts/glossary#maker) if they do not.
 
 <Tip>
   Quotes expire in ~ 30s in order to ensure freshness. Make sure to take this
