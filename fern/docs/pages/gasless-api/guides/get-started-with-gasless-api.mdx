@@ -461,7 +461,7 @@ If liquidity is available, 2 objects may be returned:
 - `approval`: This is the “approval” object which contains the necessary information to process a gasless approval. See the [quote response](/api-reference/openapi-yaml/gasless/getquote#option-1) for an example.
 
   - If a gasless approval is possible, this object includes all the required information to process it.
-  - If a gasless approval is **not** possible, this object will be `null`, and you must use the [standard approval flow](/docs/gasless-api/guides/understanding-gasless-api#technical-flow-charts) to [set a token allowance](/docs/swap-api/additional-topics/how-to-set-token-allowances). NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
+  - If a gasless approval is **not** possible, this object will be `null`, and you must use the [standard approval flow](/docs/gasless-api/guides/understanding-gasless-api#technical-flow-charts) to [set a token allowance](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances). NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
   - You can also see all the token addresses that support gasless approvals with the [`/gasless-approval-tokens`](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens) endpoint.
 
 - `trade`: This is the "trade" object which contains the necessary information to process a gasless trade. See the quote response [here](/api-reference#tag/Gasless/operation/gasless::getQuote).

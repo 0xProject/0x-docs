@@ -6,7 +6,7 @@ description: Advanced guide covering how to get started using 0x Swap API (Permi
 <Warning>
 ⚠️ The **Permit2** flow is intended for **advanced integrators only**.
 
-If you're new to 0x Swap API or want to avoid the double-signature UX, consider using [AllowanceHolder](/docs/swap-api/guides/build-token-swap-d-app-next-js) instead.
+If you're new to 0x Swap API or want to avoid the double-signature UX, consider using [AllowanceHolder](/docs/0x-swap-api/guides/build-token-swap-dapp-nextjs) instead.
 
 </Warning>
 
@@ -63,7 +63,7 @@ Try this code example directly in your browser—no installation needed!
 
 ## 0. Get a 0x API key
 
-Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0x.org/) to get your live API key. Follow the [setup guide](/docs/introduction/quickstart/create-a-0x-api-key) for more details.
+Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0x.org/) to get your live API key. Follow the [setup guide](/docs/introduction/quickstart/getting-started) for more details.
 
 ## 1. Get an Indicative Price
 
@@ -266,7 +266,7 @@ A [token allowance](https://help.matcha.xyz/en/articles/8928084-what-are-token-a
 
 Specify the amount of ERC20 tokens the contract can move.
 
-For implementation details, see [how to set your token allowances](/docs/swap-api/additional-topics/how-to-set-token-allowances).
+For implementation details, see [how to set your token allowances](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
 <Note>
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
@@ -648,4 +648,4 @@ This wraps up the Swap API Permit2 quickstart. See the links below for starter p
 
 - [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app)
 - [(Code) Examples Repo](https://github.com/0xProject/0x-examples)
-- [(Guide) Build a Next.js App with 0x Swap API](/docs/swap-api/guides/permit-2/build-d-app-with-permit-2-next-js)
+- [(Guide) Build a Next.js App with 0x Swap API](/docs/0x-swap-api/guides/permit2/build-token-swap-dapp-nextjs-permit2)
