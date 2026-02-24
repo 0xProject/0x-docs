@@ -63,6 +63,9 @@ navigation:
               - page: Using AI with 0x
                 slug: using-ai-with-0x
                 path: docs/pages/introduction/develop-with-ai/using-ai-with-0x.mdx
+              - page: MCP
+                slug: mcp-setup
+                path: docs/pages/introduction/develop-with-ai/mcp-setup.mdx
               - page: AI Project Showcase
                 slug: ai-tools
                 path: docs/pages/introduction/develop-with-ai/ai-tools.mdx
