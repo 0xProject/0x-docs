@@ -1,0 +1,117 @@
+---
+title: "MCP Server Setup"
+sidebarTitle: "MCP"
+description: Connect AI tools to 0x documentation for an enhanced development experience.
+---
+
+The **0x MCP Server** gives AI tools live, searchable access to 0x documentation using the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/).
+
+Instead of copy-pasting documentation into prompts, your AI assistant can retrieve the right guides, API references, and examples automatically.
+
+**The server is hosted at**
+
+`https://docs.0x.org/_mcp/server`
+
+Once connected, you can describe what you're building and your AI tool will pull the relevant documentation into context.
+
+#### What you can do with MCP
+
+After connecting, search the full 0x documentation. Ask questions like:
+
+> "How do I generate a swap quote?"  
+> "What parameters are required for a Gasless API request?"  
+> "Which chains does 0x support?"
+
+Your AI assistant searches the documentation and returns relevant sections automatically.
+
+#### Generate implementation-ready code
+
+Start with your goal:
+
+> "I'm building a swap feature on Base in TypeScript."
+
+The AI retrieves the appropriate documentation and generates structured implementation code based on official 0x guides.
+
+---
+
+#### Debug integration issues
+
+Ask:
+
+> "Why am I getting a 400 error from the 0x API?"  
+> "My quote succeeds but the transaction reverts — what should I check?"
+
+The AI searches troubleshooting sections and surfaces likely causes.
+
+---
+
+### Best practices for prompting
+
+- Start with what you're building, not the endpoint name.
+- Mention your chain and language.
+- Ask for examples first.
+- Iterate on the returned code.
+
+---
+
+### Connect to Cursor (MCP)
+
+Connect 0x documentation to Cursor using the Model Context Protocol (MCP) to enable AI-powered search and assistance directly in your editor.
+
+<Tabs>
+  <Tab title="Automatic (Recommended)">
+
+The fastest way to connect MCP to Cursor.
+
+  <Steps>
+    <Step title="Connect to Cursor">
+      On any CDP documentation page, open the **Copy page** dropdown next to the page header.  
+      Select **Connect to Cursor**.  
+      Cursor will automatically open with the CDP MCP server configured.
+    </Step>
+
+    <Step title="Test the connection">
+      In Cursor’s chat, ask: **“What tools do you have available?”**
+
+      Cursor should confirm access to 0x documentation search and configured API endpoints.
+    </Step>
+
+  </Steps>
+
+  </Tab>
+
+  <Tab title="Manual configuration">
+
+Use this option if you prefer explicit setup or need to troubleshoot.
+
+  <Steps>
+    <Step title="Open MCP settings">
+      Open Cursor and press `Cmd + Shift + P` (`Ctrl + Shift + P` on Windows).  
+      Search for **Open MCP settings**.  
+      Select **Open MCP settings** to open `mcp.json`.
+    </Step>
+
+    <Step title="Configure the CDP server">
+      Add the following configuration to `mcp.json`:
+
+      ```json title="mcp.json"
+      {
+        "mcpServers": {
+          "0x": {
+            "url": "https://docs.0x.org/_mcp/server"
+          }
+        }
+      }
+      ```
+    </Step>
+
+    <Step title="Test the connection">
+      In Cursor’s chat, ask: **“Do you have access to an MCP server?”**
+
+      Cursor should confirm access to CDP documentation search and any configured API endpoints.
+    </Step>
+
+  </Steps>
+
+  </Tab>
+</Tabs>
