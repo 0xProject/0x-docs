@@ -15,6 +15,9 @@ layout:
   page-width: full
   tabs-placement: header
 
+announcement:
+  message: '🌉 Cross-Chain API is in private beta.  <a href="https://0x.org/products/cross-chain" target="_blank">Request access to start building</a>.'
+
 # Tabs configuration
 tabs:
   home:
@@ -162,6 +165,14 @@ navigation:
                 path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
           - link: Gasless FAQ
             href: /docs/0x-swap-api/faq#gasless-api
+
+      - section: Cross-Chain API
+        slug: cross-chain-api
+        icon: fa-regular fa-bridge
+        contents:
+          - link: Learn More (Private Beta)
+            href: https://0x.org/products/cross-chain
+            target: _blank
 
       - section: Trade Analytics API
         slug: trade-analytics-api
