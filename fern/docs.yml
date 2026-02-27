@@ -18,6 +18,22 @@ layout:
 announcement:
   message: '🌉 Cross-Chain API is in private beta.  <a href="https://0x.org/products/cross-chain" target="_blank">Request access to start building</a>.'
 
+# Metadata configuration (SEO / Open Graph / Twitter cards)
+metadata:
+  og:site_name: "0x"
+  og:title: "0x Docs - Build with the 0x API"
+  og:description: "Developer documentation for the 0x API. Embed swaps in your onchain app. Access 10+ million tokens with liquidity from 150+ exchanges with a single API."
+  og:url: "gttps://docs.0x.org"
+  og:image: docs/assets/0x-social-card.jpg
+  og:locale: en_US
+
+  twitter:title: "0x Docs - Build with the 0x API"
+  twitter:handle: "@0xProject"
+  twitter:description: "Developer documentation for the 0x API. Embed swaps in your onchain app. Access 10+ million tokens with liquidity from 150+ exchanges with a single API."
+  twitter:image: docs/assets/0x-social-card.jpg
+  canonical-host: "https://docs.0x.org"
+  twitter:card: "summary_large_image"
+
 # Tabs configuration
 tabs:
   home:
