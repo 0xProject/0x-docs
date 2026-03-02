@@ -9,7 +9,7 @@ jobs:
     if: |
       startsWith(github.head_ref, 'auto/update-openapi') &&
       github.event.pull_request.head.repo.full_name == github.repository &&
-      github.event.pull_request.user.login == 'zeroex-automation[bot]'
+      github.event.pull_request.user.login == '0x-automation[bot]'
     runs-on: ubuntu-latest
 
     permissions:
