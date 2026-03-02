@@ -6,13 +6,17 @@ on:
 
 jobs:
   auto-merge:
-    if: startsWith(github.head_ref, 'auto/update-openapi')
+    if: |
+      startsWith(github.head_ref, 'auto/update-openapi') &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == 'zeroex-automation[bot]'
     runs-on: ubuntu-latest
+
     permissions:
       pull-requests: write
       contents: write
-    steps:
 
+    steps:
       - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
         env:
@@ -20,5 +24,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Log merge status
-        run: |
-          echo "✅ Auto-merge enabled for PR: ${{ github.event.pull_request.html_url }}"
+        run: echo "✅ Auto-merge enabled for PR: ${{ github.event.pull_request.html_url }}"
