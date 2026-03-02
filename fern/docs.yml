@@ -278,7 +278,7 @@ navigation:
     layout:
       - page: API Overview
         path: docs/pages/api-reference-overview.mdx
-      - api: openapi.yaml
+      - api: openapi.json
 
   - tab: liquidity
     layout:
