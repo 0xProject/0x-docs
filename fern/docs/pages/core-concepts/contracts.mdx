@@ -7,7 +7,7 @@ description: Learn about 0x Settler, AllowanceHolder, and Permit2 contracts.
 
 ## A Note about Setting Token Allowances
 
-<Note>
+<Warning>
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
@@ -15,7 +15,7 @@ description: Learn about 0x Settler, AllowanceHolder, and Permit2 contracts.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 
 ## Allowance Target vs. Entry Point
 
@@ -75,7 +75,6 @@ For v2, we strongly advise **against hardcoding** any entry point contract addre
 - For a comprehensive list of all Settler addresses (past, current, and predicted next hundred), [download the settler_predictions.tar.xz file here](https://github.com/0xProject/0x-examples/blob/main/settler_predictions.tar.xz).
 
 - In the list, each chain includes the following address types:
-
   - **Taker Address (tokenId = 2)** — Used by users or smart contracts submitting swaps or trades. This is the address used when the taker (caller or end user) submits the transaction.
   - **Metatransaction Address (tokenId = 3)** — Used when transactions are relayed or batched—e.g., for Gasless API flows. This is the address used by the meta-tx relayer
   - **Ignore (tokenId = 4)** - Ignore this address type. Not used for integrations.
@@ -98,8 +97,8 @@ For v2, we strongly advise **against hardcoding** any entry point contract addre
 
 ### Endpoints
 
-- [/swap/allowance-holder/price](/api-reference/openapi-yaml/swap/allowanceholder-getprice)
-- [/swap/allowance-holder/quote](/api-reference/openapi-yaml/swap/allowanceholder-getquote)
+- [/swap/allowance-holder/price](/api-reference/openapi-json/swap/allowanceholder-getprice)
+- [/swap/allowance-holder/quote](/api-reference/openapi-json/swap/allowanceholder-getquote)
 
 ### Who Should Use AllowanceHolder?
 
@@ -152,8 +151,8 @@ Permit2 offers flexible approvals with features like time-limited and granular a
 
 ### Endpoints
 
-- [/swap/permit2/price](/api-reference/openapi-yaml/swap/permit-2-getprice)
-- [/swap/permit2/quote](/api-reference/openapi-yaml/swap/permit-2-getquote)
+- [/swap/permit2/price](/api-reference/openapi-json/swap/permit-2-getprice)
+- [/swap/permit2/quote](/api-reference/openapi-json/swap/permit-2-getquote)
 
 ### Who Should Use Permit2?
 

@@ -17,11 +17,12 @@ The API handles three key tasks:
 
 ## What You Will Learn
 
-This guide will cover the core steps to using Swap API, specifically using the [Swap AllowanceHolder](/api-reference/openapi-yaml/swap/allowanceholder-getprice) endpoint.
+This guide will cover the core steps to using Swap API, specifically using the [Swap AllowanceHolder](/api-reference/openapi-json/swap/allowanceholder-getprice) endpoint.
 
 <Note>
   {" "}
-  Learn about the [difference between AllowanceHolder and Permit2 in Swap API](/docs/introduction/faq#allowanceholder-and-permit2){" "}
+  Learn about the [difference between AllowanceHolder and Permit2 in Swap
+  API](/docs/introduction/faq#allowanceholder-and-permit2){" "}
 </Note>
 
 ## Playground
@@ -56,7 +57,7 @@ Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0
 
 Let's find the best price!
 
-Use the [`/swap/allowance-holder/price`](/api-reference/openapi-yaml/swap/allowanceholder-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
+Use the [`/swap/allowance-holder/price`](/api-reference/openapi-json/swap/allowanceholder-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
 
 Think of `/price` as the "read-only" version of `/quote`, which you'll use in step 3.
 
@@ -84,7 +85,7 @@ const priceResponse = await fetch(
   "https://api.0x.org/swap/allowance-holder/price?" + priceParams.toString(),
   {
     headers,
-  }
+  },
 );
 
 console.log(await priceResponse.json());
@@ -245,7 +246,7 @@ Specify the amount of ERC20 tokens the contract can use.
 
 For detailed instructions, see [how to set your token allowances](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
-<Note>
+<Warning>
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
@@ -253,7 +254,7 @@ For detailed instructions, see [how to set your token allowances](/docs/0x-swap-
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</NWarningote>
 
 <Tip>
   When setting the token allowance, make sure to provide enough allowance for
@@ -282,7 +283,7 @@ if (price.issues.allowance !== null) {
     const hash = await usdc.write.approve(request.args);
     console.log(
       "Approved AllowanceHolder to spend USDC.",
-      await client.waitForTransactionReceipt({ hash })
+      await client.waitForTransactionReceipt({ hash }),
     );
   } catch (error) {
     console.log("Error approving AllowanceHolder:", error);
@@ -294,7 +295,7 @@ if (price.issues.allowance !== null) {
 
 ## 3. Fetch a Firm Quote
 
-When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/allowance-holder/quote`](/api-reference/openapi-yaml/swap/allowanceholder-getquote). This signals a soft commitment to complete the trade.
+When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/allowance-holder/quote`](/api-reference/openapi-json/swap/allowanceholder-getquote). This signals a soft commitment to complete the trade.
 
 The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
 

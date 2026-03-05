@@ -5,30 +5,7 @@ description: A resource for supported chains, example calls, contracts, and orde
 
 ## Supported Chains
 
-Swap and Gasless v2 APIs are currently supported on the following chains. Select the chain in your request by providing the corresponding `chainId` request parameter. To request support for a new chain, please submit a request [here](https://0x.canny.io/request-features).
-
-| Chain              | Chain ID | Swap API | Gasless API |
-| ------------------ | -------- | -------- | ----------- |
-| Ethereum (Mainnet) | 1        | ✅       | ✅          |
-| Abstract           | 2741     | ✅       |             |
-| Arbitrum           | 42161    | ✅       | ✅          |
-| Avalanche          | 43114    | ✅       | ✅          |
-| Base               | 8453     | ✅       | ✅          |
-| Berachain          | 80094    | ✅       |             |
-| Blast              | 81457    | ✅       | ✅          |
-| BSC                | 56       | ✅       | ✅          |
-| Ink                | 57073    | ✅       |             |
-| Linea              | 59144    | ✅       |             |
-| Mantle             | 5000     | ✅       | ✅          |
-| Mode               | 34443    | ✅       | ✅          |
-| Monad              | 10143    | ✅       |             |
-| Optimism           | 10       | ✅       | ✅          |
-| Plasma             | 9745     | ✅       | ✅          |
-| Polygon            | 137      | ✅       | ✅          |
-| Scroll             | 534352   | ✅       | ✅          |
-| Sonic              | 146      | ✅       | ✅          |
-| Unichain           | 130      | ✅       |             |
-| World Chain        | 480      | ✅       |             |
+Swap and Gasless APIs support multiple blockchain networks. Refer to the [Supported Chains](/docs/introduction/supported-chains) page for the full list of currently supported networks and chain IDs.
 
 ## Swap API v2
 
@@ -679,14 +656,15 @@ This section provides an overview of the three main contracts developers need to
 
 ### A Note About Setting Token Allowances
 
-<Note>
+<Warning>
+
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
 - ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-recommended) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-advanced-use-only) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 
 ### 0x Settler
 
@@ -720,8 +698,8 @@ AllowanceHolder is recommended for most integrators, and it is especially well-s
 
 Endpoints:
 
-- [/swap/allowance-holder/price](/api-reference/openapi-yaml/swap/allowanceholder-getprice)
-- [/swap/allowance-holder/quote](/api-reference/openapi-yaml/swap/allowanceholder-getquote)
+- [/swap/allowance-holder/price](/api-reference/openapi-json/swap/allowanceholder-getprice)
+- [/swap/allowance-holder/quote](/api-reference/openapi-json/swap/allowanceholder-getquote)
 
 Key Points:
 
@@ -748,8 +726,8 @@ When to use Permit2:
 
 Endpoints:
 
-- [/swap/permit2/price](/api-reference/openapi-yaml/swap/permit-2-getprice)
-- [/swap/permit2/quote](/api-reference/openapi-yaml/swap/permit-2-getquote)
+- [/swap/permit2/price](/api-reference/openapi-json/swap/permit-2-getprice)
+- [/swap/permit2/quote](/api-reference/openapi-json/swap/permit-2-getquote)
 
 Key Points:
 

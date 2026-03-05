@@ -24,7 +24,7 @@ Checkout the [Gasless API Runnable Headless Example](https://github.com/0xProjec
 
 ## Signing objects
 
-To take advantage of gaslesses approvals and gasless trades, user must sign the `approval.eip712` and the `trade.eip712` objects returned by [`/quote`](/api-reference/openapi-yaml/gasless/getquote). These objects contain everything (domain, types, primaryType, message) needed when signing these objects .
+To take advantage of gaslesses approvals and gasless trades, user must sign the `approval.eip712` and the `trade.eip712` objects returned by [`/quote`](/api-reference/openapi-json/gasless/getquote). These objects contain everything (domain, types, primaryType, message) needed when signing these objects .
 
 There are different EIP-712 signing strategies if you are user facing wallet that shows the users the details of what they are signing. Some commonly used tools for this include:
 

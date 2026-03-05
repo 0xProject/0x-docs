@@ -69,7 +69,7 @@ Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0
 
 Let's find the best price!
 
-Use the [`/swap/permit2/price`](/api-reference/openapi-yaml/swap/permit-2-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
+Use the [`/swap/permit2/price`](/api-reference/openapi-json/swap/permit-2-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
 
 Think of `/price` as the "read-only" version of `/quote`, which you'll use in step 3.
 
@@ -95,7 +95,7 @@ const headers = {
 
 const priceResponse = await fetch(
   "https://api.0x.org/swap/permit2/price?" + priceParams.toString(),
-  { headers }
+  { headers },
 );
 
 console.log(await priceResponse.json());
@@ -268,14 +268,14 @@ Specify the amount of ERC20 tokens the contract can move.
 
 For implementation details, see [how to set your token allowances](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
-<Note>
+<Warning>
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
 - ONLY set allowances on [AllowanceHolder](/docs/core-concepts/0x-cheat-sheet#allowanceholder-contract) or [Permit2](/docs/core-concepts/0x-cheat-sheet#permit2-contract) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 
 <Tip>
   When setting the token allowance, make sure to provide enough allowance for
@@ -309,7 +309,7 @@ if (sellToken.address === CONTRACTS.ETH) {
       const hash = await sellToken.write.approve(request.args);
       console.log(
         "Approved Permit2 to spend sellToken.",
-        await client.waitForTransactionReceipt({ hash })
+        await client.waitForTransactionReceipt({ hash }),
       );
     } catch (error) {
       console.log("Error approving Permit2:", error);
@@ -322,7 +322,7 @@ if (sellToken.address === CONTRACTS.ETH) {
 
 ## 3. Fetch a Firm Quote
 
-When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/permit2/quote`](/api-reference/openapi-yaml/swap/permit-2-getquote). This signals a soft commitment to complete the trade.
+When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/permit2/quote`](/api-reference/openapi-json/swap/permit-2-getquote). This signals a soft commitment to complete the trade.
 
 The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
 

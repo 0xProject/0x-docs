@@ -102,7 +102,7 @@ const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string; /
 
 ### What is it?
 
-PriceView displays indicative pricing using[/swap/allowance-holder/price](/api-reference/openapi-yaml/swap/permit-2-getprice). Indicative pricing is for users to browse for a price without committing to a trade.
+PriceView displays indicative pricing using[/swap/allowance-holder/price](/api-reference/openapi-json/swap/permit-2-getprice). Indicative pricing is for users to browse for a price without committing to a trade.
 
 Indicative prices:
 
@@ -135,7 +135,7 @@ Firm quotes are fetched later in QuoteView.
 
 #### Token Allowances & Approvals
 
-<Note>
+<Warning>
 
 Important: Read Before Using 0x API
 
@@ -145,7 +145,7 @@ Important: Read Before Using 0x API
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 
 Before placing a trade on the PageView, users must set allowances on all tokens involved. A token allowance lets a third party move funds on your behalf. Essentially, you permit them to move your tokens.
 
@@ -174,7 +174,7 @@ The logic to check if the user has approved a token allowance the selected sell 
 
 ### What is it?
 
-QuoteView displays a firm, executable quote returned from [/swap/allowance-holder/quote](/api-reference/openapi-yaml/swap/permit-2-getquote).
+QuoteView displays a firm, executable quote returned from [/swap/allowance-holder/quote](/api-reference/openapi-json/swap/permit-2-getquote).
 
 Firm quotes:
 
@@ -289,8 +289,8 @@ Swap API provides two built-in ways to monetize your swap integration—availabl
 
 For implementation details and pricing considerations, see the [how to monetize your app using 0x Swap API](/docs/0x-swap-api/guides/monetize-your-app-using-swap).
 
-<sup>1</sup> Trade surplus is available only to select integrators on a custom plan.
-Contact support for access.
+<sup>1</sup> Trade surplus is available only to select integrators on a custom
+plan. Contact support for access.
 
 ## Conclusion
 
