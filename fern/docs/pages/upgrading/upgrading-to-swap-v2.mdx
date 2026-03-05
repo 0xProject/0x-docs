@@ -333,7 +333,7 @@ This separation is a key architectural change from v1.
 
 This separation enhances security by isolating allowance management from swap execution.
 
-<Note>
+<Warning>
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
@@ -341,7 +341,7 @@ This separation enhances security by isolating allowance management from swap ex
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 
 ### Updated URLs
 
@@ -403,13 +403,11 @@ To help provide developers a smooth build experience, 0x API v2 will do as much 
 Note the following about the `issues` object for Price and Quote:
 
 - **Price**
-
   - `allowance`: If this field is not `null`, prompt the user to set the allowance on `issues.allowance.spender`
   - `balance`: If this field is not `null`, do not proceed to get a `quote`.
   - `simulationIncomplete`: This field can be ignored for `price` since when calling price means aren't close to submitting a transaction (versus calling quote). Typically `simulationIncomplete: true` won't occur if the `taker` address is set and the `taker` has a sufficient balance of the sell token.
 
 - **Quote**
-
   - `allowance`: This field should not appear if the `quote` is sent after the token allowance is set.
   - `balance`: This field will not be returned if the taker has sufficient balance when the `quote` request is sent.
   - `simulationIncomplete: true`: This field will not be returned if the taker has sufficient balance when the `quote` request is sent.
@@ -424,60 +422,12 @@ The following section overviews of how to update Swap API price and quote to han
   API?](/docs/introduction/faq#allowanceholder-and-permit2).
 </Tip>
 
-### Using Permit2
-
-<Tip>
-  ⚡️ See these steps in action in the [Permit2 headless
-  example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-headless-example)
-</Tip>
-
-#### Step 0. Get 0x API key
-
-- [ ] [Get a 0x API key](/docs/introduction/quickstart/getting-started)
-
-#### Step 1. Get indicative price
-
-- [ ] Call `/swap/permit2/price` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L62-L83))
-  - [ ] Build required price params
-    - [ ] Add `chainId` as new param
-    - [ ] `takerAddress` has changed to `taker`
-  - [ ] In the response: `sellTokenAddress` changed to `sellToken`, `buyTokenAddress` changed to `buyToken`
-
-#### Step 2. Set token allowance
-
-- [ ] Check if `taker` needs to set an allowance for Permit2. If needed, set token allowance ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L85-L105))
-  - [ ] Use the info returned by `issues.allowance` returned by `/price` (if `taker` is set) and `/quote` which contains details of allowances that the `taker` must set for the order to execute successfully
-
-#### Step 3. Get firm quote
-
-- [ ] Call `/swap/permit2/quote` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L107-L122))
-  - [ ] Build required quote params (price params + `taker` address)
-    - [ ] Add `chainId` as new param
-    - [ ] `takerAddress` has changed to `taker`
-  - [ ] In the response: `sellTokenAddress` changed to `sellToken`, `buyTokenAddress` changed to `buyToken` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L114-L131))
-
-#### Step 4. Sign Permit2 EIP-712 message
-
-- [ ] Sign the Permit2 EIP-712 message from `/quote` response
-  - [ ] `signature = await signTypedDataAsync(quote.permit2.eip712);` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L124-L131))
-  - [ ] Make sure `PriceResponse` and `QuoteResponse` types are up-to-date
-
-#### Step 5. Append signature length and signature data to transaction.data
-
-- [ ] Append the signature length and signature data to the `transaction.data`([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L134-L149))
-
-#### Step 6. Submit transaction with Permit2 signature
-
-- [ ] Submit the transaction with Permit2 signature
-  - [ ] Use `sendTransaction({account, gas, txOptions, data, value, chain)` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L133-L166))
-  - [ ] Note that the `/quote` response structure has changed from v1 to v2, specifically `to`, `gas` ,`data`, `value`, `gasPrice` → have moved under `quoteResponse.transaction.to`, `quoteResponse.transaction.gas`,`quoteResponse.transaction.data`, `quoteResponse.transaction.value`, `quoteResponse.transaction.gasPrice` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L143-L154))
-
 ### Using AllowanceHolder
 
-:::tip
+<Tip>
 ⚡️ See these steps in action in the [AllowanceHolder headless example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example)
 
-:::
+</Tip>
 
 #### Step 0. Get 0x API key
 
@@ -508,6 +458,54 @@ The following section overviews of how to update Swap API price and quote to han
 
 - [ ] Submit the transaction using `sendTransaction()` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-allowance-holder-headless-example/index.ts#L119-L127))
   - [ ] Note that the `/quote` response structure has changed from v1 to v2, specifically `to`, `gas` ,`data`, `value`, `gasPrice` → have moved under `quoteResponse.transaction.to`, `quoteResponse.transaction.gas`,`quoteResponse.transaction.data`, `quoteResponse.transaction.value`, `quoteResponse.transaction.gasPrice` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-allowance-holder-headless-example/index.ts#L121-L122))
+
+### Using Permit2
+
+<Tip>
+  ⚡️ See these steps in action in the [Permit2 headless
+  example](https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example)
+</Tip>
+
+#### Step 0. Get 0x API key
+
+- [ ] [Get a 0x API key](/docs/introduction/quickstart/getting-started)
+
+#### Step 1. Get indicative price
+
+- [ ] Call `/swap/permit2/price` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L62-L83))
+  - [ ] Build required price params
+    - [ ] Add `chainId` as new param
+    - [ ] `takerAddress` has changed to `taker`
+  - [ ] In the response: `sellTokenAddress` changed to `sellToken`, `buyTokenAddress` changed to `buyToken`
+
+#### Step 2. Set token allowance
+
+- [ ] Check if `taker` needs to set an allowance for Permit2. If needed, set token allowance ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L85-L105))
+  - [ ] Use the info returned by `issues.allowance` returned by `/price` (if `taker` is set) and `/quote` which contains details of allowances that the `taker` must set for the order to execute successfully
+
+#### Step 3. Get firm quote
+
+- [ ] Call `/swap/permit2/quote` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L107-L122))
+  - [ ] Build required quote params (price params + `taker` address)
+    - [ ] Add `chainId` as new param
+    - [ ] `takerAddress` has changed to `taker`
+  - [ ] In the response: `sellTokenAddress` changed to `sellToken`, `buyTokenAddress` changed to `buyToken` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L114-L131))
+
+#### Step 4. Sign Permit2 EIP-712 message
+
+- [ ] Sign the Permit2 EIP-712 message from `/quote` response
+  - [ ] `signature = await signTypedDataAsync(quote.permit2.eip712);` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L124-L131))
+  - [ ] Make sure `PriceResponse` and `QuoteResponse` types are up-to-date
+
+#### Step 5. Append signature length and signature data to transaction.data
+
+- [ ] Append the signature length and signature data to the `transaction.data`([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L134-L149))
+
+#### Step 6. Submit transaction with Permit2 signature
+
+- [ ] Submit the transaction with Permit2 signature
+  - [ ] Use `sendTransaction({account, gas, txOptions, data, value, chain)` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-permit2-headless-example/index.ts#L133-L166))
+  - [ ] Note that the `/quote` response structure has changed from v1 to v2, specifically `to`, `gas` ,`data`, `value`, `gasPrice` → have moved under `quoteResponse.transaction.to`, `quoteResponse.transaction.gas`,`quoteResponse.transaction.data`, `quoteResponse.transaction.value`, `quoteResponse.transaction.gasPrice` ([code](https://github.com/0xProject/0x-examples/blob/main/swap-v2-headless-example/index.ts#L143-L154))
 
 ## Migration FAQ
 

@@ -19,14 +19,14 @@ Check the value returned by the `liquidityAvailable` field that validates the av
 
 The taker (the address which holds the `sellToken` balance and is executing the swap transaction) should hold at _least_ the `sellAmount` of `sellToken`. The taker also should approve the `issues.allowance.spender` (AllowanceHolder or Permit2 contracts) to spend at least the same amount for that token.
 
-<Note>
+<Warning>
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
 - ONLY set allowances on [AllowanceHolder](/docs/core-concepts/contracts#allowanceholder-recommended) or [Permit2](/docs/core-concepts/contracts#permit2-advanced-use-only) contracts, as indicated by the API responses.
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 ## Gas Limits
 
 The transaction needs to be submitted with enough gas. Due to the nondeterministic nature of the on-chain settlement process, the swap may require more than what an `eth_estimateGas` RPC call returns. The quoted response will return `transacation.gas` which is the estimated limit that should be used to send the transaction to guarntee settlement. Any unused gas will be refunded to the transaction submitter.

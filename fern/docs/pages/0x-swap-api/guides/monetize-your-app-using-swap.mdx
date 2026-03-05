@@ -31,7 +31,7 @@ Out-of-the-box, 0x Swap API offers two monetization options:
 
 0x supports multiple affiliate fee (trading fees/commissions) within a single swap request. This allows you to route fees to multiple recipients with independently specified fee amounts — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
 
-To apply affiliate fees, include the following parameters in your [Swap API request](/api-reference/openapi-yaml/swap/allowanceholder-getprice):
+To apply affiliate fees, include the following parameters in your [Swap API request](/api-reference/openapi-json/swap/allowanceholder-getprice):
 
 - `swapFeeRecipient` - The wallet address to receive the specified trading fees (supports single or multiple comma-separated values).
 - `swapFeeBps` - The fee amount(s), in basis points, to send to each corresponding `swapFeeRecipient`. Denoted in basis points (0–1000 Bps = 0–10%).

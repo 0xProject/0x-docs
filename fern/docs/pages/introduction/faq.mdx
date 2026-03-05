@@ -140,14 +140,14 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 {" "}
 
 <Accordion title="How do I find a list of supported chains for Swap?">
-  Use the <a href="/api-reference/openapi-yaml/swap/chains">getChains</a>{" "}
+  Use the <a href="/api-reference/openapi-json/swap/chains">getChains</a>{" "}
   endpoint to get a list of supported chains for Swap.
 </Accordion>
 
   <Accordion title="Is there a fee to use Swap API?">
     We offer two transparent, flexible tiers for Web3 businesses of all sizes. You can get started <a href="https://0x.org/pricing">here</a>. If you are a high-volume app or have a unique business model, <a href="https://0x.org/contact">please contact us</a> to discuss a custom plan.
 
-    0x takes an on-chain fee on swaps for select tokens for teams on the Standard tier. This fee is charged on-chain to your users during the transaction. In cases where we charge a fee, we return the value in the API response as <code>zeroExFee</code>. See the <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">Swap API reference</a> for details.
+    0x takes an on-chain fee on swaps for select tokens for teams on the Standard tier. This fee is charged on-chain to your users during the transaction. In cases where we charge a fee, we return the value in the API response as <code>zeroExFee</code>. See the <a href="/api-reference/openapi-json/swap/allowanceholder-getprice">Swap API reference</a> for details.
 
   </Accordion>
 
@@ -219,8 +219,8 @@ amount = (swapFeeBps / 10000) * sellAmount  // in sellToken base units
 
     Endpoints:
     <ul>
-      <li><a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">/swap/allowance-holder/price</a></li>
-      <li><a href="/api-reference/openapi-yaml/swap/allowanceholder-getquote">/swap/allowance-holder/quote</a></li>
+      <li><a href="/api-reference/openapi-json/swap/allowanceholder-getprice">/swap/allowance-holder/price</a></li>
+      <li><a href="/api-reference/openapi-json/swap/allowanceholder-getquote">/swap/allowance-holder/quote</a></li>
     </ul>
 
     Allowance target is returned in <code>issues.allowance.spender</code> or <code>allowanceTarget</code>.
@@ -410,7 +410,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="How do I get a list of sources the API is sourcing from?">
   Use the{" "}
-  <a href="/api-reference/openapi-yaml/sources/getsources">getSources</a>{" "}
+  <a href="/api-reference/openapi-json/sources/getsources">getSources</a>{" "}
   endpoint.
 </Accordion>
 
@@ -425,13 +425,13 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
     Gasless API provides a gasless experience at two points of the trade flow where users normally pay gas:
     <ul>
-        <li><strong>Gasless approvals</strong> work only for tokens listed in our <a href="/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens">Gasless Approval Token endpoint</a> (tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>).</li>
+        <li><strong>Gasless approvals</strong> work only for tokens listed in our <a href="/api-reference/openapi-json/gasless/getgaslessapprovaltokens">Gasless Approval Token endpoint</a> (tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>).</li>
         <li><strong>Gasless swaps</strong> work for selling any non-native token (ERC-20 or similar).</li>
     </ul>
 
     **What doesn’t work:**
 
-    You can’t use Gasless API to sell a chain’s native coin (e.g., ETH on Mainnet, POL on Polygon). Native coins aren’t ERC-20s, so they lack <code>transferFrom</code> which the relay system uses. Use the <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">Swap API</a> instead (user pays gas in the native token) or have users wrap the coin (e.g., ETH → WETH).
+    You can’t use Gasless API to sell a chain’s native coin (e.g., ETH on Mainnet, POL on Polygon). Native coins aren’t ERC-20s, so they lack <code>transferFrom</code> which the relay system uses. Use the <a href="/api-reference/openapi-json/swap/allowanceholder-getprice">Swap API</a> instead (user pays gas in the native token) or have users wrap the coin (e.g., ETH → WETH).
 
     **Work-arounds for tokens not supported by Gasless API:**
 
@@ -444,7 +444,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="What if my user wants to sell a native token (e.g., swap ETH for USDC) on Mainnet?">
   Use the{" "}
-  <a href="/api-reference/openapi-yaml/swap/allowanceholder-getprice">
+  <a href="/api-reference/openapi-json/swap/allowanceholder-getprice">
     Swap API
   </a>{" "}
   (user pays gas in the native token), or have users wrap the native coin first
@@ -461,16 +461,18 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
   Both enable gasless-like UX, but they serve different purposes.
   <br />
   <br />
-  <strong>In short:</strong> <strong>Permit (EIP-2612)</strong> is an ERC-20 extension
-  enabling gasless approvals via an EIP-712 signature — <em>no on-chain tx</em> —
-  but only for tokens that implement EIP-2612. Many older tokens (e.g., WETH) don’t,
-  so they still need a regular <code>approve()</code>.<br />
+  <strong>In short:</strong> <strong>Permit (EIP-2612)</strong> is an ERC-20
+  extension enabling gasless approvals via an EIP-712 signature —{" "}
+  <em>no on-chain tx</em> — but only for tokens that implement EIP-2612. Many
+  older tokens (e.g., WETH) don’t, so they still need a regular{" "}
+  <code>approve()</code>.<br />
   <br />
-  <strong>Permit2</strong> (by Uniswap Labs) is a universal approval contract for
-  any ERC-20. Users first do a standard gasful <code>approve()</code> to Permit2,
-  then future moves can be authorized via EIP-712 signatures (gasless for subsequent
-  swaps). This is useful when tokens don’t support <code>permit()</code> but you
-  want a consistent meta-tx flow. Permit2 is deployed at
+  <strong>Permit2</strong> (by Uniswap Labs) is a universal approval contract
+  for any ERC-20. Users first do a standard gasful <code>approve()</code> to
+  Permit2, then future moves can be authorized via EIP-712 signatures (gasless
+  for subsequent swaps). This is useful when tokens don’t support{" "}
+  <code>permit()</code> but you want a consistent meta-tx flow. Permit2 is
+  deployed at
   <code>0x000000000022D473030F116dDEE9F6B43aC78BA3</code> on major chains.
 </Accordion>
 
@@ -489,7 +491,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="Can I monetize using Gasless API?">
     You have full flexibility on the fees you collect on trades.<br /><br />
-    Include these parameters when making a <a href="/api-reference/openapi-yaml/gasless/getprice">Gasless API</a> request:
+    Include these parameters when making a <a href="/api-reference/openapi-json/gasless/getprice">Gasless API</a> request:
     <ul>
       <li><code>swapFeeRecipient</code> — Wallet address to receive trading fees.</li>
       <li><code>swapFeeBps</code> — Fee in basis points (0–1000; 1000 Bps = 10%).</li>
@@ -656,9 +658,8 @@ Read more about [accessing 0x transaction data here](/docs/core-concepts/transac
     <a href="https://github.com/0xProject/0x-settler/tree/master/audits">
       audit reports
     </a>
-    . Check out our <a href="/docs/developer-resources/bounties">
-      bounty program
-    </a>.
+    . Check out our{" "}
+    <a href="/docs/developer-resources/bounties">bounty program</a>.
   </Accordion>
 </AccordionGroup>
 

@@ -71,9 +71,9 @@ You will be able to enable Gasless API in your app from "App Settings" in your [
 
 ## 1. Fetch Price
 
-Use [`/gasless/price`](/api-reference/openapi-yaml/gasless/getprice) to get the indicative price. This is used when the user is just _browsing_ for the price they could receive on the specified asset pair, but they are not ready to submit the quote yet.
+Use [`/gasless/price`](/api-reference/openapi-json/gasless/getprice) to get the indicative price. This is used when the user is just _browsing_ for the price they could receive on the specified asset pair, but they are not ready to submit the quote yet.
 
-This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a full transaction that can be submitted to the Ethereum network (you must use [`/gasless/quote`](/api-reference/openapi-yaml/gasless/getquote) for this). Think of `/price` as the the "read-only" version of `/quote`.
+This endpoint responds with pricing information, but the response does not contain a full 0x order, so it does not constitute a full transaction that can be submitted to the Ethereum network (you must use [`/gasless/quote`](/api-reference/openapi-json/gasless/getquote) for this). Think of `/price` as the the "read-only" version of `/quote`.
 
 ### Example Request
 
@@ -160,7 +160,7 @@ curl --request GET \
 
 ## 2. Fetch Quote
 
-When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/gasless/quote`](/api-reference/openapi-yaml/gasless/getquote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](/docs/core-concepts/glossary#maker) if they do not.
+When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/gasless/quote`](/api-reference/openapi-json/gasless/getquote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](/docs/core-concepts/glossary#maker) if they do not.
 
 <Tip>
   Quotes expire in ~ 30s in order to ensure freshness. Make sure to take this
@@ -458,17 +458,16 @@ https://api.0x.org/gasless/quote?chainId=137&buyToken=0x0d500B1d8E8eF31E21C99d1D
 
 If liquidity is available, 2 objects may be returned:
 
-- `approval`: This is the “approval” object which contains the necessary information to process a gasless approval. See the [quote response](/api-reference/openapi-yaml/gasless/getquote#option-1) for an example.
-
+- `approval`: This is the “approval” object which contains the necessary information to process a gasless approval. See the [quote response](/api-reference/openapi-json/gasless/getquote#option-1) for an example.
   - If a gasless approval is possible, this object includes all the required information to process it.
   - If a gasless approval is **not** possible, this object will be `null`, and you must use the [standard approval flow](/docs/gasless-api/guides/understanding-gasless-api#technical-flow-charts) to [set a token allowance](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances). NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
-  - You can also see all the token addresses that support gasless approvals with the [`/gasless-approval-tokens`](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens) endpoint.
+  - You can also see all the token addresses that support gasless approvals with the [`/gasless-approval-tokens`](/api-reference/openapi-json/gasless/getgaslessapprovaltokens) endpoint.
 
 - `trade`: This is the "trade" object which contains the necessary information to process a gasless trade. See the quote response [here](/api-reference#tag/Gasless/operation/gasless::getQuote).
 
 ## 3. Submit Transaction
 
-When user accepts the quote and wants to submit the trade, use [`/gasless/submit`](/api-reference/openapi-yaml/gasless/submit) to send both signatures back along with the payload from `/gasless/quote`.
+When user accepts the quote and wants to submit the trade, use [`/gasless/submit`](/api-reference/openapi-json/gasless/submit) to send both signatures back along with the payload from `/gasless/quote`.
 
 In order to submit the trade, we must complete the following:
 
@@ -516,7 +515,7 @@ curl -X POST '<https://api.0x.org/gasless/submit>' --header '0x-api-key: <API_KE
 
 ## 4. Check Trade Status
 
-Once the user has signed, split, and submitted both signatures - gasless approval (if applicable) and gasless trade - and a `tradeHash` is returned from `/submit`, you can poll [`/gasless/status/{tradeHash}`](/api-reference/openapi-yaml/gasless/getstatus) to check the status of the trade.
+Once the user has signed, split, and submitted both signatures - gasless approval (if applicable) and gasless trade - and a `tradeHash` is returned from `/submit`, you can poll [`/gasless/status/{tradeHash}`](/api-reference/openapi-json/gasless/getstatus) to check the status of the trade.
 
 ### Example Request
 
@@ -553,14 +552,14 @@ checks:  {
 }
 ```
 
-If you receive an error response, see the [`/status` response in the Gasless API reference](/api-reference/openapi-yaml/gasless/getstatus)
+If you receive an error response, see the [`/status` response in the Gasless API reference](/api-reference/openapi-json/gasless/getstatus)
 
 Once the trade is successful, you can display the transaction confirmation to your user.
 
 ## Gasless Approval Tokens
 
-Use [`/gasless/gasless-approval-tokens`](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens) to get token addresses that support gasless approvals on each chain.
+Use [`/gasless/gasless-approval-tokens`](/api-reference/openapi-json/gasless/getgaslessapprovaltokens) to get token addresses that support gasless approvals on each chain.
 
 ## Gasless Chains
 
-Use [`/gasless/chains`](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens) to get a list of supported chains for gasless.
+Use [`/gasless/chains`](/api-reference/openapi-json/gasless/getgaslessapprovaltokens) to get a list of supported chains for gasless.

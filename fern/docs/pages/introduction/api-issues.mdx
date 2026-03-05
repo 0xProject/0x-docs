@@ -14,7 +14,7 @@ When working with the 0x API v2, there are two key places to check for errors:
 
 ## Issues Object
 
-By examining both the [`issues` object](/api-reference/openapi-yaml/swap/allowanceholder-getprice) for quote validation and the error codes for request failures, developers can troubleshoot and resolve issues more efficiently, ensuring smoother transaction processes.
+By examining both the [`issues` object](/api-reference/openapi-json/swap/allowanceholder-getprice) for quote validation and the error codes for request failures, developers can troubleshoot and resolve issues more efficiently, ensuring smoother transaction processes.
 
 In rare cases where 0x cannot fully validate a quote, the API returns `true` in `issues.simulationIncomplete`. Developers are encouraged to check and address these issues before proceeding with the swap.
 

@@ -428,13 +428,11 @@ To help provide developers a smooth build experience, 0x API v2 will do as much 
 Note the following about the `issues` object for Price and Quote:
 
 - **Price**
-
   - `allowance`: If this field is not `null`, prompt the user to set the allowance on `issues.allowance.spender`
   - `balance`: If this field is not `null`, do not proceed to get a `quote`.
   - `simulationIncomplete`: This field can be ignored for `price` since when calling price means aren't close to submitting a transaction (versus calling quote). Typically `simulationIncomplete: true` won't occur if the `taker` address is set and the `taker` has a sufficient balance of the sell token.
 
 - **Quote**
-
   - `allowance`: This field should not appear if the `quote` is sent after the token allowance is set.
   - `balance`: This field will not be returned if the taker has sufficient balance when the `quote` request is sent.
   - `simulationIncomplete: true`: This field will not be returned if the taker has sufficient balance when the `quote` request is sent.
@@ -451,9 +449,9 @@ With the introduction of the `issues.allowance` field in Gasless API v2, some fi
 
 ### Standard Token Approval Flow
 
-In v2, for [tokens that do not support gasless approvals](/api-reference/openapi-yaml/gasless/getgaslessapprovaltokens), use the [standard token approval flow](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
+In v2, for [tokens that do not support gasless approvals](/api-reference/openapi-json/gasless/getgaslessapprovaltokens), use the [standard token approval flow](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
-<Note>
+<Warning>
 When using the [Standard Approval Flow](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances) (aka Gasless Approvals are not supported)
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
@@ -462,7 +460,7 @@ When using the [Standard Approval Flow](/docs/0x-swap-api/additional-topics/how-
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</NoWarningte>
 
 ## Detailed Migration Guide
 

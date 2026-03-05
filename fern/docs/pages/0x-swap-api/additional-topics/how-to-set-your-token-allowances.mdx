@@ -7,10 +7,10 @@ To allow a third-party service—such as the 0x API—to move your ERC-20 tokens
 
 Which contract to approve depends on the API endpoint you're using:
 
-| API Endpoint                                                              | Allowance Target Contract |
-| ------------------------------------------------------------------------- | ------------------------- |
-| [`/swap/allowance-holder`](/api-reference/openapi-yaml/swap/allowanceholder-getquote) | AllowanceHolder           |
-| [`/swap/permit2`](/api-reference/openapi-yaml/swap/permit-2-getquote)                   | Permit2                   |
+| API Endpoint                                                                          | Allowance Target Contract |
+| ------------------------------------------------------------------------------------- | ------------------------- |
+| [`/swap/allowance-holder`](/api-reference/openapi-json/swap/allowanceholder-getquote) | AllowanceHolder           |
+| [`/swap/permit2`](/api-reference/openapi-json/swap/permit-2-getquote)                 | Permit2                   |
 
 The wallet holding the tokens (`taker`) must approve the contract address returned in `issues.allowance.spender` or `allowanceTarget` from the `/price` or `/quote` response.
 
@@ -37,7 +37,7 @@ In API v2, **allowance management** and **swap execution** are handled by **diff
 
 This separation enhances security by isolating allowance management from swap execution.
 
-<Note>
+<Warning>
 
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/contracts#0x-settler-contract). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
 
@@ -45,7 +45,7 @@ This separation enhances security by isolating allowance management from swap ex
 
 - The correct allowance target is returned in `issues.allowance.spender` or `allowanceTarget`.
 
-</Note>
+</Warning>
 
 Example response from `/swap/permit2/quote` will return back the contract address if an allowance needs to be set:
 
