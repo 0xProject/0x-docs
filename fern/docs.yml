@@ -153,6 +153,9 @@ navigation:
               - page: Buy/Sell Tax Support
                 slug: buy-sell-tax-support
                 path: docs/pages/0x-swap-api/additional-topics/buy-sell-tax-support.mdx
+              - page: Swap and Send
+                slug: swap-and-send
+                path: docs/pages/0x-swap-api/additional-topics/swap-and-send.mdx
               - page: About the RFQ System
                 slug: about-the-rfq-system
                 path: docs/pages/0x-swap-api/additional-topics/about-the-rfq-system.mdx
