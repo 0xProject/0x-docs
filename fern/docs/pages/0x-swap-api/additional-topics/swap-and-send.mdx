@@ -3,7 +3,7 @@ title: "Swap and Send"
 description: "Send swapped tokens directly to any address using the recipient parameter."
 ---
 
-By default, swapped tokens are returned to the address that initiates the trade (the taker). With the `recipient` parameter, you can send the output tokens directly to any wallet address — in a single transaction.
+By default, swapped tokens are returned to the address that initiates the trade (the `taker`). With the `recipient` parameter, you can send the output tokens directly to any wallet address — in a single transaction.
 
 This unlocks use cases like:
 
@@ -194,6 +194,92 @@ recipient=0xRecipientAddress" \
 </Tabs>
 
 ---
+
+## Errors
+
+The API validates recipient at the price and quote stage — before any transaction is submitted — so no gas is wasted. There are two common error cases: an [invalid recipient address](/docs/0x-swap-api/additional-topics/swap-and-send#invalid-recipient-address) and passing recipient on a [wrap/unwrap operation](/docs/0x-swap-api/additional-topics/swap-and-send#wrapunwrap-operations).
+
+### Invalid recipient address
+
+The `recipient` value must be a valid Ethereum address — a 42-character hex string starting with `0x`. This error is triggered by things like a truncated address, a non-hex character, or passing a raw ENS name instead of a resolved address.
+
+<Callout type="info">
+  Always resolve ENS names to addresses client-side before passing them to the API. The `recipient` field does not support ENS.
+</Callout>
+
+```json
+{
+  "name": "INPUT_INVALID",
+  "message": "The input is invalid",
+  "data": {
+    "zid": "0x8843f11733fbf965f90ef10a",
+    "details": [
+      {
+        "field": "recipient",
+        "reason": "Invalid ethereum address"
+      }
+    ]
+  }
+}
+```
+
+To catch this before hitting the API, validate the address client-side:
+
+```typescript
+import { isAddress, getAddress } from "viem";
+
+const raw = userInputAddress;
+
+if (!isAddress(raw)) {
+  throw new Error("Invalid recipient address");
+}
+
+const recipient = getAddress(raw); // normalizes to EIP-55 checksum
+```
+
+### Wrap/unwrap operations
+
+`recipient` is not supported when `sellToken` and `buyToken` are a native/wrapped pair (e.g. ETH ↔ WETH, MATIC ↔ WMATIC). These operations don't route through the swap protocol, so the `recipient` field has no effect and is rejected.
+
+```json
+{
+  "name": "RECIPIENT_NOT_SUPPORTED",
+  "message": "The recipient parameter is not supported for wrap/unwrap operations",
+  "data": {
+    "zid": "0x05e4e8147d97597183b471ca"
+  }
+}
+```
+
+Guard against this by detecting wrap/unwrap pairs before building your request and omitting `recipient` in those cases:
+
+```typescript
+const WRAP_UNWRAP_PAIRS: [string, string][] = [
+  ["0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"], // ETH ↔ WETH
+  // add other pairs as needed
+];
+
+const isWrapUnwrap = (sellToken: string, buyToken: string) =>
+  WRAP_UNWRAP_PAIRS.some(
+    ([a, b]) =>
+      (sellToken.toLowerCase() === a.toLowerCase() && buyToken.toLowerCase() === b.toLowerCase()) ||
+      (sellToken.toLowerCase() === b.toLowerCase() && buyToken.toLowerCase() === a.toLowerCase())
+  );
+
+const params = {
+  sellToken,
+  buyToken,
+  sellAmount,
+  taker,
+  ...(!isWrapUnwrap(sellToken, buyToken) && { recipient }),
+};
+```
+
+The `zid` in the error response is a trace ID — include it when contacting support to help diagnose the issue.
+
+---
+
+
 
 ## Key considerations
 
