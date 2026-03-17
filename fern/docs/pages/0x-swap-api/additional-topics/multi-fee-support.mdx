@@ -1,0 +1,181 @@
+---
+title: Multi-Fee Support
+description: Collect fees for multiple recipients in a single swap using the Swap and Gasless APIs.
+---
+
+The Swap and Gasless APIs support collecting fees for **multiple recipients in a single transaction**. This is useful for use cases like revenue sharing between a protocol and a frontend, splitting fees between partners, or distributing fees across multiple treasury addresses — all without requiring multiple transactions or custom contracts.
+
+## Overview
+
+Both `swapFeeRecipient` and `swapFeeBps` accept **comma-separated lists**, allowing you to define multiple fee recipients, each with their own fee rate.
+
+Each fee is:
+
+- Collected in the `swapFeeToken` (the buy token by default)
+- Delivered directly to the specified recipient address
+- Reported individually in the response under `fees.integratorFees`
+
+## Parameters
+
+<ParamField query="swapFeeRecipient" type="string" optional>
+  The wallet address(es) to receive trading fees. Accepts a single address or multiple comma-separated addresses.
+
+**Example:** `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359`
+
+When providing multiple values, the list must be the same length as `swapFeeBps`. You must also specify `swapFeeBps` to use this parameter.
+
+</ParamField>
+
+<ParamField query="swapFeeBps" type="string" optional>
+  The fee amount(s) in basis points (Bps) to charge per recipient. Accepts a single value or multiple comma-separated values.
+
+**Example:** `5,10`
+
+When providing multiple values, the list must be the same length as `swapFeeRecipient`. The default maximum is **1000 Bps** per recipient. [Contact us](mailto:support@0x.org) if your integration requires a higher limit.
+
+</ParamField>
+
+<Note>
+  `swapFeeRecipient` and `swapFeeBps` are co-dependent — you must specify both
+  together. When using multiple fees, both lists must be the same length and
+  positionally matched (index 0 of `swapFeeBps` applies to index 0 of
+  `swapFeeRecipient`, and so on).
+</Note>
+
+## Example Request
+
+The following examples split fees between two recipient addresses — 5 Bps to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` and 10 Bps to `0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359`.
+
+<CodeGroup>
+
+```bash cURL
+curl "https://api.0x.org/swap/allowance-holder/price\
+?chainId=1\
+&buyToken=0xdac17f958d2ee523a2206206994597c13d831ec7\
+&sellToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\
+&sellAmount=100000000\
+&taker=0x70a9f34f9b34c64957b9c401a97bfed35b95049e\
+&swapFeeRecipient=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359\
+&swapFeeBps=5,10" \
+-H "0x-api-key: <YOUR_API_KEY>"
+```
+
+```typescript TypeScript
+const feeRecipients = [
+  "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+  "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+];
+const feeBps = [5, 10];
+
+const params = new URLSearchParams({
+  chainId: "1",
+  buyToken: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  sellToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  sellAmount: "100000000",
+  taker: "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+  swapFeeRecipient: feeRecipients.join(","),
+  swapFeeBps: feeBps.join(","),
+});
+
+const response = await fetch(
+  `https://api.0x.org/swap/allowance-holder/price?${params}`,
+  {
+    headers: {
+      "0x-api-key": process.env.ZEROX_API_KEY!,
+      "0x-version": "v2",
+    },
+  },
+);
+
+const data = await response.json();
+
+// Access full fee breakdown
+const fees = data.fees.integratorFees;
+fees.forEach((fee, i) => {
+  console.log(
+    `Recipient ${feeRecipients[i]} receives ${fee.amount} of ${fee.token}`,
+  );
+});
+```
+
+```python Python
+import os
+import requests
+
+fee_recipients = [
+    "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+]
+fee_bps = [5, 10]
+
+params = {
+    "chainId": "1",
+    "buyToken": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "sellToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "sellAmount": "100000000",
+    "taker": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+    "swapFeeRecipient": ",".join(fee_recipients),
+    "swapFeeBps": ",".join(str(b) for b in fee_bps),
+}
+
+response = requests.get(
+    "https://api.0x.org/swap/allowance-holder/price",
+    params=params,
+    headers={"0x-api-key": os.environ["ZEROX_API_KEY"]},
+)
+
+data = response.json()
+
+# Access full fee breakdown
+for i, fee in enumerate(data["fees"]["integratorFees"]):
+    print(f"Recipient {fee_recipients[i]} receives {fee['amount']} of {fee['token']}")
+```
+
+</CodeGroup>
+
+## Example Response
+
+When multiple fees are configured, the response includes both the legacy `integratorFee` field (containing the first fee, for backwards compatibility) and the new `integratorFees` array (containing all fees):
+
+```json
+{
+  "fees": {
+    "integratorFee": {
+      "amount": "49989",
+      "token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "type": "volume"
+    },
+    "integratorFees": [
+      {
+        "amount": "49989",
+        "token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "type": "volume"
+      },
+      {
+        "amount": "99978",
+        "token": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+        "type": "volume"
+      }
+    ],
+    "zeroExFee": {
+      "amount": "149968",
+      "token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "type": "volume"
+    },
+    "gasFee": null
+  }
+}
+```
+
+<Note>
+  `fees.integratorFee` is retained for backwards compatibility and always
+  reflects the **first** fee in the list. Use `fees.integratorFees` to access
+  the full breakdown of all fees.
+</Note>
+
+Each entry in `integratorFees` corresponds positionally to the `swapFeeRecipient` and `swapFeeBps` values in your request:
+
+| Index | Recipient                                    | Fee (Bps) | Amount (in buy token) |
+| ----- | -------------------------------------------- | --------- | --------------------- |
+| 0     | `0xdac17f958d2ee523a2206206994597c13d831ec7` | 5         | 49,989                |
+| 1     | `0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359` | 10        | 99,978                |
