@@ -138,10 +138,10 @@ navigation:
           - section: Additional Topics
             slug: additional-topics
             contents:
-              - page: How to Set Token Allowances
+              - page: Set Token Allowances
                 slug: how-to-set-your-token-allowances
                 path: docs/pages/0x-swap-api/additional-topics/how-to-set-your-token-allowances.mdx
-              - page: Handling Native Tokens
+              - page: Handle Native Tokens
                 slug: handling-native-tokens
                 path: docs/pages/0x-swap-api/additional-topics/handling-native-tokens.mdx
               - page: 0x Parser
@@ -154,8 +154,11 @@ navigation:
                 slug: buy-sell-tax-support
                 path: docs/pages/0x-swap-api/additional-topics/buy-sell-tax-support.mdx
               - page: Multi-Fee Support
-                slug: multi-Fee-support
+                slug: multi-fee-support
                 path: docs/pages/0x-swap-api/additional-topics/multi-fee-support.mdx
+              - page: Swap and Send
+                slug: swap-and-send
+                path: docs/pages/0x-swap-api/additional-topics/swap-and-send.mdx
               - page: About the RFQ System
                 slug: about-the-rfq-system
                 path: docs/pages/0x-swap-api/additional-topics/about-the-rfq-system.mdx

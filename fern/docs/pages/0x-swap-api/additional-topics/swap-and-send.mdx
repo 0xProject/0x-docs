@@ -1,0 +1,291 @@
+---
+title: "Swap and Send"
+description: "Send swapped tokens directly to any address using the recipient parameter."
+---
+
+By default, swapped tokens are returned to the address that initiates the trade (the `taker`). With the `recipient` parameter, you can send the output tokens directly to any wallet address — in a single transaction.
+
+This unlocks use cases like:
+
+- Swapping and gifting tokens to another wallet
+- Purchasing tokens on behalf of a user
+- Automating treasury distributions in a different token
+- Powering "pay with any token" checkout flows
+
+<Info>
+  The `recipient` parameter is supported on both the **Swap API** and **Gasless
+  API**.
+</Info>
+
+---
+
+## How it works
+
+When you include `recipient` in your request, the `buyToken` is delivered to that address at settlement. The taker (the address signing and submitting the transaction) still pays and authorizes the swap — they just don't receive the output.
+
+```
+Taker  ──pays sellToken──►  0x Settler / AllowanceHolder  ──sends buyToken──►  Recipient
+```
+
+If `recipient` is omitted, it defaults to the taker's address, so existing integrations are unaffected.
+
+---
+
+## API Reference
+
+### `recipient`
+
+| Property  | Value                                                                                                                                                                                                                                                                                                                                                                                 |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type      | `string`                                                                                                                                                                                                                                                                                                                                                                              |
+| Required  | No                                                                                                                                                                                                                                                                                                                                                                                    |
+| Format    | `^0x[a-fA-F0-9]{40}$`                                                                                                                                                                                                                                                                                                                                                                 |
+| Default   | Taker address                                                                                                                                                                                                                                                                                                                                                                         |
+| Supported | Swap API ([price](https://docs.0x.org/api-reference/openapi-json/swap/allowanceholder-getprice), [quote](https://docs.0x.org/api-reference/openapi-json/swap/allowanceholder-getquote)), Gasless API ([price](https://docs.0x.org/api-reference/openapi-json/gasless/getprice#request.query), [quote](https://docs.0x.org/api-reference/openapi-json/gasless/getquote#request.query)) |
+
+<Warning>
+  `recipient` is **not supported** for wrap and unwrap operations (e.g. ETH ↔
+  WETH). Passing it for those trade types will result in an error. Check for
+  native/wrapped token pairs and omit `recipient` before calling the API.
+</Warning>
+
+---
+
+## Swap API Example
+
+Include `recipient` as a query parameter when fetching a quote and submitting the swap.
+
+<Tabs>
+  <Tab title="TypeScript">
+
+```typescript
+const params = new URLSearchParams({
+  sellToken: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", // ETH
+  buyToken: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
+  sellAmount: "1000000000000000000", // 1 ETH in wei
+  taker: "0xYourTakerAddress",
+  recipient: "0xRecipientAddress", // buyToken sent here
+});
+
+const response = await fetch(
+  `https://api.0x.org/swap/permit2/quote?${params}`,
+  {
+    headers: {
+      "0x-api-key": process.env.ZEROX_API_KEY!,
+      "0x-version": "v2",
+    },
+  },
+);
+
+const quote = await response.json();
+```
+
+  </Tab>
+  <Tab title="Python">
+
+```python
+import requests
+import os
+
+params = {
+    "sellToken": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", # ETH
+    "buyToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", # USDC
+    "sellAmount": "1000000000000000000", # 1 ETH in wei
+    "taker": "0xYourTakerAddress",
+    "recipient": "0xRecipientAddress", # buyToken sent here
+}
+
+response = requests.get(
+    "https://api.0x.org/swap/permit2/quote",
+    headers={
+        "0x-api-key": os.environ["ZEROX_API_KEY"],
+        "0x-version": "v2",
+    },
+    params=params,
+)
+
+quote = response.json()
+
+```
+
+  </Tab>
+  <Tab title="cURL">
+```bash
+curl "https://api.0x.org/swap/permit2/quote?\
+sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&\
+buyToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&\
+sellAmount=1000000000000000000&\
+taker=0xYourTakerAddress&\
+recipient=0xRecipientAddress" \
+  -H "0x-api-key: $ZEROX_API_KEY" \
+  -H "0x-version: v2"
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Gasless API Example
+
+The `recipient` parameter works the same way with the Gasless API. Include it in the quote request body — the relayer will deliver `buyToken` to the recipient address on settlement.
+
+<Tabs>
+  <Tab title="TypeScript">
+
+```typescript
+const params = new URLSearchParams({
+  sellToken: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
+  buyToken: "0x6B175474E89094C44Da98b954EedeAC495271d0F", // DAI
+  sellAmount: "1000000000", // 1000 USDC (6 decimals)
+  taker: "0xYourTakerAddress",
+  recipient: "0xRecipientAddress", // buyToken sent here
+});
+
+const response = await fetch(`https://api.0x.org/gasless/quote?${params}`, {
+  headers: {
+    "0x-api-key": process.env.ZEROX_API_KEY!,
+    "0x-version": "v2",
+  },
+});
+
+const quote = await response.json();
+```
+
+  </Tab>
+  <Tab title="Python">
+```python
+import requests
+import os
+
+params = {
+"sellToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", # USDC
+"buyToken": "0x6B175474E89094C44Da98b954EedeAC495271d0F", # DAI
+"sellAmount": "1000000000", # 1000 USDC (6 decimals)
+"taker": "0xYourTakerAddress",
+"recipient": "0xRecipientAddress", # buyToken sent here
+}
+
+response = requests.get(
+"https://api.0x.org/gasless/quote",
+headers={
+"0x-api-key": os.environ["ZEROX_API_KEY"],
+"0x-version": "v2",
+},
+params=params,
+)
+
+quote = response.json()
+
+````
+
+  </Tab>
+  <Tab title="cURL">
+```bash
+curl "https://api.0x.org/gasless/quote?\
+sellToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&\
+buyToken=0x6B175474E89094C44Da98b954EedeAC495271d0F&\
+sellAmount=1000000000&\
+taker=0xYourTakerAddress&\
+recipient=0xRecipientAddress" \
+  -H "0x-api-key: $ZEROX_API_KEY" \
+  -H "0x-version: v2"
+```
+  </Tab>
+</Tabs>
+
+---
+
+## Errors
+
+The API validates recipient at the price and quote stage — before any transaction is submitted — so no gas is wasted. There are two common error cases: an [invalid recipient address](/docs/0x-swap-api/additional-topics/swap-and-send#invalid-recipient-address) and passing recipient on a [wrap/unwrap operation](/docs/0x-swap-api/additional-topics/swap-and-send#wrapunwrap-operations).
+
+### Invalid recipient address
+
+The `recipient` value must be a valid Ethereum address — a 42-character hex string starting with `0x`. This error is triggered by things like a truncated address, a non-hex character, or passing a raw ENS name instead of a resolved address.
+
+<Callout type="info">
+  Always resolve ENS names to addresses client-side before passing them to the API. The `recipient` field does not support ENS.
+</Callout>
+
+```json
+{
+  "name": "INPUT_INVALID",
+  "message": "The input is invalid",
+  "data": {
+    "zid": "0x8843f11733fbf965f90ef10a",
+    "details": [
+      {
+        "field": "recipient",
+        "reason": "Invalid ethereum address"
+      }
+    ]
+  }
+}
+```
+
+To catch this before hitting the API, validate the address client-side:
+
+```typescript
+import { isAddress, getAddress } from "viem";
+
+const raw = userInputAddress;
+
+if (!isAddress(raw)) {
+  throw new Error("Invalid recipient address");
+}
+
+const recipient = getAddress(raw); // normalizes to EIP-55 checksum
+```
+
+### Wrap/unwrap operations
+
+`recipient` is not supported when `sellToken` and `buyToken` are a native/wrapped pair (e.g. ETH ↔ WETH, MATIC ↔ WMATIC). These operations don't route through the swap protocol, so the `recipient` field has no effect and is rejected.
+
+```json
+{
+  "name": "RECIPIENT_NOT_SUPPORTED",
+  "message": "The recipient parameter is not supported for wrap/unwrap operations",
+  "data": {
+    "zid": "0x05e4e8147d97597183b471ca"
+  }
+}
+```
+
+Guard against this by detecting wrap/unwrap pairs before building your request and omitting `recipient` in those cases:
+
+```typescript
+const WRAP_UNWRAP_PAIRS: [string, string][] = [
+  ["0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"], // ETH ↔ WETH
+  // add other pairs as needed
+];
+
+const isWrapUnwrap = (sellToken: string, buyToken: string) =>
+  WRAP_UNWRAP_PAIRS.some(
+    ([a, b]) =>
+      (sellToken.toLowerCase() === a.toLowerCase() && buyToken.toLowerCase() === b.toLowerCase()) ||
+      (sellToken.toLowerCase() === b.toLowerCase() && buyToken.toLowerCase() === a.toLowerCase())
+  );
+
+const params = {
+  sellToken,
+  buyToken,
+  sellAmount,
+  taker,
+  ...(!isWrapUnwrap(sellToken, buyToken) && { recipient }),
+};
+```
+
+The `zid` in the error response is a trace ID — include it when contacting support to help diagnose the issue.
+
+---
+
+
+
+## Key considerations
+
+- **Taker still pays.** The `taker` signs and funds the transaction. Only the output destination changes.
+- **Omitting `recipient` is safe**, it falls back to the taker address, so no changes are needed for existing flows.
+- **Validate before sending.** Always validate `recipient` client-side to avoid wasted gas on failed transactions.
+- **Wrap/unwrap is not supported.** Check for native/wrapped token pairs and strip `recipient` before calling the API.
+
+````
