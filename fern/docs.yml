@@ -117,6 +117,9 @@ navigation:
               - page: Swap Tokens with Swap API
                 slug: swap-tokens-with-0x-swap-api
                 path: docs/pages/0x-swap-api/guides/swap-tokens-with-0x-swap-api.mdx
+              - page: Onchain Swaps for Exchanges
+                slug: onchain-swaps-for-exchanges
+                path: docs/pages/0x-swap-api/guides/onchain-swaps-for-exchanges.mdx
               - page: Build Token Swap App (Next.js)
                 slug: build-token-swap-dapp-nextjs
                 path: docs/pages/0x-swap-api/guides/build-token-swap-dapp-nextjs.mdx
