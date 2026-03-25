@@ -11,11 +11,11 @@ Fee splitting is controlled by three query parameters that work together:
 
 - `swapFeeRecipient` — one or more wallet addresses (comma-separated) that receive fees at settlement
 - `swapFeeBps` — one or more fee amounts in basis points (comma-separated), defining how much each recipient earns
-- `swapFeeToken` _(optional)_ — the token fees are collected in; if omitted, typically defaults to the buy token, unless the sell token has higher priority (e.g., stablecoins or more liquid assets) or the buy token is ineligible.
+- `swapFeeToken`*(optional)* — the token fees are collected in; can be omitted or set to either the address of `buyToken` or `sellToken`
 
-`swapFeeRecipient` and `swapFeeBps` are positionally matched and co-dependent. The first value in `swapFeeBps` applies to the first address in `swapFeeRecipient`, the second to the second, and so on. Both must be present and the same length.
-
-By default, each fee is collected in the buy token and delivered directly to the specified address at settlement. You can optionally collect fees in a different token by specifying `swapFeeToken`, as long as each value is set to either the address of the `buyToken` or `sellToken`.
+`swapFeeRecipient` and `swapFeeBps` are positionally matched and co-dependent. The first value in `swapFeeBps` applies to the first address in `swapFeeRecipient`, the second to the second, and so on. Both must be present and the same length.\
+\
+Use `swapFeeToken` to specify which token fees are collected in — either the `buyToken` or `sellToken`. If omitted, 0x defaults to the buy token, unless the sell token has higher priority (e.g., stablecoins or a more liquid asset) or the buy token is ineligible.
 
 ## Parameters
 
