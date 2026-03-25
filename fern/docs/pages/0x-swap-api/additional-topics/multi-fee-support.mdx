@@ -7,13 +7,15 @@ The Swap and Gasless APIs support collecting fees for **multiple recipients in a
 
 ## Overview
 
-Both `swapFeeRecipient` and `swapFeeBps` accept **comma-separated lists**, allowing you to define multiple fee recipients, each with their own fee rate.
+Fee splitting is controlled by three query parameters that work together:
 
-Each fee is:
+- `swapFeeRecipient` — one or more wallet addresses (comma-separated) that receive fees at settlement
+- `swapFeeBps` — one or more fee amounts in basis points (comma-separated), defining how much each recipient earns
+- `swapFeeToken` _(optional)_ — the token fees are collected in; if omitted, typically defaults to the buy token, unless the sell token has higher priority (e.g., stablecoins or more liquid assets) or the buy token is ineligible.
 
-- Collected in the `swapFeeToken` (the buy token by default)
-- Delivered directly to the specified recipient address
-- Reported individually in the response under `fees.integratorFees`
+`swapFeeRecipient` and `swapFeeBps` are positionally matched and co-dependent. The first value in `swapFeeBps` applies to the first address in `swapFeeRecipient`, the second to the second, and so on. Both must be present and the same length.
+
+By default, each fee is collected in the buy token and delivered directly to the specified address at settlement. You can optionally collect fees in a different token by specifying `swapFeeToken`, as long as each value is set to either the address of the `buyToken` or `sellToken`.
 
 ## Parameters
 
@@ -35,16 +37,30 @@ When providing multiple values, the list must be the same length as `swapFeeReci
 
 </ParamField>
 
+<ParamField query="swapFeeToken" type="string" optional>
+  The contract address of the token to collect trading fees in. Accepts a single address or multiple comma-separated addresses.
+
+**Format:** `^\s*0x(?!0{40})[a-fA-F0-9]{40}(\s*,\s*0x(?!0{40})[a-fA-F0-9]{40})*\s*$`
+
+Each value must be set to either the address of the `buyToken` or the `sellToken`. When multiple values are provided, the list must be the same length as `swapFeeBps`.
+
+If omitted, 0x selects the fee token from the trade. The buy token is used by default unless the sell token has higher priority (e.g., stablecoins or more liquid assets) or the buy token is ineligible.
+
+You must also specify `swapFeeRecipient` and `swapFeeBps` to use this parameter.
+
+</ParamField>
+
 <Note>
   `swapFeeRecipient` and `swapFeeBps` are co-dependent — you must specify both
   together. When using multiple fees, both lists must be the same length and
   positionally matched (index 0 of `swapFeeBps` applies to index 0 of
-  `swapFeeRecipient`, and so on).
+  `swapFeeRecipient`, and so on). `swapFeeToken` must also match this length
+  when multiple values are provided.
 </Note>
 
 ## Example Request
 
-The following examples split fees between two recipient addresses — 5 Bps to `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` and 10 Bps to `0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359`.
+The following example splits fees between two recipients on a USDC → USDT swap — 5 Bps to the platform and 10 Bps to a distribution partner. `swapFeeToken` is omitted, so fees default to the buy token (USDT).
 
 <CodeGroup>
 
@@ -55,26 +71,24 @@ curl "https://api.0x.org/swap/allowance-holder/price\
 &sellToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\
 &sellAmount=100000000\
 &taker=0x70a9f34f9b34c64957b9c401a97bfed35b95049e\
-&swapFeeRecipient=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045,0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359\
+&swapFeeRecipient=0xPLATFORM_ADDRESS,0xPARTNER_ADDRESS\
 &swapFeeBps=5,10" \
 -H "0x-api-key: <YOUR_API_KEY>"
 ```
 
 ```typescript TypeScript
-const feeRecipients = [
-  "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-  "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-];
-const feeBps = [5, 10];
-
 const params = new URLSearchParams({
   chainId: "1",
   buyToken: "0xdac17f958d2ee523a2206206994597c13d831ec7",
   sellToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
   sellAmount: "100000000",
   taker: "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
-  swapFeeRecipient: feeRecipients.join(","),
-  swapFeeBps: feeBps.join(","),
+  swapFeeRecipient: [
+    "0xPLATFORM_ADDRESS", // index 0 — earns 5 Bps
+    "0xPARTNER_ADDRESS", // index 1 — earns 10 Bps
+  ].join(","),
+  swapFeeBps: "5,10",
+  // swapFeeToken (optional)
 });
 
 const response = await fetch(
@@ -90,11 +104,8 @@ const response = await fetch(
 const data = await response.json();
 
 // Access full fee breakdown
-const fees = data.fees.integratorFees;
-fees.forEach((fee, i) => {
-  console.log(
-    `Recipient ${feeRecipients[i]} receives ${fee.amount} of ${fee.token}`,
-  );
+data.fees.integratorFees.forEach((fee, i) => {
+  console.log(`Recipient ${i}: ${fee.amount} of ${fee.token}`);
 });
 ```
 
@@ -102,20 +113,15 @@ fees.forEach((fee, i) => {
 import os
 import requests
 
-fee_recipients = [
-    "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-]
-fee_bps = [5, 10]
-
 params = {
     "chainId": "1",
     "buyToken": "0xdac17f958d2ee523a2206206994597c13d831ec7",
     "sellToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "sellAmount": "100000000",
     "taker": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
-    "swapFeeRecipient": ",".join(fee_recipients),
-    "swapFeeBps": ",".join(str(b) for b in fee_bps),
+    "swapFeeRecipient": ",".join(["0xPLATFORM_ADDRESS", "0xPARTNER_ADDRESS"]),
+    "swapFeeBps": "5,10",
+    # swapFeeToken (optional)
 }
 
 response = requests.get(
@@ -128,7 +134,7 @@ data = response.json()
 
 # Access full fee breakdown
 for i, fee in enumerate(data["fees"]["integratorFees"]):
-    print(f"Recipient {fee_recipients[i]} receives {fee['amount']} of {fee['token']}")
+    print(f"Recipient {i}: {fee['amount']} of {fee['token']}")
 ```
 
 </CodeGroup>
@@ -175,7 +181,7 @@ When multiple fees are configured, the response includes both the legacy `integr
 
 Each entry in `integratorFees` corresponds positionally to the `swapFeeRecipient` and `swapFeeBps` values in your request:
 
-| Index | Recipient                                    | Fee (Bps) | Amount (in buy token) |
-| ----- | -------------------------------------------- | --------- | --------------------- |
-| 0     | `0xdac17f958d2ee523a2206206994597c13d831ec7` | 5         | 49,989                |
-| 1     | `0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359` | 10        | 99,978                |
+| Index | Recipient            | Fee (Bps) | Amount (in buy token) |
+| ----- | -------------------- | --------- | --------------------- |
+| 0     | `0xPLATFORM_ADDRESS` | 5         | 49,989                |
+| 1     | `0xPARTNER_ADDRESS`  | 10        | 99,978                |
