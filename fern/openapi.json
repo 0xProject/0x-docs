@@ -6066,7 +6066,7 @@
                             "succeeded",
                             "confirmed"
                           ],
-                          "description": "`pending` means that the order has been queued on 0x. `submitted` means that it has been submitted onchain,`succeeded` means it has been included in a block and `confirmed` means it has at least 3 confirmations onchain"
+                          "description": "`pending` means that the order has been queued on 0x. `submitted` means that it has been submitted onchain, `succeeded` means it has been included in a block, `confirmed` means the transaction has at least 3 confirmations onchain"
                         },
                         "transactions": {
                           "type": "array",
@@ -6087,7 +6087,7 @@
                             "required": ["hash", "timestamp"],
                             "additionalProperties": false
                           },
-                          "description": "Details of the gasless swap transaction. If the trade is `pending`, no transaction will be returned. If `submitted`, multiple transactions may be returned, but only one will be mined. If `succeeded` and `confirmed`, the mined transaction will be returned"
+                          "description": "Details of the gasless swap transaction. If the trade is `pending`, no transaction will be returned. If `submitted`, multiple transactions may be returned, but only one will be mined. If `succeeded` or `confirmed`, the mined transaction will be returned"
                         },
                         "zid": {
                           "type": "string",
