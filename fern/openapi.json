@@ -5546,9 +5546,10 @@
                           "signatureType": { "type": "number" },
                           "v": { "type": "number" },
                           "r": { "type": "string" },
-                          "s": { "type": "string" }
+                          "s": { "type": "string" },
+                          "signatureBytes": { "type": "string" }
                         },
-                        "required": ["signatureType", "v", "r", "s"],
+                        "required": ["signatureType"],
                         "additionalProperties": false
                       }
                     },
@@ -5770,9 +5771,10 @@
                           "signatureType": { "type": "number" },
                           "v": { "type": "number" },
                           "r": { "type": "string" },
-                          "s": { "type": "string" }
+                          "s": { "type": "string" },
+                          "signatureBytes": { "type": "string" }
                         },
-                        "required": ["signatureType", "v", "r", "s"],
+                        "required": ["signatureType"],
                         "additionalProperties": false
                       }
                     },
