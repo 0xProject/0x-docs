@@ -68,7 +68,7 @@ The following example splits fees between two recipients on a USDC → USDT swap
 curl "https://api.0x.org/swap/allowance-holder/price\
 ?chainId=1\
 &buyToken=0xdac17f958d2ee523a2206206994597c13d831ec7\
-&sellToken=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\
+&sellToken=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2\
 &sellAmount=100000000\
 &taker=0x70a9f34f9b34c64957b9c401a97bfed35b95049e\
 &swapFeeRecipient=0xPLATFORM_ADDRESS,0xPARTNER_ADDRESS\
@@ -80,7 +80,7 @@ curl "https://api.0x.org/swap/allowance-holder/price\
 const params = new URLSearchParams({
   chainId: "1",
   buyToken: "0xdac17f958d2ee523a2206206994597c13d831ec7",
-  sellToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  sellToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   sellAmount: "100000000",
   taker: "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
   swapFeeRecipient: [
@@ -116,7 +116,7 @@ import requests
 params = {
     "chainId": "1",
     "buyToken": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-    "sellToken": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "sellToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
     "sellAmount": "100000000",
     "taker": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
     "swapFeeRecipient": ",".join(["0xPLATFORM_ADDRESS", "0xPARTNER_ADDRESS"]),
