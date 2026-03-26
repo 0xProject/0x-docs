@@ -4197,6 +4197,9 @@
                     { "$ref": "#/components/schemas/INPUT_INVALID" },
                     { "$ref": "#/components/schemas/RECIPIENT_NOT_SUPPORTED" },
                     {
+                      "$ref": "#/components/schemas/SMART_WALLET_NOT_SUPPORTED"
+                    },
+                    {
                       "$ref": "#/components/schemas/UNABLE_TO_CALCULATE_GAS_FEE"
                     },
                     { "$ref": "#/components/schemas/SELL_AMOUNT_TOO_SMALL" },
@@ -5218,6 +5221,9 @@
                     { "$ref": "#/components/schemas/INSUFFICIENT_BALANCE" },
                     { "$ref": "#/components/schemas/RECIPIENT_NOT_SUPPORTED" },
                     {
+                      "$ref": "#/components/schemas/SMART_WALLET_NOT_SUPPORTED"
+                    },
+                    {
                       "$ref": "#/components/schemas/UNABLE_TO_CALCULATE_GAS_FEE"
                     },
                     { "$ref": "#/components/schemas/SELL_AMOUNT_TOO_SMALL" },
@@ -5964,6 +5970,9 @@
                     { "$ref": "#/components/schemas/META_TRANSACTION_INVALID" },
                     {
                       "$ref": "#/components/schemas/PENDING_TRADES_ALREADY_EXIST"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SMART_WALLET_NOT_SUPPORTED"
                     },
                     { "$ref": "#/components/schemas/TRADE_ALREADY_SUBMITTED" }
                   ]
@@ -7647,6 +7656,34 @@
               }
             },
             "required": ["zid"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
+      "SMART_WALLET_NOT_SUPPORTED": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["SMART_WALLET_NOT_SUPPORTED"] },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "taker": {
+                "type": "string",
+                "description": "The smart wallet address that was rejected"
+              },
+              "chainId": {
+                "type": "number",
+                "description": "The chain where smart wallets are not supported"
+              }
+            },
+            "required": ["zid", "taker", "chainId"],
             "additionalProperties": false
           }
         },
