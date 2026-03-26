@@ -5549,14 +5549,30 @@
                       "signature": {
                         "type": "object",
                         "properties": {
-                          "signatureType": { "type": "number" },
-                          "v": { "type": "number" },
-                          "r": { "type": "string" },
-                          "s": { "type": "string" },
-                          "signatureBytes": { "type": "string" }
+                          "signatureType": {
+                            "type": "number",
+                            "description": "Signature type enum: `2` (EIP712), `3` (EthSign), or `5` (Raw). Determines which other fields are required."
+                          },
+                          "v": {
+                            "type": "number",
+                            "description": "ECDSA recovery id. Required when signatureType is `2` (EIP712) or `3` (EthSign)."
+                          },
+                          "r": {
+                            "type": "string",
+                            "description": "ECDSA signature r value (hex string). Required when signatureType is `2` (EIP712) or `3` (EthSign)."
+                          },
+                          "s": {
+                            "type": "string",
+                            "description": "ECDSA signature s value (hex string). Required when signatureType is `2` (EIP712) or `3` (EthSign)."
+                          },
+                          "signatureBytes": {
+                            "type": "string",
+                            "description": "Raw signature bytes (hex string). Required when signatureType is `5` (Raw). Must not be provided for other signature types."
+                          }
                         },
                         "required": ["signatureType"],
-                        "additionalProperties": false
+                        "additionalProperties": false,
+                        "description": "A discriminated union based on `signatureType`. For EIP712 (`signatureType: 2`) or EthSign (`signatureType: 3`): provide `v`, `r`, and `s`. For Raw (`signatureType: 5`): provide `signatureBytes` only. Use Raw (`signatureType: 5`) to support smart contract wallets (e.g. ERC-1271) that return opaque signature bytes."
                       }
                     },
                     "required": ["type", "eip712", "signature"],
@@ -5774,14 +5790,30 @@
                       "signature": {
                         "type": "object",
                         "properties": {
-                          "signatureType": { "type": "number" },
-                          "v": { "type": "number" },
-                          "r": { "type": "string" },
-                          "s": { "type": "string" },
-                          "signatureBytes": { "type": "string" }
+                          "signatureType": {
+                            "type": "number",
+                            "description": "Signature type enum: `2` (EIP712), `3` (EthSign), or `5` (Raw). Determines which other fields are required."
+                          },
+                          "v": {
+                            "type": "number",
+                            "description": "ECDSA recovery id. Required when signatureType is `2` (EIP712) or `3` (EthSign)."
+                          },
+                          "r": {
+                            "type": "string",
+                            "description": "ECDSA signature r value (hex string). Required when signatureType is `2` (EIP712) or `3` (EthSign)."
+                          },
+                          "s": {
+                            "type": "string",
+                            "description": "ECDSA signature s value (hex string). Required when signatureType is `2` (EIP712) or `3` (EthSign)."
+                          },
+                          "signatureBytes": {
+                            "type": "string",
+                            "description": "Raw signature bytes (hex string). Required when signatureType is `5` (Raw). Must not be provided for other signature types."
+                          }
                         },
                         "required": ["signatureType"],
-                        "additionalProperties": false
+                        "additionalProperties": false,
+                        "description": "A discriminated union based on `signatureType`. For EIP712 (`signatureType: 2`) or EthSign (`signatureType: 3`): provide `v`, `r`, and `s`. For Raw (`signatureType: 5`): provide `signatureBytes` only. Use Raw (`signatureType: 5`) to support smart contract wallets (e.g. ERC-1271) that return opaque signature bytes."
                       }
                     },
                     "required": ["type", "eip712", "signature"],
