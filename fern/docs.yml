@@ -356,3 +356,6 @@ page-actions:
     cursor: true
     vscode: true
     claude: true
+
+integrations:
+  context7: ./context7.json
