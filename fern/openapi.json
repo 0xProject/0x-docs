@@ -172,6 +172,18 @@
               "default": "false"
             },
             "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+          },
+          {
+            "name": "wrapUnwrapMode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "not": {} },
+                { "type": "string", "enum": ["direct", "settler"] }
+              ]
+            },
+            "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
           }
         ],
         "responses": {
@@ -977,6 +989,18 @@
               "default": "false"
             },
             "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+          },
+          {
+            "name": "wrapUnwrapMode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "not": {} },
+                { "type": "string", "enum": ["direct", "settler"] }
+              ]
+            },
+            "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
           }
         ],
         "responses": {
@@ -1818,6 +1842,18 @@
               "default": "false"
             },
             "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+          },
+          {
+            "name": "wrapUnwrapMode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "not": {} },
+                { "type": "string", "enum": ["direct", "settler"] }
+              ]
+            },
+            "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
           }
         ],
         "responses": {
@@ -2623,6 +2659,18 @@
               "default": "false"
             },
             "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+          },
+          {
+            "name": "wrapUnwrapMode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "not": {} },
+                { "type": "string", "enum": ["direct", "settler"] }
+              ]
+            },
+            "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
           }
         ],
         "responses": {
