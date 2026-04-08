@@ -1,0 +1,73 @@
+---
+title: 0x Agent Skills
+description: Give your AI coding agent full knowledge of the 0x APIs with a single command.
+---
+
+Give your AI coding agent full knowledge of the 0x APIs with a single command. Once installed, your agent knows every endpoint, authentication method, and integration pattern for token swaps.
+
+Compatible with [Claude Code](https://www.anthropic.com/claude-code), [Cursor](https://cursor.com), [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), and any agent that supports the [Agent Skills specification](https://agentskills.io).
+
+## Install
+
+```bash
+npx skills add 0xProject/0x-ai
+```
+
+| Skill    | Auth    | Best for                                                                                                                                                                                              |
+| -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0x-api` | API key | Token swaps using 0x Swap and Gasless APIs on any [supported EVM chain](https://docs.0x.org/docs/introduction/supported-chains). A [0x API key](https://dashboard.0x.org/create-account) is required. |
+
+## What your agent learns
+
+The `0x-api` skill covers everything needed to build production-ready swap integrations:
+
+- **Swap API v2:** Token swaps across all supported EVM chains. Both AllowanceHolder and Permit2 flows.
+- **Gasless API v2:** Swaps with no native token (e.g. ETH) required for gas.
+- **Language support:** TypeScript and Python code examples ready to drop into your project.
+- **Error handling:** Common failure modes and how to recover from them
+- **v1 → v2 migration:** A clear path for upgrading existing 0x integrations
+
+## Getting started
+
+You'll need a [0x API key](https://dashboard.0x.org/create-account) — sign up free at the [0x Dashboard](https://dashboard.0x.org/create-account). Set it as an environment variable and your agent takes it from there.
+
+Once the skill is installed, activate it in any agent session:
+
+```
+/0x-api
+```
+
+## MCP Server
+
+Alongside the skill, 0x provides an MCP server that gives your agent on-demand access to the latest 0x documentation and API references. This keeps your agent current even when docs have changed since its training cutoff.
+
+The MCP server is set up automatically during `npx skills add`. To configure it manually:
+
+```json
+{
+  "mcpServers": {
+    "0x-mcp": {
+      "type": "url",
+      "url": "https://docs.0x.org/_mcp/server"
+    }
+  }
+}
+```
+
+## Skills vs. MCP — what's the difference?
+
+They solve different problems and work well together:
+
+|                    | Agent Skills                                             | MCP Server                                                |
+| ------------------ | -------------------------------------------------------- | --------------------------------------------------------- |
+| **Role**           | Embeds API knowledge so the agent can write correct code | Lets the agent fetch live docs and references on demand   |
+| **Triggered when** | The agent is writing code that calls 0x APIs             | The agent needs to verify current endpoints or parameters |
+| **Result**         | Code that follows 0x patterns and best practices         | Up-to-date documentation in the conversation context      |
+
+## Next steps
+
+- [GitHub: 0xProject/0x-ai](https://github.com/0xProject/0x-ai)
+- [0x Dashboard](https://dashboard.0x.org/create-account)
+- [Supported Chains](https://docs.0x.org/docs/introduction/supported-chains)
+- [Swap API v2 Reference](https://docs.0x.org/api-reference/api-overview)
+- [0x MCP Server](https://docs.0x.org/_mcp/server)

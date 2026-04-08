@@ -4,15 +4,15 @@ sidebarTitle: "Using AI with 0x"
 description: Use built-in AI integrations and copy options in 0x Docs to work efficiently with LLMs
 ---
 
-0x Docs includes built-in AI integrations and an official MCP server so you can work with up-to-date documentation directly inside your AI tools and editor.
+0x Docs includes built-in AI integrations, 0x skills, and an official MCP server so you can work with up-to-date documentation directly inside your AI tools and editor.
 
-All options are available from the **page actions menu** on any documentation page.
+See the options available from the **page actions menu** on any documentation page.
 
 ![context menu in docs](../../../assets/img/introduction/context-menu.png)
 
 ## Get started
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
 
 <Card
   title="Connect to the 0x MCP Server"
@@ -20,10 +20,16 @@ All options are available from the **page actions menu** on any documentation pa
   icon="plug"
 >
   Connect AI tools to 0x documentation for an enhanced development experience.
-
 </Card>
 
-{" "}
+<Card
+  title="Install 0x Agent Skills"
+  href="/docs/introduction/develop-with-ai/agent-skills"
+  icon="wand-magic-sparkles"
+>
+  Give your AI coding agent instant knowledge of the 0x Swap & Gasless API —
+  swap flows, auth, error handling, and more with a single command.
+</Card>
 
 <Card
   title="Use an LLM"
@@ -34,18 +40,35 @@ All options are available from the **page actions menu** on any documentation pa
   direct AI tool integrations, and one-click IDE setup.
 </Card>
 
-  <Card
-    title="AI Projects with 0x"
-    href="/docs/introduction/develop-with-ai/ai-tools"
-    icon="robot"
-  >
-    Explore consumer and developer tools using AI and 0x in production.
-  </Card>
+<Card
+  title="AI Projects with 0x"
+  href="/docs/introduction/develop-with-ai/ai-tools"
+  icon="robot"
+>
+  Explore consumer and developer tools using AI and 0x in production.
+</Card>
+
 </CardGroup>
 
 ## Available Options
 
 Below is a list of all available options, what they do, and when to use them.
+
+### Install Agent Skills
+
+Give your AI coding agent built-in knowledge of the 0x API — no manual prompting or copy-pasting docs required.
+
+```bash
+npx skills add 0xProject/0x-ai
+```
+
+Once installed, your agent understands the full 0x Swap API surface: swap flows, gasless transactions, authentication, error handling, and chain-specific details. Works with Claude Code, Cursor, GitHub Copilot, and other agents that support the [Agent Skills specification](https://agentskills.io).
+
+→ See the full setup guide: **[0x Agent Skills](/docs/introduction/develop-with-ai/agent-skills)**
+
+Agent Skills are the recommended starting point if you're actively building a swap integration in your editor.
+
+---
 
 ### Connect via MCP
 
@@ -56,6 +79,8 @@ MCP gives AI tools live, searchable access to 0x documentation — no copy-pasti
 → Follow the full setup guide: **[Connect to the 0x MCP Server](/docs/introduction/develop-with-ai/mcp-setup)**
 
 If you're building in an IDE or working on a multi-step integration, MCP is the recommended approach.
+
+---
 
 ### Copy Page
 
