@@ -1,11 +1,10 @@
 name: Auto-merge OpenAPI updates
 on:
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize]
 jobs:
   auto-merge:
     if: |
-      github.event.action != 'closed' &&
       github.event_name == 'pull_request' &&
       startsWith(github.event.pull_request.head.ref, 'auto/update-openapi') &&
       github.event.pull_request.head.repo.full_name == github.repository &&
@@ -23,19 +22,3 @@ jobs:
       - name: Log merge status
         run: |
           echo "✅ Auto-merge enabled for PR: ${{ github.event.pull_request.html_url }}"
-  publish-after-merge:
-    if: |
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'auto/update-openapi') &&
-      github.event.pull_request.user.login == '0x-automation[bot]'
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    steps:
-      - name: Trigger publish-docs workflow
-        run: |
-          gh workflow run publish-docs.yml --ref main
-          echo "✅ Triggered publish-docs workflow after merge of PR: ${{ github.event.pull_request.html_url }}"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
