@@ -1,11 +1,11 @@
 name: Auto-merge OpenAPI updates
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, closed]
 jobs:
   auto-merge:
     if: |
-      github.event_name == 'pull_request' &&
+      github.event.action != 'closed' &&
       startsWith(github.event.pull_request.head.ref, 'auto/update-openapi') &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.user.login == '0x-automation[bot]'
@@ -22,3 +22,23 @@ jobs:
       - name: Log merge status
         run: |
           echo "✅ Auto-merge enabled for PR: ${{ github.event.pull_request.html_url }}"
+
+  publish-docs:
+    if: |
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'auto/update-openapi') &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == '0x-automation[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Publish Docs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: fern generate --docs
