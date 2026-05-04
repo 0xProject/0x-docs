@@ -147,13 +147,15 @@
             "name": "slippageBps",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
           },
           {
             "name": "slippagePpm",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
           },
           {
             "name": "excludedSources",
@@ -964,13 +966,15 @@
             "name": "slippageBps",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
           },
           {
             "name": "slippagePpm",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
           },
           {
             "name": "excludedSources",
@@ -1817,13 +1821,15 @@
             "name": "slippageBps",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
           },
           {
             "name": "slippagePpm",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
           },
           {
             "name": "excludedSources",
@@ -2634,13 +2640,15 @@
             "name": "slippageBps",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
           },
           {
             "name": "slippagePpm",
             "in": "query",
             "required": false,
-            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+            "schema": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+            "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
           },
           {
             "name": "excludedSources",
