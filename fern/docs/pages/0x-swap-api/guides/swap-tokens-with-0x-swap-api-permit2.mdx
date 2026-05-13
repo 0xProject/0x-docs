@@ -333,7 +333,7 @@ if (sellToken.address === CONTRACTS.ETH) {
 
 ## 3. Fetch a Firm Quote
 
-When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/permit2/quote`](/api-reference/openapi-json/swap/permit-2-getquote). This signals a soft commitment to complete the trade.
+When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/permit2/quote`](/api-reference/openapi-json/swap/permit-2-getquote).
 
 The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
 

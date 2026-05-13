@@ -160,7 +160,7 @@ curl --request GET \
 
 ## 2. Fetch Quote
 
-When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/gasless/quote`](/api-reference/openapi-json/gasless/getquote) endpoint. At this point, the taker is making a soft commitment to fill the suggested orders, and understands they may be penalized by the [Market Maker](/docs/core-concepts/glossary#maker) if they do not.
+When the user has found a price they are happy with and are ready to fill a quote, they should request a firm quote from Gasless API using the [`/gasless/quote`](/api-reference/openapi-json/gasless/getquote) endpoint.
 
 <Tip>
   Quotes expire in ~ 30s in order to ensure freshness. Make sure to take this
