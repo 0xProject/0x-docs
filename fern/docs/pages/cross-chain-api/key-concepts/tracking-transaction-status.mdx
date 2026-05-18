@@ -1,0 +1,56 @@
+---
+title: "Tracking Transaction Status"
+description: "Understand the status lifecycle of a cross-chain transaction returned by /status."
+---
+
+When monitoring a transaction's execution via `/status`, you may encounter various statuses that indicate the current stage of the transaction lifecycle.
+
+## Transaction Lifecycle
+
+<Frame>
+  <img src="../../../assets/img/cross-chain-api/transaction_status_diagram.png" alt="Cross-chain transaction status lifecycle" />
+</Frame>
+
+Statuses can be skipped. A single poll may jump from `origin_tx_pending` directly to `bridge_filled` if the bridge completes quickly. Do not rely on observing every intermediate status.
+
+## Top-level Status
+
+Users may refer to the top-level status to locate the funds transferred upon execution. The list of status enums below is in approximately chronological order.
+
+| Status | Description | Is Terminal? |
+| --- | --- | --- |
+| `origin_tx_pending` | The origin transaction is pending and has not landed on-chain. | ❌ |
+| `origin_tx_confirmed` | The origin transaction has been included in a block. The bridge status is fetched immediately after. | ❌ |
+| `origin_tx_reverted` | The origin transaction is reverted. The transaction has reached the end of the lifecycle, and the funds still remain in the `originAddress`. | ✅ |
+| `bridge_pending` | The bridge is in flight. The quoted bridge provider has received the funds from the `originAddress` and is in process of executing the trade. | ❌ |
+| `bridge_filled` | The bridge has been fulfilled. The funds have landed in the `destinationAddress`. | ✅ |
+| `bridge_failed` | The bridge is unable to be fulfilled. See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery) for recovery options. | ✅ |
+| `unknown` | The transaction status is unknown. Please reach out to 0x, as it is likely that there is an internal error. | ❌ |
+
+## How Confirmation Works
+
+The status service does not wait for multiple block confirmations. A transaction is marked `origin_tx_confirmed` as soon as a receipt exists and the containing block is available from the RPC node:
+
+- **Fast L2s** (Base, Arbitrum, Optimism): under 2 seconds
+- **Ethereum mainnet**: ~12 seconds (one slot)
+- Bridge providers handle their own finality requirements independently
+
+## Using `quoteId`
+
+The `quoteId` parameter (returned in each quote from `/quotes`) is optional but **strongly recommended**. Passing it enables faster status resolution and is **required** when the origin transaction contains multiple cross-chain operations (e.g., submitted via an ERC-4337 bundler).
+
+Without `quoteId` in those cases, the `/status` endpoint returns a 400 error: `"Multiple cross-chain operations found in transaction; provide quoteId to disambiguate"`
+
+## Settled Amounts
+
+After `bridge_filled`, the bridge step in the `steps` array includes a `settledBuyAmount` field which represents the actual amount the recipient received on the destination chain. This may differ from `quotedBuyAmount` due to slippage.
+
+Settled amounts are supported on all chain types (EVM, Solana, Tron, HyperCore).
+
+For refunds, `recovery.settledAmount` similarly shows the actual refunded amount.
+
+## Failure Context
+
+When `status` is `bridge_failed`, the response includes a `failure` object with the failure reason, recovery status, and (for some bridges) a ready-to-sign recovery transaction.
+
+See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery) for the complete guide.

@@ -1,0 +1,315 @@
+---
+title: "Cross Chain Swaps from Tron"
+description: "Learn how to use the 0x Cross Chain API endpoint to get a quote and send a cross chain swap transaction from Tron."
+---
+
+<Tip>
+Quick link with examples: [0x-examples](https://github.com/0xProject/0x-examples)
+</Tip>
+
+## Steps to Cross Chain Swap Tokens from Tron
+
+This guide will walk you through using the `/quotes` and `/status` endpoints on 0x's Cross Chain API to:
+
+- Fetch a quote
+- Build and sign a transaction
+- Broadcast and confirm the transaction
+- Monitor the status of the cross chain swap
+
+In our example, we will be swapping USDT on Tron to USDC on Arbitrum. For understanding how to deal with the native TRX, please refer to [Native Tokens Handling](/docs/cross-chain-api/key-concepts/native-tokens-handling).
+
+### 0. Prerequisites
+
+Make sure you have:
+
+- A funded Tron wallet (with TRX for energy/bandwidth fees)
+- [0x API key](https://dashboard.0x.org/apps)
+- A connection to a Tron full-node HTTP API (see details below)
+- [TronWeb](https://tronweb.network/docu/docs/intro/) library (used for address conversion, signing, and broadcasting)
+
+<Accordion title="Set up a Tron connection">
+Tron provides a [public full-node HTTP API](https://developers.tron.network/reference/full-node), but for production use, it's strongly recommended to use a dedicated provider such as [TronGrid](https://www.trongrid.io/) or run your own Tron full node.
+
+Tron transactions are built via the HTTP API endpoint `wallet/triggersmartcontract`, then signed and broadcast using TronWeb helpers.
+
+```typescript
+import TronWeb from "tronweb";
+
+const TRON_RPC_URL = "https://api.trongrid.io";
+
+const tronWeb = new TronWeb({
+    fullHost: TRON_RPC_URL,
+    privateKey: "your_private_key_hex",
+});
+```
+</Accordion>
+
+<Accordion title="Understanding Tron fees">
+Unlike EVM chains, Tron uses an **energy** and **bandwidth** model instead of gas:
+
+- **Bandwidth** — consumed when broadcasting any transaction. Free bandwidth is available from staking TRX.
+- **Energy** — consumed when executing smart contract calls. Can be obtained by staking TRX or paid in TRX directly.
+
+If your wallet does not have enough staked TRX to cover energy/bandwidth, the required TRX will be burned from your balance automatically. For cross-chain swaps, make sure your wallet has sufficient TRX to cover these fees.
+</Accordion>
+
+### 1. Fetch a Quote
+
+Start by sending a GET request to the 0x `/quotes` endpoint to get a quote for a specific token and chain pair with a selected amount. You may use `'tron'` or `'999999999993'` as the `originChain`. Tron addresses use the **Base58Check** format (e.g. `TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t`).
+
+```typescript
+const quotesParams = new URLSearchParams({
+    originChain: 'tron', // Tron mainnet
+    destinationChain: '42161', // Arbitrum mainnet
+    sellToken: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t', // USDT on Tron
+    buyToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', // USDC on Arbitrum
+    sellAmount: '10000000', // 10 USDT (6 decimals)
+    originAddress: '$USER_TRON_ADDRESS', // Tron address (Base58Check) that will make the trade
+    destinationAddress: '$USER_EVM_ADDRESS', // Arbitrum address that will receive the output
+    sortQuotesBy: 'price', // Prefer the quote that will result in the best price / output
+    maxNumQuotes: '1', // only the best quote
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const response = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
+const quoteResponse = await response.json();
+
+console.log(quoteResponse);
+```
+
+<Accordion title="Example response">
+```json
+{
+    "liquidityAvailable": true,
+    "allowanceTarget": null,
+    "originChainId": 999999999993,
+    "originChain": "tron",
+    "destinationChainId": 42161,
+    "destinationChain": "arbitrum",
+    "sellToken": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+    "buyToken": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "issues": {
+        "allowance": null,
+        "balance": null,
+        "simulationIncomplete": false,
+        "invalidSwapSourcesPassed": [],
+        "invalidBridgesPassed": []
+    },
+    "zid": "0x16eccbf6d178cd46304ae903",
+    "quotes": [
+        {
+            "sellAmount": "10000000",
+            "buyAmount": "9984660",
+            "minBuyAmount": "9884813",
+            "quoteId": "0x16eccbf6d178cd46304ae903eb6e3703",
+            "fees": {
+                "integratorFee": null,
+                "zeroExFee": null,
+                "bridgeNativeFee": null
+            },
+            "gasCosts": {
+                "chainType": "tvm",
+                "energyFee": "27300000",
+                "bandwidthFee": "350000",
+                "total": "27650000"
+            },
+            "steps": [
+                {
+                    "type": "bridge",
+                    "originChainId": 999999999993,
+                    "destinationChainId": 42161,
+                    "sellToken": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+                    "buyToken": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+                    "sellAmount": "10000000",
+                    "buyAmount": "9984660",
+                    "minBuyAmount": "9884813",
+                    "provider": "near_intents",
+                    "estimatedTimeSeconds": 79
+                }
+            ],
+            "transaction": {
+                "chainType": "tvm",
+                "details": {
+                    "to": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+                    "data": "a9059cbb00000000000000000000000000000069ed03...0000000000",
+                    "value": "0",
+                    "ownerAddress": "T...",
+                    "memo": ""
+                }
+            },
+            "estimatedTimeSeconds": 79,
+            "issues": {
+                "allowance": null,
+                "balance": null,
+                "simulationIncomplete": false
+            }
+        }
+    ]
+}
+```
+</Accordion>
+
+<Info>
+Unlike EVM chains, Tron cross-chain swaps do not require token approvals. The API uses deposit-only transactions, so there is no `allowanceTarget` and no approval step needed.
+</Info>
+
+### 2. Build and sign the transaction
+
+Tron transactions follow a different flow than EVM or Solana. Instead of receiving a pre-built serialized transaction, you receive the contract call parameters (`to`, `data`, `value`, `ownerAddress`) and use them to build a transaction via the Tron HTTP API.
+
+The recommended approach is to call the Tron HTTP API directly for building the transaction, then use TronWeb for signing:
+
+```typescript
+const quote = quoteResponse.quotes[0];
+const txDetails = quote.transaction.details;
+
+// Build unsigned transaction via Tron HTTP API
+const triggerResponse = await fetch(`${TRON_RPC_URL}/wallet/triggersmartcontract`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        owner_address: tronWeb.address.toHex(txDetails.ownerAddress),
+        contract_address: tronWeb.address.toHex(txDetails.to),
+        function_selector: "",
+        parameter: "",
+        data: txDetails.data.replace(/^0x/, ""),
+        call_value: Number(txDetails.value) || 0,
+        fee_limit: 150_000_000, // 150 TRX fee limit
+    }),
+});
+
+const { transaction } = await triggerResponse.json();
+
+// Sign the transaction
+const signedTx = await tronWeb.trx.sign(transaction);
+```
+
+### 3. Broadcast and confirm the transaction
+
+After signing, broadcast the transaction and poll for confirmation. Tron blocks are produced approximately every 3 seconds.
+
+```typescript
+// Broadcast the signed transaction
+const broadcastResult = await tronWeb.trx.sendRawTransaction(signedTx);
+
+if (!broadcastResult.result) {
+    throw new Error(`Broadcast failed: ${broadcastResult.message}`);
+}
+
+const txHash = broadcastResult.txid;
+console.log(`Transaction broadcast: ${txHash}`);
+
+// Poll for confirmation
+async function waitForConfirmation(txHash: string, maxAttempts = 40) {
+    for (let i = 0; i < maxAttempts; i++) {
+        await new Promise((r) => setTimeout(r, 3000)); // Wait 3 seconds between polls
+
+        const info = await tronWeb.trx.getTransactionInfo(txHash);
+
+        if (info && info.id) {
+            if (info.receipt?.result === "SUCCESS") {
+                console.log("Transaction confirmed!");
+                return info;
+            }
+            if (info.receipt?.result && info.receipt.result !== "SUCCESS") {
+                throw new Error(`Transaction failed: ${info.receipt.result}`);
+            }
+        }
+    }
+    throw new Error("Transaction not confirmed within timeout");
+}
+
+const confirmation = await waitForConfirmation(txHash);
+```
+
+### 4. Monitor the cross chain execution
+
+The last step is to monitor the execution of the cross chain transaction, including the fill on the destination chain. For that, we will use the `/status` endpoint.
+
+When using the `/status` endpoint for Tron-originated transactions, pass the transaction hash as a **hex string prefixed with** `0x` (64 hex characters).
+
+```typescript
+const statusParams = new URLSearchParams({
+    originChain: "tron", // origin chain
+    originTxHash: `0x${txHash}`, // Tron tx hash, 0x-prefixed
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
+
+console.log(await statusResponse.json());
+```
+
+In your application, you might need to monitor the status repeatedly, as bridging operation might take several seconds or minutes to complete.
+
+<Accordion title="Example response">
+```json
+{
+    "status": "bridge_filled",
+    "bridge": "relay",
+    "steps": [
+        {
+            "type": "bridge",
+            "bridge": "relay",
+            "originChainId": 999999999993,
+            "destinationChainId": 42161,
+            "sellToken": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+            "buyToken": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+            "sellAmount": "10000000",
+            "minBuyAmount": "9884813",
+            "quotedBuyAmount": "9984660",
+            "settledBuyAmount": null,
+            "estimatedTimeSeconds": 5,
+            "transactions": [
+                {
+                    "chainId": 999999999993,
+                    "chain": "tron",
+                    "txHash": "0xabc123...64hex",
+                    "timestamp": 1755200803
+                },
+                {
+                    "chainId": 42161,
+                    "chain": "arbitrum",
+                    "txHash": "0xdef456...64hex",
+                    "timestamp": 1755200810
+                }
+            ]
+        }
+    ],
+    "failure": null,
+    "transactions": [
+        {
+            "chainId": 999999999993,
+            "chain": "tron",
+            "txHash": "0xabc123...64hex",
+            "timestamp": 1755200803
+        },
+        {
+            "chainId": 42161,
+            "chain": "arbitrum",
+            "txHash": "0xdef456...64hex",
+            "timestamp": 1755200810
+        }
+    ],
+    "zid": "0xabc123def456789012345678"
+}
+```
+</Accordion>
+
+## Key differences from EVM and Solana
+
+| | EVM | Solana | Tron |
+| --- | --- | --- | --- |
+| **Chain identifier** | Numeric chain ID (e.g. `8453`) | `solana` or `999999999991` | `tron` or `999999999993` |
+| **Address format** | Hex, `0x`-prefixed | Base58 (Pubkey) | Base58Check (e.g. `T...`) |
+| **Transaction format** | Pre-built `to`, `data`, `value` | Serialized `VersionedTransaction` | Contract call params (`to`, `data`, `value`, `ownerAddress`) |
+| **Gas model** | Gas price × gas limit | Base fee + priority fee | Energy fee + bandwidth fee |
+| **Token allowance** | ERC-20 `approve` to AllowanceHolder | Not needed (handled in transaction) | Not needed (deposit-only transactions) |
+| **Confirmation** | `waitForTransactionReceipt` | `confirmTransaction` | Poll `getTransactionInfo` (~3s blocks) |
+| **`chainType` discriminator** | `"evm"` | `"svm"` | `"tvm"` |

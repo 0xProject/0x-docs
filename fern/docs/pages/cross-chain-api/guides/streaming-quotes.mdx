@@ -1,0 +1,125 @@
+---
+title: "Streaming Quotes"
+description: "Stream cross-chain quotes progressively via Server-Sent Events for faster, more responsive UX."
+---
+
+The Cross-Chain API supports streaming of swap quotes using Server-Sent Events (SSE). Quotes are delivered progressively as they're discovered, so users can act on them immediately.
+
+## Why Streaming?
+
+- ⚡ **Faster first quote** — get actionable quotes faster
+- 🔄 **Progressive discovery** — quotes stream in as they're found, no blocking waits
+- 🛠️ **Immediately executable** — every quote includes full transaction details
+- 🎯 **Better UX** — show users the first good option instead of making them wait
+
+## Endpoint
+
+`GET /cross-chain/quotes/stream`
+
+Streams cross-chain swap quotes as SSE events. Each quote is delivered as a standalone event with everything needed for execution.
+
+Same params as `/cross-chain/quotes`, except:
+
+- No `sortQuotesBy` — quotes stream in discovery order always
+- The `maxNumQuotes` defaults to **5** for the streaming endpoint (vs. 3 for the non-streaming `/quotes` endpoint). The stream closes after delivering this many quotes or reaching the timeout, whichever comes first.
+
+After calling the endpoint with proper parameters, you will get back Server-Sent Events with the following message types:
+
+### Quote Found
+
+```json
+data: {
+    "event": {
+      "type": "quote",
+      "data": {
+        "quote": { /* full quote object */ },
+        "allowanceTarget": "0x000..."
+      }
+    },
+    "zid": "0xbed7b45844099af94219ba8c"
+}
+```
+
+### Stream Done
+
+```json
+data: {
+    "event": {
+      "type": "result",
+      "data": {
+         "liquidityAvailable": true
+      }
+    },
+    "zid": "0xbed7b45844099af94219ba8c"
+}
+```
+
+### Error (if stream fails)
+
+```json
+data: {
+    "event": {
+      "type": "error",
+      "data": {
+        "message": "Stream failed due to server error",
+        "code": "STREAM_ERROR"
+      }
+    }
+}
+```
+
+## Timeout
+
+The stream has a 30-second server-side timeout. If no quotes are found within this window, a `result` event with `liquidityAvailable: false` is sent and the stream closes.
+
+This timeout is not configurable. If you're getting timeouts:
+
+- Remove `excludedBridges` or broaden `includedBridges`
+- Increase `slippageBps`
+- Try a more liquid token pair
+
+## Reconnection
+
+SSE connections may be dropped by network intermediaries (proxies, load balancers). If the connection closes without a `result` or `error` event:
+
+- The stream is not resumable, just open a new connection with the same parameters
+- Each new connection generates a new `zid`
+- Add a 1–2 second delay between reconnection attempts
+
+## Client Example
+
+```typescript
+const quoteParams = new URLSearchParams({
+    originChain: '8453', // Base mainnet
+    destinationChain: '42161', // Arbitrum mainnet
+    sellToken: '0x4200000000000000000000000000000000000006', // WETH on Base
+    buyToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', // USDC on Arbitrum
+    sellAmount: '1000000000000000000', // Amount of sellToken in base units
+    originAddress: '$USER_TAKER_ADDRESS', // Address that will make the trade
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const resp = await fetch('https://api.0x.org/cross-chain/quotes/stream?' + quoteParams.toString(), { headers });
+
+const reader = resp.body.getReader();
+const decoder = new TextDecoder();
+
+while (true) {
+  const { value, done } = await reader.read();
+  if (done) break;
+
+  const chunk = decoder.decode(value, { stream: true });
+
+  chunk.split("\n").forEach(line => {
+    if (line.startsWith("data:")) {
+      const parsed = JSON.parse(line.slice(5).trim());
+      console.log("SSE event:", parsed);
+    }
+  });
+}
+```
+
+You can find a full streaming example with NextJS in [0x-examples](https://github.com/0xProject/0x-examples).

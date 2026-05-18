@@ -2,4 +2,5 @@
 api:
   specs:
     - openapi: openapi.json
+    - openapi: openapi-cross-chain.json
 groups:

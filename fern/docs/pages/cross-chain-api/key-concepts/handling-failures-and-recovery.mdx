@@ -1,0 +1,179 @@
+---
+title: "Handling Failures and Recovery"
+description: "What happens when a bridge fails, how recovery works, and what your integration should do for each scenario."
+---
+
+Cross-chain swaps are non-atomic as they span two chains and a bridge provider in between. If the origin transaction succeeds but the bridge cannot complete, the user's funds have left their wallet and need to be recovered.
+
+This page explains what happens when a bridge fails, how recovery works, and what your integration should do for each scenario. For the happy-path status lifecycle, see [Tracking Transaction Status](/docs/cross-chain-api/key-concepts/tracking-transaction-status).
+
+## How Failures Surface
+
+When you poll `GET /cross-chain/status` and the response has `status: "bridge_failed"`, it includes a `failure` object with everything needed to understand what went wrong and what to do next.
+
+## Failure Object Structure
+
+```json
+{
+  "status": "bridge_failed",
+  "bridge": "across_v4",
+  "failure": {
+    "reason": "expired",
+    "status": "refund_pending",
+    "transactions": [
+      { "chainId": 8453, "txHash": "0xabc...", "timestamp": 1712345678 }
+    ],
+    "recovery": {
+      "chainId": 8453,
+      "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "amount": "2500000000",
+      "estimatedTimeSeconds": 1200,
+      "deadline": null,
+      "manualTransaction": null,
+      "settledAmount": null
+    }
+  }
+}
+```
+
+## Failure Reasons
+
+| Reason | Meaning |
+| --- | --- |
+| `expired` | The bridge provider is unable to execute the cross-chain transaction before its expiry. |
+| `cancelled` | The bridge has been cancelled by the user or a third-party entity. This can occur only if someone bypasses 0x's recommended flow and interacts directly with the bridge provider's system, or if the bridge provider experiences a technical failure. |
+| `out_of_gas` | The bridge provider was unable to complete the cross-chain transaction after running out of gas mid-execution. Often times, the user may need to perform a manual action to rectify the failure and unstuck the funds. |
+| `internal` | The bridge provider ran into a technical failure. Often times, the user may need to perform a manual action to rectify the failure and unstuck the funds. |
+| `unknown` | The reason of the bridge failure cannot be determined by 0x. |
+
+## Failure Statuses
+
+| Status | Description |
+| --- | --- |
+| `refund_pending` | An automatic recovery process has been initiated by the bridge provider. |
+| `refund_succeeded` | The refund has been issued by the bridge provider. The user receives the funds either in `originAddress` or `destinationAddress`, depending on the chain from which the funds are recovered. Please check `failure.recovery` for more information. |
+| `manual_action_required` | The recovery process needs to be manually initiated by the user. The user may submit the manual transaction provided as `failure.recovery.manualTransaction` to the chain that corresponds to `failure.recovery.chainId` to unstuck the funds. **The `/status` endpoint does not track the status of this manual transaction.** |
+| `no_actions_required` | The bridge ran into a failure before transferring the tokens from the origin chain. The user has already received the funds and no further actions are required. |
+| `failed` | The catch-all failure status. Unfortunately, there is nothing that the user can do at this point. Please contact 0x for support. |
+
+## Recovery Step Fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `chainId` | number | Chain where recovery occurs. |
+| `token` | string | Token being refunded. May differ from `sellToken` - see below for details. |
+| `amount` | string | Expected recovery amount (bigint). |
+| `estimatedTimeSeconds` | number or null | Seconds until automatic refund. Present when `refund_pending`. |
+| `deadline` | number or null | Unix timestamp for manual action deadline. After this, funds may be permanently lost. Only Arbitrum Bridge uses this. |
+| `manualTransaction` | object or null | Ready-to-sign transaction. Present when `manual_action_required`. Can be submitted by anyone. |
+| `settledAmount` | string or null | Actual refunded amount. Populated after refund confirms. May differ from `amount`. |
+
+## Refund Token and Chain
+
+The refund token and chain depend on **where the failure happened** and **what the route looked like**. The refund is not always in the user's original `sellToken` on `originChain`. What you get back depends on the bridge (see table below) and the route composition.
+
+The main thing to understand: the refund token is based on the **bridge step's** sell or buy token and not the route's `sellToken`. If the route included a swap or wrap before the bridge, the bridge step's tokens differ from what the user started with:
+
+| Route | Sell token | Bridge token | Token refunded (origin-side bridges) |
+| --- | --- | --- | --- |
+| USDC → bridge | USDC | USDC | USDC |
+| ETH → wrap → WETH → bridge | ETH | WETH | WETH (not ETH) |
+| ETH → swap → USDC → bridge | ETH | USDC | USDC (not ETH) |
+
+The `recovery.token`, `recovery.chainId`, and `recovery.amount` fields contain the exact refund details.
+
+## Manual Recovery Transactions
+
+When `manualTransaction` is present, it's a complete transaction.
+
+**EVM:**
+
+```json
+{ "chainType": "evm", "to": "0x...", "data": "0x...", "value": "0", "gas": "200000", "gasPrice": "30000000000" }
+```
+
+Submit via `eth_sendTransaction` on chain `recovery.chainId`.
+
+**Solana:**
+
+```json
+{ "chainType": "svm", "serializedTransaction": "<base64>" }
+```
+
+Base64-decode, sign, submit.
+
+- Can be submitted by anyone, not just the original sender
+- If `deadline` is set, submit before it expires as otherwise funds might be lost
+
+## Tracking Refund Progress
+
+For automatic refunds, keep polling `/status`:
+
+1. `bridge_failed` + `refund_pending` - refund initiated
+2. `bridge_failed` + `refund_succeeded` - refund confirmed, `failure.transactions` has refund tx hash and `recovery.settledAmount` has actual refunded amount
+
+## Recovery Behavior by Bridge
+
+In this table, "bridge step's sell/buy token" refers to the tokens on the bridge step specifically - not the user's original `sellToken`/`buyToken` from the quote request. If the route included a swap or wrap before the bridge, these are different. See [Refund Token and Chain](#refund-token-and-chain) above.
+
+| Bridge | Recovery | Refund Chain | Refund Token |
+| --- | --- | --- | --- |
+| Across V4 | Automatic | Origin | Bridge step's `sellToken` |
+| Arbitrum Bridge | Manual (has deadline) | Destination | Bridge step's `buyToken` |
+| Bungee Auto | Automatic | Origin or destination | Usually `sellToken` or `buyToken` but there can be cases where on origin chain user will be refunded with a different token like USDC or WETH |
+| Circle Forwarder | Not tracked | - | - |
+| CCIP | Manual | Destination | Bridge step's `buyToken` |
+| Gas.zip | Automatic | Origin | Bridge step's `sellToken` |
+| HyperCore Bridge | Not tracked | - | - |
+| Linea Bridge | Not tracked | - | - |
+| Mayan Swift | Automatic | Origin | Bridge step's `sellToken` |
+| Mayan MCTP / FastMCTP | Automatic | Destination | USDC |
+| NEAR Intents | Automatic | Origin | Bridge step's `sellToken` |
+| OFT (LayerZero) | Manual | Destination | Bridge step's `buyToken` |
+| Relay | Automatic | Origin | Bridge step's `sellToken` |
+| Squid | Automatic | Origin | Bridge step's `sellToken` |
+| Stargate V2 | Manual | Destination | Bridge step's `buyToken` |
+| Superchain | Manual | Destination | Bridge step's `buyToken` |
+
+<Warning>
+**Important:** Arbitrum Bridge is the only bridge with a recovery **deadline**. The `deadline` field contains a Unix timestamp. If the user does not submit the `manualTransaction` before this time, funds may be permanently lost. Always display the deadline prominently.
+</Warning>
+
+For bridges marked "Not tracked", the 0x status service does not track the recovery process. The bridge provider may still offer recovery through their own tools. Contact 0x support with the `zid` for assistance.
+
+## Example: Automatic Refund (Across)
+
+```json
+{
+  "failure": {
+    "reason": "expired", "status": "refund_pending",
+    "recovery": { "chainId": 8453, "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "amount": "2500000000", "estimatedTimeSeconds": 1200 }
+  }
+}
+```
+
+## Example: Manual Recovery with Transaction (Stargate)
+
+A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destination:
+
+```json
+{
+  "failure": {
+    "reason": "out_of_gas", "status": "manual_action_required",
+    "recovery": { "chainId": 42161, "token": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", "amount": "2500000000",
+      "manualTransaction": { "chainType": "evm", "to": "0x...", "data": "0x...", "value": "0", "gas": "150000", "gasPrice": "100000000" } }
+  }
+}
+```
+
+## Example: Arbitrum Bridge Deadline
+
+```json
+{
+  "failure": {
+    "reason": "out_of_gas", "status": "manual_action_required",
+    "recovery": { "chainId": 42161, "deadline": 1713000000,
+      "manualTransaction": { "chainType": "evm", "to": "0x...", "data": "0x...", "value": "0", "gas": "200000", "gasPrice": "100000000" } }
+  }
+}
+```
