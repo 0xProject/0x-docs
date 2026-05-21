@@ -835,44 +835,15 @@
                                   "additionalProperties": false,
                                   "nullable": true,
                                   "description": "The fee charged by 0x for the trade."
-                                },
-                                "gasFee": {
-                                  "type": "object",
-                                  "properties": {
-                                    "amount": {
-                                      "allOf": [
-                                        {},
-                                        {
-                                          "type": "string",
-                                          "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
-                                        }
-                                      ],
-                                      "description": "The amount of token charged as the gas fee"
-                                    },
-                                    "token": {
-                                      "type": "string",
-                                      "pattern": "^0x[a-fA-F0-9]{40}$",
-                                      "description": "The address of the token charged as the gas fee"
-                                    },
-                                    "type": {
-                                      "type": "string",
-                                      "enum": ["gas"]
-                                    }
-                                  },
-                                  "required": ["amount", "token", "type"],
-                                  "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The gas fee to be used in submitting the transaction."
                                 }
                               },
                               "required": [
                                 "integratorFee",
                                 "integratorFees",
-                                "zeroExFee",
-                                "gasFee"
+                                "zeroExFee"
                               ],
                               "additionalProperties": false,
-                              "description": "Fees to be deducted in this transaction. Exact-out v1 does not support fees."
+                              "description": "Fees to be deducted in this transaction."
                             },
                             "issues": {
                               "type": "object",
@@ -1099,8 +1070,7 @@
                                   },
                                   "required": ["fills", "tokens"],
                                   "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The optional refund route used to convert buy-token surplus back to the sell token"
+                                  "description": "The refund route used to convert buy-token surplus back to the sell token"
                                 }
                               },
                               "required": ["forward", "refund"],
@@ -2285,44 +2255,15 @@
                                   "additionalProperties": false,
                                   "nullable": true,
                                   "description": "The fee charged by 0x for the trade."
-                                },
-                                "gasFee": {
-                                  "type": "object",
-                                  "properties": {
-                                    "amount": {
-                                      "allOf": [
-                                        {},
-                                        {
-                                          "type": "string",
-                                          "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
-                                        }
-                                      ],
-                                      "description": "The amount of token charged as the gas fee"
-                                    },
-                                    "token": {
-                                      "type": "string",
-                                      "pattern": "^0x[a-fA-F0-9]{40}$",
-                                      "description": "The address of the token charged as the gas fee"
-                                    },
-                                    "type": {
-                                      "type": "string",
-                                      "enum": ["gas"]
-                                    }
-                                  },
-                                  "required": ["amount", "token", "type"],
-                                  "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The gas fee to be used in submitting the transaction."
                                 }
                               },
                               "required": [
                                 "integratorFee",
                                 "integratorFees",
-                                "zeroExFee",
-                                "gasFee"
+                                "zeroExFee"
                               ],
                               "additionalProperties": false,
-                              "description": "Fees to be deducted in this transaction. Exact-out v1 does not support fees."
+                              "description": "Fees to be deducted in this transaction."
                             },
                             "issues": {
                               "type": "object",
@@ -2549,8 +2490,7 @@
                                   },
                                   "required": ["fills", "tokens"],
                                   "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The optional refund route used to convert buy-token surplus back to the sell token"
+                                  "description": "The refund route used to convert buy-token surplus back to the sell token"
                                 }
                               },
                               "required": ["forward", "refund"],
@@ -3740,44 +3680,15 @@
                                   "additionalProperties": false,
                                   "nullable": true,
                                   "description": "The fee charged by 0x for the trade."
-                                },
-                                "gasFee": {
-                                  "type": "object",
-                                  "properties": {
-                                    "amount": {
-                                      "allOf": [
-                                        {},
-                                        {
-                                          "type": "string",
-                                          "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
-                                        }
-                                      ],
-                                      "description": "The amount of token charged as the gas fee"
-                                    },
-                                    "token": {
-                                      "type": "string",
-                                      "pattern": "^0x[a-fA-F0-9]{40}$",
-                                      "description": "The address of the token charged as the gas fee"
-                                    },
-                                    "type": {
-                                      "type": "string",
-                                      "enum": ["gas"]
-                                    }
-                                  },
-                                  "required": ["amount", "token", "type"],
-                                  "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The gas fee to be used in submitting the transaction."
                                 }
                               },
                               "required": [
                                 "integratorFee",
                                 "integratorFees",
-                                "zeroExFee",
-                                "gasFee"
+                                "zeroExFee"
                               ],
                               "additionalProperties": false,
-                              "description": "Fees to be deducted in this transaction. Exact-out v1 does not support fees."
+                              "description": "Fees to be deducted in this transaction."
                             },
                             "issues": {
                               "type": "object",
@@ -4004,8 +3915,7 @@
                                   },
                                   "required": ["fills", "tokens"],
                                   "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The optional refund route used to convert buy-token surplus back to the sell token"
+                                  "description": "The refund route used to convert buy-token surplus back to the sell token"
                                 }
                               },
                               "required": ["forward", "refund"],
@@ -5275,44 +5185,15 @@
                                   "additionalProperties": false,
                                   "nullable": true,
                                   "description": "The fee charged by 0x for the trade."
-                                },
-                                "gasFee": {
-                                  "type": "object",
-                                  "properties": {
-                                    "amount": {
-                                      "allOf": [
-                                        {},
-                                        {
-                                          "type": "string",
-                                          "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
-                                        }
-                                      ],
-                                      "description": "The amount of token charged as the gas fee"
-                                    },
-                                    "token": {
-                                      "type": "string",
-                                      "pattern": "^0x[a-fA-F0-9]{40}$",
-                                      "description": "The address of the token charged as the gas fee"
-                                    },
-                                    "type": {
-                                      "type": "string",
-                                      "enum": ["gas"]
-                                    }
-                                  },
-                                  "required": ["amount", "token", "type"],
-                                  "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The gas fee to be used in submitting the transaction."
                                 }
                               },
                               "required": [
                                 "integratorFee",
                                 "integratorFees",
-                                "zeroExFee",
-                                "gasFee"
+                                "zeroExFee"
                               ],
                               "additionalProperties": false,
-                              "description": "Fees to be deducted in this transaction. Exact-out v1 does not support fees."
+                              "description": "Fees to be deducted in this transaction."
                             },
                             "issues": {
                               "type": "object",
@@ -5539,8 +5420,7 @@
                                   },
                                   "required": ["fills", "tokens"],
                                   "additionalProperties": false,
-                                  "nullable": true,
-                                  "description": "The optional refund route used to convert buy-token surplus back to the sell token"
+                                  "description": "The refund route used to convert buy-token surplus back to the sell token"
                                 }
                               },
                               "required": ["forward", "refund"],
