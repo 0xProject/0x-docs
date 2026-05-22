@@ -9917,6 +9917,70 @@
         "required": ["name", "message", "data"],
         "additionalProperties": false
       },
+      "INTENTS_INSUFFICIENT_BALANCE_OR_ALLOWANCE": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["INTENTS_INSUFFICIENT_BALANCE_OR_ALLOWANCE"]
+          },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "tradeHash": {
+                "type": "string",
+                "description": "The hash of the trade provided by the caller"
+              },
+              "taker": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "The taker of the trade"
+              },
+              "sellToken": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "The sell token"
+              },
+              "sellAmount": {
+                "allOf": [
+                  {},
+                  {
+                    "type": "string",
+                    "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                  }
+                ],
+                "description": "The sell amount"
+              },
+              "minBalanceOrAllowance": {
+                "allOf": [
+                  {},
+                  {
+                    "type": "string",
+                    "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                  }
+                ],
+                "description": "The smaller value of the balance or the allowance of the taker"
+              }
+            },
+            "required": [
+              "zid",
+              "tradeHash",
+              "taker",
+              "sellToken",
+              "sellAmount",
+              "minBalanceOrAllowance"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
       "INTERNAL_SERVER_ERROR": {
         "type": "object",
         "properties": {
@@ -9960,6 +10024,35 @@
               }
             },
             "required": ["zid", "metaTransactionHash", "taker"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
+      "INTENTS_INVALID_SIGNATURE": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["INTENTS_INVALID_SIGNATURE"] },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "tradeHash": {
+                "type": "string",
+                "description": "The hash of the trade provided by the caller"
+              },
+              "taker": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "The taker of the trade"
+              }
+            },
+            "required": ["zid", "tradeHash", "taker"],
             "additionalProperties": false
           }
         },
@@ -10084,6 +10177,64 @@
         "required": ["name", "message", "data"],
         "additionalProperties": false
       },
+      "TRADE_EXPIRY_TOO_SOON": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["TRADE_EXPIRY_TOO_SOON"] },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "tradeHash": {
+                "type": "string",
+                "description": "The hash of the trade provided by the caller"
+              },
+              "expiry": {
+                "allOf": [
+                  {},
+                  {
+                    "type": "string",
+                    "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                  }
+                ],
+                "description": "The expiry of the trade provided by the caller in ms"
+              }
+            },
+            "required": ["zid", "tradeHash", "expiry"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
+      "TRADE_INVALID": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["TRADE_INVALID"] },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "tradeHash": {
+                "type": "string",
+                "description": "The hash of the trade provided by the caller"
+              }
+            },
+            "required": ["zid", "tradeHash"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
       "TRADE_STATUS_NOT_FOUND": {
         "type": "object",
         "properties": {
@@ -10134,6 +10285,38 @@
               "metaTransactionHash",
               "pendingMetaTransactionHashes"
             ],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
+      "INTENTS_PENDING_TRADES_ALREADY_EXIST": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["INTENTS_PENDING_TRADES_ALREADY_EXIST"]
+          },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "tradeHash": {
+                "type": "string",
+                "description": "The hash of the trade provided by the caller"
+              },
+              "pendingTradeHashes": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "The list of pending trade hashes for the same taker and sell token"
+              }
+            },
+            "required": ["zid", "tradeHash", "pendingTradeHashes"],
             "additionalProperties": false
           }
         },
