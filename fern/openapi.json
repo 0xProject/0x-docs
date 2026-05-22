@@ -10084,6 +10084,26 @@
         "required": ["name", "message", "data"],
         "additionalProperties": false
       },
+      "TRADE_STATUS_NOT_FOUND": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["TRADE_STATUS_NOT_FOUND"] },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              }
+            },
+            "required": ["zid"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
       "PENDING_TRADES_ALREADY_EXIST": {
         "type": "object",
         "properties": {
