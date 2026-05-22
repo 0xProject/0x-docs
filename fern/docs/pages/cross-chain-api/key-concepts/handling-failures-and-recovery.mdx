@@ -3,6 +3,10 @@ title: "Handling Failures and Recovery"
 description: "What happens when a bridge fails, how recovery works, and what your integration should do for each scenario."
 ---
 
+<Info>
+  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
+</Info>
+
 Cross-chain swaps are non-atomic as they span two chains and a bridge provider in between. If the origin transaction succeeds but the bridge cannot complete, the user's funds have left their wallet and need to be recovered.
 
 This page explains what happens when a bridge fails, how recovery works, and what your integration should do for each scenario. For the happy-path status lifecycle, see [Tracking Transaction Status](/docs/cross-chain-api/key-concepts/tracking-transaction-status).
