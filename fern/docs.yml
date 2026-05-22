@@ -91,7 +91,7 @@ navigation:
               - page: AI Project Showcase
                 slug: ai-tools
                 path: docs/pages/introduction/develop-with-ai/ai-tools.mdx
-          - page: Supported Chains
+          - page: Supported Chains and Providers
             slug: supported-chains
             path: docs/pages/introduction/supported-chains.mdx
           - link: Demo Apps
@@ -198,7 +198,53 @@ navigation:
         slug: cross-chain-api
         icon: fa-regular fa-bridge
         contents:
-          - link: Learn More (Private Beta)
+          - page: Introduction
+            slug: introduction
+            path: docs/pages/cross-chain-api/introduction.mdx
+          - section: Guides
+            slug: guides
+            contents:
+              - page: Get started
+                slug: get-started
+                path: docs/pages/cross-chain-api/guides/get-started.mdx
+              - page: Cross Chain Swaps from Solana
+                slug: cross-chain-swaps-from-solana
+                path: docs/pages/cross-chain-api/guides/cross-chain-swaps-from-solana.mdx
+              - page: Cross Chain Swaps from Tron
+                slug: cross-chain-swaps-from-tron
+                path: docs/pages/cross-chain-api/guides/cross-chain-swaps-from-tron.mdx
+              - page: Streaming Quotes
+                slug: streaming-quotes
+                path: docs/pages/cross-chain-api/guides/streaming-quotes.mdx
+              - page: Monetize Your App
+                slug: monetize-your-app
+                path: docs/pages/cross-chain-api/guides/monetize-your-app.mdx
+          - section: Key Concepts
+            slug: key-concepts
+            contents:
+              - page: Tracking Transaction Status
+                slug: tracking-transaction-status
+                path: docs/pages/cross-chain-api/key-concepts/tracking-transaction-status.mdx
+              - page: Handling Failures and Recovery
+                slug: handling-failures-and-recovery
+                path: docs/pages/cross-chain-api/key-concepts/handling-failures-and-recovery.mdx
+              - page: Native Tokens Handling
+                slug: native-tokens-handling
+                path: docs/pages/cross-chain-api/key-concepts/native-tokens-handling.mdx
+              - page: Understanding Bridging Costs
+                slug: understanding-bridging-costs
+                path: docs/pages/cross-chain-api/key-concepts/understanding-bridging-costs.mdx
+          - section: Reference
+            slug: reference
+            contents:
+              - link: Supported Chains and Providers
+                href: /docs/introduction/supported-chains#cross-chain-api
+              - page: Troubleshooting
+                slug: troubleshooting
+                path: docs/pages/cross-chain-api/reference/troubleshooting.mdx
+              - link: Rate Limits
+                href: /docs/developer-resources/rate-limits
+          - link: Learn More
             href: https://0x.org/products/cross-chain
             target: _blank
 
@@ -290,7 +336,7 @@ navigation:
     layout:
       - page: API Overview
         path: docs/pages/api-reference-overview.mdx
-      - api: openapi.json
+      - api: 0x API
 
   - tab: liquidity
     layout:

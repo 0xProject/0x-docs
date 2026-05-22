@@ -22,4 +22,5 @@ The following is shared to help your team to maximize your app setup. The exampl
 
 - The 5 RPS is 5 calls across our endpoints
 - The 5 RPS is per fixed 1 second window; in other words, the API has fixed 1 second windows and will allow 5 calls any where within that 1 second window
+- Opening an SSE connection (e.g. to `/cross-chain/quotes/stream`) counts as one request. Individual events delivered over the stream do not count as separate requests; each new connection (including reconnections) counts as a new request.
 - You can view your current usage and limits on the [0x API Dashboard](https://dashboard.0x.org/login).

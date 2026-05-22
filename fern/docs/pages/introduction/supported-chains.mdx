@@ -1,9 +1,11 @@
 ---
-title: Supported Chains
-description: This page provides a list of chains supported by 0x APIs.
+title: Supported Chains and Providers
+description: This page provides a list of chains and bridge providers supported by 0x APIs.
 ---
 
-Swap and Gasless APIs support the following chains. Select the chain in your request by providing the corresponding `chainId` request parameter. To request support for a new chain, please submit a request [here](https://0x.canny.io/request-features).
+Select the chain in your request by providing the corresponding `chainId` request parameter. To request support for a new chain, please submit a request [here](https://0x.canny.io/request-features).
+
+## Swap and Gasless APIs
 
 | Chain              | Chain ID | Swap API | Gasless API |
 | ------------------ | -------- | -------- | ----------- |
@@ -27,3 +29,70 @@ Swap and Gasless APIs support the following chains. Select the chain in your req
 | Tempo              | **4217** | ✅       | ✅          |
 | Unichain           | 130      | ✅       | ✅          |
 | World Chain        | 480      | ✅       | ✅          |
+
+## Cross-Chain API
+
+Below you can find the table with supported chains and providers. If a chain is supported, it is supported as both origin and destination chain, and the exceptions are marked by `ori` or `dst` if a chain is supported just as an origin or destination chain.
+
+| Chain | Across V4 | Relay | Bungee Auto | CCIP | Gas.zip | Squid Coral | NEAR Intents | OFT | Mayan Swift | Mayan MCTP | Mayan FastMCTP | Circle Std | Circle Fast | Arbitrum | Linea | Superchain | HyperCore |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Ethereum | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ori | ori | ori | ❌ |
+| Abstract | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Arbitrum | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | dst | ❌ | ❌ | ori |
+| Avalanche | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Base | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | dst | ❌ |
+| Berachain | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Blast | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| BSC | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| HyperEVM | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Ink | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Linea | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | dst | ❌ | ❌ |
+| Mantle | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Mode | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Monad | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Optimism | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | dst | ❌ |
+| Plasma | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Polygon | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Scroll | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Sonic | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Tempo | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Unichain | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | dst | ❌ |
+| Worldchain | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Solana | ✅ | ✅ | ❌ | ❌ | ori | ❌ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| HyperCore | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | dst |
+| Tron | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+
+### Bridge Provider IDs
+
+Pass these IDs (as a comma-separated string) to the `includedBridges` or `excludedBridges` query parameters to control which providers are eligible for routing.
+
+| Provider | API ID |
+| --- | --- |
+| Across V4 | `across_v4` |
+| Relay | `relay` |
+| Bungee Auto | `bungee_auto` |
+| CCIP | `ccip` |
+| Gas.zip | `gas_zip` |
+| Squid Coral | `squid` |
+| NEAR Intents | `near_intents` |
+| OFT | `oft` |
+| Mayan Swift | `mayan_swift` |
+| Mayan MCTP | `mayan_mctp` |
+| Mayan FastMCTP | `mayan_fast_mctp` |
+| Circle Std | `circle_forwarder_standard` |
+| Circle Fast | `circle_forwarder_fast` |
+| Arbitrum | `arbitrum_bridge` |
+| Linea | `linea` |
+| Superchain | `superchain` |
+| HyperCore | `hyper_core_bridge` |
+
+### Chain ID Mapping
+
+While it is recommended to use the chain name over `chainId` for your API requests, below is the mapping between chains and their chain IDs.
+
+| Chain | Chain ID |
+| --- | --- |
+| All EVM chains | Canonical chain ID (e.g. `base: 8453`) |
+| Solana | 999,999,999,991 |
+| HyperCore | 999,999,999,992 |
+| Tron | 999,999,999,993 |

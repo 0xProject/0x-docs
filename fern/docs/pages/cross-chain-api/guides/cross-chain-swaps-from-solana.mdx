@@ -1,0 +1,219 @@
+---
+title: "Cross Chain Swaps from Solana"
+description: "Learn how to use the 0x Cross Chain API endpoint to get a quote and send a cross chain swap transaction from Solana."
+---
+
+<Info>
+  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
+</Info>
+
+<Tip>
+Quick link with examples: [0x-examples](https://github.com/0xProject/0x-examples)
+</Tip>
+
+## Steps to Cross Chain Swap Tokens from Solana
+
+This guide will walk you through using the `/quotes` and `/status` endpoints on 0x's Cross Chain API to:
+
+1. Fetch a quote
+2. Sign and send a transaction
+3. Monitor the status of the cross chain swap
+
+In our example, we will be swapping WSOL on Solana to USDC on Base. For understanding how to deal with the native SOL, please refer to [Native Tokens Handling](/docs/cross-chain-api/key-concepts/native-tokens-handling).
+
+### 0. Prerequisites
+
+Make sure you have:
+
+- A funded Solana wallet
+- [0x API key](https://dashboard.0x.org/apps)
+- An RPC Connection (see details below)
+
+<Accordion title="Set up an RPC connection">
+Solana provides a [default public RPC endpoint](https://docs.solana.com/cluster/rpc-endpoints), but for production use, it's strongly recommended to run your own or use a third-party provider like [Helius](https://www.helius.dev/).
+
+```typescript
+import { Connection } from "@solana/web3.js";
+
+// You can replace this with your own or a third-party RPC URL
+const connection = new Connection("https://api.mainnet-beta.solana.com");
+```
+</Accordion>
+
+### 1. Fetch a Quote
+
+Start by sending a GET request to the 0x `/quotes` endpoint to get a quotes for a specific tokens and chains pair with selected amount. You may use `'solana'` or `'999999999991'` as the `originChain`.
+
+```typescript
+const quotesParams = new URLSearchParams({
+    originChain: 'solana', // Solana mainnet
+    destinationChain: '8453', // Base mainnet
+    sellToken: 'So11111111111111111111111111111111111111112', // WSOL on Solana
+    buyToken: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913', // USDC on Base
+    sellAmount: '10000000000000000000', // Amount of sellToken in base units
+    originAddress: '$USER_TAKER_ADDRESS', // Solana Pubkey that will make the trade
+    destinationAddress: '$USER_RECEIVER_ADDRESS', // Base address that will receive the output
+    sortQuotesBy: 'price', // Prefer the quote that will result in the best price / output
+    maxNumQuotes: 1 // only the best quote
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const quoteResponse = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
+
+console.log(await quoteResponse.json());
+```
+
+<Accordion title="Example response">
+```json
+{
+    "liquidityAvailable": true,
+    "originChainId": 999999999991,
+    "originChain": "solana",
+    "destinationChainId": 8453,
+    "destinationChain": "base",
+    "sellToken": "So11111111111111111111111111111111111111112",
+    "buyToken": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "issues": {
+        "allowance": null,
+        "balance": null,
+        "simulationIncomplete": false,
+        "invalidSwapSourcesPassed": [],
+        "invalidBridgesPassed": []
+    },
+    "zid": "0xbacab00bea6e849844e1be8b",
+    "routes": [
+        {
+            "sellAmount": "10000000000",
+            "buyAmount": "1946182873",
+            "minBuyAmount": "1926913735",
+            "fees": {
+                "integratorFee": null,
+                "zeroExFee": null,
+                "bridgeNativeFee": null
+            },
+            "gasCosts": {
+                "chainType": "svm",
+                "base": "5000",
+                "priority": "0",
+                "total": "5000"
+            },
+            "steps": [
+                {
+                    "type": "bridge",
+                    "originChainId": 999999999991,
+                    "destinationChainId": 8453,
+                    "sellToken": "So11111111111111111111111111111111111111112",
+                    "buyToken": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+                    "sellAmount": "10000000000",
+                    "buyAmount": "1946182873",
+                    "minBuyAmount": "1926913735",
+                    "provider": "relay",
+                    "estimatedTimeSeconds": 3
+                }
+            ],
+            "transaction": {
+                "chainType": "svm",
+                "details": {
+                    "serializedTransaction": "AQAA...JeZQ=="
+                }
+            },
+            "estimatedTimeSeconds": 3,
+            "issues": {
+                "allowance": null,
+                "balance": null,
+                "simulationIncomplete": false
+            }
+        }
+    ]
+}
+```
+</Accordion>
+
+### 2. Sign and submit transaction
+
+In the next step, you need to build `VersionedTransaction` based on returned transaction data, sign it with your wallet, and send it to the Solana network, and wait for transaction confirmation.
+
+```typescript
+const serializedTx = quotesResponse.quotes[0].transaction.details.serializedTransaction;
+const transactionBuffer = Buffer.from(serializedTx, "base64");
+const transaction = VersionedTransaction.deserialize(transactionBuffer);
+
+transaction.sign([keypair]);
+
+const signature = await connection.sendTransaction(transaction, {
+    skipPreflight: false, // Let Solana do final preflight
+    preflightCommitment: "confirmed",
+});
+
+const confirmation = await connection.confirmTransaction(
+    {
+      signature,
+      ...(await connection.getLatestBlockhash()),
+    },
+    "finalized",
+);
+```
+
+### 3. Monitor the cross chain execution
+
+The last step is to monitor the execution of the cross chain transaction, including the fill on the destination chain. For that, we will use the `/status` endpoint.
+
+```typescript
+const statusParams = new URLSearchParams({
+    originChain: "solana", // origin chain
+    originTxHash: signature, // transaction hash of the origin chain transaction, submitted in previous step
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
+
+console.log(await statusResponse.json());
+```
+
+In your application, you might need to monitor the status repeatedly, as bridging operation might take several seconds or minutes to complete.
+
+<Accordion title="Example response">
+```json
+{
+    "status": "bridge_filled",
+    "bridge": "relay",
+    "transactions": [
+        {
+            "chainId": 999999999991,
+            "chain": "solana",
+            "txHash": "5UnA6U8LBcV7ZrBcq9ZVJrAmp86f9m5yQyRtBF3nFYYFmQAjknBNiYGvj41CAUf9ZqAUfqYVME571KskA7ERX2ep",
+            "timestamp": 1755200803
+        },
+        {
+            "chainId": 8453,
+            "chain": "base",
+            "txHash": "0xbc52c14a42fe35cdf6f2eef0676bfa9af51870a72f19e9f510ea1e31619a6b7d",
+            "timestamp": 1755200808
+        }
+    ],
+    "zid": "0x9562c9b7dd462114505f5dcd"
+}
+```
+</Accordion>
+
+## Extra - using alternative gas payer
+
+One thing that is specific to cross chain swaps originating from Solana is the ability to specify an alternative wallet as a gas payer. When requesting a `/quote`, you need to pass an extra `gasPayer` parameter, equal to base58-encoded pubkey of the gas payer. Then, when processing the response, you need to additionally sign the transaction with the gas payer wallet.
+
+```typescript
+const serializedTx = quote.transaction.details.serializedTransaction;
+const transactionBuffer = Buffer.from(serializedTx, "base64");
+const transaction = VersionedTransaction.deserialize(transactionBuffer);
+// Sign transaction with both keypairs
+console.log("Signing transaction with gas payer and user keypairs...");
+
+transaction.sign([gasPayerKeypair, keypair]);
+```
+
+In the examples repo, you can find a dedicated end-to-end example utilising a gas payer functionality.
