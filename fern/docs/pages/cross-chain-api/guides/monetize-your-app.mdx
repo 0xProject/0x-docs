@@ -9,9 +9,17 @@ description: "Collect a percentage-based fee on every cross-chain swap your user
 
 Collect a percentage-based fee on every cross-chain swap your users make. Fees are deducted from the `sellAmount` and sent directly to your wallet during the origin transaction.
 
+## Origin Chain Support
+
+| Origin chain | Fee collection |
+| --- | --- |
+| EVM | Supported. |
+| Solana | Supported, with a few [constraints](#solana-origin-constraints). |
+| Tron | Not supported. |
+
 ## Quick Start
 
-Add `feeBps` and `feeRecipient` to your quote request:
+Add `feeBps` and `feeRecipient` to your quote request. `feeRecipient` must be in the origin chain's address format (EVM hex on EVM origins, base58 on Solana).
 
 ```typescript
 const quoteParams = new URLSearchParams({
@@ -100,21 +108,30 @@ When multiple fees are used, the response contains `integratorFees` (array) inst
 }
 ```
 
+## Solana Origin Constraints
+
+| Constraint | Detail |
+| --- | --- |
+| Maximum integrator fees | Solana origins support a maximum of 2 integrator fees per quote. |
+| ATA creation for SPL fees | When an SPL fee recipient does not yet have an Associated Token Account for the mint, one is created on their behalf. The first fee paid to a fresh recipient adds ~0.002 SOL of rent on top of network fees; subsequent fees to the same recipient are free. Native SOL fee recipients have no ATA cost. |
+
 ## Parameter Reference
 
 | Parameter | Type | Required | Description |
 | --- | --- | --- | --- |
-| `feeBps` | string | With `feeRecipient` | Comma-separated basis points. Each: integer 0–10,000. |
-| `feeRecipient` | string | With `feeBps` | Comma-separated wallet addresses. Must be valid EVM addresses. |
-| `feeToken` | string | No | Comma-separated token addresses. Defaults to `sellToken`. |
+| `feeBps` | string | With `feeRecipient` | Comma-separated basis points. Each: integer 0–10,000. Solana origins are capped at 2 entries. |
+| `feeRecipient` | string | With `feeBps` | Comma-separated wallet addresses, in the origin chain's address format. |
+| `feeToken` | string | No | Comma-separated token addresses. Defaults to `sellToken`; currently fees can only be collected in `sellToken`. |
 
 ### Validation Rules
 
 - `feeBps` and `feeRecipient` must **both** be provided, or neither.
 - If `feeToken` is provided, array length must match `feeBps`.
 - `feeRecipient` addresses must be valid for the origin chain's address format.
+- Solana origins reject more than 2 integrator fees.
 
 ## Pricing Considerations
 
 - Fees reduce the `sellAmount` that reaches the bridge, reducing the user's `buyAmount`.
 - Higher fees may make your quotes less competitive if users compare across aggregators.
+- On Solana, the first fee paid to a fresh SPL recipient also costs ~0.002 SOL of ATA rent. Reusing the same recipient avoids this.

@@ -48,7 +48,10 @@ All API error responses follow this structure:
 | `"Multiple cross-chain operations found in transaction; provide quoteId to disambiguate"` | Pass `quoteId` from original quote. Happens with ERC-4337 bundlers. |
 | `"originChain and destinationChain must be different"` | Use different chains, this API does not support same-chain swaps. |
 | `"HyperCore is not supported as an origin chain"` | HyperCore (`999999999992`) is destination-only. |
-| `"Fee parameters are not supported..."` | Remove `feeBps` / `feeRecipient`. Fees only work on EVM origins. |
+| `"Fee collection is not supported when origin chain is Tron"` | Fees are supported on EVM and Solana origins only. Remove `feeBps` / `feeRecipient` / `feeToken` for Tron quotes. |
+| `"Solana origins support a maximum of 2 integrator fees"` | Reduce `feeBps` / `feeRecipient` to at most 2 entries. |
+| `"Invalid Solana address format for feeRecipient"` | Use a base58 Solana pubkey. |
+| `"Invalid Solana token address format for feeToken"` | Use a base58 Solana mint address. |
 | `"includedBridges and excludedBridges are mutually exclusive"` | Use only one of those parameters. |
 | `"feeBps and feeRecipient must have the same length"` | Match comma-separated array lengths. |
 | `"Address is not authorized for trading"` | Wallet is on a screening blocklist. `data.details[].field` shows which address. |
