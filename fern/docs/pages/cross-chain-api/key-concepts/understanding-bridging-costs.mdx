@@ -29,7 +29,7 @@ Each quote includes a `fees` object breaking down the explicit costs:
 
 ### Integrator Fees (`integratorFees`)
 
-Fees you collect as the integrator. Only present when `feeBps` and `feeRecipient` are passed in the request. Deducted from `sellAmount`. See [Monetize Your App](/docs/cross-chain-api/guides/monetize-your-app) for setup instructions.
+Fees you collect as the integrator. Only present when `feeBps` and `feeRecipient` are passed in the request. Deducted from `sellAmount` on EVM and Solana origins (Tron does not support fees). See [Monetize Your App](/docs/cross-chain-api/guides/monetize-your-app).
 
 ### 0x Fee (`zeroExFee`)
 
@@ -37,7 +37,7 @@ Fee collected by the 0x API. Deducted from `sellAmount`. Null when not applicabl
 
 ### Bridge Native Fee (`bridgeNativeFee`)
 
-A fee charged by the bridge provider in the chain's native token for cross-chain messaging infrastructure. It is **not** deducted from the `sellAmount`. Instead, it is added to the transaction's `value` field on EVM chains and it is paid by the user in native tokens, additionally to the `sellAmount`. It will be null when the bridge doesn't charge it.
+A fee charged by the bridge provider on EVM chains in the chain's native token for cross-chain messaging infrastructure. It is **not** deducted from the `sellAmount`; it is added to the transaction's `value` field and paid by the user in native tokens, additionally to the `sellAmount`. It will be null when the bridge doesn't charge it, and is always `null` on Solana and Tron origins (any bridge messaging cost on those chains is folded into `buyAmount` instead).
 
 | Bridge | What it covers |
 | --- | --- |
@@ -47,7 +47,7 @@ A fee charged by the bridge provider in the chain's native token for cross-chain
 | Linea Bridge | Postman fee (message relay) |
 | Arbitrum Bridge | Retryable ticket gas deposit |
 
-All other bridges do not charge a native fee. Make sure to always inspect `bridgeNativeFee` in response, as the list of bridges that charge an extra native fee might change in the future.
+All other bridges do not charge a native fee. `bridgeNativeFee` is always `null` for Solana and Tron origins — any bridge messaging cost on those chains is folded into `buyAmount` instead. Make sure to always inspect `bridgeNativeFee` in the response, as the list of bridges that charge an extra native fee might change in the future.
 
 ### Internal Bridge Fees
 
