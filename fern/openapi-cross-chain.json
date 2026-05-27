@@ -154,7 +154,7 @@
                             "type": "string",
                             "default": ""
                         },
-                        "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient."
+                        "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes."
                     },
                     {
                         "name": "feeRecipient",
@@ -164,7 +164,7 @@
                             "type": "string",
                             "default": ""
                         },
-                        "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps."
+                        "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes."
                     },
                     {
                         "name": "feeToken",
@@ -174,7 +174,7 @@
                             "type": "string",
                             "default": ""
                         },
-                        "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken."
+                        "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes."
                     },
                     {
                         "name": "sortQuotesBy",
@@ -2709,7 +2709,7 @@
             "get": {
                 "operationId": "crossChain::getTxHistory",
                 "summary": "getTxHistory",
-                "description": "Get cross-chain transaction history for a user wallet address",
+                "description": "Get cross-chain transaction history for a user wallet address. Note: this endpoint is in beta and still a work in progress — please reach out to the 0x team if you or your users run into any issues.",
                 "tags": ["Cross-Chain"],
                 "parameters": [
                     {
@@ -3038,7 +3038,7 @@
                             "type": "string",
                             "default": ""
                         },
-                        "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient."
+                        "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes."
                     },
                     {
                         "name": "feeRecipient",
@@ -3048,7 +3048,7 @@
                             "type": "string",
                             "default": ""
                         },
-                        "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps."
+                        "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes."
                     },
                     {
                         "name": "feeToken",
@@ -3058,7 +3058,7 @@
                             "type": "string",
                             "default": ""
                         },
-                        "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken."
+                        "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes."
                     },
                     {
                         "name": "maxNumQuotes",
