@@ -213,6 +213,9 @@ navigation:
               - page: Cross Chain Swaps from Tron
                 slug: cross-chain-swaps-from-tron
                 path: docs/pages/cross-chain-api/guides/cross-chain-swaps-from-tron.mdx
+              - page: Cross Chain Swaps to HyperCore
+                slug: cross-chain-swaps-to-hypercore
+                path: docs/pages/cross-chain-api/guides/cross-chain-swaps-to-hypercore.mdx
               - page: Streaming Quotes
                 slug: streaming-quotes
                 path: docs/pages/cross-chain-api/guides/streaming-quotes.mdx
