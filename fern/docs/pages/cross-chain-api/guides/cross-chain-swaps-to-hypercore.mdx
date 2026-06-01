@@ -1,0 +1,269 @@
+---
+title: "Cross Chain Swaps to HyperCore"
+description: "Learn how to use the 0x Cross Chain API to bridge tokens from an EVM chain into HyperCore (Hyperliquid)."
+---
+
+<Info>
+  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
+</Info>
+
+HyperCore (also known as Hyperliquid) is supported as a **destination chain**. You can bridge tokens from any supported origin chain into HyperCore; bridging _out_ of HyperCore is not yet supported. HyperCore works much like other supported chains, with one key difference: tokens are identified by **16-byte token IDs** instead of standard EVM addresses.
+
+You can identify HyperCore using any of the following:
+
+- **Chain name:** `hypercore`
+- **Alias:** `hyperliquid`
+- **Chain ID:** `999999999992`
+
+## Steps to Cross Chain Swap Tokens to HyperCore
+
+This guide will walk you through using the `/quotes` and `/status` endpoints on 0x's Cross Chain API to:
+
+1. Fetch a quote
+2. Set allowance
+3. Sign and send a transaction
+4. Monitor the status of the cross chain swap
+
+In our example, we will be swapping USDC on Arbitrum to USDC_PERP on HyperCore. Because the origin chain is a standard EVM chain, the signing and submission flow is identical to any other EVM origin — see [Get started](/docs/cross-chain-api/guides/get-started) for more detail on the EVM-specific steps.
+
+### 0. Prerequisites
+
+Make sure you have:
+
+- A funded Arbitrum wallet
+- [0x API key](https://dashboard.0x.org/apps)
+- An RPC Connection (see [Get started](/docs/cross-chain-api/guides/get-started) for setting up a wallet client with viem)
+
+### 1. Fetch a Quote
+
+Start by sending a GET request to the 0x `/quotes` endpoint. The `destinationChain` is HyperCore, and the `buyToken` is the **16-byte HyperCore token ID** (see [Supported tokens](#supported-tokens) below).
+
+```typescript
+const quotesParams = new URLSearchParams({
+    originChain: '42161', // Arbitrum mainnet
+    destinationChain: 'hypercore', // HyperCore (or '999999999992')
+    sellToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', // USDC on Arbitrum (20-byte EVM address)
+    buyToken: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', // USDC_PERP on HyperCore (16-byte token ID)
+    sellAmount: '5000000', // Amount of sellToken in base units
+    originAddress: '$USER_TAKER_ADDRESS', // Arbitrum address that will make the trade
+    destinationAddress: '$USER_RECEIVER_ADDRESS', // HyperCore address that will receive the output (standard EVM address)
+    sortQuotesBy: 'price', // Prefer the quote that will result in the best price / output
+    maxNumQuotes: 1 // only the best quote
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const quoteResponse = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
+
+console.log(await quoteResponse.json());
+```
+
+<Info>
+The API automatically selects the best available bridge based on your request parameters. HyperCore is currently served by the [Across V4 and Relay](/docs/introduction/supported-chains#cross-chain-api) bridges, and available quotes depend on each bridge's token coverage.
+</Info>
+
+<Accordion title="Example response">
+```json
+{
+    "liquidityAvailable": true,
+    "allowanceTarget": "0x0000000000001ff3684f28c67538d4d072c22734",
+    "originChainId": 42161,
+    "originChain": "arbitrum",
+    "destinationChainId": 999999999992,
+    "destinationChain": "hypercore",
+    "sellToken": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    "buyToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "issues": {
+        "allowance": null,
+        "balance": null,
+        "simulationIncomplete": false,
+        "invalidSwapSourcesPassed": [],
+        "invalidBridgesPassed": []
+    },
+    "zid": "0x0d190f698dfa2a134b2089d6",
+    "quotes": [
+        {
+            "sellAmount": "5000000",
+            "buyAmount": "375000000",
+            "minBuyAmount": "371250000",
+            "fees": {
+                "integratorFee": null,
+                "integratorFees": null,
+                "zeroExFee": {
+                    "amount": "50000",
+                    "token": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+                    "type": "volume"
+                },
+                "bridgeNativeFee": null
+            },
+            "gasCosts": {
+                "chainType": "evm",
+                "gasPrice": "22945500",
+                "gasLimit": "183470",
+                "totalNetworkFee": "4209810885000"
+            },
+            "steps": [
+                {
+                    "type": "bridge",
+                    "originChainId": 42161,
+                    "destinationChainId": 999999999992,
+                    "sellToken": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+                    "buyToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "sellAmount": "4950000",
+                    "buyAmount": "375000000",
+                    "minBuyAmount": "371250000",
+                    "provider": "relay",
+                    "estimatedTimeSeconds": 2
+                }
+            ],
+            "transaction": {
+                "chainType": "evm",
+                "details": {
+                    "to": "0x0000000000001ff3684f28c67538d4d072c22734",
+                    "data": "0x2213bc0b...",
+                    "gas": "183470",
+                    "gasPrice": "22945500",
+                    "value": "0"
+                }
+            },
+            "estimatedTimeSeconds": 2,
+            "issues": {
+                "allowance": null,
+                "balance": null,
+                "simulationIncomplete": false
+            },
+            "quoteId": "0x0d190f698dfa2a134b2089d64ec0370a"
+        }
+    ]
+}
+```
+</Accordion>
+
+### 2. Set a token allowance
+
+Because the origin chain is an EVM chain, you may need to set a token allowance to 0x's [AllowanceHolder contract](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances). When an allowance is required, it is reported in `issues.allowance` in the response. Always use the `spender` value from the response rather than hardcoding an address.
+
+```typescript
+// Example assumes that you've set up your walletClient with viem
+import { erc20Abi } from "viem";
+...
+const approveTxHash = await walletClient.writeContract({
+  address: quoteResponse.sellToken as `0x${string}`,
+  abi: erc20Abi,
+  functionName: "approve",
+  args: [
+      quoteResponse.quotes[0].issues.allowance.spender as `0x${string}`,
+      BigInt(quoteResponse.sellAmount),
+  ],
+});
+
+await walletClient.waitForTransactionReceipt({
+  hash: approveTxHash,
+  confirmations: 1,
+});
+```
+
+### 3. Sign and submit a transaction
+
+With the approval in place, construct, sign, and submit the origin-chain transaction from the quote response, exactly as you would for any EVM swap.
+
+```typescript
+const txRequest = {
+    to: quoteResponse.quotes[0].transaction.details.to as `0x${string}`,
+    data: quoteResponse.quotes[0].transaction.details.data as `0x${string}`,
+    value: BigInt(quoteResponse.quotes[0].transaction.details.value),
+    gas: quoteResponse.quotes[0].transaction.details.gas
+        ? BigInt(quoteResponse.quotes[0].transaction.details.gas)
+        : undefined,
+};
+
+const txHash = await walletClient.sendTransaction(txRequest);
+
+const receipt = await walletClient.waitForTransactionReceipt({
+    hash: txHash,
+    confirmations: 2,
+});
+console.log(`Transaction confirmed in block: ${receipt.blockNumber}`);
+```
+
+### 4. Monitor the cross chain execution
+
+Finally, monitor execution of the cross chain transaction, including the fill on HyperCore, using the `/status` endpoint. Pass the origin tx hash and `quoteId`.
+
+```typescript
+const statusParams = new URLSearchParams({
+    originChain: '42161', // origin chain
+    originTxHash: txHash, // origin chain transaction hash from the previous step
+    quoteId: quoteResponse.quotes[0].quoteId, // recommended for faster status resolution
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
+
+console.log(await statusResponse.json());
+```
+
+In your application, you might need to monitor the status repeatedly, as the bridging operation might take several seconds or minutes to complete.
+
+For full status lifecycle details, polling intervals, and failure handling, see [Tracking Transaction Status](/docs/cross-chain-api/key-concepts/tracking-transaction-status) and [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery).
+
+## Supported tokens
+
+HyperCore identifies tokens by **16-byte token IDs** (32 hex characters), not by the 20-byte EVM address or 32-byte Solana public key used on other chains. The following tokens are currently supported:
+
+| Token | Token ID | Description |
+| --- | --- | --- |
+| USDC_PERP | `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` | USDC for perpetual trading |
+| HYPE | `0x0d01dc56dcaaca66ad901c959b4011ec` | Native HYPE token |
+| USDH | `0x54e00a5988577cb0b0c9ab0cb6ef7f4b` | Hyperliquid USD |
+| USDC_SPOT | `0x6d1e7cde53ba9467b783cb7c530ce054` | USDC for spot trading |
+| USDT | `0x25faedc3f054130dbb4e4203aca63567` | USDT0 OFT token |
+| USDe | `0x2e6d84f2d7ca82e6581e03523e4389f7` | USDe token |
+
+Additional tokens may be available depending on the bridge used. To discover more tokens and their IDs, query the HyperCore API directly:
+
+```bash
+curl -X POST https://api.hyperliquid.xyz/info \
+  -H "Content-Type: application/json" \
+  -d '{"type": "spotMeta"}'
+```
+
+The response includes a `tokens` array with a `tokenId` field for each token. Note that not all tokens are supported by all bridges.
+
+<Warning>
+**Use token IDs, not system addresses.** Elsewhere in the HyperCore ecosystem you may see "system addresses" — 20-byte addresses (e.g. `0x2000000000000000000000000000000000000020`) used internally for transfers between HyperCore and HyperEVM. These are **not** token IDs and must **not** be passed to the 0x Cross-Chain API. The API handles the mapping between token IDs and system addresses internally; always pass the 16-byte token ID.
+</Warning>
+
+## Checking token balances
+
+HyperCore does not expose a JSON-RPC node. Instead, query token balances through the HyperCore API. Note that `originAddress` and `destinationAddress` on HyperCore use the **standard 20-byte EVM format**, and tx hashes are 32-byte EVM-style hashes — only token identifiers use the 16-byte format.
+
+```bash
+# Spot token balances (all tokens except USDC_PERP)
+curl -X POST https://api.hyperliquid.xyz/info \
+  -H "Content-Type: application/json" \
+  -d '{"type": "spotClearinghouseState", "user": "0x0000000000000000000000000000000000000000" }'
+
+# USDC_PERP balance (see the `withdrawable` field in the response)
+curl -X POST https://api.hyperliquid.xyz/info \
+  -H "Content-Type: application/json" \
+  -d '{"type": "clearinghouseState", "user": "0x0000000000000000000000000000000000000000" }'
+```
+
+## Key differences from EVM, Solana, and Tron
+
+| | EVM | Solana | HyperCore | Tron |
+| --- | --- | --- | --- | --- |
+| **Supported as** | Origin & destination | Origin & destination | Destination only | Origin & destination |
+| **Chain identifier** | Numeric chain ID (e.g. `8453`) | `solana` or `999999999991` | `hypercore` / `hyperliquid` or `999999999992` | `tron` or `999999999993` |
+| **Token format** | 20-byte address, `0x`-prefixed | Base58 (Pubkey) | 16-byte token ID (32 hex chars) | Base58Check (e.g. `T...`) |
+| **User address format** | Hex, `0x`-prefixed | Base58 (Pubkey) | Hex, `0x`-prefixed (standard EVM) | Base58Check (e.g. `T...`) |
+| **Balance / chain data** | JSON-RPC node | JSON-RPC node | HyperCore API (`api.hyperliquid.xyz/info`) | Tron HTTP API |
+| **Bridges** | Varies by chain | Across V4, Relay, others | Across V4, Relay | Relay, NEAR Intents |
+
+**Want to collect fees?** See [Monetize Your App](/docs/cross-chain-api/guides/monetize-your-app) to learn how to add integrator fees to cross-chain swaps.
