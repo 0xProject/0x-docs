@@ -1,0 +1,142 @@
+---
+title: "Integrator Byte Costs"
+description: A step-by-step guide to estimating byte costs for custom instructions added to a 0x Solana swap transaction.
+---
+
+<Info>
+  The 0x Solana Swap API is available via priority access. [Apply
+  now](https://0x.org/products/solana) to start building.
+</Info>
+
+## Byte Budget Calculator
+
+How to calculate the byte cost of instructions you add around a 0x swap.
+
+V0 transaction limit: **1232 bytes**. Each 0x swap has a defined structure, which reserves a fixed fraction of bytes.
+
+On top of this, adding your own instructions will require some bytes. Follow these steps to calculate byte costs from your own instructions
+
+- Byte space is reserved, so your serialized transactions do not go over the 1232 byte limit.
+- Byte space reservation is not more conservative than it needs to be, allowing us to return the highest quality routes possible within expressed limits.
+
+---
+
+### Step 1: Count instruction bytes
+
+For each instruction you add, calculate:
+
+```
+N + M + 3
+```
+
+- **N** = number of account references in the instruction
+- **M** = byte length of instruction data
+
+Add up all your instructions. [<sup>1</sup>](integrator-byte-costs.md#notes)
+
+### Step 2: Count new unique programs
+
+List every unique program your instructions invoke **at the top level** (not via CPI).
+
+For each new program: **add bytes cost from footnote** [²](integrator-byte-costs.md#notes)
+
+### Step 3: Count new unique accounts
+
+List every account referenced across all your instructions. Remove duplicates, remove programs counted in Step 2, and remove free accounts. [³](integrator-byte-costs.md#notes)
+
+For each remaining account add:
+
+- **+1 byte** (resolved via an ALT you bring)
+- **+32 bytes** (standard non ALT-resolved account)
+
+### Step 4: Count ALT entries
+
+For each Address Lookup Table you bring: **+34 bytes**
+
+Pack accounts into fewer ALTs to minimize this.[ ⁴](integrator-byte-costs.md#notes)
+
+### Step 5: Total
+
+```
+instruction_bytes           (Step 1)
++ new_program_bytes         (Step 2)
++ new_account_bytes         (Step 3)
++ new_alts × 34             (Step 4)
+────────────────────────────
+= your byte reservation
+```
+
+---
+
+### Worked example: Swap with ComputeBudget Instructions
+
+This is the most common example - where 0x provides the core setup and swap instructions, and you are required to add further instructions required for sending the transaction
+
+**Step 1** — instruction bytes:
+
+| Instruction              | N   | M   | Bytes  |
+| ------------------------ | --- | --- | ------ |
+| ComputeBudget (CU Limit) | 0   | 5   | 8      |
+| ComputeBudget (CU Price) | 0   | 9   | 12     |
+|                          |     |     | **20** |
+
+**Step 2** — invoked programs:
+
+- ComputeBudget = **32**
+- Total = **+ 32 bytes**
+
+**Step 3** — No accounts introduced
+
+**Step 4** — No ALTs introduced
+
+```
+  20  instructions
+  32  programs
+  0  accounts
+  0  ALTs
+─────
+ 52  bytes
+```
+
+---
+
+### Notes
+
+<sup>1</sup> **Instruction encoding.** Each instruction serializes as: `1 (program_id_index) + 1 (compact-u16 account count) + N (account indexes) + 1 (compact-u16 data length) + M (data)`. The compact-u16 fields use 2 bytes instead of 1 when the value is ≥ 128. In practice N < 128 and M < 128, so the cost simplifies to `N + M + 3`.
+
+Common instructions for reference:
+
+| Instruction                | N   | M   | Bytes |
+| -------------------------- | --- | --- | ----- |
+| createIdempotent           | 6   | 1   | 10    |
+| SystemProgram::Transfer    | 2   | 12  | 17    |
+| SPL Token::TransferChecked | 4   | 10  | 17    |
+
+² **Top Level Invoked Programs Cost** (cost 0 in Step 2):
+
+| Program        | Address                                        | Cost |
+| -------------- | ---------------------------------------------- | ---- |
+| Settler        | `Sett1erwx2eqT5A8uvu8GBxDFT2W5TNnhirL7hLmb8m`  | 0    |
+| ATA Program    | `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL` | 0    |
+| System Program | `11111111111111111111111111111111`             | 31   |
+| SPL Token      | `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`  | 31   |
+| SPL Token 2022 | `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb`  | 31   |
+| Other          | -                                              | 32   |
+
+Note the costs of **+31 bytes** comes from these being accounts that are usually resolved via 0x ALTs, but are now promoted to a static 32 byte key through being a top level invoked program
+
+³ **Free accounts**:
+
+| Account        | Role                                             |
+| -------------- | ------------------------------------------------ |
+| Taker / User   | Signer                                           |
+| User Token ATA | User associated token account for buy/sell token |
+| Token Mints    | Token mint for buy/sell token                    |
+| ATA Program    | `ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL`   |
+| System Program | `11111111111111111111111111111111`               |
+| SPL Token      | `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA`    |
+| SPL Token 2022 | `TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb`    |
+
+These accounts are already present in the 0x transaction. Invoking any of them as a top-level program incurs the one time promotion cost in Step 2, but using them as instruction accounts costs no additional bytes.
+
+⁴ **ALT overhead.** Each ALT entry in the transaction costs 32 (address) + 1 (writable indexes length) + 1 (readonly indexes length) = 34 bytes, plus the per-account index bytes already counted in Step 3.

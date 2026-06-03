@@ -182,7 +182,7 @@ navigation:
           - section: Guides
             slug: guides
             contents:
-              - page: Get Started with Gasless API
+              - page: Get Started
                 slug: get-started-with-gasless-api
                 path: docs/pages/gasless-api/guides/get-started-with-gasless-api.mdx
               - page: Understanding Gasless API
@@ -191,6 +191,39 @@ navigation:
               - page: Technical Appendix
                 slug: gasless-api-technical-appendix
                 path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
+          - link: Gasless FAQ
+            href: /docs/0x-swap-api/faq#gasless-api
+
+      - section: Solana Swap API
+        slug: solana-swap-api
+        icon: fa-regular fa-arrows-rotate
+        contents:
+          - page: Introduction
+            slug: introduction
+            path: docs/pages/solana-swap-api/introduction.mdx
+          - section: Guides
+            slug: guides
+            contents:
+              - page: Get Started
+                slug: get-started-with-solana-swap-api
+                path: docs/pages/solana-swap-api/guides/get-started.mdx
+              - page: Important Integration Notes
+                slug: important-integration-notes
+                path: docs/pages/solana-swap-api/guides/important-integration-notes.mdx
+              - page: Integrator Byte Costs
+                slug: integrator-byte-costs
+                path: docs/pages/solana-swap-api/guides/integrator-byte-costs.mdx
+          - section: Reference
+            slug: references
+            contents:
+              - page: Add Solana to EVM Projects
+                slug: evm-to-solana
+                path: docs/pages/solana-swap-api/reference/evm-to-solana.mdx
+              - page: Troubleshooting
+                slug: troubleshooting
+                path: docs/pages/solana-swap-api/reference/troubleshooting.mdx
+              - link: Rate Limits
+                href: /docs/developer-resources/rate-limits
           - link: Gasless FAQ
             href: /docs/0x-swap-api/faq#gasless-api
 
@@ -339,7 +372,12 @@ navigation:
     layout:
       - page: API Overview
         path: docs/pages/api-reference-overview.mdx
-      - api: 0x API
+      - api: EVM APIs
+        api-name: evm
+      - api: Solana Swap APIs
+        api-name: solana
+      - api: Cross-Chain APIs
+        api-name: cross-chain
 
   - tab: liquidity
     layout:

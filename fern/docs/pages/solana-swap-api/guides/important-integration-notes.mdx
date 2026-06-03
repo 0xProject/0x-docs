@@ -1,0 +1,59 @@
+---
+title: "Important Integration Notes"
+description: Key differences in how the 0x Solana API returns swap instructions, and what integrators are responsible for handling.
+---
+
+<Info>
+  The 0x Solana Swap API is available via priority access. [Apply
+  now](https://0x.org/products/solana) to start building.
+</Info>
+
+As part of our priority access release, we want to highlight some intentional differences in how our Solana API returns swap instructions, compared to other providers. These differences are important for integrators to be aware of, especially when composing and sending transactions manually.
+
+## Token Support
+
+- **SPL Tokens Only (No Token-2022):**\
+  During the alpha phase, our API **supports only standard SPL tokens**. We do **not support Token-2022 extensions** or any non-standard token types. If your integration requires Token-2022 features, please be aware this functionality is not yet available.
+- **WSOL-Only for SOL:**\
+  In the alpha release, only the wrapped SOL (WSOL) SPL token (`So11111111111111111111111111111111111111112`) is supported. Native SOL accounts (`So11111111111111111111111111111111111111111`) are explicitly rejected.
+
+  All SOL inputs and outputs must use WSOL. Any response labeled “SOL” refers to WSOL. The API does not include unwrap or cleanup instructions—integrators are responsible for handling native SOL conversion if needed.
+
+## Instructions Grouping
+
+We currently return **a single flat array of instructions.** Here's what’s currently included:
+
+**✅ Included Instructions**
+
+- **Setup Instructions (N):**
+  - These create associated token accounts (ATAs) for the user as needed. This uses `createIdempotent`, so instructions won’t fail if an ATA already exists.
+  - The number of instructions (`N`) depends on how many tokens the route involves, sometimes there may be 1 extra instruction for native SOL support (for certain DEXs).
+- **Swap Instruction (1):**
+  - A single instruction on our [**Settler**](https://github.com/0xProject/0x-settler) program to perform the actual swap.
+
+<Note>
+  We're planning to return these in distinct arrays (`setupInstructions`,
+  `swapInstructions`) in a future release.
+</Note>
+
+**🚫 Not Included (for Alpha)**
+
+- **Compute Budget Instructions:**
+  - You’ll need to manually add these if your transaction is complex and might exceed compute limits.
+- **Cleanup Instructions:**
+  - In our alpha, we assume all SOL is already wrapped (WSOL). As a result, any output labeled as “SOL” will be **returned as WSOL**, and no cleanup step is needed.
+
+## Instruction Execution Assumptions
+
+- All instructions are returned in a single array, and **must be executed in order**. It is the responsibility of the integrator to:
+  - Assemble the full transaction (e.g., using `VersionedTransaction`)
+  - Add signers
+  - Insert optional instructions (e.g., compute budget or priority fee) if needed
+
+## Byte Budgeting
+
+Solana v0 transactions are limited to **1232 bytes**.
+
+Each 0x swap transaction reserves a fixed portion of that space. When you add instructions around the swap (compute budget, transfers, close account, referral logic, etc.), you must ensure your serialized transaction remains under the limit.
+
+We provide a detailed [**Integrator Byte Costs**](integrator-byte-costs.md) guide to help you compute this.

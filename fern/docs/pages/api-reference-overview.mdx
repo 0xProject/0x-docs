@@ -5,17 +5,34 @@ subtitle: Getting started with the 0x API
 
 # Introduction
 
-The 0x API provides a unified interface for liquidity aggregation, token swap pricing, and onchain trading across major supported blockchains. It is designed to help developers easily integrate token swaps and routing logic without managing individual DEX integrations.
+The 0x API provides a unified interface for liquidity aggregation, token swap pricing, and onchain trading. It is designed to help developers easily integrate token swaps and routing logic without managing individual DEX integrations.
 
-The 0x API exposes endpoints for the following core capabilities:
+The 0x API offers the following:
 
-- **[Swap](/api-reference/openapi-json/swap/allowanceholder-getprice)**: Generate executable quotes and calldata for token swaps using either the AllowanceHolder (recommended) or Permit2 approval models. Learn more in the [FAQ](/docs/introduction/faq#allowanceholder-and-permit2).
-- **[Gasless](/api-reference/openapi-json/gasless/getprice)**: Enable gasless swaps by sponsoring transaction fees on behalf of users, improving UX for end-user applications.
-- **[Sources](/api-reference/openapi-json/sources/getsources)**: Retrieve supported liquidity sources, chains, and token metadata used by the 0x routing engine.
-- **[Trade Analytics](/api-reference/openapi-json/trade-analytics/trade-analytics-swap)**: Query historical trade data, volumes, and execution details for monitoring and analytics use cases.
-- **[Cross-Chain](/api-reference/0-x-api/cross-chain/cross-chain-get-quotes)**: Bridge assets between EVM, Solana, Tron, and HyperCore chains with ready-to-sign quotes and live status tracking.
+## EVM Swap API
 
-Each API surface is documented in detail in the sections below.
+Endpoints for EVM-compatible chains (Ethereum, Arbitrum, Base, Polygon, and more):
+
+- **[Swap](/api-reference/evm-ap-is/swap/allowanceholder-getprice)**: Generate executable quotes and calldata for token swaps using either the AllowanceHolder (recommended) or Permit2 approval models. Learn more in the [FAQ](/docs/introduction/faq#allowanceholder-and-permit2).
+- **[Gasless](/api-reference/evm-ap-is/swap/allowanceholder-getquote)**: Enable gasless swaps by sponsoring transaction fees on behalf of users, improving UX for end-user applications.
+- **[Sources](/api-reference/evm-ap-is/sources/getsources)**: Retrieve supported liquidity sources, chains, and token metadata used by the 0x routing engine.
+- **[Trade Analytics](/api-reference/evm-ap-is/trade-analytics/trade-analytics-swap)**: Query historical trade data, volumes, and execution details for monitoring and analytics use cases.
+
+## Solana Swap API
+
+Endpoints for Solana (SVM):
+
+- **[Swap Instructions](/api-reference/solana-swap-ap-is/solana-swap/solana-swap-swap-instructions)**: Generate swap instructions for Solana tokens, returning versioned transaction data ready to sign and submit.
+
+## Cross-Chain API
+
+Endpoints for bridging assets across chains (EVM, Solana, Tron, HyperCore):
+
+- **[Quotes](/api-reference/cross-chain-ap-is/cross-chain/cross-chain-get-quotes)**: Get ready-to-sign bridge quotes across supported chains and assets.
+- **[Status](/api-reference/cross-chain-ap-is/cross-chain/cross-chain-get-status)**: Track the status of an in-flight cross-chain transaction.
+- **[Sources](/api-reference/cross-chain-ap-is/cross-chain/cross-chain-list-sources)**: List supported bridge routes and liquidity sources.
+- **[Transaction History](/api-reference/cross-chain-ap-is/cross-chain/cross-chain-get-tx-history)**: Get cross-chain transaction history for a user wallet address.
+- **[Streaming Quotes](/api-reference/cross-chain-ap-is/cross-chain/cross-chain-stream-quotes)**: Subscribe to a live stream of cross-chain quotes.
 
 ## Base URL
 

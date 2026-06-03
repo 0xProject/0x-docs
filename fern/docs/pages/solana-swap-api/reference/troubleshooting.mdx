@@ -1,0 +1,28 @@
+---
+title: "Troubleshooting"
+description: Common issues, error types, and debugging tips for the 0x Solana Swap API.
+---
+
+<Info>
+  The 0x Solana Swap API is available via priority access. [Apply
+  now](https://0x.org/products/solana) to start building.
+</Info>
+
+When working with Solana transactions and the 0x Swap API, you may encounter some common issues. Below are tips to help diagnose and resolve them:
+
+| Issue                                          | Possible Cause                                                      | Suggested Fix                                                                                        |
+| ---------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Transaction fails or gets dropped              | Insufficient SOL for fees, expired blockhash, or network congestion | Ensure your wallet has enough SOL, fetch a fresh blockhash before sending, and retry the transaction |
+| Signature verification errors                  | Wrong signer, unsigned transaction, or corrupted transaction data   | Verify the transaction is signed by the correct keypair and that instructions are built correctly    |
+| RPC timeout or errors during `sendTransaction` | Network issues or overloaded RPC node                               | Try switching to a different RPC endpoint or increase `maxRetries` in transaction sending options    |
+| Unexpected API errors or bad responses         | Incorrect API key or malformed request payload                      | Double-check API keys, endpoint URLs, and request parameters                                         |
+
+#### Debugging Tips
+
+- Log your transaction signature and monitor it on a Solana explorer (e.g. [Solscan](https://solscan.io/)) to track status.
+- Use `connection.getLatestBlockhash()` before each transaction to ensure blockhash freshness.
+- Use the [transaction confirmation](../get-started.md#transaction-confirmation) step to catch failures early.
+- Enable `skipPreflight: false` during development to validate transactions before sending.
+- Check API response error messages carefully; they often indicate what went wrong.
+
+If you continue to experience issues, consider reaching out to the 0x developer support or the Solana developer community for assistance.
