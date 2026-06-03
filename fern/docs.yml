@@ -36,32 +36,28 @@ metadata:
 
 # Tabs configuration
 tabs:
-  home:
-    display-name: Home
-    icon: home
-  docs:
-    display-name: Docs
-    icon: book
+  overview:
+    display-name: Overview
+  evm:
+    display-name: EVM
+  svm:
+    display-name: SVM
+  cross-chain:
+    display-name: Cross-Chain
   api-reference:
     display-name: API Reference
-    icon: puzzle
   liquidity:
     display-name: Liquidity Integration
-    icon: water
   changelog:
     display-name: Changelog
-    icon: clock
     changelog: docs/changelog
 
 # Navigation structure
 navigation:
-  - tab: home
+  - tab: overview
     layout:
-      - page: Home
+      - page: Welcome
         path: docs/pages/index.mdx
-
-  - tab: docs
-    layout:
       - section: Introduction
         slug: introduction
         icon: fa-regular fa-compass
@@ -107,9 +103,51 @@ navigation:
             slug: need-help
             path: docs/pages/need-help/contact-support.mdx
 
-      - section: Swap API
+      - section: Core Concepts
+        slug: core-concepts
+        icon: fa-regular fa-books
+        contents:
+          - page: Introduction to 0x
+            slug: introduction-to-0x
+            path: docs/pages/core-concepts/introduction-to-0x.mdx
+          - page: 0x Cheat Sheet
+            slug: 0x-cheat-sheet
+            path: docs/pages/core-concepts/0x-cheat-sheet.mdx
+          - page: Contracts
+            slug: contracts
+            path: docs/pages/core-concepts/contracts.mdx
+          - page: Order Types
+            slug: order-types
+            path: docs/pages/core-concepts/order-types.mdx
+          - page: Glossary
+            slug: glossary
+            path: docs/pages/core-concepts/glossary.mdx
+          - page: White Paper
+            slug: white-paper
+            path: docs/pages/core-concepts/white-paper.mdx
+          - page: Transaction Data
+            slug: transaction-data
+            path: docs/pages/core-concepts/transaction-data.mdx
+
+      - section: Developer Resources
+        slug: developer-resources
+        icon: fa-regular fa-screwdriver-wrench
+        contents:
+          - page: Bounties
+            slug: bounties
+            path: docs/pages/developer-resources/bounties.mdx
+          - page: Rate Limits
+            slug: rate-limits
+            path: docs/pages/developer-resources/rate-limits.mdx
+          - link: System Status
+            href: https://0x.statuspal.io/
+            target: _blank
+
+  - tab: evm
+    layout:
+      - section: EVM Swap API
         slug: 0x-swap-api
-        icon: fa-regular fa-arrows-rotate
+        icon: fa-regular fa-shuffle
         contents:
           - page: Introduction
             slug: introduction
@@ -172,7 +210,7 @@ navigation:
             slug: faq
             path: docs/pages/introduction/faq.mdx
 
-      - section: Gasless API
+      - section: EVM Gasless API
         slug: gasless-api
         icon: fa-regular fa-gas-pump
         contents:
@@ -194,9 +232,28 @@ navigation:
           - link: Gasless FAQ
             href: /docs/0x-swap-api/faq#gasless-api
 
+      - section: Need Help?
+        slug: need-help
+        icon: fa-regular fa-circle-question
+        contents:
+          - page: FAQ
+            slug: faq
+            path: docs/pages/introduction/faq.mdx
+          - page: API Issues & Error Codes
+            slug: api-issues
+            path: docs/pages/introduction/api-issues.mdx
+          - page: Contact Support
+            slug: contact-support
+            path: docs/pages/need-help/contact-support.mdx
+          - link: Contact Sales
+            href: https://0x.org/contact
+            target: _blank
+
+  - tab: svm
+    layout:
       - section: Solana Swap API
         slug: solana-swap-api
-        icon: fa-regular fa-arrows-rotate
+        icon: fa-regular fa-shuffle
         contents:
           - page: Introduction
             slug: introduction
@@ -227,6 +284,25 @@ navigation:
           - link: Gasless FAQ
             href: /docs/0x-swap-api/faq#gasless-api
 
+      - section: Need Help?
+        slug: need-help
+        icon: fa-regular fa-circle-question
+        contents:
+          - page: FAQ
+            slug: faq
+            path: docs/pages/introduction/faq.mdx
+          - page: API Issues & Error Codes
+            slug: api-issues
+            path: docs/pages/introduction/api-issues.mdx
+          - page: Contact Support
+            slug: contact-support
+            path: docs/pages/need-help/contact-support.mdx
+          - link: Contact Sales
+            href: https://0x.org/contact
+            target: _blank
+
+  - tab: cross-chain
+    layout:
       - section: Cross-Chain API
         slug: cross-chain-api
         icon: fa-regular fa-bridge
@@ -284,73 +360,6 @@ navigation:
             href: https://0x.org/products/cross-chain
             target: _blank
 
-      - section: Trade Analytics API
-        slug: trade-analytics-api
-        icon: fa-regular fa-chart-column
-        contents:
-          - page: Introduction
-            slug: introduction
-            path: docs/pages/trade-analytics-api/introduction.mdx
-          - page: Transaction Data
-            slug: transaction-data
-            path: docs/pages/core-concepts/transaction-data.mdx
-          - link: Trade Analytics FAQ
-            href: /docs/introduction/faq#trade-analytics-api
-
-      - section: Core Concepts
-        slug: core-concepts
-        icon: fa-regular fa-books
-        contents:
-          - page: Introduction to 0x
-            slug: introduction-to-0x
-            path: docs/pages/core-concepts/introduction-to-0x.mdx
-          - page: 0x Cheat Sheet
-            slug: 0x-cheat-sheet
-            path: docs/pages/core-concepts/0x-cheat-sheet.mdx
-          - page: Contracts
-            slug: contracts
-            path: docs/pages/core-concepts/contracts.mdx
-          - page: Order Types
-            slug: order-types
-            path: docs/pages/core-concepts/order-types.mdx
-          - page: Glossary
-            slug: glossary
-            path: docs/pages/core-concepts/glossary.mdx
-          - page: White Paper
-            slug: white-paper
-            path: docs/pages/core-concepts/white-paper.mdx
-          - page: Transaction Data
-            slug: transaction-data
-            path: docs/pages/core-concepts/transaction-data.mdx
-
-      - section: Developer Resources
-        slug: developer-resources
-        icon: fa-regular fa-screwdriver-wrench
-        contents:
-          - page: Bounties
-            slug: bounties
-            path: docs/pages/developer-resources/bounties.mdx
-          - page: Rate Limits
-            slug: rate-limits
-            path: docs/pages/developer-resources/rate-limits.mdx
-          - link: System Status
-            href: https://0x.statuspal.io/
-            target: _blank
-
-      - section: Upgrading
-        slug: upgrading
-        icon: fa-regular fa-arrow-up
-        contents:
-          - page: Overview
-            slug: overview
-            path: docs/pages/upgrading/overview.mdx
-          - page: Upgrading to Swap v2
-            slug: upgrading-to-swap-v2
-            path: docs/pages/upgrading/upgrading-to-swap-v2.mdx
-          - page: Upgrading to Gasless v2
-            slug: upgrading-to-gasless-v2
-            path: docs/pages/upgrading/upgrading-to-gasless-v2.mdx
-
       - section: Need Help?
         slug: need-help
         icon: fa-regular fa-circle-question
@@ -392,9 +401,13 @@ navbar-links:
   - type: minimal
     text: Contact Support
     url: https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help
-  - type: minimal
-    text: Discord
-    url: https://discord.com/invite/official0x
+  - type: dropdown
+    text: Connect
+    links:
+      - text: X
+        href: https://x.com/0xProject
+      - text: Discord
+        href: https://discord.com/invite/official0x
   - type: filled
     text: Go to dashboard
     url: https://dashboard.0x.org/create-account

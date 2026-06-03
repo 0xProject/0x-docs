@@ -5,39 +5,83 @@ hide-toc: true
 hide-nav-links: true
 ---
 
-<div style={{ textAlign: 'center', padding: '5rem 1rem 6rem' }}>
+{/* ── Hero ── */}
 
-<h1 style={{ fontSize: "4rem", fontWeight: "400", marginBottom: "1.5rem" }}>
-  Welcome to 0x Docs
-</h1>
-
-<p style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "2.5rem" }}>
-  Embed swaps in your onchain app
-</p>
-
-<a
-  href="/docs/introduction/quickstart/getting-started"
+<div
   style={{
-    display: "inline-block",
-    backgroundColor: "#717276",
-    color: "white",
-    padding: "0.5rem 3rem",
-    borderRadius: "88px",
-    textDecoration: "none",
-    fontWeight: "500",
+    display: "flex",
+    alignItems: "center",
+    gap: "2rem",
+    padding: "2rem 2rem 1.5rem",
+    flexWrap: "wrap",
   }}
 >
-  Start building
-</a>
-
+  <div style={{ flex: "1 1 340px" }}>
+    <h1
+      style={{
+        fontSize: "3.25rem",
+        fontWeight: "400",
+        marginBottom: "0.75rem",
+        lineHeight: 1.1,
+      }}
+    >
+      Welcome to 0x Docs
+    </h1>
+    <p
+      style={{
+        fontSize: "1.15rem",
+        marginBottom: "1.5rem",
+        maxWidth: "480px",
+        lineHeight: 1.6,
+      }}
+    >
+      Build onchain trading into your app. Liquidity from 150+ sources, across
+      EVM chains and Solana — with a single API.
+    </p>
+    <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+      <a
+        href="/docs/overview/introduction/getting-started"
+        className="hero-btn-primary"
+      >
+        Start building →
+      </a>
+      <a
+        href="https://github.com/0xProject/0x-examples"
+        className="hero-btn-secondary"
+      >
+        Explore demo projects →
+      </a>
+    </div>
+  </div>
+  <div style={{ flex: "1 1 240px", display: "flex", justifyContent: "center" }}>
+    <img
+      src="../assets/img/hero-home-new.svg"
+      alt=""
+      className="hero-illustration hero-illustration-light"
+      style={{ width: "100%", maxWidth: "260px", height: "auto", opacity: 0.9 }}
+    />
+    <img
+      src="../assets/img/hero-home-dark.svg"
+      alt=""
+      className="hero-illustration hero-illustration-dark"
+      style={{ width: "100%", maxWidth: "260px", height: "auto", opacity: 0.9 }}
+    />
+  </div>
 </div>
+
+{/* ── Explore 0x APIs ── */}
 
 <h2 style={{ textAlign: "center" }}>Explore 0x APIs</h2>
 
 <CardGroup cols={3}>
 
-<Card title="Swap API" href="/docs/0x-swap-api/introduction" icon="shuffle">
-  Embed swaps into your app
+<Card title="EVM Swap API" href="/docs/0x-swap-api/introduction" icon="shuffle">
+  Embed token swaps on any EVM chain. Aggregated liquidity from 150+ sources.
+</Card>
+
+<Card title="Solana Swap API" href="/docs/0x-swap-api/introduction" icon="sun">
+  Native Solana support. Fast, low-cost token swaps with deep SPL token
+  liquidity.
 </Card>
 
 <Card
@@ -45,11 +89,11 @@ hide-nav-links: true
   href="/docs/cross-chain-api/introduction"
   icon="bridge"
 >
-  Swap any token, any chain
+  Swap any token across any chain in one transaction.
 </Card>
 
-<Card title="Gasless API" href="/docs/gasless-api/introduction" icon="globe">
-  Enable seamless, gasless DeFi transactions
+<Card title="Gasless API" href="/docs/gasless-api/introduction" icon="gas-pump">
+  Enable seamless, gasless DeFi transactions.
 </Card>
 
 <Card
@@ -57,10 +101,12 @@ hide-nav-links: true
   href="/docs/trade-analytics-api/introduction"
   icon="chart-bar"
 >
-  Track & analyze trading activity
+  Track and analyze every trade routed through 0x.
 </Card>
 
 </CardGroup>
+
+{/* ── Quick Links ── */}
 
 <h2 style={{ textAlign: "center" }}>Quick Links</h2>
 
@@ -100,17 +146,31 @@ hide-nav-links: true
 
 </CardGroup>
 
-<h2 style={{ textAlign: "center" }}>Dev Resources</h2>
+{/* ── Release Highlights ── */}
 
-<CardGroup cols={3}>
+<h2 style={{ textAlign: "center" }}>Release Highlights</h2>
 
-<Card title="Troubleshooting" href="/docs/introduction/faq" icon="wrench">
-  Answers to common integration issues
-</Card>
+| Date       | Update                                                                                                                                              | API                   |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| May 2026   | [Exact-out support — specify a precise `buyAmount` and get the minimum sell amount required](https://docs.0x.org/changelog#2026-05-31-new-features) | Swap API, Gasless API |
+| May 2026   | [Concurrent gasless trades now supported for the same taker and sell token](https://docs.0x.org/changelog#2026-05-31-new-features)                  | Gasless API           |
+| April 2026 | [New 0x Agent Skill for AI-powered integrations](https://docs.0x.org/changelog#2026-04-30-new-feature)                                              | All APIs              |
+| April 2026 | [Sub-BPS slippage precision now supported](https://docs.0x.org/changelog#2026-04-30-new-feature)                                                    | Swap API, Gasless API |
+| March 2026 | [Smart account signatures now supported](https://docs.0x.org/changelog#2026-04-13-new-features)                                                     | Gasless API           |
+| March 2026 | [Fine-tuned native wrap/unwrap control via `wrapUnwrapMode`](https://docs.0x.org/changelog#2026-04-13-new-features)                                 | Swap API              |
 
-<Card title="0x System Status" href="https://0x.statuspal.io" icon="signal">
-  Real-time 0x system performance updates
-</Card>
+<a
+  href="/changelog"
+  style={{ display: "block", textAlign: "center", marginTop: "0.5rem" }}
+>
+  See all updates →
+</a>
+
+{/* ── Resources ── */}
+
+<h2 style={{ textAlign: "center" }}>Resources</h2>
+
+<CardGroup cols={2}>
 
 <Card
   title="0x Cheat Sheet"
@@ -119,4 +179,41 @@ hide-nav-links: true
 >
   Quick reference for supported chains & contract addresses
 </Card>
+
+<Card title="0x System Status" href="https://0x.statuspal.io" icon="signal">
+  Real-time 0x system performance updates
+</Card>
+
+<Card
+  title="Rate Limits"
+  href="overview/developer-resources/rate-limits"
+  icon="gauge"
+>
+  Understand 0x API rate limits
+</Card>
+
+<Card title="0x Dashboard" href="https://dashboard.0x.org" icon="chart-line">
+  Manage your API keys and monitor usage
+</Card>
+
+</CardGroup>
+
+{/* ── Help ── */}
+
+<h2 style={{ textAlign: "center" }}>Need Help?</h2>
+
+<CardGroup cols={2}>
+
+<Card title="FAQ" href="/overview/introduction/faq" icon="wrench">
+  Answers to common integration issues
+</Card>
+
+<Card
+  title="Support"
+  href="/introduction/need-help#-contact-developer-support-fastest-direct-help"
+  icon="life-ring"
+>
+  Contact the 0x developer support team
+</Card>
+
 </CardGroup>
