@@ -16,7 +16,7 @@ layout:
   tabs-placement: header
 
 announcement:
-  message: '🌉 Cross-Chain API is in private beta.  <a href="https://0x.org/products/cross-chain" target="_blank">Request access to start building</a>.'
+  message: '⚡️ Solana API is available via priority access.  <a href="https://0x.org/products/solana" target="_blank">Apply now</a> to start building.'
 
 # Metadata configuration (SEO / Open Graph / Twitter cards)
 metadata:

@@ -3,10 +3,6 @@ title: "Troubleshooting"
 description: "Common issues, error types, and debugging tips for the 0x Cross Chain API."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 When working with 0x Cross Chain API, you may encounter some common issues. Below are tips to help diagnose and resolve them.
 
 ## Error Response Format
@@ -20,7 +16,10 @@ All API error responses follow this structure:
   "data": {
     "zid": "0xabc123...",
     "details": [
-      { "field": "originTxHash", "reason": "Multiple cross-chain operations found in transaction; provide quoteId to disambiguate" }
+      {
+        "field": "originTxHash",
+        "reason": "Multiple cross-chain operations found in transaction; provide quoteId to disambiguate"
+      }
     ]
   }
 }
@@ -33,35 +32,35 @@ All API error responses follow this structure:
 
 ## Error Types
 
-| Error Name | HTTP | Description |
-| --- | --- | --- |
-| `INPUT_INVALID` | 400 | Bad parameters, unsupported chain, ambiguous transaction, blocked wallet |
-| `TRANSACTION_NOT_FOUND` | 404 | Origin tx not found on-chain |
-| `BRIDGE_UNKNOWN` | 404 | Can't identify bridge for the given transaction |
-| `BRIDGE_PROVIDER_ERROR` | 500 | Bridge provider API unavailable. Retry after a short delay |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Error Name              | HTTP | Description                                                              |
+| ----------------------- | ---- | ------------------------------------------------------------------------ |
+| `INPUT_INVALID`         | 400  | Bad parameters, unsupported chain, ambiguous transaction, blocked wallet |
+| `TRANSACTION_NOT_FOUND` | 404  | Origin tx not found on-chain                                             |
+| `BRIDGE_UNKNOWN`        | 404  | Can't identify bridge for the given transaction                          |
+| `BRIDGE_PROVIDER_ERROR` | 500  | Bridge provider API unavailable. Retry after a short delay               |
+| `INTERNAL_SERVER_ERROR` | 500  | Unexpected server error                                                  |
 
 ## Common `INPUT_INVALID` Errors
 
-| `data.details[].reason` | Fix |
-| --- | --- |
-| `"Multiple cross-chain operations found in transaction; provide quoteId to disambiguate"` | Pass `quoteId` from original quote. Happens with ERC-4337 bundlers. |
-| `"originChain and destinationChain must be different"` | Use different chains, this API does not support same-chain swaps. |
-| `"HyperCore is not supported as an origin chain"` | HyperCore (`999999999992`) is destination-only. |
-| `"Fee parameters are not supported..."` | Remove `feeBps` / `feeRecipient`. Fees only work on EVM origins. |
-| `"includedBridges and excludedBridges are mutually exclusive"` | Use only one of those parameters. |
-| `"feeBps and feeRecipient must have the same length"` | Match comma-separated array lengths. |
-| `"Address is not authorized for trading"` | Wallet is on a screening blocklist. `data.details[].field` shows which address. |
-| `"Quote ID not found in transaction metadata"` | The `quoteId` doesn't match any cross-chain operation in the transaction. |
+| `data.details[].reason`                                                                   | Fix                                                                             |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `"Multiple cross-chain operations found in transaction; provide quoteId to disambiguate"` | Pass `quoteId` from original quote. Happens with ERC-4337 bundlers.             |
+| `"originChain and destinationChain must be different"`                                    | Use different chains, this API does not support same-chain swaps.               |
+| `"HyperCore is not supported as an origin chain"`                                         | HyperCore (`999999999992`) is destination-only.                                 |
+| `"Fee parameters are not supported..."`                                                   | Remove `feeBps` / `feeRecipient`. Fees only work on EVM origins.                |
+| `"includedBridges and excludedBridges are mutually exclusive"`                            | Use only one of those parameters.                                               |
+| `"feeBps and feeRecipient must have the same length"`                                     | Match comma-separated array lengths.                                            |
+| `"Address is not authorized for trading"`                                                 | Wallet is on a screening blocklist. `data.details[].field` shows which address. |
+| `"Quote ID not found in transaction metadata"`                                            | The `quoteId` doesn't match any cross-chain operation in the transaction.       |
 
 ## Common Issues
 
-| Issue | Possible Cause | Suggested Fix |
-| --- | --- | --- |
-| Transaction fails or gets dropped | Insufficient SOL/ETH/etc. for gas fees, network congestion, insufficient balance or allowance | Ensure your wallet has enough SOL/ETH for fees, ensure you have enough balance for the trade, ensure you set proper allowance (see `issues` in API response) |
-| Signature verification errors | Wrong signer, unsigned transaction, or corrupted transaction data | Verify the transaction is signed by the correct keypair (or keypairs) |
-| RPC timeout or errors during transaction submission | Network issues or overloaded RPC node | Try switching to a different RPC endpoint or add retries |
-| Unexpected API errors or bad responses | Incorrect API key or malformed request payload | Double-check API keys, endpoint URLs, and request parameters |
+| Issue                                               | Possible Cause                                                                                | Suggested Fix                                                                                                                                                |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Transaction fails or gets dropped                   | Insufficient SOL/ETH/etc. for gas fees, network congestion, insufficient balance or allowance | Ensure your wallet has enough SOL/ETH for fees, ensure you have enough balance for the trade, ensure you set proper allowance (see `issues` in API response) |
+| Signature verification errors                       | Wrong signer, unsigned transaction, or corrupted transaction data                             | Verify the transaction is signed by the correct keypair (or keypairs)                                                                                        |
+| RPC timeout or errors during transaction submission | Network issues or overloaded RPC node                                                         | Try switching to a different RPC endpoint or add retries                                                                                                     |
+| Unexpected API errors or bad responses              | Incorrect API key or malformed request payload                                                | Double-check API keys, endpoint URLs, and request parameters                                                                                                 |
 
 ## Debugging Tips
 

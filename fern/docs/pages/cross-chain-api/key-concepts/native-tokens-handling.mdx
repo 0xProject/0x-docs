@@ -3,21 +3,17 @@ title: "Native Tokens Handling"
 description: "How native tokens (ETH, SOL, TRX) work in cross-chain swaps."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 This page explains how native tokens (ETH, SOL, TRX) work in cross-chain swaps.
 
 ## Native Token Addresses
 
 Each chain type uses a specific address to represent the native token:
 
-| Chain Type | Native Token Address | Example |
-| --- | --- | --- |
-| EVM | `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` | ETH, AVAX, BNB, POL, etc. |
-| Solana | `So11111111111111111111111111111111111111111` | SOL |
-| Tron | `T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb` | TRX |
+| Chain Type | Native Token Address                          | Example                   |
+| ---------- | --------------------------------------------- | ------------------------- |
+| EVM        | `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`  | ETH, AVAX, BNB, POL, etc. |
+| Solana     | `So11111111111111111111111111111111111111111` | SOL                       |
+| Tron       | `T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb`          | TRX                       |
 
 Pass these as `sellToken` or `buyToken` when swapping the chain's native token.
 
@@ -27,15 +23,28 @@ When selling a native token, the API may include a **wrap** step on the origin c
 
 ```json
 [
-  { "type": "wrap", "sellToken": "0xeeeee...eeee", "buyToken": "0x4200...0006", "amount": "1000000000000000000" },
-  { "type": "bridge", "bridge": "across_v4", "originChainId": 8453, "destinationChainId": 42161 }
+  {
+    "type": "wrap",
+    "sellToken": "0xeeeee...eeee",
+    "buyToken": "0x4200...0006",
+    "amount": "1000000000000000000"
+  },
+  {
+    "type": "bridge",
+    "bridge": "across_v4",
+    "originChainId": 8453,
+    "destinationChainId": 42161
+  }
 ]
 ```
 
 The wrap executes atomically within the origin transaction. No extra user action needed.
 
 <Note>
-**Wrap steps affect refund behavior.** If a bridge fails after a wrap, the refund is in the wrapped token (WETH), not the original native token (ETH). See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery).
+  **Wrap steps affect refund behavior.** If a bridge fails after a wrap, the
+  refund is in the wrapped token (WETH), not the original native token (ETH).
+  See [Handling Failures and
+  Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery).
 </Note>
 
 ## The `value` Field (EVM only)

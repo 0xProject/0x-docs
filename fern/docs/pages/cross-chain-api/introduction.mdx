@@ -3,10 +3,6 @@ title: "Introduction"
 description: "Programmatically access tokens across blockchains with the 0x Cross-Chain API."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 ## What is the 0x Cross Chain API?
 
 The 0x Cross Chain API is a fast, flexible API that lets developers programmatically access tokens across various blockchains, enabling cross-chain swap functionality in any app or wallet. It's designed to provide the same powerful aggregation and transaction-building features that 0x offers for same-chain swaps - now available across EVM, Solana, HyperCore, and Tron chains.
@@ -16,7 +12,10 @@ Whether you're building a new application, or expanding the offering of your exi
 ## How It Works
 
 <Frame>
-  <img src="../../assets/img/cross-chain-api/diagram_intro_cross_chain.png" alt="0x Cross Chain API request flow" />
+  <img
+    src="../../assets/img/cross-chain-api/diagram_intro_cross_chain.png"
+    alt="0x Cross Chain API request flow"
+  />
 </Frame>
 
 1. **Get a quote** — your app calls `/quotes` or `/quotes/stream`. The API queries multiple bridge providers and liquidity sources, then returns the best routes with ready-to-sign transactions.

@@ -3,10 +3,6 @@ title: "Streaming Quotes"
 description: "Stream cross-chain quotes progressively via Server-Sent Events for faster, more responsive UX."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 The Cross-Chain API supports streaming of swap quotes using Server-Sent Events (SSE). Quotes are delivered progressively as they're discovered, so users can act on them immediately.
 
 ## Why Streaming?
@@ -94,19 +90,22 @@ SSE connections may be dropped by network intermediaries (proxies, load balancer
 
 ```typescript
 const quoteParams = new URLSearchParams({
-    originChain: '8453', // Base mainnet
-    destinationChain: '42161', // Arbitrum mainnet
-    sellToken: '0x4200000000000000000000000000000000000006', // WETH on Base
-    buyToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', // USDC on Arbitrum
-    sellAmount: '1000000000000000000', // Amount of sellToken in base units
-    originAddress: '$USER_TAKER_ADDRESS', // Address that will make the trade
+  originChain: "8453", // Base mainnet
+  destinationChain: "42161", // Arbitrum mainnet
+  sellToken: "0x4200000000000000000000000000000000000006", // WETH on Base
+  buyToken: "0xaf88d065e77c8cc2239327c5edb3a432268e5831", // USDC on Arbitrum
+  sellAmount: "1000000000000000000", // Amount of sellToken in base units
+  originAddress: "$USER_TAKER_ADDRESS", // Address that will make the trade
 });
 
 const headers = {
-    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+  "0x-api-key": "[api-key]", // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
 
-const resp = await fetch('https://api.0x.org/cross-chain/quotes/stream?' + quoteParams.toString(), { headers });
+const resp = await fetch(
+  "https://api.0x.org/cross-chain/quotes/stream?" + quoteParams.toString(),
+  { headers },
+);
 
 const reader = resp.body.getReader();
 const decoder = new TextDecoder();
@@ -117,7 +116,7 @@ while (true) {
 
   const chunk = decoder.decode(value, { stream: true });
 
-  chunk.split("\n").forEach(line => {
+  chunk.split("\n").forEach((line) => {
     if (line.startsWith("data:")) {
       const parsed = JSON.parse(line.slice(5).trim());
       console.log("SSE event:", parsed);

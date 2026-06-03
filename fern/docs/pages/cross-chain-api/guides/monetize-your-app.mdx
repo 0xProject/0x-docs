@@ -3,10 +3,6 @@ title: "Monetize Your App"
 description: "Collect a percentage-based fee on every cross-chain swap your users make."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 Collect a percentage-based fee on every cross-chain swap your users make. Fees are deducted from the `sellAmount` and sent directly to your wallet during the origin transaction.
 
 ## Quick Start
@@ -15,19 +11,19 @@ Add `feeBps` and `feeRecipient` to your quote request:
 
 ```typescript
 const quoteParams = new URLSearchParams({
-    originChain: '8453',
-    destinationChain: '42161',
-    sellToken: '0x4200000000000000000000000000000000000006',
-    buyToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-    sellAmount: '1000000000000000000',
-    originAddress: '$USER_TAKER_ADDRESS',
-    sortQuotesBy: 'price',
+  originChain: "8453",
+  destinationChain: "42161",
+  sellToken: "0x4200000000000000000000000000000000000006",
+  buyToken: "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+  sellAmount: "1000000000000000000",
+  originAddress: "$USER_TAKER_ADDRESS",
+  sortQuotesBy: "price",
 
-    // Monetisation parameters
-    feeRecipient: '0x2fb3a9fb601808e110b1ade14068d69c3bfe0fef', // address to which the fee should be sent
-    feeBps: 100 // The amount in bps of the amount that will be delivered to the feeRecipient
+  // Monetisation parameters
+  feeRecipient: "0x2fb3a9fb601808e110b1ade14068d69c3bfe0fef", // address to which the fee should be sent
+  feeBps: 100, // The amount in bps of the amount that will be delivered to the feeRecipient
 
-    // The feeToken is optional as currently it is only possible to collect fees in sellToken
+  // The feeToken is optional as currently it is only possible to collect fees in sellToken
 });
 ```
 
@@ -64,10 +60,10 @@ The quote response includes a `fees` object:
 }
 ```
 
-| Field | Description |
-| --- | --- |
-| `integratorFees` | Array of your fees |
-| `zeroExFee` | 0x protocol fee, if applicable. |
+| Field             | Description                                                                                                                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `integratorFees`  | Array of your fees                                                                                                                                                                                |
+| `zeroExFee`       | 0x protocol fee, if applicable.                                                                                                                                                                   |
 | `bridgeNativeFee` | Additional bridge infrastructure cost paid by the user in native tokens. Please see [Native Tokens and Bridge Fees](/docs/cross-chain-api/key-concepts/understanding-bridging-costs) for details. |
 
 ## Multiple Fee Recipients
@@ -76,8 +72,8 @@ It is also possible to collect multiple fees, sent to different recipients as a 
 
 ```typescript
 // To collect multiple fees
-feeRecipient: '0xWalletA,0xWalletB'
-feeBps: '30,20'
+feeRecipient: "0xWalletA,0xWalletB";
+feeBps: "30,20";
 ```
 
 This collects:
@@ -102,11 +98,11 @@ When multiple fees are used, the response contains `integratorFees` (array) inst
 
 ## Parameter Reference
 
-| Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
-| `feeBps` | string | With `feeRecipient` | Comma-separated basis points. Each: integer 0–10,000. |
-| `feeRecipient` | string | With `feeBps` | Comma-separated wallet addresses. Must be valid EVM addresses. |
-| `feeToken` | string | No | Comma-separated token addresses. Defaults to `sellToken`. |
+| Parameter      | Type   | Required            | Description                                                    |
+| -------------- | ------ | ------------------- | -------------------------------------------------------------- |
+| `feeBps`       | string | With `feeRecipient` | Comma-separated basis points. Each: integer 0–10,000.          |
+| `feeRecipient` | string | With `feeBps`       | Comma-separated wallet addresses. Must be valid EVM addresses. |
+| `feeToken`     | string | No                  | Comma-separated token addresses. Defaults to `sellToken`.      |
 
 ### Validation Rules
 

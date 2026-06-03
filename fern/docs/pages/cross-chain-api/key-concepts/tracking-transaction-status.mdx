@@ -3,16 +3,15 @@ title: "Tracking Transaction Status"
 description: "Understand the status lifecycle of a cross-chain transaction returned by /status."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 When monitoring a transaction's execution via `/status`, you may encounter various statuses that indicate the current stage of the transaction lifecycle.
 
 ## Transaction Lifecycle
 
 <Frame>
-  <img src="../../../assets/img/cross-chain-api/transaction_status_diagram.png" alt="Cross-chain transaction status lifecycle" />
+  <img
+    src="../../../assets/img/cross-chain-api/transaction_status_diagram.png"
+    alt="Cross-chain transaction status lifecycle"
+  />
 </Frame>
 
 Statuses can be skipped. A single poll may jump from `origin_tx_pending` directly to `bridge_filled` if the bridge completes quickly. Do not rely on observing every intermediate status.
@@ -21,15 +20,15 @@ Statuses can be skipped. A single poll may jump from `origin_tx_pending` directl
 
 Users may refer to the top-level status to locate the funds transferred upon execution. The list of status enums below is in approximately chronological order.
 
-| Status | Description | Is Terminal? |
-| --- | --- | --- |
-| `origin_tx_pending` | The origin transaction is pending and has not landed on-chain. | ❌ |
-| `origin_tx_confirmed` | The origin transaction has been included in a block. The bridge status is fetched immediately after. | ❌ |
-| `origin_tx_reverted` | The origin transaction is reverted. The transaction has reached the end of the lifecycle, and the funds still remain in the `originAddress`. | ✅ |
-| `bridge_pending` | The bridge is in flight. The quoted bridge provider has received the funds from the `originAddress` and is in process of executing the trade. | ❌ |
-| `bridge_filled` | The bridge has been fulfilled. The funds have landed in the `destinationAddress`. | ✅ |
-| `bridge_failed` | The bridge is unable to be fulfilled. See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery) for recovery options. | ✅ |
-| `unknown` | The transaction status is unknown. Please reach out to 0x, as it is likely that there is an internal error. | ❌ |
+| Status                | Description                                                                                                                                                         | Is Terminal? |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `origin_tx_pending`   | The origin transaction is pending and has not landed on-chain.                                                                                                      | ❌           |
+| `origin_tx_confirmed` | The origin transaction has been included in a block. The bridge status is fetched immediately after.                                                                | ❌           |
+| `origin_tx_reverted`  | The origin transaction is reverted. The transaction has reached the end of the lifecycle, and the funds still remain in the `originAddress`.                        | ✅           |
+| `bridge_pending`      | The bridge is in flight. The quoted bridge provider has received the funds from the `originAddress` and is in process of executing the trade.                       | ❌           |
+| `bridge_filled`       | The bridge has been fulfilled. The funds have landed in the `destinationAddress`.                                                                                   | ✅           |
+| `bridge_failed`       | The bridge is unable to be fulfilled. See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery) for recovery options. | ✅           |
+| `unknown`             | The transaction status is unknown. Please reach out to 0x, as it is likely that there is an internal error.                                                         | ❌           |
 
 ## How Confirmation Works
 
