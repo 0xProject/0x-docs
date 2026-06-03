@@ -1,0 +1,198 @@
+---
+title: "Best Practices to Add Solana to EVM Projects"
+description: Design patterns, integration tips, and architectural considerations for teams adding Solana (SVM) support to an existing EVM-based application.
+---
+
+<Info>
+  The 0x Solana Swap API is available via priority access. [Apply
+  now](https://0x.org/products/solana) to start building.
+</Info>
+
+This guide outlines design patterns, integration tips, and architectural considerations for teams adding Solana (SVM) support to an existing EVM-based application. It is geared toward engineers familiar with Ethereum who want to offer a unified cross-chain experience.
+
+### SVM + EVM Integration Checklist
+
+- [ ] Abstract tokens, wallets, and transaction logic across chains
+- [ ] Normalize the transaction UX flow
+- [ ] Detect and create ATAs as needed
+- [ ] Select production-ready RPC providers
+- [ ] Decide on a wallet connection UX (single vs. multi-wallet)
+- [ ] Account for Solana-specific token account behavior
+
+---
+
+### 1. Abstract Core Concepts
+
+Avoid hardcoding chain-specific assumptions in your app. Design your architecture around abstract interfaces to encapsulate EVM and SVM differences:
+
+- **Token abstraction**: Define a generic token model that hides differences like hexadecimal (EVM) vs base58 (Solana) addresses.
+- **Wallet abstraction**: Represent wallets as objects that can return addresses, sign messages, and send transactions across chains.
+- **Chain awareness**: Add utility methods to check if a wallet or token belongs to EVM or SVM to help enforce compatibility or limit unsupported operations.
+
+---
+
+### 2. Wallet Connection UX
+
+Decide how your application should handle multi-chain wallet connections.
+
+#### Option 1: Single Wallet at a Time
+
+- Simpler to implement
+- Reuses more of your current EVM app architecture
+- Less user flexibility
+
+#### Option 2: Multiple Wallets Connected
+
+- Supports simultaneous connections (e.g., one EVM wallet and one Solana wallet)
+- Enables richer cross-chain interactions
+- Requires additional UI logic and app-wide refactoring
+
+Choose your wallet provider carefully. The abstractions they expose can significantly affect your architecture. For example, 0x uses [Privy](https://privy.io/) for multi-chain key management.
+
+---
+
+### 3. Normalize Transaction Flow
+
+While EVM and SVM transactions are different at the protocol level, you can normalize the user experience:
+
+| UX Behavior        | EVM                         | Solana                     |
+| ------------------ | --------------------------- | -------------------------- |
+| Fetch price        | API call                    | API call                   |
+| Build transaction  | Construct calldata          | Build instructions         |
+| Approve allowance  | ERC-20 `approve()`          | Typically unnecessary      |
+| Submit transaction | Send signed transaction     | Send versioned transaction |
+| Track status       | `eth_getTransactionReceipt` | `getSignatureStatus`       |
+
+One option is to create an internal type (e.g. `AbstractTransaction`) that abstract sthe transaction type with shared fields (e.g. fees, tips, status), while allowing chain-specific logic to compute them differently.
+
+---
+
+### 4. Solana-Specific Considerations
+
+Solana has different design assumptions from EVM-based chains, which must be accounted for.
+
+---
+
+#### 4.1 RPC Provider Selection
+
+You’ll need to address Solana-specific infrastructure concerns, such as choosing a high-quality RPC provider (e.g., Helius or Triton) to improve transaction reliability during peak activity. For additional protection against MEV, consider integrating with Jito.
+
+---
+
+#### 4.2 Program-Specific Accounts
+
+- Users must have **Associated Token Accounts (ATAs)** to receive SPL tokens.
+- Order book DEXes like OpenBook may also require program-specific **Open Orders Accounts**.
+
+Be prepared to handle creation of these accounts per swap, especially for new tokens or protocols requiring dedicated accounts.
+
+#### 4.3 SPL Tokens
+
+[SPL (Solana Program Library) tokens](https://solana.com/pl/docs/tokens) are analogous to ERC-20 tokens.
+
+Each SPL token has an on-chain mint account owned by the SPL Token Program.
+
+The address `So11111111111111111111111111111111111111112` is the WSOL mint address, but native SOL is not an SPL token mint account.
+
+A simple, effective way to verify if a token address is an SPL token it to check if the account is owned by the SPL Token Program.
+
+To verify whether a token address on Solana is a valid SPL token mint:
+
+```ts
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { Connection, PublicKey } from "@solana/web3.js";
+
+/**
+ * Checks whether a list of token addresses are SPL tokens.
+ * @param addresses - An array of base58 token account addresses or mint addresses.
+ * @param connection - A Solana RPC connection object.
+ */
+export async function classifyTokenAccounts(
+  addresses: string[],
+  connection: Connection,
+): Promise<void> {
+  for (const address of addresses) {
+    try {
+      const pubkey = new PublicKey(address);
+      const accountInfo = await connection.getAccountInfo(pubkey);
+
+      if (!accountInfo) {
+        console.log(`${address} does not exist on-chain`);
+        continue;
+      }
+
+      const owner = accountInfo.owner.toBase58();
+      const isSPL = owner === TOKEN_PROGRAM_ID.toBase58();
+
+      console.log(
+        `${address} is ${isSPL ? "an SPL token" : "NOT an SPL token"}`,
+      );
+    } catch (err) {
+      console.error(`Error checking ${address}:`, err);
+    }
+  }
+}
+
+// Example usage
+if (require.main === module) {
+  const tokenAddresses = [
+    "So11111111111111111111111111111111111111112", // not a mint
+    "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC
+    "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", // USDT
+    // ... other tokens
+  ];
+
+  const connection = new Connection(
+    "https://api.mainnet-beta.solana.com",
+    "confirmed",
+  );
+
+  classifyTokenAccounts(tokenAddresses, connection);
+}
+```
+
+---
+
+#### 4.4 What is an ATA
+
+An **Associated Token Account (ATA)** is a deterministic, standard token account that holds SPL tokens for a specific wallet.
+
+- Each wallet has one ATA per token mint
+- The ATA must be created before it can receive tokens
+- ATAs are rent-exempt and owned by the wallet
+
+To compute an ATA:
+
+```ts
+import { getAssociatedTokenAddress } from "@solana/spl-token";
+
+const ata = await getAssociatedTokenAddress(
+  mintPublicKey, // Token mint address
+  userPublicKey, // Wallet address
+);
+```
+
+---
+
+#### 4.5 Token Account Model: Solana vs Ethereum
+
+| Feature                | Ethereum (ERC-20)               | Solana (SPL Token)                        |
+| ---------------------- | ------------------------------- | ----------------------------------------- |
+| Token balances         | Stored in token contract        | Stored in separate on-chain token account |
+| Receiving tokens       | Send directly to wallet         | Must create ATA before receiving          |
+| Token account creation | Not required                    | Required per (wallet, token) pair         |
+| Ownership model        | Wallet owns balance via mapping | Wallet owns a dedicated account           |
+
+Solana’s model is more explicit and composable, but requires additional account management logic.
+
+---
+
+#### 4.6 Limitations of Shared Token Accounts
+
+Shared or global token accounts are not universal.
+
+- Created and managed by specific aggregators to reduce account bloat
+- Not guaranteed to be accepted by all DEXes or routing paths
+- Best used for efficiency, with fallbacks to user-owned accounts when needed
+
+These accounts are infrastructure shortcuts managed at the protocol level—not core features of the SPL Token Program.
