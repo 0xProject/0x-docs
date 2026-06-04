@@ -4,8 +4,7 @@ description: "Learn how to use the 0x Cross Chain API endpoint to get a quote an
 ---
 
 <Tip>
-  Quick link with examples:
-  [0x-examples](https://github.com/0xProject/0x-examples)
+Quick link with examples: [0x-examples](https://github.com/0xProject/0x-examples)
 </Tip>
 
 ## Steps to Cross Chain Swap Tokens from Solana
@@ -35,7 +34,6 @@ import { Connection } from "@solana/web3.js";
 // You can replace this with your own or a third-party RPC URL
 const connection = new Connection("https://api.mainnet-beta.solana.com");
 ```
-
 </Accordion>
 
 ### 1. Fetch a Quote
@@ -44,25 +42,22 @@ Start by sending a GET request to the 0x `/quotes` endpoint to get a quotes for 
 
 ```typescript
 const quotesParams = new URLSearchParams({
-  originChain: "solana", // Solana mainnet
-  destinationChain: "8453", // Base mainnet
-  sellToken: "So11111111111111111111111111111111111111112", // WSOL on Solana
-  buyToken: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", // USDC on Base
-  sellAmount: "10000000000000000000", // Amount of sellToken in base units
-  originAddress: "$USER_TAKER_ADDRESS", // Solana Pubkey that will make the trade
-  destinationAddress: "$USER_RECEIVER_ADDRESS", // Base address that will receive the output
-  sortQuotesBy: "price", // Prefer the quote that will result in the best price / output
-  maxNumQuotes: 1, // only the best quote
+    originChain: 'solana', // Solana mainnet
+    destinationChain: '8453', // Base mainnet
+    sellToken: 'So11111111111111111111111111111111111111112', // WSOL on Solana
+    buyToken: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913', // USDC on Base
+    sellAmount: '10000000000000000000', // Amount of sellToken in base units
+    originAddress: '$USER_TAKER_ADDRESS', // Solana Pubkey that will make the trade
+    destinationAddress: '$USER_RECEIVER_ADDRESS', // Base address that will receive the output
+    sortQuotesBy: 'price', // Prefer the quote that will result in the best price / output
+    maxNumQuotes: 1 // only the best quote
 });
 
 const headers = {
-  "0x-api-key": "[api-key]", // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
 
-const quoteResponse = await fetch(
-  "https://api.0x.org/cross-chain/quotes?" + quotesParams.toString(),
-  { headers },
-);
+const quoteResponse = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
 
 console.log(await quoteResponse.json());
 ```
@@ -138,24 +133,23 @@ console.log(await quoteResponse.json());
 In the next step, you need to build `VersionedTransaction` based on returned transaction data, sign it with your wallet, and send it to the Solana network, and wait for transaction confirmation.
 
 ```typescript
-const serializedTx =
-  quotesResponse.quotes[0].transaction.details.serializedTransaction;
+const serializedTx = quotesResponse.quotes[0].transaction.details.serializedTransaction;
 const transactionBuffer = Buffer.from(serializedTx, "base64");
 const transaction = VersionedTransaction.deserialize(transactionBuffer);
 
 transaction.sign([keypair]);
 
 const signature = await connection.sendTransaction(transaction, {
-  skipPreflight: false, // Let Solana do final preflight
-  preflightCommitment: "confirmed",
+    skipPreflight: false, // Let Solana do final preflight
+    preflightCommitment: "confirmed",
 });
 
 const confirmation = await connection.confirmTransaction(
-  {
-    signature,
-    ...(await connection.getLatestBlockhash()),
-  },
-  "finalized",
+    {
+      signature,
+      ...(await connection.getLatestBlockhash()),
+    },
+    "finalized",
 );
 ```
 
@@ -165,18 +159,15 @@ The last step is to monitor the execution of the cross chain transaction, includ
 
 ```typescript
 const statusParams = new URLSearchParams({
-  originChain: "solana", // origin chain
-  originTxHash: signature, // transaction hash of the origin chain transaction, submitted in previous step
+    originChain: "solana", // origin chain
+    originTxHash: signature, // transaction hash of the origin chain transaction, submitted in previous step
 });
 
 const headers = {
-  "0x-api-key": "[api-key]", // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
 
-const statusResponse = await fetch(
-  "https://api.0x.org/cross-chain/status?" + statusParams.toString(),
-  { headers },
-);
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
 
 console.log(await statusResponse.json());
 ```

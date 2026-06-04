@@ -4,8 +4,7 @@ description: "Learn how to use the 0x Cross Chain API endpoint to get a quote, s
 ---
 
 <Tip>
-  Quick link with examples:
-  [0x-examples](https://github.com/0xProject/0x-examples)
+Quick link with examples: [0x-examples](https://github.com/0xProject/0x-examples)
 </Tip>
 
 ## About 0x Cross Chain API
@@ -43,16 +42,17 @@ import { createWalletClient, http } from "viem";
 import { base } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 
-const PRIVATE_KEY = "your_private_key";
+const PRIVATE_KEY = 'your_private_key'
 
 const account = privateKeyToAccount(PRIVATE_KEY as `0x${string}`);
-const walletClient = createWalletClient({
-  account,
-  chain: base,
-  transport: http(configuration.rpcUrls.base),
-});
+const walletClient = createWalletClient(
+  {
+    account,
+    chain: base,
+    transport: http(configuration.rpcUrls.base),
+  }
+)
 ```
-
 </Accordion>
 
 ### 1. Fetch a Quote
@@ -61,24 +61,21 @@ Start by sending a GET request to the 0x `/quotes` endpoint to get a quote for a
 
 ```typescript
 const quotesParams = new URLSearchParams({
-  originChain: "8453", // Base mainnet
-  destinationChain: "42161", // Arbitrum mainnet
-  sellToken: "0x4200000000000000000000000000000000000006", // WETH on Base
-  buyToken: "0xaf88d065e77c8cc2239327c5edb3a432268e5831", // USDC on Arbitrum
-  sellAmount: "1000000000000000000", // Amount of sellToken in base units
-  originAddress: "$USER_TAKER_ADDRESS", // Address that will make the trade
-  sortQuotesBy: "price", // Prefer the quote that will result in the best price / output
-  maxNumQuotes: 1, // only the best quote
+    originChain: '8453', // Base mainnet
+    destinationChain: '42161', // Arbitrum mainnet
+    sellToken: '0x4200000000000000000000000000000000000006', // WETH on Base
+    buyToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', // USDC on Arbitrum
+    sellAmount: '1000000000000000000', // Amount of sellToken in base units
+    originAddress: '$USER_TAKER_ADDRESS', // Address that will make the trade
+    sortQuotesBy: 'price', // Prefer the quote that will result in the best price / output
+    maxNumQuotes: 1 // only the best quote
 });
 
 const headers = {
-  "0x-api-key": "[api-key]", // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
 
-const quoteResponse = await fetch(
-  "https://api.0x.org/cross-chain/quotes?" + quotesParams.toString(),
-  { headers },
-);
+const quoteResponse = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
 
 console.log(await quoteResponse.json());
 ```
@@ -204,9 +201,7 @@ await walletClient.waitForTransactionReceipt({
 ```
 
 <Info>
-  **Important:** Only EVM chains require token allowances. Solana and Tron do
-  not need an approval step and `allowanceTarget` will be `null` for those
-  chains. Native tokens (ETH, BNB, etc.) also do not need approvals.
+**Important:** Only EVM chains require token allowances. Solana and Tron do not need an approval step and `allowanceTarget` will be `null` for those chains. Native tokens (ETH, BNB, etc.) also do not need approvals.
 </Info>
 
 ### 3. Sign and submit a transaction
@@ -218,12 +213,12 @@ Code below will construct, sign, and submit the transaction based on the quote r
 ```typescript
 // Prepare a transaction request
 const txRequest = {
-  to: quoteResponse.quotes[0].transaction.details.to as `0x${string}`,
-  data: quoteResponse.quotes[0].transaction.details.data as `0x${string}`,
-  value: BigInt(quoteResponse.quotes[0].transaction.details.value),
-  gas: quoteResponse.quotes[0].transaction.details.gas
-    ? BigInt(quoteResponse.quotes[0].transaction.details.gas)
-    : undefined,
+    to: quoteResponse.quotes[0].transaction.details.to as `0x${string}`,
+    data: quoteResponse.quotes[0].transaction.details.data as `0x${string}`,
+    value: BigInt(quoteResponse.quotes[0].transaction.details.value),
+    gas: quoteResponse.quotes[0].transaction.details.gas
+        ? BigInt(quoteResponse.quotes[0].transaction.details.gas)
+        : undefined,
 };
 
 // Sign and submit the transaction request
@@ -231,8 +226,8 @@ const txHash = await walletClient.sendTransaction(txRequest);
 
 // Wait for confirmation on Base
 const receipt = await walletClient.waitForTransactionReceipt({
-  hash: txHash,
-  confirmations: 2,
+    hash: txHash,
+    confirmations: 2,
 });
 console.log(`Transaction confirmed in block: ${receipt.blockNumber}`);
 console.log(`View on BaseScan: https://basescan.org/tx/${txHash}`);
@@ -244,19 +239,16 @@ The last step is to monitor the execution of the cross chain transaction, includ
 
 ```typescript
 const statusParams = new URLSearchParams({
-  originChain: 8453, // origin chain
-  originTxHash, // transaction hash of the origin chain transaction, submitted in previous step
-  quoteId, // the quote ID of the submitted quote, equivalent to quoteResponse.quotes[0].quoteId
+    originChain: 8453, // origin chain
+    originTxHash, // transaction hash of the origin chain transaction, submitted in previous step
+    quoteId, // the quote ID of the submitted quote, equivalent to quoteResponse.quotes[0].quoteId
 });
 
 const headers = {
-  "0x-api-key": "[api-key]", // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
 
-const statusResponse = await fetch(
-  "https://api.0x.org/cross-chain/status?" + statusParams.toString(),
-  { headers },
-);
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
 
 console.log(await statusResponse.json());
 ```
