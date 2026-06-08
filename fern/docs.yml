@@ -493,3 +493,9 @@ redirects:
     destination: /api-reference/evm-ap-is/api-reference/evm-ap-is/swap/api-reference/evm-ap-is/swap/allowanceholder-getquote
   - source: /developer-resources/bounties
     destination: /docs/developer-resources/docs/developer-resources/bounties
+  - source: /docs/cross-chain-api/introduction
+    destination: /cross-chain/cross-chain-api/introduction
+  - source: /docs/0x-swap-api/guides/build-token-swap-dapp-nextjs
+    destination: /evm/0x-swap-api/guides/build-token-swap-dapp-nextjs
+  - source: /docs/0x-swap-api/guides/monetize-your-app-using-swap
+    destination: /evm/0x-swap-api/guides/monetize-your-app-using-swap
