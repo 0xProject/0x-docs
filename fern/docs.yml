@@ -449,3 +449,7 @@ page-actions:
 
 integrations:
   context7: ./context7.json
+
+redirects:
+  - source: /developer-resources/bounties
+    destination: /docs/developer-resources/docs/developer-resources/bounties
