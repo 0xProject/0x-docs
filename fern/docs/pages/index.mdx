@@ -5,62 +5,112 @@ hide-toc: true
 hide-nav-links: true
 ---
 
-<div style={{ textAlign: 'center', padding: '5rem 1rem 6rem' }}>
+{/* ── Hero ── */}
 
-<h1 style={{ fontSize: "4rem", fontWeight: "400", marginBottom: "1.5rem" }}>
-  Welcome to 0x Docs
-</h1>
-
-<p style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "2.5rem" }}>
-  Embed swaps in your onchain app
-</p>
-
-<a
-  href="/docs/introduction/quickstart/getting-started"
+<div
   style={{
-    display: "inline-block",
-    backgroundColor: "#717276",
-    color: "white",
-    padding: "0.5rem 3rem",
-    borderRadius: "88px",
-    textDecoration: "none",
-    fontWeight: "500",
+    display: "flex",
+    alignItems: "center",
+    gap: "2rem",
+    padding: "2rem 2rem 1.5rem",
+    flexWrap: "wrap",
   }}
 >
-  Start building
-</a>
-
+  <div style={{ flex: "1 1 340px" }}>
+    <h1
+      style={{
+        fontSize: "3.25rem",
+        fontWeight: "400",
+        marginBottom: "0.75rem",
+        lineHeight: 1.1,
+      }}
+    >
+      Welcome to 0x Docs
+    </h1>
+    <p
+      style={{
+        fontSize: "1.15rem",
+        marginBottom: "1.5rem",
+        maxWidth: "480px",
+        lineHeight: 1.6,
+      }}
+    >
+      The trading API for every chain. Liquidity from 150+ sources across EVM,
+      Solana, Tron, and HyperCore — one integration, everywhere.
+    </p>
+    <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+      <a
+        href="/docs/introduction/quickstart/swap-tokens-with-0x-swap-api"
+        className="hero-btn-primary"
+      >
+        Start building →
+      </a>
+      <a
+        href="https://github.com/0xProject/0x-examples"
+        className="hero-btn-secondary"
+      >
+        Explore demo projects →
+      </a>
+    </div>
+  </div>
+  <div style={{ flex: "1 1 240px", display: "flex", justifyContent: "center" }}>
+    <img
+      src="../assets/img/hero-home-new.svg"
+      alt=""
+      className="hero-illustration hero-illustration-light"
+      style={{ width: "100%", maxWidth: "260px", height: "auto", opacity: 0.9 }}
+    />
+    <img
+      src="../assets/img/hero-home-dark.svg"
+      alt=""
+      className="hero-illustration hero-illustration-dark"
+      style={{ width: "100%", maxWidth: "260px", height: "auto", opacity: 0.9 }}
+    />
+  </div>
 </div>
+
+{/* ── Explore 0x APIs ── */}
 
 <h2 style={{ textAlign: "center" }}>Explore 0x APIs</h2>
 
 <CardGroup cols={3}>
 
-<Card title="Swap API" href="/docs/0x-swap-api/introduction" icon="shuffle">
-  Embed swaps into your app
+<Card title="EVM Swap API" href="/evm/0x-swap-api/introduction" icon="shuffle">
+  Embed token swaps on any EVM chain. Aggregated liquidity from 150+ sources.
+</Card>
+
+<Card
+  title="Solana Swap API"
+  href="/svm/solana-swap-api/introduction"
+  icon="sun"
+>
+  Native Solana support. Fast, low-cost token swaps with deep SPL token
+  liquidity.
 </Card>
 
 <Card
   title="Cross-Chain API"
-  href="/docs/cross-chain-api/introduction"
+  href="/cross-chain/cross-chain-api/introduction"
   icon="bridge"
 >
-  Swap any token, any chain
+  Swap any token across any chain in one transaction.
 </Card>
 
-<Card title="Gasless API" href="/docs/gasless-api/introduction" icon="globe">
-  Enable seamless, gasless DeFi transactions
+<Card title="Gasless API" href="/evm/gasless-api/introduction" icon="gas-pump">
+  Enable seamless, gasless DeFi transactions.
 </Card>
 
 <Card
   title="Trade Analytics API"
-  href="/docs/trade-analytics-api/introduction"
+  href="/evm/trade-analytics-api/introduction"
   icon="chart-bar"
 >
-  Track & analyze trading activity
+  Track and analyze trades routed through 0x.
 </Card>
 
 </CardGroup>
+
+{/* ── Quick Links ── */}
 
 <h2 style={{ textAlign: "center" }}>Quick Links</h2>
 
@@ -68,7 +118,7 @@ hide-nav-links: true
 
 <Card
   title="Build with AI"
-  href="https://docs.0x.org/docs/introduction/develop-with-ai/using-ai-with-0x"
+  href="/docs/introduction/develop-with-ai/using-ai-with-0x"
   icon="microchip"
 >
   Accelerate your 0x integration using AI tools
@@ -76,7 +126,7 @@ hide-nav-links: true
 
 <Card
   title="Build with Swap API"
-  href="https://docs.0x.org/docs/0x-swap-api/guides/swap-tokens-with-0x-swap-api"
+  href="/evm/0x-swap-api/guides/swap-tokens-with-0x-swap-api"
   icon="hammer"
 >
   Get started with Swap API
@@ -92,7 +142,7 @@ hide-nav-links: true
 
 <Card
   title="Monetize your app"
-  href="/docs/0x-swap-api/guides/monetize-your-app-using-swap"
+  href="/evm/0x-swap-api/guides/monetize-your-app-using-swap"
   icon="dollar-sign"
 >
   Unlock new revenue streams with 0x
@@ -100,23 +150,90 @@ hide-nav-links: true
 
 </CardGroup>
 
-<h2 style={{ textAlign: "center" }}>Dev Resources</h2>
+{/* ── Release Highlights ── */}
+
+<h2 style={{ textAlign: "center" }}>Release Highlights</h2>
+
+| Date       | Update                                                                                                                                              | API                   |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| May 2026   | [Exact-out support — specify a precise `buyAmount` and get the minimum sell amount required](https://docs.0x.org/changelog#2026-05-31-new-features) | Swap API, Gasless API |
+| May 2026   | [Concurrent gasless trades now supported for the same taker and sell token](https://docs.0x.org/changelog#2026-05-31-new-features)                  | Gasless API           |
+| April 2026 | [New 0x Agent Skill for AI-powered integrations](https://docs.0x.org/changelog#2026-04-30-new-feature)                                              | All APIs              |
+| April 2026 | [Sub-BPS slippage precision now supported](https://docs.0x.org/changelog#2026-04-30-new-feature)                                                    | Swap API, Gasless API |
+| March 2026 | [Smart account signatures now supported](https://docs.0x.org/changelog#2026-04-13-new-features)                                                     | Gasless API           |
+| March 2026 | [Fine-tuned native wrap/unwrap control via `wrapUnwrapMode`](https://docs.0x.org/changelog#2026-04-13-new-features)                                 | Swap API              |
+
+<a
+  href="/changelog"
+  style={{ display: "block", textAlign: "center", marginTop: "0.5rem" }}
+>
+  See all updates →
+</a>
+
+{/* ── Resources ── */}
+
+<h2 style={{ textAlign: "center" }}>Resources</h2>
 
 <CardGroup cols={3}>
-
-<Card title="Troubleshooting" href="/docs/introduction/faq" icon="wrench">
-  Answers to common integration issues
-</Card>
-
-<Card title="0x System Status" href="https://0x.statuspal.io" icon="signal">
-  Real-time 0x system performance updates
-</Card>
 
 <Card
   title="0x Cheat Sheet"
   href="/docs/core-concepts/0x-cheat-sheet"
   icon="book"
 >
-  Quick reference for supported chains & contract addresses
+  Quick reference for supported chains and contract addresses
 </Card>
+
+<Card
+  title="Supported Chains"
+  href="/docs/introduction/supported-chains"
+  icon="link"
+>
+  Supported networks and liquidity provider information
+</Card>
+
+<Card
+  title="Rate Limits"
+  href="/docs/developer-resources/rate-limits"
+  icon="gauge"
+>
+  API rate limits and best practices for staying within them
+</Card>
+
+<Card title="0x Dashboard" href="https://dashboard.0x.org" icon="chart-line">
+  Manage API keys and monitor usage
+</Card>
+
+<Card title="0x System Status" href="https://0x.statuspal.io" icon="signal">
+  Real-time system status and performance updates
+</Card>
+
+<Card
+  title="Buy/Sell Tax Support"
+  href="/evm/0x-swap-api/additional-topics/buy-sell-tax-support"
+  icon="percent"
+>
+  Real-time detection and calculation for token buy/sell taxes
+</Card>
+
+</CardGroup>
+
+{/* ── Help ── */}
+
+<h2 style={{ textAlign: "center" }}>Need Help?</h2>
+
+<CardGroup cols={2}>
+
+<Card title="FAQ" href="/docs/introduction/faq" icon="wrench">
+  Answers to common integration issues
+</Card>
+
+<Card
+  title="Support"
+  href="/docs/introduction/need-help#-contact-developer-support-fastest-direct-help"
+  icon="life-ring"
+>
+  Contact the 0x developer support team
+</Card>
+
 </CardGroup>

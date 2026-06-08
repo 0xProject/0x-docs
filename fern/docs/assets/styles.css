@@ -16,3 +16,53 @@
 .fern-layout-overview .fern-layout-footer-toolbar {
   display: none !important;
 }
+
+
+/* Hero illustration — swap between light and dark variants */
+.hero-illustration-dark { display: none; }
+.dark .hero-illustration-light { display: none; }
+.dark .hero-illustration-dark { display: block; }
+
+/* Hero buttons */
+.hero-btn-primary,
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 22px;
+  border-radius: 9999px;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+/* Hide the auto-injected external link icon */
+.hero-btn-primary svg,
+.hero-btn-secondary svg {
+  display: none !important;
+}
+
+.hero-btn-primary {
+  background-color: #01a74d;
+  color: #ffffff !important;
+  border: 1.5px solid transparent;
+}
+
+.dark .hero-btn-primary {
+  background-color: #01a74d;
+  color: #ffffff !important;
+}
+
+.hero-btn-secondary {
+  background-color: white;
+  color: #25272a !important;
+  border: 1.5px solid rgba(37, 39, 42, 0.2);
+}
+
+.dark .hero-btn-secondary {
+  background-color: #ffffff;
+  color: #25272a !important;
+  border-color: transparent;
+}
