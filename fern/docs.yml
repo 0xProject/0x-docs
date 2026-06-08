@@ -38,6 +38,7 @@ metadata:
 tabs:
   overview:
     display-name: Overview
+    slug: docs
   evm:
     display-name: EVM
   svm:
@@ -56,15 +57,12 @@ tabs:
 navigation:
   - tab: overview
     layout:
-      - page: Welcome
-        path: docs/pages/index.mdx
       - section: Introduction
         slug: introduction
         icon: fa-regular fa-compass
         contents:
           - page: Welcome
-            slug: welcome
-            path: docs/pages/introduction/welcome.mdx
+            path: docs/pages/index.mdx
           - section: Quickstart
             contents:
               - page: Create a 0x API Key
@@ -142,6 +140,20 @@ navigation:
           - link: System Status
             href: https://0x.statuspal.io/
             target: _blank
+
+      - section: Upgrading
+        slug: upgrading
+        icon: fa-regular fa-arrow-up-right-dots
+        contents:
+          - page: Overview
+            slug: overview
+            path: docs/pages/upgrading/overview.mdx
+          - page: Upgrading to Swap API v2
+            slug: upgrading-to-swap-v2
+            path: docs/pages/upgrading/upgrading-to-swap-v2.mdx
+          - page: Upgrading to Gasless API v2
+            slug: upgrading-to-gasless-v2
+            path: docs/pages/upgrading/upgrading-to-gasless-v2.mdx
 
   - tab: evm
     layout:
@@ -230,7 +242,20 @@ navigation:
                 slug: gasless-api-technical-appendix
                 path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
           - link: Gasless FAQ
-            href: /docs/0x-swap-api/faq#gasless-api
+            href: /evm/0x-swap-api/faq#gasless-api
+
+      - section: EVM Trade Analytics API
+        slug: trade-analytics-api
+        icon: fa-regular fa-chart-bar
+        contents:
+          - page: Introduction
+            slug: introduction
+            path: docs/pages/trade-analytics-api/introduction.mdx
+          - page: Transaction Data
+            slug: transaction-data
+            path: docs/pages/core-concepts/transaction-data.mdx
+          - link: Trade Analytics FAQ
+            href: /docs/introduction/faq#trade-analytics-api
 
       - section: Need Help?
         slug: need-help
