@@ -3,10 +3,6 @@ title: "Handling Failures and Recovery"
 description: "What happens when a bridge fails, how recovery works, and what your integration should do for each scenario."
 ---
 
-<Info>
-  The 0x Cross-Chain API is in private beta. [Request access](https://0x.org/products/cross-chain) to start building.
-</Info>
-
 Cross-chain swaps are non-atomic as they span two chains and a bridge provider in between. If the origin transaction succeeds but the bridge cannot complete, the user's funds have left their wallet and need to be recovered.
 
 This page explains what happens when a bridge fails, how recovery works, and what your integration should do for each scenario. For the happy-path status lifecycle, see [Tracking Transaction Status](/docs/cross-chain-api/key-concepts/tracking-transaction-status).
@@ -124,7 +120,6 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | --- | --- | --- | --- |
 | Across V4 | Automatic | Origin | Bridge step's `sellToken` |
 | Arbitrum Bridge | Manual (has deadline) | Destination | Bridge step's `buyToken` |
-| Bungee Auto | Automatic | Origin or destination | Usually `sellToken` or `buyToken` but there can be cases where on origin chain user will be refunded with a different token like USDC or WETH |
 | Circle Forwarder | Not tracked | - | - |
 | CCIP | Manual | Destination | Bridge step's `buyToken` |
 | Gas.zip | Automatic | Origin | Bridge step's `sellToken` |
