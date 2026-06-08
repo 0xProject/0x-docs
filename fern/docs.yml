@@ -489,5 +489,7 @@ integrations:
   context7: ./context7.json
 
 redirects:
+  - source: /api-reference/openapi-json/swap/allowanceholder-getprice
+    destination: /api-reference/evm-ap-is/api-reference/evm-ap-is/swap/api-reference/evm-ap-is/swap/allowanceholder-getquote
   - source: /developer-resources/bounties
     destination: /docs/developer-resources/docs/developer-resources/bounties
