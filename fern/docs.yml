@@ -88,7 +88,7 @@ navigation:
           - page: Supported Chains and Providers
             slug: supported-chains
             path: docs/pages/introduction/supported-chains.mdx
-          - link: Demo Apps
+          - link: Example Code
             href: https://github.com/0xProject/0x-examples
             target: _blank
           - page: FAQ
@@ -191,6 +191,9 @@ navigation:
                   - page: Build App with Permit2 (Next.js)
                     slug: build-token-swap-dapp-nextjs-permit2
                     path: docs/pages/0x-swap-api/guides/build-token-swap-dapp-nextjs-permit2.mdx
+          - link: Example Code
+            href: https://github.com/0xProject/0x-examples#swap-api
+            target: _blank
           - section: Additional Topics
             slug: additional-topics
             contents:
@@ -241,6 +244,8 @@ navigation:
               - page: Technical Appendix
                 slug: gasless-api-technical-appendix
                 path: docs/pages/gasless-api/guides/gasless-api-technical-appendix.mdx
+          - link: Example Code
+            href: https://github.com/0xProject/0x-examples#gasless-api
           - link: Gasless FAQ
             href: /evm/0x-swap-api/faq#gasless-api
 
@@ -295,6 +300,9 @@ navigation:
               - page: Integrator Byte Costs
                 slug: integrator-byte-costs
                 path: docs/pages/solana-swap-api/guides/integrator-byte-costs.mdx
+          - link: Example Code
+            href: https://github.com/0xProject/0x-solana-example
+            target: _blank
           - section: Reference
             slug: references
             contents:
@@ -354,6 +362,8 @@ navigation:
               - page: Monetize Your App
                 slug: monetize-your-app
                 path: docs/pages/cross-chain-api/guides/monetize-your-app.mdx
+          - link: Example Code
+            href: https://github.com/0xProject/0x-examples#cross-chain-api
           - section: Key Concepts
             slug: key-concepts
             contents:
