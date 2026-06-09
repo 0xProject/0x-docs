@@ -31,7 +31,7 @@ When selling a native token, the API may include a **wrap** step on the origin c
 The wrap executes atomically within the origin transaction. No extra user action needed.
 
 <Note>
-**Wrap steps affect refund behavior.** If a bridge fails after a wrap, the refund is in the wrapped token (WETH), not the original native token (ETH). See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery).
+**Wrap steps affect refund behavior.** If a bridge fails after a wrap, the refund is in the wrapped token (WETH), not the original native token (ETH). See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery).
 </Note>
 
 ## The `value` Field (EVM only)
@@ -39,7 +39,7 @@ The wrap executes atomically within the origin transaction. No extra user action
 On EVM chains, the `value` field in the transaction object is the amount of native token sent with the transaction. It is non-zero in two cases:
 
 1. **Selling a native token** — `value` includes the sell amount
-2. **Bridge native fee** — some bridges charge a messaging fee in native token (see [Understanding Bridging Costs](/docs/cross-chain-api/key-concepts/understanding-bridging-costs))
+2. **Bridge native fee** — some bridges charge a messaging fee in native token (see [Understanding Bridging Costs](/cross-chain/cross-chain-api/key-concepts/understanding-bridging-costs))
 
 When both apply, `value` = sell amount + bridge fee.
 

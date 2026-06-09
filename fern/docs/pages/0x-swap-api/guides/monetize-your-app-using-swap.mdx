@@ -15,8 +15,8 @@ See below for pricing guidance, code examples, and a live demo.
 
 Out-of-the-box, 0x Swap API offers two monetization options:
 
-1. [Affiliate fees](/docs/0x-swap-api/guides/monetize-your-app-using-swap#option-1-collect-affiliate-fees) (aka trading fee or commission) – Available on all pricing plans.
-2. [Trade surplus](/docs/0x-swap-api/guides/monetize-your-app-using-swap#option-2-collect-trade-surplus) (aka positive slippage) – Available to select integrators on custom plans. For assistance with setting up a custom plan, please [contact support](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
+1. [Affiliate fees](/evm/0x-swap-api/guides/monetize-your-app-using-swap#option-1-collect-affiliate-fees) (aka trading fee or commission) – Available on all pricing plans.
+2. [Trade surplus](/evm/0x-swap-api/guides/monetize-your-app-using-swap#option-2-collect-trade-surplus) (aka positive slippage) – Available to select integrators on custom plans. For assistance with setting up a custom plan, please [contact support](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
 
 <Tip>
 ### Demo Quicklinks
@@ -31,7 +31,7 @@ Out-of-the-box, 0x Swap API offers two monetization options:
 
 0x supports multiple affiliate fee (trading fees/commissions) within a single swap request. This allows you to route fees to multiple recipients with independently specified fee amounts — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
 
-To apply affiliate fees, include the following parameters in your [Swap API request](/api-reference/openapi-json/swap/allowanceholder-getprice):
+To apply affiliate fees, include the following parameters in your [Swap API request](/api-reference/evm-ap-is/swap/allowanceholder-getprice):
 
 - `swapFeeRecipient` - The wallet address to receive the specified trading fees (supports single or multiple comma-separated values).
 - `swapFeeBps` - The fee amount(s), in basis points, to send to each corresponding `swapFeeRecipient`. Denoted in basis points (0–1000 Bps = 0–10%).
@@ -113,7 +113,7 @@ support](https://docs.0x.org/docs/introduction/need-help#-contact-developer-supp
 
 </Note>
 
-Trade surplus, also known as positive slippage, occurs when a user receives more tokens than their quoted amount. The `tradeSurplusRecipient` parameter lets you direct this surplus to a specific wallet. This parameter can be set in a [Swap API request](https://0x.org/docs/api) to automatically route surplus when applicable.
+Trade surplus, also known as positive slippage, occurs when a user receives more tokens than their quoted amount. The `tradeSurplusRecipient` parameter lets you direct this surplus to a specific wallet. This parameter can be set in a [Swap API request](https://docs.0x.org/api-reference/api-overview) to automatically route surplus when applicable.
 
 ### How it works
 

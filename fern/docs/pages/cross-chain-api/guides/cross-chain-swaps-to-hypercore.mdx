@@ -20,7 +20,7 @@ This guide will walk you through using the `/quotes` and `/status` endpoints on 
 3. Sign and send a transaction
 4. Monitor the status of the cross chain swap
 
-In our example, we will be swapping USDC on Arbitrum to USDC_PERP on HyperCore. Because the origin chain is a standard EVM chain, the signing and submission flow is identical to any other EVM origin — see [Get started](/docs/cross-chain-api/guides/get-started) for more detail on the EVM-specific steps.
+In our example, we will be swapping USDC on Arbitrum to USDC_PERP on HyperCore. Because the origin chain is a standard EVM chain, the signing and submission flow is identical to any other EVM origin — see [Get started](/cross-chain/cross-chain-api/guides/get-started) for more detail on the EVM-specific steps.
 
 ### 0. Prerequisites
 
@@ -28,7 +28,7 @@ Make sure you have:
 
 - A funded Arbitrum wallet
 - [0x API key](https://dashboard.0x.org/apps)
-- An RPC Connection (see [Get started](/docs/cross-chain-api/guides/get-started) for setting up a wallet client with viem)
+- An RPC Connection (see [Get started](/cross-chain/cross-chain-api/guides/get-started) for setting up a wallet client with viem)
 
 ### 1. Fetch a Quote
 
@@ -145,7 +145,7 @@ console.log(await quoteResponse.json());
 
 ### 2. Set a token allowance
 
-Because the origin chain is an EVM chain, you may need to set a token allowance to 0x's [AllowanceHolder contract](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances). When an allowance is required, it is reported in `issues.allowance` in the response. Always use the `spender` value from the response rather than hardcoding an address.
+Because the origin chain is an EVM chain, you may need to set a token allowance to 0x's [AllowanceHolder contract](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances). When an allowance is required, it is reported in `issues.allowance` in the response. Always use the `spender` value from the response rather than hardcoding an address.
 
 ```typescript
 // Example assumes that you've set up your walletClient with viem
@@ -215,7 +215,7 @@ console.log(await statusResponse.json());
 
 In your application, you might need to monitor the status repeatedly, as the bridging operation might take several seconds or minutes to complete.
 
-For full status lifecycle details, polling intervals, and failure handling, see [Tracking Transaction Status](/docs/cross-chain-api/key-concepts/tracking-transaction-status) and [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery).
+For full status lifecycle details, polling intervals, and failure handling, see [Tracking Transaction Status](/cross-chain/cross-chain-api/key-concepts/tracking-transaction-status) and [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery).
 
 ## Supported tokens
 
@@ -276,4 +276,4 @@ curl -X POST https://api.hyperliquid.xyz/info \
 | **Balance / chain data** | JSON-RPC node                  | JSON-RPC node              | HyperCore API (`api.hyperliquid.xyz/info`)    | Tron HTTP API             |
 | **Bridges**              | Varies by chain                | Across V4, Relay, others   | Across V4, Relay                              | Relay, NEAR Intents       |
 
-**Want to collect fees?** See [Monetize Your App](/docs/cross-chain-api/guides/monetize-your-app) to learn how to add integrator fees to cross-chain swaps.
+**Want to collect fees?** See [Monetize Your App](/cross-chain/cross-chain-api/guides/monetize-your-app) to learn how to add integrator fees to cross-chain swaps.

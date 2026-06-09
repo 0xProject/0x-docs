@@ -173,7 +173,7 @@ console.log(await quoteResponse.json());
 
 ### 2. Set a token allowance
 
-It is possible, that you will need to set proper token allowance to 0x's [AllowanceHolder contract](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances). In cases where allowance will be needed, it will be reported in `issues` in the response and will be the same as the allowance target for Swap API (when using AllowanceHolder flow). It may differ across chains, so always use the value from the response rather than hardcoding an address.
+It is possible, that you will need to set proper token allowance to 0x's [AllowanceHolder contract](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances). In cases where allowance will be needed, it will be reported in `issues` in the response and will be the same as the allowance target for Swap API (when using AllowanceHolder flow). It may differ across chains, so always use the value from the response rather than hardcoding an address.
 
 Below you can find an example on how to set proper token allowance for received quote.
 
@@ -257,7 +257,7 @@ In your application, you might need to monitor the status repeatedly, as bridgin
 
 It is a good practice to always pass `quoteId` when polling `/status`. Without it, bundled transactions (e.g. with ERC-4337) cannot be disambiguated, and the first status request will be slower.
 
-For full status lifecycle details, polling intervals, and failure handling, see [Tracking Transaction Status](/docs/cross-chain-api/key-concepts/tracking-transaction-status) and [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery).
+For full status lifecycle details, polling intervals, and failure handling, see [Tracking Transaction Status](/cross-chain/cross-chain-api/key-concepts/tracking-transaction-status) and [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery).
 
 <Accordion title="Example response">
 ```json
@@ -312,4 +312,4 @@ For full status lifecycle details, polling intervals, and failure handling, see 
 ```
 </Accordion>
 
-**Want to collect fees?** See [Monetize Your App](/docs/cross-chain-api/guides/monetize-your-app) to learn how to add integrator fees to cross-chain swaps.
+**Want to collect fees?** See [Monetize Your App](/cross-chain/cross-chain-api/guides/monetize-your-app) to learn how to add integrator fees to cross-chain swaps.

@@ -41,7 +41,7 @@ If `recipient` is omitted, it defaults to the taker's address, so existing integ
 | Required  | No                                                                                                                                                                                                                                                                                                                                                                                    |
 | Format    | `^0x[a-fA-F0-9]{40}$`                                                                                                                                                                                                                                                                                                                                                                 |
 | Default   | Taker address                                                                                                                                                                                                                                                                                                                                                                         |
-| Supported | Swap API ([price](https://docs.0x.org/api-reference/openapi-json/swap/allowanceholder-getprice), [quote](https://docs.0x.org/api-reference/openapi-json/swap/allowanceholder-getquote)), Gasless API ([price](https://docs.0x.org/api-reference/openapi-json/gasless/getprice#request.query), [quote](https://docs.0x.org/api-reference/openapi-json/gasless/getquote#request.query)) |
+| Supported | Swap API ([price](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getprice), [quote](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getquote)), Gasless API ([price](https://docs.0x.org/api-reference/evm-ap-is/gasless/getprice#request.query), [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote#request.query)) |
 
 <Warning>
   `recipient` is **not supported** for wrap and unwrap operations (e.g. ETH ↔
@@ -197,7 +197,7 @@ recipient=0xRecipientAddress" \
 
 ## Errors
 
-The API validates recipient at the price and quote stage — before any transaction is submitted — so no gas is wasted. There are two common error cases: an [invalid recipient address](/docs/0x-swap-api/additional-topics/swap-and-send#invalid-recipient-address) and passing recipient on a [wrap/unwrap operation](/docs/0x-swap-api/additional-topics/swap-and-send#wrapunwrap-operations).
+The API validates recipient at the price and quote stage — before any transaction is submitted — so no gas is wasted. There are two common error cases: an [invalid recipient address](/evm/0x-swap-api/additional-topics/swap-and-send#invalid-recipient-address) and passing recipient on a [wrap/unwrap operation](/evm/0x-swap-api/additional-topics/swap-and-send#wrapunwrap-operations).
 
 ### Invalid recipient address
 

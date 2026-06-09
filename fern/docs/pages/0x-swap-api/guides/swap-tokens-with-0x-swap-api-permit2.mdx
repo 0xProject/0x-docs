@@ -6,7 +6,7 @@ description: Advanced guide covering how to get started using 0x Swap API (Permi
 <Warning>
 ⚠️ The **Permit2** flow is intended for **advanced integrators only**.
 
-If you're new to 0x Swap API or want to avoid the double-signature UX, consider using [AllowanceHolder](/docs/0x-swap-api/guides/build-token-swap-dapp-nextjs) instead.
+If you're new to 0x Swap API or want to avoid the double-signature UX, consider using [AllowanceHolder](/evm/0x-swap-api/guides/build-token-swap-dapp-nextjs) instead.
 
 </Warning>
 
@@ -80,7 +80,7 @@ npx skills add 0xProject/0x-ai
 
 Let's find the best price!
 
-Use the [`/swap/permit2/price`](/api-reference/openapi-json/swap/permit-2-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
+Use the [`/swap/permit2/price`](/api-reference/evm-ap-is/swap/permit-2-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
 
 Think of `/price` as the "read-only" version of `/quote`, which you'll use in step 3.
 
@@ -92,7 +92,7 @@ See ([code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-p
 
 ```js
 const priceParams = new URLSearchParams({
-  chainId: "1", // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0x-cheat-sheet
+  chainId: "1", // / Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://docs.0x.org/docs/core-concepts/0x-cheat-sheet
   sellToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", //ETH
   buyToken: "0x6b175474e89094c44da98b954eedeac495271d0f", //DAI
   sellAmount: "100000000000000000000", // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
@@ -277,7 +277,7 @@ A [token allowance](https://help.matcha.xyz/en/articles/8928084-what-are-token-a
 
 Specify the amount of ERC20 tokens the contract can move.
 
-For implementation details, see [how to set your token allowances](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
+For implementation details, see [how to set your token allowances](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
 <Warning>
 - NEVER set an allowance on the [Settler contract](/docs/core-concepts/0x-cheat-sheet#0x-settler-contracts). Doing so may result in unintended consequences, including potential loss of tokens or exposure to security risks. The Settler contract does not support or require token allowances for its operation. Setting an allowance on the Settler contract will lead to misuse by other parties.
@@ -333,7 +333,7 @@ if (sellToken.address === CONTRACTS.ETH) {
 
 ## 3. Fetch a Firm Quote
 
-When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/permit2/quote`](/api-reference/openapi-json/swap/permit-2-getquote).
+When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/permit2/quote`](/api-reference/evm-ap-is/swap/permit-2-getquote).
 
 The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
 
@@ -351,7 +351,7 @@ const params = {
     buyToken: '0x6b175474e89094c44da98b954eedeac495271d0f', //DAI
     sellAmount: '100000000000000000000', // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
     taker: '$USER_TAKER_ADDRESS', // Address that will make the trade
-    chainId: '1', // Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0x-cheat-sheet
+    chainId: '1', // Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://docs.0x.org/docs/core-concepts/0x-cheat-sheet
 };
 
 const headers = {
@@ -659,4 +659,4 @@ This wraps up the Swap API Permit2 quickstart. See the links below for starter p
 
 - [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app)
 - [(Code) Examples Repo](https://github.com/0xProject/0x-examples)
-- [(Guide) Build a Next.js App with 0x Swap API](/docs/0x-swap-api/guides/permit2/build-token-swap-dapp-nextjs-permit2)
+- [(Guide) Build a Next.js App with 0x Swap API](/evm/0x-swap-api/guides/permit2/build-token-swap-dapp-nextjs-permit2)

@@ -24,7 +24,7 @@ Users may refer to the top-level status to locate the funds transferred upon exe
 | `origin_tx_reverted` | The origin transaction is reverted. The transaction has reached the end of the lifecycle, and the funds still remain in the `originAddress`. | ✅ |
 | `bridge_pending` | The bridge is in flight. The quoted bridge provider has received the funds from the `originAddress` and is in process of executing the trade. | ❌ |
 | `bridge_filled` | The bridge has been fulfilled. The funds have landed in the `destinationAddress`. | ✅ |
-| `bridge_failed` | The bridge is unable to be fulfilled. See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery) for recovery options. | ✅ |
+| `bridge_failed` | The bridge is unable to be fulfilled. See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery) for recovery options. | ✅ |
 | `unknown` | The transaction status is unknown. Please reach out to 0x, as it is likely that there is an internal error. | ❌ |
 
 ## How Confirmation Works
@@ -53,4 +53,4 @@ For refunds, `recovery.settledAmount` similarly shows the actual refunded amount
 
 When `status` is `bridge_failed`, the response includes a `failure` object with the failure reason, recovery status, and (for some bridges) a ready-to-sign recovery transaction.
 
-See [Handling Failures and Recovery](/docs/cross-chain-api/key-concepts/handling-failures-and-recovery) for the complete guide.
+See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery) for the complete guide.

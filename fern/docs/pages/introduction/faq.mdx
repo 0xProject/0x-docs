@@ -38,7 +38,7 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
     If your 0x quote is reverting, besides the standard revert issues related to ETH transactions, check the following:
 
     <ul>
-      <li>Has a [token allowance](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances) been properly set for the user to trade the <code>sellToken</code>?</li>
+      <li>Has a [token allowance](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances) been properly set for the user to trade the <code>sellToken</code>?</li>
       <li>Does the user have enough <code>sellToken</code> balance to execute the swap?</li>
       <li>Does the user have enough to pay the gas?</li>
       <li>Is the slippage tolerance too low?</li>
@@ -122,7 +122,7 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
   </Accordion>
 
   <Accordion title="What does MEV protection mean?">
-    Use the <a href="https://0x.org/docs/api#tag/Sources">getSources</a> endpoint.
+    Use the <a href="https://docs.0x.org/api-reference/evm-ap-is/sources/getsources">getSources</a> endpoint.
   </Accordion>
 </AccordionGroup>
 
@@ -134,20 +134,20 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 
 <AccordionGroup>
   <Accordion title="How do I get a list of all the sources the API is sourcing from?">
-    Use the <a href="https://0x.org/docs/api#tag/Sources">getSources</a> endpoint.
+    Use the <a href="https://docs.0x.org/api-reference/evm-ap-is/sources/getsources">getSources</a> endpoint.
   </Accordion>
 
 {" "}
 
 <Accordion title="How do I find a list of supported chains for Swap?">
-  Use the <a href="/api-reference/openapi-json/swap/chains">getChains</a>{" "}
+  Use the <a href="/api-reference/evm-ap-is/swap/chains">getChains</a>{" "}
   endpoint to get a list of supported chains for Swap.
 </Accordion>
 
   <Accordion title="Is there a fee to use Swap API?">
     We offer two transparent, flexible tiers for Web3 businesses of all sizes. You can get started <a href="https://0x.org/pricing">here</a>. If you are a high-volume app or have a unique business model, <a href="https://0x.org/contact">please contact us</a> to discuss a custom plan.
 
-    0x takes an on-chain fee on swaps for select tokens for teams on the Standard tier. This fee is charged on-chain to your users during the transaction. In cases where we charge a fee, we return the value in the API response as <code>zeroExFee</code>. See the <a href="/api-reference/openapi-json/swap/allowanceholder-getprice">Swap API reference</a> for details.
+    0x takes an on-chain fee on swaps for select tokens for teams on the Standard tier. This fee is charged on-chain to your users during the transaction. In cases where we charge a fee, we return the value in the API response as <code>zeroExFee</code>. See the <a href="/api-reference/evm-ap-is/swap/allowanceholder-getprice">Swap API reference</a> for details.
 
   </Accordion>
 
@@ -172,7 +172,7 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 </Accordion>
 
   <Accordion title="What does MEV protection mean?">
-    MEV protection applies to <a href="/docs/0x-swap-api/additional-topics/about-the-rfq-system">RFQ orders</a>, which are filled privately and atomically to prevent sandwiching/front-running. It does not apply to AMM trades, which execute on public mempools and are subject to typical MEV risks.
+    MEV protection applies to <a href="/evm/0x-swap-api/additional-topics/about-the-rfq-system">RFQ orders</a>, which are filled privately and atomically to prevent sandwiching/front-running. It does not apply to AMM trades, which execute on public mempools and are subject to typical MEV risks.
   </Accordion>
 </AccordionGroup>
 
@@ -180,7 +180,7 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 
 <AccordionGroup>
   <Accordion title="I am building a DEX app using Swap API. Can I charge my users a trading fee/commission?">
-    You can collect affiliate fees or trade surplus. Read the full guide: <a href="/docs/0x-swap-api/guides/monetize-your-app-using-swap">monetizing your swap integration</a>.
+    You can collect affiliate fees or trade surplus. Read the full guide: <a href="/evm/0x-swap-api/guides/monetize-your-app-using-swap">monetizing your swap integration</a>.
   </Accordion>
 
   <Accordion title="How is the trading fee/commission I charge returned by Swap API?">
@@ -199,12 +199,12 @@ amount = (swapFeeBps / 10000) * sellAmount  // in sellToken base units
     </ul>
     Fee amount = <code>1000000</code> = <code>1</code> USDC.
 
-    See the guide: <a href="/docs/0x-swap-api/guides/monetize-your-app-using-swap">monetization</a>. In API v2, you can take fees on <code>buyToken</code> or <code>sellToken</code>.
+    See the guide: <a href="/evm/0x-swap-api/guides/monetize-your-app-using-swap">monetization</a>. In API v2, you can take fees on <code>buyToken</code> or <code>sellToken</code>.
 
   </Accordion>
 
   <Accordion title="Can I collect trade surplus (positive slippage)?">
-    Available to select integrators on a custom pricing plan. <a href="https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help">Contact support</a>. See <a href="/docs/0x-swap-api/guides/monetize-your-app-using-swap">the monetization guide</a>.
+    Available to select integrators on a custom pricing plan. <a href="https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help">Contact support</a>. See <a href="/evm/0x-swap-api/guides/monetize-your-app-using-swap">the monetization guide</a>.
   </Accordion>
 </AccordionGroup>
 
@@ -219,8 +219,8 @@ amount = (swapFeeBps / 10000) * sellAmount  // in sellToken base units
 
     Endpoints:
     <ul>
-      <li><a href="/api-reference/openapi-json/swap/allowanceholder-getprice">/swap/allowance-holder/price</a></li>
-      <li><a href="/api-reference/openapi-json/swap/allowanceholder-getquote">/swap/allowance-holder/quote</a></li>
+      <li><a href="/api-reference/evm-ap-is/swap/allowanceholder-getprice">/swap/allowance-holder/price</a></li>
+      <li><a href="/api-reference/evm-ap-is/swap/allowanceholder-getquote">/swap/allowance-holder/quote</a></li>
     </ul>
 
     Allowance target is returned in <code>issues.allowance.spender</code> or <code>allowanceTarget</code>.
@@ -289,7 +289,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
   <Accordion title="What is the significance of `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`?">
     It’s a standardized representation of native tokens (e.g., ETH, BNB, POL) which don’t have contract addresses like ERC-20s. 
     
-    <br></br>On Mantle, $MNT is an exception. It has the contract address <code>0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000</code>. Note this is not applicable to wrapped/bridged MNT. See <a href="/docs/0x-swap-api/additional-topics/handling-native-tokens">Handling native tokens with 0x Swap API</a> for additional information.
+    <br></br>On Mantle, $MNT is an exception. It has the contract address <code>0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000</code>. Note this is not applicable to wrapped/bridged MNT. See <a href="/evm/0x-swap-api/additional-topics/handling-native-tokens">Handling native tokens with 0x Swap API</a> for additional information.
 
   </Accordion>
 
@@ -373,8 +373,8 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
   <Accordion title="What’s the best way to access 0x trade data?">
     Depends on your use case:
     <ul>
-      <li><a href="/docs/trade-analytics-api/introduction">0x Trade Analytics API</a> — historical analysis, usage tracking, reporting.</li>
-      <li><a href="/docs/0x-swap-api/additional-topics/0x-parser">0x-parser</a> — TypeScript library for decoding real-time 0x transaction logs.</li>
+      <li><a href="/evm/trade-analytics-api/introduction">0x Trade Analytics API</a> — historical analysis, usage tracking, reporting.</li>
+      <li><a href="/evm/0x-swap-api/additional-topics/0x-parser">0x-parser</a> — TypeScript library for decoding real-time 0x transaction logs.</li>
     </ul>
 
     See the <a href="/docs/core-concepts/transaction-data">0x transaction data guide</a>.
@@ -387,7 +387,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
     <br /><br />
     <strong>Tracking your own app’s activity:</strong>
     <ul>
-      <li>Use the <a href="/docs/trade-analytics-api/introduction">0x Trade Analytics API</a>.</li>
+      <li>Use the <a href="/evm/trade-analytics-api/introduction">0x Trade Analytics API</a>.</li>
       <li>Enable onchain tagging in the <a href="https://dashboard.0x.org/">0x Dashboard</a> (Settings → “Enable onchain tagging”).</li>
     </ul>
 
@@ -410,7 +410,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="How do I get a list of sources the API is sourcing from?">
   Use the{" "}
-  <a href="/api-reference/openapi-json/sources/getsources">getSources</a>{" "}
+  <a href="/api-reference/evm-ap-is/sources/getsources">getSources</a>{" "}
   endpoint.
 </Accordion>
 
@@ -425,13 +425,13 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
     Gasless API provides a gasless experience at two points of the trade flow where users normally pay gas:
     <ul>
-        <li><strong>Gasless approvals</strong> work only for tokens listed in our <a href="/api-reference/openapi-json/gasless/getgaslessapprovaltokens">Gasless Approval Token endpoint</a> (tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>).</li>
+        <li><strong>Gasless approvals</strong> work only for tokens listed in our <a href="/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens">Gasless Approval Token endpoint</a> (tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>).</li>
         <li><strong>Gasless swaps</strong> work for selling any non-native token (ERC-20 or similar).</li>
     </ul>
 
     **What doesn’t work:**
 
-    You can’t use Gasless API to sell a chain’s native coin (e.g., ETH on Mainnet, POL on Polygon). Native coins aren’t ERC-20s, so they lack <code>transferFrom</code> which the relay system uses. Use the <a href="/api-reference/openapi-json/swap/allowanceholder-getprice">Swap API</a> instead (user pays gas in the native token) or have users wrap the coin (e.g., ETH → WETH).
+    You can’t use Gasless API to sell a chain’s native coin (e.g., ETH on Mainnet, POL on Polygon). Native coins aren’t ERC-20s, so they lack <code>transferFrom</code> which the relay system uses. Use the <a href="/api-reference/evm-ap-is/swap/allowanceholder-getprice">Swap API</a> instead (user pays gas in the native token) or have users wrap the coin (e.g., ETH → WETH).
 
     **Work-arounds for tokens not supported by Gasless API:**
 
@@ -444,7 +444,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="What if my user wants to sell a native token (e.g., swap ETH for USDC) on Mainnet?">
   Use the{" "}
-  <a href="/api-reference/openapi-json/swap/allowanceholder-getprice">
+  <a href="/api-reference/evm-ap-is/swap/allowanceholder-getprice">
     Swap API
   </a>{" "}
   (user pays gas in the native token), or have users wrap the native coin first
@@ -491,7 +491,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="Can I monetize using Gasless API?">
     You have full flexibility on the fees you collect on trades.<br /><br />
-    Include these parameters when making a <a href="/api-reference/openapi-json/gasless/getprice">Gasless API</a> request:
+    Include these parameters when making a <a href="/api-reference/evm-ap-is/gasless/getprice">Gasless API</a> request:
     <ul>
       <li><code>swapFeeRecipient</code> — Wallet address to receive trading fees.</li>
       <li><code>swapFeeBps</code> — Fee in basis points (0–1000; 1000 Bps = 10%).</li>
@@ -521,12 +521,12 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 <Accordion title="What tokens work with gasless approvals?">
   Gasless approvals are supported only for tokens listed in the [gasless
   approval token
-  endpoint](https://0x.org/docs/api#tag/Gasless/operation/gasless::getGaslessApprovalTokens).
+  endpoint](https://docs.0x.org/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens).
 </Accordion>
 
 <Accordion title="How do I know if an approval is required?">
   Check the response from
-  [/gasless/quote](https://0x.org/docs/api#tag/Gasless/operation/gasless::getQuote),
+  [/gasless/quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote),
   <ul>
     <li>
       If <code>issues.allowance</code> is not <code>null</code>, an allowance
@@ -547,7 +547,7 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 
 <Accordion title="What does a gasless approve + swap happy path look like?">
   See the flow charts{" "}
-  <a href="/docs/gasless-api/guides/understanding-gasless-api#technical-flow-charts">
+  <a href="/evm/gasless-api/guides/understanding-gasless-api#technical-flow-charts">
     here
   </a>
   .
@@ -559,7 +559,7 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 
 <Accordion title="I received one of these errors: INPUT_INVALID, BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE, INTERNAL_SERVER_ERROR. Help!">
   Read more about{" "}
-  <a href="/docs/gasless-api/guides/gasless-api-technical-appendix#status-code">
+  <a href="/evm/gasless-api/guides/gasless-api-technical-appendix#status-code">
     Status Codes
   </a>
   .
@@ -608,7 +608,7 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
     **🔍 If you're trying to track your own app's activity**
 
     <ul>
-      <li>The <a href="/docs/trade-analytics-api/introduction">0x Trade Analytics API</a> is the best place to start. It allows you to query detailed trade data associated with your API key.</li>
+      <li>The <a href="/evm/trade-analytics-api/introduction">0x Trade Analytics API</a> is the best place to start. It allows you to query detailed trade data associated with your API key.</li>
       <li>Enable onchain tagging. In your <a href="https://dashboard.0x.org/">0x Dashboard</a>, go to your app’s <strong>Settings</strong> and toggle on <strong>“Enable onchain tagging.”</strong> This makes it easier to filter and trace your transactions onchain later.</li>
     </ul>
 
