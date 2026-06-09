@@ -55,7 +55,7 @@ The API handles three key tasks:
 
 ## What You Will Learn
 
-This guide will cover the core steps to using Swap API, specifically using the [Swap AllowanceHolder](/api-reference/openapi-json/swap/allowanceholder-getprice) endpoint.
+This guide will cover the core steps to using Swap API, specifically using the [Swap AllowanceHolder](/api-reference/evm-ap-is/swap/allowanceholder-getprice) endpoint.
 
 <Note>
   {" "}
@@ -95,7 +95,7 @@ Every 0x API call requires an API key. [Create a 0x account](https://dashboard.0
 
 Let's find the best price!
 
-Use the [`/swap/allowance-holder/price`](/api-reference/openapi-json/swap/allowanceholder-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
+Use the [`/swap/allowance-holder/price`](/api-reference/evm-ap-is/swap/allowanceholder-getprice) endpoint to get an indicative price for an asset pair. This returns pricing information without creating a full order or transaction, allowing the user to browse potential prices before committing.
 
 Think of `/price` as the "read-only" version of `/quote`, which you'll use in step 3.
 
@@ -107,7 +107,7 @@ See [code example](https://github.com/0xProject/0x-examples/blob/main/swap-v2-al
 
 ```js
 const priceParams = new URLSearchParams({
-  chainId: "1", // Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0x-cheat-sheet
+  chainId: "1", // Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://docs.0x.org/docs/core-concepts/0x-cheat-sheet
   sellToken: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", //ETH
   buyToken: "0x6b175474e89094c44da98b954eedeac495271d0f", //DAI
   sellAmount: "100000000000000000000", // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
@@ -282,7 +282,7 @@ A [token allowance](https://help.matcha.xyz/en/articles/8928084-what-are-token-a
 
 Specify the amount of ERC20 tokens the contract can use.
 
-For detailed instructions, see [how to set your token allowances](/docs/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
+For detailed instructions, see [how to set your token allowances](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
 <Warning>
 
@@ -331,7 +331,7 @@ if (price.issues.allowance !== null) {
 
 ## 3. Fetch a Firm Quote
 
-When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/allowance-holder/quote`](/api-reference/openapi-json/swap/allowanceholder-getquote).
+When you're ready to execute a trade, request a firm quote from the Swap API using [`/swap/allowance-holder/quote`](/api-reference/evm-ap-is/swap/allowanceholder-getquote).
 
 The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
 
@@ -349,7 +349,7 @@ const params = {
   buyToken: "0x6b175474e89094c44da98b954eedeac495271d0f", //DAI
   sellAmount: "100000000000000000000", // Note that the WETH token uses 18 decimal places, so `sellAmount` is `100 * 10^18`.
   taker: "$USER_TAKER_ADDRESS", //Address that will make the trade
-  chainId: "1", // Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://0x.org/docs/core-concepts/0x-cheat-sheet
+  chainId: "1", // Ethereum mainnet. See the 0x Cheat Sheet for all supported endpoints: https://docs.0x.org/docs/core-concepts/0x-cheat-sheet
 };
 
 const headers = {

@@ -9,8 +9,8 @@ Which contract to approve depends on the API endpoint you're using:
 
 | API Endpoint                                                                          | Allowance Target Contract |
 | ------------------------------------------------------------------------------------- | ------------------------- |
-| [`/swap/allowance-holder`](/api-reference/openapi-json/swap/allowanceholder-getquote) | AllowanceHolder           |
-| [`/swap/permit2`](/api-reference/openapi-json/swap/permit-2-getquote)                 | Permit2                   |
+| [`/swap/allowance-holder`](/api-reference/evm-ap-is/swap/allowanceholder-getquote) | AllowanceHolder           |
+| [`/swap/permit2`](/api-reference/evm-ap-is/swap/permit-2-getquote)                 | Permit2                   |
 
 The wallet holding the tokens (`taker`) must approve the contract address returned in `issues.allowance.spender` or `allowanceTarget` from the `/price` or `/quote` response.
 

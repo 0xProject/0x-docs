@@ -15,5 +15,5 @@ tags: []
 
 #### New Features
 
-- **Exact-out support in Swap & Gasless API**: You can now specify a precise `buyAmount` to receive and the API returns the minimum sell amount required. Responses include `maxSellAmount`, `estimatedNetSellAmount`, and a `route.refund` leg that converts any buy-token surplus back to the sell token. Supports custom `recipient` and `txOrigin` parameters. [See `buyAmount` in API reference](https://docs.0x.org/api-reference/openapi-json/swap/allowanceholder-getprice).
+- **Exact-out support in Swap & Gasless API**: You can now specify a precise `buyAmount` to receive and the API returns the minimum sell amount required. Responses include `maxSellAmount`, `estimatedNetSellAmount`, and a `route.refund` leg that converts any buy-token surplus back to the sell token. Supports custom `recipient` and `txOrigin` parameters. [See `buyAmount` in API reference](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getprice).
 - **Concurrent gasless trades now supported**: Gasless `/submit` now allows multiple in-flight trades for the same taker and sell token, as long as the taker's balance covers all pending sells.

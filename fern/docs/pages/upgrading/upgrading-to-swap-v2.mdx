@@ -19,7 +19,7 @@ description: Learn how to upgrade to the latest version (v2) of Swap API.
 - improved [monetization features](../0x-swap-api/guides/monetize-your-app-using-swap)
 - enhanced quote validation to provide accurate gas estimates without a user balance or allowance set
 - improved [error handling](../introduction/api-issues)
-- new [buy/sell tax support](https://0x.org/docs/developer-resources/buy-sell-tax-support)
+- new [buy/sell tax support](https://0x.org/evm/0x-swap-api/additional-topics/buy-sell-tax-support)
 - expanded token and chain coverage
 
 <Tip>
@@ -377,7 +377,7 @@ The `buyAmount` parameter has been deprecated in favor of purely `sellAmount` fo
 
 ### Enhanced Security
 
-0x V2 enhances security by moving away from unlimited approvals and now sets allowances per trade. You can choose between using [Permit2](https://0x.org/docs/api#tag/Swap/operation/swap::permit2::getPrice) (`/swap/permit2`) or [AllowanceHolder](https://0x.org/docs/api#tag/Swap/operation/swap::allowanceHolder::getPrice) (`/swap/allowance-holder`) when making a swap request. Read more about [the difference between using Permit2 and AllowanceHolder for Swap API](/docs/introduction/faq#permit2-and-allowanceholder).
+0x V2 enhances security by moving away from unlimited approvals and now sets allowances per trade. You can choose between using [Permit2](https://docs.0x.org/api-reference/evm-ap-is/swap/permit-2-getprice) (`/swap/permit2`) or [AllowanceHolder](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getprice) (`/swap/allowance-holder`) when making a swap request. Read more about [the difference between using Permit2 and AllowanceHolder for Swap API](/docs/introduction/faq#permit2-and-allowanceholder).
 
 - **Old:** `https://api.0x.org/swap/v1/quote`
 - **New:** `https://api.0x.org/swap/permit2/quote` or `https://api.0x.org/swap/allowance-holder/quote`

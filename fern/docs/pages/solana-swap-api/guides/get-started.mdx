@@ -236,7 +236,7 @@ console.log(`✅ Swap complete: https://solscan.io/tx/${signature}`);
 
 - The transaction must be signed by the **taker** (payer of the swap)
 - You’ll need a **funded wallet** that can cover gas (SOL)
-- If you add **extra instructions** (compute budget, unwrap/cleanup, transfers, etc.), be mindful of the **v0 transaction** 1232-byte limit and use the [Integrator Byte Costs guide](TODO) to reserve bytes appropriately.
+- If you add **extra instructions** (compute budget, unwrap/cleanup, transfers, etc.), be mindful of the **v0 transaction** 1232-byte limit and use the [Integrator Byte Costs guide](/svm/solana-swap-api/guides/integrator-byte-costs) to reserve bytes appropriately.
 
 ## sendTransaction Options
 
@@ -320,6 +320,4 @@ For additional best practices on confirming transactions and handling errors, se
 
 ## Important Integration Notes
 
-Coming from another swap provider? Make sure to review the following:
-
-[TODO]
+Coming from another swap provider? Make sure to review the [Important Integration Notes](/svm/solana-swap-api/guides/important-integration-notes)

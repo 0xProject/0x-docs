@@ -306,8 +306,6 @@ navigation:
                 path: docs/pages/solana-swap-api/reference/troubleshooting.mdx
               - link: Rate Limits
                 href: /docs/developer-resources/rate-limits
-          - link: Gasless FAQ
-            href: /docs/0x-swap-api/faq#gasless-api
 
       - section: Need Help?
         slug: need-help
@@ -499,3 +497,5 @@ redirects:
     destination: /evm/0x-swap-api/guides/build-token-swap-dapp-nextjs
   - source: /docs/0x-swap-api/guides/monetize-your-app-using-swap
     destination: /evm/0x-swap-api/guides/monetize-your-app-using-swap
+  - source: /docs/solana-swap-api/introduction
+    destination: /svm/solana-swap-api/introduction
