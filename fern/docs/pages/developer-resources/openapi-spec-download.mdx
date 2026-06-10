@@ -1,0 +1,78 @@
+---
+title: Download OpenAPI Spec
+description: Download the 0x OpenAPI 3.1 spec to import into Postman, generate SDKs, or use with AI coding tools
+---
+
+The 0x docs site automatically serves the OpenAPI 3.1 spec for all EVM APIs. No API key required to download.
+
+## Available endpoints
+
+| Format | URL |
+| ------ | --- |
+| JSON   | `https://docs.0x.org/openapi.json` |
+| YAML   | `https://docs.0x.org/openapi.yaml` |
+
+## Download via curl
+
+```bash
+# JSON
+curl -o 0x-openapi.json https://docs.0x.org/openapi.json
+
+# YAML
+curl -o 0x-openapi.yaml https://docs.0x.org/openapi.yaml
+```
+
+## What's included
+
+The spec covers the full suite of 0x EVM APIs:
+
+- **Swap API v2** — price quotes, firm quotes, and transaction assembly for token swaps
+- **Gasless API v2** — gasless swap and approval flows via meta-transactions
+- **Trade Analytics API** — historical trade and volume data
+
+Each endpoint includes request parameters, response schemas, and example values.
+
+## Common use cases
+
+### Postman
+
+Import the spec directly into Postman to explore and test endpoints interactively:
+
+1. Open Postman → **Import**
+2. Paste `https://docs.0x.org/openapi.json` into the URL field
+3. Click **Import** — Postman generates a full collection with all endpoints
+
+### SDK generation
+
+Use the spec to generate a typed client in any language.
+
+**OpenAPI Generator:**
+
+```bash
+openapi-generator-cli generate \
+  -i https://docs.0x.org/openapi.json \
+  -g typescript-fetch \
+  -o ./src/0x-client
+```
+
+**Fern:**
+
+```bash
+fern add 0x --openapi https://docs.0x.org/openapi.json
+```
+
+### AI coding assistants
+
+Point your AI tool at the spec so it can generate accurate API calls without hallucinating endpoints or parameters:
+
+- **Cursor / Copilot** — add `https://docs.0x.org/openapi.json` as a context source
+- **Claude** — paste the spec URL or contents into your prompt
+- **MCP** — use the [0x MCP server](/docs/introduction/mcp-setup) to give your AI agent live access to the API
+
+### Contract testing
+
+Load the spec into a contract-testing framework (e.g. Dredd, Schemathesis) to validate that your integration stays in sync with the live API:
+
+```bash
+schemathesis run https://docs.0x.org/openapi.json --validate-schema=true
+```
