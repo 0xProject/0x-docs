@@ -415,7 +415,7 @@ navigation:
       - page: API Overview
         path: docs/pages/api-reference-overview.mdx
       - page: Download OpenAPI Spec
-        path: docs/pages/developer-resources/openapi-spec-download.mdx
+        path: docs/pages/openapi-spec-download.mdx
       - api: EVM APIs
         api-name: evm
       - api: Solana Swap APIs

@@ -1,0 +1,94 @@
+---
+title: Download OpenAPI Spec
+description: Download the 0x OpenAPI 3.1 spec to import into Postman, generate SDKs, or use with AI coding tools
+---
+
+The 0x docs site automatically serves OpenAPI 3.1 specs for all APIs. No API key required to download.
+
+## Available specs
+
+| API | JSON | YAML |
+| --- | ---- | ---- |
+| EVM APIs | `https://docs.0x.org/openapi/evm-apis.json` | `https://docs.0x.org/openapi/evm-apis.yaml` |
+| Solana Swap APIs | `https://docs.0x.org/openapi/solana-swap-apis.json` | `https://docs.0x.org/openapi/solana-swap-apis.yaml` |
+| Cross-Chain APIs | `https://docs.0x.org/openapi/cross-chain-apis.json` | `https://docs.0x.org/openapi/cross-chain-apis.yaml` |
+
+## Download via curl
+
+```bash
+# EVM APIs
+curl -o 0x-evm-apis.json https://docs.0x.org/openapi/evm-apis.json
+
+# Solana Swap APIs
+curl -o 0x-solana-swap-apis.json https://docs.0x.org/openapi/solana-swap-apis.json
+
+# Cross-Chain APIs
+curl -o 0x-cross-chain-apis.json https://docs.0x.org/openapi/cross-chain-apis.json
+```
+
+## What's included
+
+**EVM APIs** — for EVM-compatible chains (Ethereum, Arbitrum, Base, Polygon, and more):
+
+- **Swap API v2** — price quotes, firm quotes, and transaction assembly for token swaps
+- **Gasless API v2** — gasless swap and approval flows via meta-transactions
+- **Trade Analytics API** — historical trade and volume data
+
+**Solana Swap APIs** — for Solana (SVM):
+
+- **Swap Instructions** — versioned transaction data for Solana token swaps, ready to sign and submit
+
+**Cross-Chain APIs** — for bridging assets across chains (EVM, Solana, Tron, HyperCore):
+
+- **Quotes** — ready-to-sign bridge quotes across supported chains and assets
+- **Status** — track the status of an in-flight cross-chain transaction
+- **Sources** — list supported bridge routes and liquidity sources
+- **Transaction History** — cross-chain transaction history for a wallet address
+- **Streaming Quotes** — live stream of cross-chain quotes
+
+Each endpoint includes request parameters, response schemas, and example values.
+
+## Common use cases
+
+### AI coding assistants
+
+Point your AI tool at the spec so it can generate accurate API calls without hallucinating endpoints or parameters:
+
+- **Cursor / Copilot** — add a spec URL as a context source
+- **Claude** — paste the spec URL or contents into your prompt
+- **MCP** — use the [0x MCP server](docs/introduction/develop-with-ai/mcp-setup) to give your AI agent live access to the API
+
+### Postman
+
+Import a spec directly into Postman to explore and test endpoints interactively:
+
+1. Open Postman → **Import**
+2. Paste the spec URL into the URL field
+3. Click **Import** — Postman generates a full collection with all endpoints
+
+### SDK generation
+
+Use a spec to generate a typed client in any language.
+
+**OpenAPI Generator:**
+
+```bash
+openapi-generator-cli generate \
+  -i https://docs.0x.org/openapi/evm-apis.json \
+  -g typescript-fetch \
+  -o ./src/0x-client
+```
+
+**Fern:**
+
+```bash
+fern add 0x --openapi https://docs.0x.org/openapi/evm-apis.json
+```
+
+### Contract testing
+
+Load a spec into a contract-testing framework (e.g. Dredd, Schemathesis) to validate that your integration stays in sync with the live API:
+
+```bash
+schemathesis run https://docs.0x.org/openapi/evm-apis.json --validate-schema=true
+```
