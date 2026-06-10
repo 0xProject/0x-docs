@@ -371,10 +371,6 @@ Note the following parameter names have been updated in v2. See the [API referen
 - `sellTokenAddress` has been renamed to `sellToken`
 - `buyTokenAddress` has been renamed to `buyToken`
 
-### Deprecated Parameter
-
-The `buyAmount` parameter has been deprecated in favor of purely `sellAmount` for more deterministic and user-friendly behavior. Using `sellAmount` ensures any unused tokens are refunded, while `buyAmount` can result in over-purchasing due to slippage and inconsistencies across liquidity sources. Additionally, some sources (e.g., Kyber) do not support quoting by `buyAmount`, reducing available liquidity. By transitioning to `sellAmount`, we align with industry trends and offer more predictable execution for users.
-
 ### Enhanced Security
 
 0x V2 enhances security by moving away from unlimited approvals and now sets allowances per trade. You can choose between using [Permit2](https://docs.0x.org/api-reference/evm-ap-is/swap/permit-2-getprice) (`/swap/permit2`) or [AllowanceHolder](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getprice) (`/swap/allowance-holder`) when making a swap request. Read more about [the difference between using Permit2 and AllowanceHolder for Swap API](/docs/introduction/faq#permit2-and-allowanceholder).
