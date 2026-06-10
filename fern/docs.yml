@@ -137,9 +137,6 @@ navigation:
           - page: Rate Limits
             slug: rate-limits
             path: docs/pages/developer-resources/rate-limits.mdx
-          - page: Download OpenAPI Spec
-            slug: openapi-spec-download
-            path: docs/pages/developer-resources/openapi-spec-download.mdx
           - link: System Status
             href: https://0x.statuspal.io/
             target: _blank
@@ -417,6 +414,8 @@ navigation:
     layout:
       - page: API Overview
         path: docs/pages/api-reference-overview.mdx
+      - page: Download OpenAPI Spec
+        path: docs/pages/developer-resources/openapi-spec-download.mdx
       - api: EVM APIs
         api-name: evm
       - api: Solana Swap APIs
