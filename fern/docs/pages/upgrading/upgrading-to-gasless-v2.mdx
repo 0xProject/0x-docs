@@ -393,28 +393,6 @@ Note the following parameter names have been updated in v2. See the [API referen
 - `sellTokenAddress` has been renamed to `sellToken`
 - `buyTokenAddress` has been renamed to `buyToken`
 
-### Deprecated Parameter
-
-The `buyAmount` query parameter has been deprecated in favor of purely `sellAmount` for more deterministic behavior. When using `sellAmount`, any unused tokens are refunded to the user, whereas using `buyAmount` can lead to over-buying due to slippage and varying liquidity source behaviors. Additionally, some liquidity sources (e.g., Kyber) do not support quoting by `buyAmount`, which limits available liquidity.
-
-**Old (v1):**
-
-```bash
-curl --request GET
---url https://api.0x.org/tx-relay/v1/swap/quote?buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellAmount=100000000&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&takerAddress=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&feeSellTokenPercentage=0.01&feeRecipient=0xa8aac589a67ecfade31efde49a062cc21d68a64e&feeRecipientTradeSurplus=0xa8aac589a67ecfade31efde49a062cc21d68a64e
---header '0x-api-key: <API_KEY>'
---header '0x-chain-id: 137'
-```
-
-**New (v2):**
-
-```bash
-curl --request GET
-https://api.0x.org/gasless/quote?chainId=137&buyToken=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&sellToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&sellAmount=10000000&taker=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&swapFeeBps=10&swapFeeRecipient=0xa8aac589a67ecfade31efde49a062cc21d68a64e&swapFeeToken=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&tradeSurplusRecipient=0xa8aac589a67ecfade31efde49a062cc21d68a64e
---header '0x-api-key: YOUR_API_KEY'
---header '0x-version: v2'
-```
-
 ### Changes in API Responses
 
 #### Liquidity Availability
