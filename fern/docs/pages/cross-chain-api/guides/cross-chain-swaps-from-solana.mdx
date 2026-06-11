@@ -213,3 +213,36 @@ transaction.sign([gasPayerKeypair, keypair]);
 ```
 
 In the examples repo, you can find a dedicated end-to-end example utilising a gas payer functionality.
+
+## Extra - routes requiring an ephemeral signer (Circle CCTP)
+
+Some Solana-origin routes need an extra one-shot transaction signer in addition to your wallet. Currently this applies to Circle CCTP, where the burn instruction creates a fresh on-chain account (`message_sent_event_data`) that must co-sign the transaction.
+
+These routes are opt-in: they are only included in your quotes when you pass the `solanaEphemeralSignerPubkey` parameter. To use them:
+
+1. Generate a **fresh keypair for every quote request** and pass its base58-encoded pubkey as `solanaEphemeralSignerPubkey`.
+2. Sign the returned transaction with both your wallet and the ephemeral keypair.
+
+```typescript
+import { Keypair } from "@solana/web3.js";
+
+// 1. Fresh keypair per quote request
+const ephemeralSigner = Keypair.generate();
+
+const quotesParams = new URLSearchParams({
+    // ... the parameters from step 1 ...
+    solanaEphemeralSignerPubkey: ephemeralSigner.publicKey.toBase58(),
+});
+
+// 2. Sign with both keypairs before sending
+const transaction = VersionedTransaction.deserialize(
+    Buffer.from(quote.transaction.details.serializedTransaction, "base64"),
+);
+transaction.sign([keypair, ephemeralSigner]);
+```
+
+A few things to keep in mind:
+
+- The account **must not already exist on-chain**, so never reuse a keypair across requests.
+- The keypair is **not reusable after the transfer** - the program takes ownership of the account. You can discard the secret key once the transaction is confirmed.
+- Creating the account requires a small rent deposit in SOL, paid by the fee payer and included in the quote's `gasCosts`.
