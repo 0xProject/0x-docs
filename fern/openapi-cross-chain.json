@@ -108,6 +108,15 @@
                         "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains"
                     },
                     {
+                        "name": "solanaEphemeralSignerPubkey",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Pubkey of an integrator-held ephemeral keypair used as a one-shot extra transaction signer for Solana origin routes that require one (e.g. the CCTP event account). Generate a fresh keypair per request and sign the returned transaction with it; the account must not already exist on-chain and is not reusable afterwards. Routes requiring an ephemeral signer are only quoted when this is set. Only applicable for Solana origin chains"
+                    },
+                    {
                         "name": "slippageBps",
                         "in": "query",
                         "required": false,
@@ -2990,6 +2999,15 @@
                             "type": "string"
                         },
                         "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains"
+                    },
+                    {
+                        "name": "solanaEphemeralSignerPubkey",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Pubkey of an integrator-held ephemeral keypair used as a one-shot extra transaction signer for Solana origin routes that require one (e.g. the CCTP event account). Generate a fresh keypair per request and sign the returned transaction with it; the account must not already exist on-chain and is not reusable afterwards. Routes requiring an ephemeral signer are only quoted when this is set. Only applicable for Solana origin chains"
                     },
                     {
                         "name": "slippageBps",
