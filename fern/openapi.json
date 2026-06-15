@@ -67,7 +67,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The amount of `sellToken` in `sellToken` base units to sell",
+            "description": "The amount of `sellToken` in `sellToken` base units to sell. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error.",
             "example": "100000000"
           },
           {
@@ -75,7 +75,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+            "description": "The amount of `buyToken` in `buyToken` base units to buy. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error."
           },
           {
             "name": "taker",
@@ -729,7 +729,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The exact amount of `buyToken` (in `buyToken` units) requested for the swap"
+                              "description": "The amount of `buyToken` (in `buyToken` units) requested for the swap"
                             },
                             "buyToken": {
                               "type": "string",
@@ -1455,7 +1455,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The amount of `sellToken` in `sellToken` base units to sell",
+            "description": "The amount of `sellToken` in `sellToken` base units to sell. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error.",
             "example": "100000000"
           },
           {
@@ -1463,7 +1463,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+            "description": "The amount of `buyToken` in `buyToken` base units to buy. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error."
           },
           {
             "name": "taker",
@@ -2149,7 +2149,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The exact amount of `buyToken` (in `buyToken` units) requested for the swap"
+                              "description": "The amount of `buyToken` (in `buyToken` units) requested for the swap"
                             },
                             "buyToken": {
                               "type": "string",
@@ -2912,7 +2912,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The amount of `sellToken` in `sellToken` base units to sell",
+            "description": "The amount of `sellToken` in `sellToken` base units to sell. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error.",
             "example": "100000000"
           },
           {
@@ -2920,7 +2920,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+            "description": "The amount of `buyToken` in `buyToken` base units to buy. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error."
           },
           {
             "name": "taker",
@@ -3574,7 +3574,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The exact amount of `buyToken` (in `buyToken` units) requested for the swap"
+                              "description": "The amount of `buyToken` (in `buyToken` units) requested for the swap"
                             },
                             "buyToken": {
                               "type": "string",
@@ -4300,7 +4300,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The amount of `sellToken` in `sellToken` base units to sell",
+            "description": "The amount of `sellToken` in `sellToken` base units to sell. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error.",
             "example": "100000000"
           },
           {
@@ -4308,7 +4308,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "string" },
-            "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+            "description": "The amount of `buyToken` in `buyToken` base units to buy. Exactly one of `sellAmount` or `buyAmount` must be provided — specifying both will result in an error."
           },
           {
             "name": "taker",
@@ -5079,7 +5079,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The exact amount of `buyToken` (in `buyToken` units) requested for the swap"
+                              "description": "The amount of `buyToken` (in `buyToken` units) requested for the swap"
                             },
                             "buyToken": {
                               "type": "string",
@@ -7018,7 +7018,7 @@
                               "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                             }
                           ],
-                          "description": "The amount of `buyToken` (in `buyToken` units) that will be bought in the swap"
+                          "description": "The exact amount of `buyToken` (in `buyToken` units) that will be bought in the swap"
                         },
                         "buyToken": {
                           "type": "string",
