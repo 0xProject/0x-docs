@@ -311,8 +311,9 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 {" "}
 
 <Accordion title="Is it possible to quote by the `buyAmount`?">
-  No — in v2 only <code>sellAmount</code> is supported for more deterministic
-  behavior and broader liquidity support.
+  Yes — <code>buyAmount</code> is supported. You can specify the exact amount of
+  the buy token you want to receive, and the API will calculate the required sell
+  amount. See the <a href="/api-reference/evm-ap-is/swap/allowanceholder-getquote#request.query.buyAmount">API reference</a> for details.
 </Accordion>
 
 {" "}
