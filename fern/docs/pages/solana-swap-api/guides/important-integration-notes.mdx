@@ -26,10 +26,13 @@ We currently return **a single flat array of instructions.** Here's what’s cur
 **✅ Included Instructions**
 
 - **Setup Instructions (N):**
-  - These create associated token accounts (ATAs) for the user as needed. This uses `createIdempotent`, so instructions won’t fail if an ATA already exists.
+  - These create associated token accounts (ATAs) for the user (`taker`) as needed. This uses `createIdempotent`, so instructions won’t fail if an ATA already exists.
   - The number of instructions (`N`) depends on how many tokens the route involves, sometimes there may be 1 extra instruction for native SOL support (for certain DEXs).
+  - **Integrator fee recipient ATAs are not created automatically.** The [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/solana-swap/solana-swap-swap-instructions#swap_fee_recipient) field accepts either a wallet address (for native SOL output) or a valid token account address (for token outputs). If you're collecting fees on a token output, the token account you pass must already exist — 0x will not create it. If it may not exist, add a `createAssociatedTokenAccountIdempotent` instruction for the fee recipient + fee token mint **before** the swap/fee transfer path. See the [Integrator Byte Costs](/svm/solana-swap-api/guides/integrator-byte-costs) guide for how to account for those extra bytes.
 - **Swap Instruction (1):**
   - A single instruction on our [**Settler**](https://github.com/0xProject/0x-settler) program to perform the actual swap.
+- **Cleanup Instructions (as required):**
+  - Cleanup instructions are included as needed for the swap route.
 
 <Note>
   We're planning to return these in distinct arrays (`setupInstructions`,
@@ -40,8 +43,6 @@ We currently return **a single flat array of instructions.** Here's what’s cur
 
 - **Compute Budget Instructions:**
   - You’ll need to manually add these if your transaction is complex and might exceed compute limits.
-- **Cleanup Instructions:**
-  - In our alpha, we assume all SOL is already wrapped (WSOL). As a result, any output labeled as “SOL” will be **returned as WSOL**, and no cleanup step is needed.
 
 ## Instruction Execution Assumptions
 
@@ -56,4 +57,4 @@ Solana v0 transactions are limited to **1232 bytes**.
 
 Each 0x swap transaction reserves a fixed portion of that space. When you add instructions around the swap (compute budget, transfers, close account, referral logic, etc.), you must ensure your serialized transaction remains under the limit.
 
-We provide a detailed [**Integrator Byte Costs**](integrator-byte-costs.md) guide to help you compute this.
+We provide a detailed [**Integrator Byte Costs**](/svm/solana-swap-api/guides/integrator-byte-costs) guide to help you compute this.

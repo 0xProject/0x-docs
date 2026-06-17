@@ -8,6 +8,14 @@ description: A step-by-step guide to estimating byte costs for custom instructio
   now](https://0x.org/products/solana) to start building.
 </Info>
 
+<Tip>
+  If you’re unsure what value to use for the integrator bytes field, start at
+  zero or keep it as small as possible. Setting it higher than necessary reduces
+  the quality of routes the API can return. The correct value is best determined
+  experimentally — build your transaction, measure its actual byte cost using
+  the steps below, and set the field to that value.
+</Tip>
+
 ## Byte Budget Calculator
 
 How to calculate the byte cost of instructions you add around a 0x swap.
