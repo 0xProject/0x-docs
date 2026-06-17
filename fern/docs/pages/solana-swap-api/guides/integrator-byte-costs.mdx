@@ -19,6 +19,10 @@ On top of this, adding your own instructions will require some bytes. Follow the
 - Byte space is reserved, so your serialized transactions do not go over the 1232 byte limit.
 - Byte space reservation is not more conservative than it needs to be, allowing us to return the highest quality routes possible within expressed limits.
 
+<Tip>
+  **If you're unsure what value to use for the integrator bytes field, start at zero or keep it as small as possible.** Setting it higher than necessary reduces the quality of routes the API can return. The correct value is best determined experimentally — build your transaction, measure its actual byte cost using the steps below, and set the field to that value.
+</Tip>
+
 ---
 
 ### Step 1: Count instruction bytes
