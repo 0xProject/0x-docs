@@ -218,6 +218,9 @@ navigation:
               - page: Swap and Send
                 slug: swap-and-send
                 path: docs/pages/0x-swap-api/additional-topics/swap-and-send.mdx
+              - page: Exact Buy
+                slug: exact-buy
+                path: docs/pages/0x-swap-api/additional-topics/exact-buy.mdx
               - page: About the RFQ System
                 slug: about-the-rfq-system
                 path: docs/pages/0x-swap-api/additional-topics/about-the-rfq-system.mdx
