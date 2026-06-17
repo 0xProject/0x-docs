@@ -1,0 +1,229 @@
+---
+title: "Exact Buy (Exact Out)"
+description: "Guarantee an exact output amount (exact out) for your swap using the buyAmount parameter."
+---
+
+The Swap API supports exact out swaps via the `buyAmount` parameter. Instead of specifying how much to sell, you specify the exact output the swap must deliver — and 0x sizes and routes the input to guarantee it.
+
+This unlocks use cases like:
+
+- Merchant checkout where the seller receives exactly the invoiced amount
+- Invoicing and bill pay with no rounding or shortfall
+- Fixed-amount payouts to contractors or sellers regardless of which asset the treasury holds
+- Subscriptions that charge a fixed price each cycle while users hold any asset
+
+<Info>
+  Exact out is supported on the **Swap API** via the `buyAmount` parameter.
+</Info>
+
+---
+
+## How it works
+
+Send `buyAmount` on a price or quote request in place of `sellAmount`. The response sizes the input and returns `maxSellAmount` — the ceiling the taker needs to cover in balance and allowance.
+
+```
+Taker  ──authorizes up to maxSellAmount──►  0x Settler / AllowanceHolder  ──sends exactly buyAmount──►  Recipient
+```
+
+The swap acquires at least `buyAmount` and converts any surplus back to the sell token, returning it to the taker in the same transaction. The recipient receives exactly `buyAmount`.
+
+If `recipient` is omitted, it defaults to the taker address. Combine `buyAmount` with `recipient` to deliver an exact amount directly to a merchant or third-party address — in a single transaction. See [Swap and Send](/evm/0x-swap-api/additional-topics/swap-and-send) for details.
+
+---
+
+## API Reference
+
+### `buyAmount`
+
+| Property  | Value                                                                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type      | `string`                                                                                                                                                                          |
+| Required  | No (mutually exclusive with `sellAmount`)                                                                                                                                         |
+| Format    | Integer string, in the smallest unit of the buy token (e.g. wei, 6-decimal USDC units)                                                                                            |
+| Supported | Swap API ([price](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getprice), [quote](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getquote)) |
+
+### `maxSellAmount`
+
+The response field that replaces `minBuyAmount` when `buyAmount` is used. It is the maximum amount of `sellToken` the taker authorizes — the swap will not spend more than this. Any unspent sell token is returned to the taker.
+
+<Warning>
+  `buyAmount` and `sellAmount` are mutually exclusive. Passing both on the same
+  request will result in an error. Use one or the other.
+</Warning>
+
+<Warning>
+  `buyAmount` is **not supported** for wrap and unwrap operations (e.g. ETH ↔
+  WETH). Passing it for those trade types will result in an error. Check for
+  native/wrapped token pairs and use `sellAmount` for those cases.
+</Warning>
+
+---
+
+## Example
+
+A payment provider wants to guarantee a merchant receives exactly 500 USDC. The buyer holds ETH on Base.
+
+<Tabs>
+  <Tab title="TypeScript">
+
+```typescript
+const params = new URLSearchParams({
+  chainId: "8453",
+  sellToken: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", // ETH
+  buyToken: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // USDC on Base
+  buyAmount: "500000000", // exactly 500 USDC (6 decimals)
+  taker: "0xYourTakerAddress",
+  recipient: "0xMerchantAddress", // merchant receives exactly 500 USDC
+});
+
+const response = await fetch(
+  `https://api.0x.org/swap/allowance-holder/quote?${params}`,
+  {
+    headers: {
+      "0x-api-key": process.env.ZEROX_API_KEY!,
+      "0x-version": "v2",
+    },
+  },
+);
+
+const quote = await response.json();
+
+// The taker authorizes up to maxSellAmount
+console.log("Max ETH to spend:", quote.maxSellAmount);
+// The merchant will receive exactly this amount
+console.log("USDC merchant receives:", quote.buyAmount);
+```
+
+  </Tab>
+  <Tab title="Python">
+
+```python
+import requests
+import os
+
+params = {
+    "chainId": "8453",
+    "sellToken": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",  # ETH
+    "buyToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",   # USDC on Base
+    "buyAmount": "500000000",  # exactly 500 USDC (6 decimals)
+    "taker": "0xYourTakerAddress",
+    "recipient": "0xMerchantAddress",  # merchant receives exactly 500 USDC
+}
+
+response = requests.get(
+    "https://api.0x.org/swap/allowance-holder/quote",
+    headers={
+        "0x-api-key": os.environ["ZEROX_API_KEY"],
+        "0x-version": "v2",
+    },
+    params=params,
+)
+
+quote = response.json()
+
+# The taker authorizes up to maxSellAmount
+print("Max ETH to spend:", quote["maxSellAmount"])
+# The merchant will receive exactly this amount
+print("USDC merchant receives:", quote["buyAmount"])
+```
+
+  </Tab>
+  <Tab title="cURL">
+
+```bash
+curl "https://api.0x.org/swap/allowance-holder/quote?\
+chainId=8453&\
+sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&\
+buyToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&\
+buyAmount=500000000&\
+taker=0xYourTakerAddress&\
+recipient=0xMerchantAddress" \
+  -H "0x-api-key: $ZEROX_API_KEY" \
+  -H "0x-version: v2"
+```
+
+  </Tab>
+</Tabs>
+
+---
+
+## Errors
+
+### Conflicting amount fields
+
+Passing both `buyAmount` and `sellAmount` on the same request is not allowed.
+
+```json
+{
+  "name": "INPUT_INVALID",
+  "message": "The input is invalid",
+  "data": {
+    "details": [
+      {
+        "field": "buyAmount",
+        "reason": "buyAmount and sellAmount are mutually exclusive"
+      }
+    ]
+  }
+}
+```
+
+### Wrap/unwrap operations
+
+`buyAmount` is not supported when `sellToken` and `buyToken` are a native/wrapped pair (e.g. ETH ↔ WETH). Use `sellAmount` for these operations instead.
+
+```json
+{
+  "name": "INPUT_INVALID",
+  "message": "The input is invalid",
+  "data": {
+    "details": [
+      {
+        "field": "buyAmount",
+        "reason": "buyAmount is not supported for wrap/unwrap operations"
+      }
+    ]
+  }
+}
+```
+
+Guard against this by detecting wrap/unwrap pairs before building your request:
+
+```typescript
+const WRAP_UNWRAP_PAIRS: [string, string][] = [
+  [
+    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+  ], // ETH ↔ WETH
+  // add other chain pairs as needed
+];
+
+const isWrapUnwrap = (sellToken: string, buyToken: string) =>
+  WRAP_UNWRAP_PAIRS.some(
+    ([a, b]) =>
+      (sellToken.toLowerCase() === a.toLowerCase() &&
+        buyToken.toLowerCase() === b.toLowerCase()) ||
+      (sellToken.toLowerCase() === b.toLowerCase() &&
+        buyToken.toLowerCase() === a.toLowerCase()),
+  );
+
+const params = {
+  sellToken,
+  buyToken,
+  taker,
+  // use sellAmount for wrap/unwrap, buyAmount otherwise
+  ...(isWrapUnwrap(sellToken, buyToken) ? { sellAmount } : { buyAmount }),
+};
+```
+
+---
+
+## Key considerations
+
+- **Taker authorizes a ceiling, not a fixed input.** The taker approves up to `maxSellAmount`. Any unspent sell token is returned in the same transaction — the taker never overpays.
+- **The merchant receives exactly `buyAmount`.** This guarantee holds regardless of price movement between quote and settlement.
+- **Existing integrations are unaffected.** `buyAmount` is opt-in. Integrations using `sellAmount` continue to work without changes.
+- **Wrap/unwrap is not supported.** Check for native/wrapped token pairs and use `sellAmount` for those cases.
+- **All supported chains.** Exact Buy is live on every EVM chain the Swap API supports.
+- **Pairs naturally with Swap and Send.** Use `recipient` alongside `buyAmount` to deliver the exact output directly to a merchant in one transaction.
