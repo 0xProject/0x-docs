@@ -8493,6 +8493,7 @@
                     {
                       "$ref": "#/components/schemas/INSUFFICIENT_BALANCE_OR_ALLOWANCE"
                     },
+                    { "$ref": "#/components/schemas/INVALID_APPROVAL" },
                     { "$ref": "#/components/schemas/INVALID_SIGNATURE" },
                     { "$ref": "#/components/schemas/INVALID_SIGNER" },
                     {
@@ -10171,6 +10172,35 @@
                 "type": "string",
                 "pattern": "^0x[a-fA-F0-9]{40}$",
                 "description": "The intended signer of the meta-transaction"
+              }
+            },
+            "required": ["zid", "metaTransactionHash", "taker"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
+      "INVALID_APPROVAL": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["INVALID_APPROVAL"] },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "metaTransactionHash": {
+                "type": "string",
+                "description": "The hash of the meta-transaction provided by the caller"
+              },
+              "taker": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "The taker of the trade"
               }
             },
             "required": ["zid", "metaTransactionHash", "taker"],
