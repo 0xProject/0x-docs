@@ -128,9 +128,9 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 
 ---
 
-## Swap API
+## EVM Swap API
 
-### About Swap API
+### About EVM Swap API
 
 <AccordionGroup>
   <Accordion title="How do I get a list of all the sources the API is sourcing from?">
@@ -140,8 +140,8 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 {" "}
 
 <Accordion title="How do I find a list of supported chains for Swap?">
-  Use the <a href="/api-reference/evm-ap-is/swap/chains">getChains</a>{" "}
-  endpoint to get a list of supported chains for Swap.
+  Use the <a href="/api-reference/evm-ap-is/swap/chains">getChains</a> endpoint
+  to get a list of supported chains for Swap.
 </Accordion>
 
   <Accordion title="Is there a fee to use Swap API?">
@@ -176,7 +176,7 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
   </Accordion>
 </AccordionGroup>
 
-### Monetizing your Swap Integration
+### Monetizing your EVM Swap Integration
 
 <AccordionGroup>
   <Accordion title="I am building a DEX app using Swap API. Can I charge my users a trading fee/commission?">
@@ -312,8 +312,28 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="Is it possible to quote by the `buyAmount`?">
   Yes — <code>buyAmount</code> is supported. You can specify the exact amount of
-  the buy token you want to receive, and the API will calculate the required sell
-  amount. See the <a href="/api-reference/evm-ap-is/swap/allowanceholder-getquote#request.query.buyAmount">API reference</a> for details.
+  the buy token you want to receive, and the API will calculate the required
+  sell amount. See the{" "}
+  <a href="/api-reference/evm-ap-is/swap/allowanceholder-getquote#request.query.buyAmount">
+    API reference
+  </a>{" "}
+  for details.
+</Accordion>
+
+{" "}
+
+<Accordion title="How does Exact Buy handle token allowances and trade surplus?">
+  <strong>Allowances:</strong> The taker approves up to{" "}
+  <code>maxSellAmount</code> — a ceiling, not a fixed spend. The swap will never
+  pull more than this amount from the taker's wallet.
+
+  <strong>Trade surplus:</strong> Any trade surplus comes from the sell side,
+  not the buy side. If the on-chain fill settles for less than the estimated sell
+  amount, the difference is returned to the taker in the same transaction as
+  excess sell token. The <code>buyAmount</code> is an exact output — the
+  recipient always receives precisely that amount, no more. See the{" "}
+  <a href="/evm/0x-swap-api/additional-topics/exact-buy">Exact Buy guide</a> for
+  details.
 </Accordion>
 
 {" "}
@@ -403,15 +423,14 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 ---
 
-## Gasless API
+## EVM Gasless API
 
-### About Gasless API
+### About EVM Gasless API
 
 <AccordionGroup>
 
 <Accordion title="How do I get a list of sources the API is sourcing from?">
-  Use the{" "}
-  <a href="/api-reference/evm-ap-is/sources/getsources">getSources</a>{" "}
+  Use the <a href="/api-reference/evm-ap-is/sources/getsources">getSources</a>{" "}
   endpoint.
 </Accordion>
 
@@ -445,9 +464,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 <Accordion title="What if my user wants to sell a native token (e.g., swap ETH for USDC) on Mainnet?">
   Use the{" "}
-  <a href="/api-reference/evm-ap-is/swap/allowanceholder-getprice">
-    Swap API
-  </a>{" "}
+  <a href="/api-reference/evm-ap-is/swap/allowanceholder-getprice">Swap API</a>{" "}
   (user pays gas in the native token), or have users wrap the native coin first
   (e.g., ETH → WETH), then use Gasless API.
 </Accordion>
@@ -568,6 +585,21 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 
 ---
 
+## Solana Swap API
+
+<AccordionGroup>
+  <Accordion title="Does 0x create ATAs if we don't have one, specifically for our fee address?">
+    **For the user/taker:** Yes. The setup instructions 0x returns automatically create associated token accounts (ATAs) for the taker as needed, using `createAssociatedTokenAccountIdempotent` — so these won't fail if an ATA already exists. See [what's included in the instructions](/svm/solana-swap-api/guides/important-integration-notes#instructions-grouping) for the full list.
+
+    **For an integrator fee address:** No. You should assume the fee recipient ATA must already exist. If it may not exist, add a `createAssociatedTokenAccountIdempotent` instruction for the fee recipient + fee token mint yourself, **before** the swap/fee transfer path. See the [Integrator Byte Costs](/svm/solana-swap-api/guides/integrator-byte-costs) guide for how to account for the extra bytes this adds.
+
+    The relevant field is [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/solana-swap/solana-swap-swap-instructions#swap_fee_recipient) — it accepts either a wallet address (for native SOL output) or a valid token account address (for token outputs).
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
 ## Trade Analytics API
 
 <AccordionGroup>
@@ -657,7 +689,8 @@ Read more about [accessing 0x transaction data here](/docs/core-concepts/transac
   <Accordion title="Are the smart contracts audited?">
     Yes. See{" "}
     <a href="https://github.com/0xProject/0x-settler/tree/master/audits">
-      audit reports
+      {" "}
+      audit reports{" "}
     </a>
     . Check out our{" "}
     <a href="/docs/developer-resources/bounties">bounty program</a>.

@@ -26,9 +26,11 @@ Send `buyAmount` on a price or quote request in place of `sellAmount`. The respo
 Taker  ──authorizes up to maxSellAmount──►  0x Settler / AllowanceHolder  ──sends exactly buyAmount──►  Recipient
 ```
 
-The swap acquires at least `buyAmount` and converts any surplus back to the sell token, returning it to the taker in the same transaction. The recipient receives exactly `buyAmount`.
+The swap acquires exactly `buyAmount` and returns any excess sell token to the taker in the same transaction. The recipient receives exactly `buyAmount` — no more, no less.
 
-If `recipient` is omitted, it defaults to the taker address. Combine `buyAmount` with `recipient` to deliver an exact amount directly to a merchant or third-party address — in a single transaction. See [Swap and Send](/evm/0x-swap-api/additional-topics/swap-and-send) for details.
+Any trade surplus comes from the **sell side**, not the buy side. If the on-chain fill settles for less than the estimated sell amount (`maxSellAmount`) — for example, the estimate was 100 USDC but the swap actually cost 99 — the 1-unit trade surplus is returned to the taker. The buy amount is not a minimum; it is the exact output delivered.
+
+To deliver the exact output to a merchant or third-party address, combine `buyAmount` with `recipient`. If `recipient` is omitted, it defaults to the taker. See [Swap and Send](/evm/0x-swap-api/additional-topics/swap-and-send) for details.
 
 ---
 
@@ -219,9 +221,21 @@ const params = {
 
 ---
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How does Exact Buy handle token allowances and trade surplus?">
+    **Allowances:** The taker approves up to `maxSellAmount` — a ceiling, not a fixed spend. The swap will never pull more than this amount from the taker's wallet.
+
+    **Trade surplus:** Any trade surplus comes from the sell side, not the buy side. If the on-chain fill settles for less than the estimated sell amount, the difference is returned to the taker in the same transaction as excess sell token. The `buyAmount` is an exact output — the recipient always receives precisely that amount, no more.
+  </Accordion>
+</AccordionGroup>
+
+---
+
 ## Key considerations
 
-- **Taker authorizes a ceiling, not a fixed input.** The taker approves up to `maxSellAmount`. Any unspent sell token is returned in the same transaction — the taker never overpays.
+- **Taker authorizes a ceiling, not a fixed input.** The taker approves up to `maxSellAmount`. If the on-chain fill costs less than estimated, the excess sell token is returned in the same transaction — the taker never overpays.
 - **The merchant receives exactly `buyAmount`.** This guarantee holds regardless of price movement between quote and settlement.
 - **Existing integrations are unaffected.** `buyAmount` is opt-in. Integrations using `sellAmount` continue to work without changes.
 - **Wrap/unwrap is not supported.** Check for native/wrapped token pairs and use `sellAmount` for those cases.

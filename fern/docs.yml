@@ -304,7 +304,7 @@ navigation:
                 slug: integrator-byte-costs
                 path: docs/pages/solana-swap-api/guides/integrator-byte-costs.mdx
           - link: Example Code
-            href: https://github.com/0xProject/0x-solana-example
+            href: https://github.com/0xProject/0x-examples#solana-swap-api
             target: _blank
           - section: Reference
             slug: references
