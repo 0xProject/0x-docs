@@ -221,6 +221,18 @@ const params = {
 
 ---
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How does Exact Buy handle token allowances and trade surplus?">
+    **Allowances:** The taker approves up to `maxSellAmount` — a ceiling, not a fixed spend. The swap will never pull more than this amount from the taker's wallet.
+
+    **Trade surplus:** Any trade surplus comes from the sell side, not the buy side. If the on-chain fill settles for less than the estimated sell amount, the difference is returned to the taker in the same transaction as excess sell token. The `buyAmount` is an exact output — the recipient always receives precisely that amount, no more.
+  </Accordion>
+</AccordionGroup>
+
+---
+
 ## Key considerations
 
 - **Taker authorizes a ceiling, not a fixed input.** The taker approves up to `maxSellAmount`. If the on-chain fill costs less than estimated, the excess sell token is returned in the same transaction — the taker never overpays.
