@@ -1,0 +1,290 @@
+---
+title: Autonomous Agent Payments
+sidebarTitle: Autonomous Agent Payments
+description: Access 0x swap APIs from AI agents using per-request USDC payments — no API keys required. Supports x402 (Base, Solana) and MPP via Tempo.
+---
+
+AI agents need to call APIs autonomously — without human-managed API keys, billing accounts, or pre-authorized subscriptions. Two open standards, **x402** and **MPP (Machine Payments Protocol)**, solve this by embedding micropayments directly into HTTP requests.
+
+0x swap endpoints are available through both protocols via the [Alchemy AgentPay](https://agentpay.alchemy.com) proxy. Agents pay **$0.01 per request** in USDC. No 0x API key required — payment is the authentication.
+
+<CardGroup cols={2}>
+  <Card title="x402" icon="bolt" href="#x402">
+    Pay per request using USDC on Base or Solana. Built on the HTTP 402 status
+    code — agents sign a payment, retry, and get a response.
+  </Card>
+  <Card title="MPP" icon="link" href="#mpp">
+    Machine Payments Protocol. Pay via Tempo Mainnet (USDC.e). Uses a
+    challenge–credential–receipt pattern over HTTP 402.
+  </Card>
+</CardGroup>
+
+| | x402 | MPP |
+|---|---|---|
+| **Payment network** | Base or Solana | Tempo Mainnet |
+| **Payment token** | USDC | USDC.e |
+| **Wallet type** | EVM or Solana | EVM |
+| **Standard** | [x402.org](https://www.x402.org) | [mpp.dev](https://mpp.dev) |
+
+## Using an AI coding agent?
+
+Install the `0x-agentic-gateway` skill. Your agent will handle protocol selection, package installation, wallet setup, and code generation automatically.
+
+```bash
+npx skills add 0xProject/0x-ai
+```
+
+Then activate it in your agent session:
+
+```
+/0x-agentic-gateway
+```
+
+---
+
+## Manual integration
+
+The sections below cover endpoints, wallet requirements, and working code examples for both protocols.
+
+### How it works
+
+Both protocols follow the same HTTP-native pattern:
+
+<Steps>
+  <Step title="Agent makes a request">
+    The agent calls a 0x swap endpoint with no credentials.
+  </Step>
+  <Step title="Server returns 402">
+    The proxy responds with `402 Payment Required` and machine-readable payment
+    requirements (amount, network, recipient).
+  </Step>
+  <Step title="Agent signs and pays">
+    The agent signs a USDC payment using its wallet and retries the request with
+    a `PAYMENT-SIGNATURE` (x402) or `Authorization: Payment` (MPP) header.
+  </Step>
+  <Step title="Server verifies and responds">
+    The proxy verifies the on-chain payment, forwards the request to 0x, and
+    returns the swap data. The response includes a transaction hash for the
+    payment.
+  </Step>
+</Steps>
+
+Every payment includes the agent's **wallet address** and an **on-chain transaction hash** in the `PAYMENT-RESPONSE` header — giving cryptographically verifiable per-caller attribution without API key management.
+
+---
+
+## x402
+
+[x402](https://www.x402.org/) is an open standard that repurposes the HTTP `402 Payment Required` status code for real-time stablecoin payments. Agents sign a USDC [EIP-3009](https://eips.ethereum.org/EIPS/eip-3009) `transferWithAuthorization` payload (EVM) or a Solana USDC transfer transaction (SVM), then retry the request with the encoded signature.
+
+### Endpoints
+
+| Network          | Price                                                            | Quote                                                            |
+| ---------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Base (mainnet)   | `https://agent.api.0x.org/v1/x402/swap-allowance-holder-price/` | `https://agent.api.0x.org/v1/x402/swap-allowance-holder-quote/` |
+| Solana (mainnet) | `https://agent.api.0x.org/v1/x402/swap-allowance-holder-price/` | `https://agent.api.0x.org/v1/x402/swap-allowance-holder-quote/` |
+
+Both networks share the same URLs. The payment scheme your client registers determines which chain the payment runs on.
+
+### Cost
+
+| Network          | Currency | Price per request |
+| ---------------- | -------- | ----------------- |
+| Base (mainnet)   | USDC     | $0.01             |
+| Solana (mainnet) | USDC     | $0.01             |
+
+**Wallet requirement:** EVM wallet funded with USDC on Base (`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`), or a Solana wallet funded with USDC on Solana mainnet (`EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`). When paying via Solana, an EVM wallet is also required — swap execution runs on EVM, so the `taker` in the quote must be an EVM address.
+
+### Get a swap price and quote
+
+<Tabs>
+  <Tab title="Base (EVM)">
+
+```js
+import { createPublicClient, http } from "viem";
+import { base } from "viem/chains";
+import { privateKeyToAccount } from "viem/accounts";
+import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
+import { ExactEvmScheme, toClientEvmSigner } from "@x402/evm";
+
+const account = privateKeyToAccount(process.env.WALLET_PRIVATE_KEY);
+const publicClient = createPublicClient({ chain: base, transport: http() });
+
+const signer = toClientEvmSigner(account, publicClient);
+const core = new x402Client();
+
+core.register("eip155:8453", new ExactEvmScheme(signer));
+
+// Refuse to sign any payment over $0.02
+core.registerPolicy((_version, requirements) =>
+  requirements.filter((r) => BigInt(r.amount) <= 20_000n),
+);
+
+const x402Fetch = wrapFetchWithPayment(fetch, core);
+
+const BASE = "https://agent.api.0x.org/v1/x402";
+const params =
+  "?chainId=8453" +
+  "&sellToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" + // USDC on Base
+  "&buyToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" + // ETH
+  "&sellAmount=100000"; // 0.1 USDC
+
+// Price — indicative, no taker required
+const priceRes = await x402Fetch(`${BASE}/swap-allowance-holder-price/${params}`);
+const price = await priceRes.json();
+
+// Quote — firm quote with transaction calldata
+const quoteRes = await x402Fetch(
+  `${BASE}/swap-allowance-holder-quote/${params}&taker=${account.address}`,
+);
+const quote = await quoteRes.json();
+```
+
+  </Tab>
+  <Tab title="Solana (SVM)">
+
+```js
+import bs58 from "bs58";
+import { createKeyPairSignerFromBytes } from "@solana/kit";
+import { ExactSvmScheme, toClientSvmSigner, SOLANA_MAINNET_CAIP2 } from "@x402/svm";
+import { wrapFetchWithPayment, x402Client } from "@x402/fetch";
+import { privateKeyToAccount } from "viem/accounts";
+
+// Solana key — base58 encoded 64-byte keypair (export from Phantom/Solflare)
+const keyBytes = bs58.decode(process.env.SOLANA_PRIVATE_KEY);
+const keypairSigner = await createKeyPairSignerFromBytes(keyBytes);
+const svmSigner = toClientSvmSigner(keypairSigner);
+
+// EVM account used as the taker address in swap quotes
+const evmAccount = privateKeyToAccount(process.env.WALLET_PRIVATE_KEY);
+
+const core = new x402Client();
+core.register(SOLANA_MAINNET_CAIP2, new ExactSvmScheme(svmSigner));
+
+// Refuse to sign any payment over $0.02
+core.registerPolicy((_version, requirements) =>
+  requirements.filter((r) => BigInt(r.amount) <= 20_000n),
+);
+
+const x402Fetch = wrapFetchWithPayment(fetch, core);
+
+const BASE = "https://agent.api.0x.org/v1/x402";
+const params =
+  "?chainId=8453" +
+  "&sellToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" + // USDC on Base
+  "&buyToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" + // ETH
+  "&sellAmount=100000"; // 0.1 USDC
+
+// Price
+const priceRes = await x402Fetch(`${BASE}/swap-allowance-holder-price/${params}`);
+const price = await priceRes.json();
+
+// Quote — use EVM address as taker (swap executes on Base)
+const quoteRes = await x402Fetch(
+  `${BASE}/swap-allowance-holder-quote/${params}&taker=${evmAccount.address}`,
+);
+const quote = await quoteRes.json();
+```
+
+  </Tab>
+</Tabs>
+
+### Reading the payment response
+
+After a successful request, the `PAYMENT-RESPONSE` header contains base64-encoded settlement data:
+
+```js
+const settlement = JSON.parse(
+  Buffer.from(priceRes.headers.get("PAYMENT-RESPONSE"), "base64").toString("utf8"),
+);
+
+console.log(settlement.success);     // true
+console.log(settlement.transaction); // on-chain tx hash
+console.log(settlement.network);     // e.g. "eip155:8453" or "solana:5eykt4..."
+console.log(settlement.payer);       // agent's wallet address
+```
+
+<Note>
+  The 0x API key is managed server-side — do not pass it from the client.
+</Note>
+
+---
+
+## MPP
+
+[MPP (Machine Payments Protocol)](https://mpp.dev/) is an open standard for machine-to-machine HTTP payments. It uses an extensible challenge–credential–receipt pattern: the server issues a `WWW-Authenticate` challenge, the client returns a credential (payment proof), and the server confirms with a receipt.
+
+0x MPP endpoints use **Tempo Mainnet** (chainId 4217) as the payment rail, settled in USDC.e.
+
+### Endpoints
+
+| Endpoint                                                              | Description                          |
+| --------------------------------------------------------------------- | ------------------------------------ |
+| `https://agent.api.0x.org/v1/mpp-tempo/swap-allowance-holder-price/` | Indicative price — no taker required |
+| `https://agent.api.0x.org/v1/mpp-tempo/swap-allowance-holder-quote/` | Firm quote with transaction calldata |
+
+Both endpoints proxy the 0x Swap API v2 (AllowanceHolder flow) on Base.
+
+### Cost
+
+| Network       | Currency | Price per request |
+| ------------- | -------- | ----------------- |
+| Tempo Mainnet | USDC.e   | $0.01             |
+
+**Wallet requirement:** EVM wallet funded with USDC.e on Tempo Mainnet (`0x20C000000000000000000000b9537d11c60E8b50`).
+
+### Get a swap price and quote
+
+```ts
+import "dotenv/config";
+import { Mppx, tempo } from "mppx/client";
+import { privateKeyToAccount } from "viem/accounts";
+
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+const mppx = Mppx.create({
+  methods: [
+    tempo.charge({
+      account,
+      mode: "push", // client broadcasts the tx and sends the hash to the proxy
+    }),
+  ],
+});
+
+const BASE_URL = "https://agent.api.0x.org/v1/mpp-tempo";
+
+const params = new URLSearchParams({
+  chainId: "8453",
+  sellToken: "0x4200000000000000000000000000000000000006", // WETH on Base
+  buyToken: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",  // USDC on Base
+  sellAmount: "1000000000000000",                           // 0.001 WETH
+});
+
+// Price — indicative, no taker required
+const priceRes = await mppx.fetch(`${BASE_URL}/swap-allowance-holder-price/?${params}`);
+const price = await priceRes.json();
+
+// Quote — add taker address for firm quote with calldata
+params.set("taker", account.address);
+const quoteRes = await mppx.fetch(`${BASE_URL}/swap-allowance-holder-quote/?${params}`);
+const quote = await quoteRes.json();
+
+console.log(quote.transaction.to);   // AllowanceHolder contract
+console.log(quote.transaction.data); // calldata to submit
+```
+
+<Note>
+  Tempo Mainnet (chainId 4217) is the payment network. Swap execution always
+  runs on Base (chainId 8453) — USDC.e on Tempo pays for API access; the swap
+  itself settles on Base.
+</Note>
+
+---
+
+## Next steps
+
+- [0x Agentic Gateway skill](https://github.com/0xProject/0x-ai/tree/main/skills/0x-agentic-gateway) — install with `npx skills add 0xProject/0x-ai`
+- [x402 documentation](https://docs.cdp.coinbase.com/x402/welcome) — full protocol spec
+- [MPP documentation](https://mpp.dev) — full protocol spec and SDK reference
+- [0x Swap API reference](/api-reference/api-overview) — query parameters, response fields, and error codes
+- [Supported Chains](/docs/introduction/supported-chains) — chains available for swap execution

@@ -82,6 +82,9 @@ navigation:
               - page: MCP
                 slug: mcp-setup
                 path: docs/pages/introduction/develop-with-ai/mcp-setup.mdx
+              - page: Autonomous Agent Payments
+                slug: autonomous-agent-payments
+                path: docs/pages/introduction/develop-with-ai/autonomous-agent-payments.mdx
               - page: AI Project Showcase
                 slug: ai-tools
                 path: docs/pages/introduction/develop-with-ai/ai-tools.mdx
