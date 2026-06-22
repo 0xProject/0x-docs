@@ -1,0 +1,268 @@
+---
+title: 0x CLI
+sidebarTitle: 0x CLI
+description: Trade tokens across EVM chains and Solana from your terminal — built for both human traders and AI agents.
+---
+
+The **0x CLI** is a single binary, `0x`, that wraps the 0x APIs — indicative prices, on-chain swaps, gasless swaps, cross-chain bridging, and status polling — behind one command-line tool.
+
+It works two ways:
+
+- **For you,** it's a fast, safe way to trade from the terminal: colored quote tables, confirmation prompts, transaction simulation before every execution, and OS-keyring storage for wallet secrets.
+- **For your AI agent,** every command is non-interactive-safe and emits a machine-readable JSON envelope with stable exit codes, structured error codes, and inline response schemas in every `--help`. It also bundles its own [`0x-trade` agent skill](#bundled-agent-skill) so a coding agent knows exactly how to drive the CLI.
+
+<Note>
+  The CLI calls the 0x APIs, so a [0x API key](https://dashboard.0x.org/create-account) is required. Price commands need only the key, on-chain swaps additionally need a wallet (an EVM private key and/or a Solana keypair).
+</Note>
+
+## Install
+
+<Tabs>
+  <Tab title="Prebuilt binary (recommended)">
+
+One command installs the latest release for macOS or Linux (x86_64 and arm64). It downloads the binary from GitHub Releases, verifies its SHA-256 checksum, and drops it in `~/.local/bin`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | sh
+```
+
+Pin a version or change the install directory:
+
+```bash
+# Specific version
+curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | ZEROX_VERSION=v0.1.0 sh
+
+# Custom directory on your PATH
+curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | ZEROX_BIN_DIR=/usr/local/bin sh
+```
+
+On **Windows**, download the `x86_64-pc-windows-msvc` `.zip` from the [latest release](https://github.com/0xProject/0x-cli/releases/latest) and put `0x.exe` on your PATH.
+
+  </Tab>
+  <Tab title="From source">
+
+Requires [Rust](https://rustup.rs/) 1.75+:
+
+```bash
+git clone https://github.com/0xProject/0x-cli && cd 0x-cli
+cargo install --path .
+```
+
+  </Tab>
+</Tabs>
+
+Verify the install:
+
+```bash
+0x --version
+```
+
+## Configure
+
+Run the interactive setup once, or set values manually:
+
+<Tabs>
+  <Tab title="Interactive">
+
+```bash
+0x config init
+```
+
+Guides you through your API key, default chain, and wallet.
+
+  </Tab>
+  <Tab title="Manual">
+
+```bash
+# 0x API key — get one at https://dashboard.0x.org
+0x config set api_key <your-key>
+
+# Default chain
+0x config set defaults.chain base
+
+# EVM wallet (private key) — stored in the OS keyring by default
+0x config set wallet.evm 0xac0974bec...
+
+# Solana wallet — a keypair file path, or a base58 secret (→ keyring)
+0x config set wallet.solana /path/to/keypair.json
+```
+
+  </Tab>
+  <Tab title="Environment variables">
+
+Environment variables always take precedence over config-file values and are never persisted to disk.
+
+```bash
+export ZEROX_API_KEY=<your-key>
+export ZEROX_EVM_PRIVATE_KEY=0xac0974bec...
+export ZEROX_SOLANA_KEYPAIR=/path/to/keypair.json
+export ZEROX_DEFAULT_CHAIN=base
+```
+
+  </Tab>
+</Tabs>
+
+Wallet secrets are stored in the **OS keyring** (macOS Keychain, Linux libsecret, Windows Credential Locker) by default and are never written to disk in plaintext. You can opt out with `--plaintext` (or the `ZEROX_*` env vars) when a keyring isn't available.
+
+## Quick start
+
+```bash
+# Check a price (read-only, no wallet needed) — USDC → WETH on Base
+0x price --chain base \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0x4200000000000000000000000000000000000006 \
+  --amount 1000000
+
+# Execute a swap
+0x swap --chain base \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0x4200000000000000000000000000000000000006 \
+  --amount 1000000
+
+# Bridge USDC from Base to Arbitrum
+0x cross-chain --from base --to arbitrum \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0xaf88d065e77c8cC2239327C5EDb3A432268e5831 \
+  --amount 1000000
+```
+
+<Note>
+  Amounts are in **base units**: USDC (6 decimals) `1000000` = 1 USDC, ETH (18) `1000000000000000000` = 1 ETH, SOL (9) `1000000000` = 1 SOL.
+
+  Tokens must be passed as **contract addresses** (EVM) or **base58 mint addresses** (Solana) — ticker symbols like `USDC` are not accepted. Addresses are chain-specific; USDC on Base and USDC on Ethereum are different contracts.
+</Note>
+
+## What it can do
+
+| Command | Description |
+| --- | --- |
+| `0x price` | Indicative price for a pair (standard or `--gasless`) |
+| `0x swap` | On-chain swap on any supported EVM chain or Solana; `--gasless` for no-gas swaps |
+| `0x cross-chain` | Bridge and swap between chains |
+| `0x status` | Track gasless or cross-chain trade status (`--poll` to wait for completion) |
+| `0x chains` | List supported chains |
+| `0x config` | Manage API key, wallet, RPC, and defaults |
+| `0x skill` | Install or print the bundled agent skill |
+
+Run any command with `--help` to see its flags and a `RESPONSE:` block documenting the JSON it returns.
+
+## Built for AI agents
+
+The CLI is designed as a first-class tool for AI agents and scripts. Everything an agent needs to drive it reliably is stable and documented.
+
+### A consistent JSON envelope
+
+When stdout is not a TTY, output switches to a JSON envelope automatically. Inside an agent loop, pass `-o json-envelope` explicitly for stability:
+
+```bash
+0x price --chain base \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0x4200000000000000000000000000000000000006 \
+  --amount 1000000 -o json-envelope
+```
+
+```json
+{
+  "version": "1",
+  "command": "price",
+  "status": "success",
+  "exit_code": 0,
+  "data": { "rate": "0.00038", "buy_amount": { "raw": "380000000000000", "formatted": "0.00038" } },
+  "metadata": { "chain_id": 8453, "chain_name": "Base", "api_version": "v2" }
+}
+```
+
+On failure, the envelope carries a stable, actionable error:
+
+```json
+{
+  "command": "swap",
+  "status": "error",
+  "exit_code": 5,
+  "error": {
+    "code": "API_KEY_MISSING",
+    "message": "No API key configured",
+    "category": "config",
+    "retryable": false,
+    "suggestion": "Run '0x config set api_key <your-key>' or set ZEROX_API_KEY env var"
+  }
+}
+```
+
+### Stable exit codes
+
+Agents should match on `exit_code` first, then `error.code`. A few of the most useful:
+
+| Code | Meaning | Agent action |
+| --- | --- | --- |
+| 0 | Success | Proceed |
+| 3 | Config error | Run `0x config init` |
+| 4 | Network error | Retry with backoff |
+| 5 | Auth error | Update API key |
+| 6 | Validation failed (no liquidity, insufficient balance) | Fix parameters or fund wallet |
+| 11 | Transaction reverted | Do **not** retry as-is |
+| 12 | Transaction pending | Poll with `0x status` |
+| 25 | Confirmation required | Re-run with `--yes` |
+| 30 | Dry-run completed | Informational |
+
+### Non-interactive by design
+
+Every interactive prompt has a flag equivalent, so an agent never gets stuck:
+
+```bash
+# Non-interactive swap with JSON output
+0x swap --chain base \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0x4200000000000000000000000000000000000006 \
+  --amount 1000000 --yes -o json-envelope
+
+# Simulate without executing — signs and submits nothing
+0x swap --chain base \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0x4200000000000000000000000000000000000006 \
+  --amount 1000000 --dry-run
+```
+
+### Bundled agent skill
+
+The CLI ships with its own **`0x-trade`** agent skill ([source](https://github.com/0xProject/0x-cli/blob/main/skills/0x-trade/SKILL.md)) compiled into the binary, so it's always in sync with the installed version. Drop it into your agent's skills directory with one command:
+
+```bash
+# Installs SKILL.md + reference guides into ./.claude/skills/0x-trade/
+0x skill install
+
+# Or print the skill to stdout
+0x skill print
+```
+
+The skill teaches the agent the command contract — base-unit amounts, the `--yes -o json-envelope` pattern, exit-code handling, dry-run discipline — plus deep-dive references for gasless, cross-chain, Solana, config, tokens, and errors.
+
+<Note>
+  This is a different skill from the [`0x-api` Agent Skill](/docs/introduction/develop-with-ai/agent-skills). The `0x-api` skill teaches an agent to **write code** against the 0x REST APIs; the bundled `0x-trade` skill teaches it to **drive this CLI**. They're complementary — use `0x-api` when embedding swaps in your own app, `0x-trade` when an agent runs the `0x` binary as a tool.
+</Note>
+
+## Telemetry
+
+The CLI sends **anonymous, opt-out** usage statistics (command name, exit code, chain, duration) to help prioritize chains and surface common errors. It never sends token addresses, amounts, transaction hashes, wallet addresses, API keys, or RPC URLs. Opt out any time:
+
+```bash
+0x config set telemetry.enabled false   # persistent
+export DO_NOT_TRACK=1                    # cross-tool standard
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="0x API Agent Skill" href="/docs/introduction/develop-with-ai/agent-skills" icon="wand-magic-sparkles">
+    The complementary `0x-api` skill — teaches an agent to write code against the 0x REST APIs.
+  </Card>
+  <Card title="Connect to the 0x MCP Server" href="/docs/introduction/develop-with-ai/mcp-setup" icon="plug">
+    Live, searchable access to 0x documentation inside your AI tools.
+  </Card>
+  <Card title="Supported Chains" href="/docs/introduction/supported-chains" icon="link">
+    Every EVM chain and Solana the CLI can trade on.
+  </Card>
+  <Card title="Get a 0x API key" href="https://dashboard.0x.org/create-account" icon="key">
+    Sign up free at the 0x Dashboard.
+  </Card>
+</CardGroup>

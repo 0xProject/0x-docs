@@ -79,6 +79,9 @@ navigation:
               - page: Agent Skills
                 slug: agent-skills
                 path: docs/pages/introduction/develop-with-ai/agent-skills.mdx
+              - page: 0x CLI
+                slug: 0x-cli
+                path: docs/pages/introduction/develop-with-ai/0x-cli.mdx
               - page: MCP
                 slug: mcp-setup
                 path: docs/pages/introduction/develop-with-ai/mcp-setup.mdx

@@ -32,6 +32,15 @@ See the options available from the **page actions menu** on any documentation pa
 </Card>
 
 <Card
+  title="Trade from the terminal with the 0x CLI"
+  href="/docs/introduction/develop-with-ai/0x-cli"
+  icon="terminal"
+>
+  An agent-first command-line tool for swaps, gasless trades, and cross-chain
+  bridging — JSON envelopes, stable exit codes, and a bundled agent skill.
+</Card>
+
+<Card
   title="Use an LLM"
   href="/docs/introduction/develop-with-ai/using-ai-with-0x#copy-page"
   icon="brain"
@@ -88,6 +97,20 @@ MCP gives AI tools live, searchable access to 0x documentation — no copy-pasti
 → Follow the full setup guide: **[Connect to the 0x MCP Server](/docs/introduction/develop-with-ai/mcp-setup)**
 
 If you're building in an IDE or working on a multi-step integration, MCP is the recommended approach.
+
+---
+
+### Trade from the terminal with the 0x CLI
+
+The **0x CLI** is a single binary, `0x`, that wraps the 0x Swap, Gasless, Solana, and Cross-Chain APIs. It's built to be driven by both humans and AI agents: every command is non-interactive-safe and emits a machine-readable JSON envelope with stable exit codes.
+
+```bash
+0x swap --chain base --sell USDC --buy WETH --amount 1000000 --yes -o json-envelope
+```
+
+→ See the full guide: **[0x CLI](/docs/introduction/develop-with-ai/0x-cli)**
+
+Use the CLI when you want an agent to *execute* trades as a tool, rather than write API client code itself.
 
 ---
 
