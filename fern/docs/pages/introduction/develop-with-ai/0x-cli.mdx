@@ -34,10 +34,10 @@ Pin a version or change the install directory:
 
 ```bash
 # Specific version
-curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | ZEROX_VERSION=v0.1.0 sh
+curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | ZEROEX_VERSION=v0.1.0 sh
 
 # Custom directory on your PATH
-curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | ZEROX_BIN_DIR=/usr/local/bin sh
+curl -fsSL https://raw.githubusercontent.com/0xProject/0x-cli/main/scripts/install.sh | ZEROEX_BIN_DIR=/usr/local/bin sh
 ```
 
 On **Windows**, download the `x86_64-pc-windows-msvc` `.zip` from the [latest release](https://github.com/0xProject/0x-cli/releases/latest) and put `0x.exe` on your PATH.
@@ -97,16 +97,16 @@ Guides you through your API key, default chain, and wallet.
 Environment variables always take precedence over config-file values and are never persisted to disk.
 
 ```bash
-export ZEROX_API_KEY=<your-key>
-export ZEROX_EVM_PRIVATE_KEY=0xac0974bec...
-export ZEROX_SOLANA_KEYPAIR=/path/to/keypair.json
-export ZEROX_DEFAULT_CHAIN=base
+export ZEROEX_API_KEY=<your-key>
+export ZEROEX_EVM_PRIVATE_KEY=0xac0974bec...
+export ZEROEX_SOLANA_KEYPAIR=/path/to/keypair.json
+export ZEROEX_DEFAULT_CHAIN=base
 ```
 
   </Tab>
 </Tabs>
 
-Wallet secrets are stored in the **OS keyring** (macOS Keychain, Linux libsecret, Windows Credential Locker) by default and are never written to disk in plaintext. You can opt out with `--plaintext` (or the `ZEROX_*` env vars) when a keyring isn't available.
+Wallet secrets are stored in the **OS keyring** (macOS Keychain, Linux libsecret, Windows Credential Locker) by default and are never written to disk in plaintext. You can opt out with `--plaintext` (or the `ZEROEX_*` env vars) when a keyring isn't available.
 
 ## Quick start
 
@@ -140,8 +140,8 @@ Wallet secrets are stored in the **OS keyring** (macOS Keychain, Linux libsecret
 
 | Command | Description |
 | --- | --- |
-| `0x price` | Indicative price for a pair (standard or `--gasless`) |
-| `0x swap` | On-chain swap on any supported EVM chain or Solana; `--gasless` for no-gas swaps |
+| `0x price` | Indicative price for a pair (standard or `--gasless`); `--pay` to pay per request instead of an API key |
+| `0x swap` | On-chain swap on any supported EVM chain or Solana; `--gasless` for no-gas swaps; `--pay` to buy the quote without an API key |
 | `0x cross-chain` | Bridge and swap between chains |
 | `0x status` | Track gasless or cross-chain trade status (`--poll` to wait for completion) |
 | `0x chains` | List supported chains |
@@ -188,7 +188,7 @@ On failure, the envelope carries a stable, actionable error:
     "message": "No API key configured",
     "category": "config",
     "retryable": false,
-    "suggestion": "Run '0x config set api_key <your-key>' or set ZEROX_API_KEY env var"
+    "suggestion": "Run '0x config set api_key <your-key>' or set ZEROEX_API_KEY env var"
   }
 }
 ```
@@ -208,6 +208,30 @@ Agents should match on `exit_code` first, then `error.code`. A few of the most u
 | 12 | Transaction pending | Poll with `0x status` |
 | 25 | Confirmation required | Re-run with `--yes` |
 | 30 | Dry-run completed | Informational |
+| 40–44 | Agent payment failed (`--pay`) | 41 = refused before signing, **nothing spent**; 43 = money may have moved — check the wallet |
+
+### Pay per request (no API key)
+
+For autonomous agents, `price` and `swap` can pay **~$0.01 in USDC per request** through the 0x agent gateway instead of using an API key — add `--pay`:
+
+```bash
+# x402 over Base — the EVM wallet signs an EIP-3009 USDC authorization (no gas)
+0x price --chain base \
+  --sell 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \
+  --buy 0x4200000000000000000000000000000000000006 \
+  --amount 1000000 --pay x402-evm --max-payment 0.05 -o json-envelope
+```
+
+| `--pay` | Rail | Wallet needs |
+| --- | --- | --- |
+| `x402-evm` | [x402](https://www.x402.org) over Base (EIP-3009 USDC signature, no gas) | USDC on Base |
+| `mpp` | [MPP](https://mpp.dev) over Tempo (chainId 4217, on-chain push) | USDC.e **and** native gas on Tempo |
+
+- **EVM AllowanceHolder only** — rejected (free, no spend) with `--gasless`, Solana/Tron, or exact-out (`--buy-amount`).
+- `--max-payment <USD>` (default `0.05`) caps the spend; the CLI refuses **before signing/broadcasting** if the gateway asks for more (exit 41, nothing spent).
+- The payment is real, non-refundable money charged per request — including if a later on-chain swap reverts. The settlement (tx hash, payer, amount) is reported under `metadata.payment`. `swap --pay` pays only for the quote; the swap itself still uses your wallet and RPC.
+
+See [Autonomous Agent Payments](/docs/introduction/develop-with-ai/autonomous-agent-payments) for how x402 and MPP work end to end.
 
 ### Non-interactive by design
 
