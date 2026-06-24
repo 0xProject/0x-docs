@@ -27,6 +27,10 @@ AI agents need to call APIs autonomously — without human-managed API keys, bil
 | **Swap execution chains** | Any [EVM chain supported by Swap API](/docs/introduction/supported-chains#swap-and-gasless-apis) | Any [EVM chain supported by Swap API](/docs/introduction/supported-chains#swap-and-gasless-apis) |
 | **Standard**              | [x402.org](https://www.x402.org)                                                                 | [mpp.dev](https://mpp.dev)                                                                       |
 
+<Note>
+  **Prefer the command line?** The [0x CLI](/docs/introduction/develop-with-ai/0x-cli) implements both rails natively — run `0x price`/`0x swap` with `--pay x402-evm` or `--pay mpp` to pay per request from a funded wallet, no API key and no code. It enforces a `--max-payment` cap before signing.
+</Note>
+
 ## Using an AI coding agent?
 
 Install the `0x-agentic-gateway` skill. Your agent will handle protocol selection, package installation, wallet setup, and code generation automatically.
