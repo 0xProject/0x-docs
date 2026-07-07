@@ -71,8 +71,22 @@ jobs:
           fi
 
       - name: Post PR comment
-        uses: thollander/actions-comment-pull-request@v2.4.3
+        uses: actions/github-script@v9
         with:
-          filePath: comment.md
-          comment_tag: preview-docs
-          mode: upsert
+          script: |
+            const fs = require('fs');
+            const tag = '<!-- preview-docs -->';
+            const body = `${tag}\n${fs.readFileSync('comment.md', 'utf8')}`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number,
+            });
+            const existing = comments.find((c) => c.body.includes(tag));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
