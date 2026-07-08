@@ -5966,8 +5966,7 @@
                   { "chainName": "Linea", "chainId": "59144" },
                   { "chainName": "Scroll", "chainId": "534352" },
                   { "chainName": "Mantle", "chainId": "5000" },
-                  { "chainName": "Blast", "chainId": "81457" },
-                  { "chainName": "Mode", "chainId": "34443" }
+                  { "chainName": "Blast", "chainId": "81457" }
                 ]
               }
             }
@@ -8925,8 +8924,7 @@
                   { "chainName": "Avalanche", "chainId": "43114" },
                   { "chainName": "Scroll", "chainId": "534352" },
                   { "chainName": "Mantle", "chainId": "5000" },
-                  { "chainName": "Blast", "chainId": "81457" },
-                  { "chainName": "Mode", "chainId": "34443" }
+                  { "chainName": "Blast", "chainId": "81457" }
                 ]
               }
             }
