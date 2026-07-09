@@ -461,7 +461,7 @@ If liquidity is available, 2 objects may be returned:
 - `approval`: This is the “approval” object which contains the necessary information to process a gasless approval. See the [quote response](/api-reference/evm-ap-is/gasless/getquote#option-1) for an example.
   - If a gasless approval is possible, this object includes all the required information to process it.
   - If a gasless approval is **not** possible, this object will be `null`, and you must use the [standard approval flow](/evm/gasless-api/guides/understanding-gasless-api#technical-flow-charts) to [set a token allowance](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances). NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
-  - There isn't a separate list of tokens that support gasless approvals to check ahead of time — whether `approval` is `null` in the quote response is the source of truth.
+  - Gasless approvals work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token.
 
 - `trade`: This is the "trade" object which contains the necessary information to process a gasless trade. See the quote response [here](/api-reference#tag/Gasless/operation/gasless::getQuote).
 
@@ -558,7 +558,7 @@ Once the trade is successful, you can display the transaction confirmation to yo
 
 ## Gasless Approval Tokens
 
-There isn't a static list of tokens that support gasless approvals. Instead, check the `approval` object in the [quote](/api-reference/evm-ap-is/gasless/getquote) response for a given token — if it's not `null`, gasless approval is available.
+Gasless approvals work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token.
 
 ## Gasless Chains
 
