@@ -445,7 +445,7 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
     Gasless API provides a gasless experience at two points of the trade flow where users normally pay gas:
     <ul>
-        <li><strong>Gasless approvals</strong> work only for tokens listed in our <a href="/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens">Gasless Approval Token endpoint</a> (tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>).</li>
+        <li><strong>Gasless approvals</strong> work only for tokens that support <a href="https://eips.ethereum.org/EIPS/eip-2612">EIP-2612</a>. Check the <code>approval</code> object in the <a href="/api-reference/evm-ap-is/gasless/getquote">quote</a> response — if it's not <code>null</code>, gasless approval is available for that token.</li>
         <li><strong>Gasless swaps</strong> work for selling any non-native token (ERC-20 or similar).</li>
     </ul>
 
@@ -537,9 +537,11 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 <AccordionGroup>
 
 <Accordion title="What tokens work with gasless approvals?">
-  Gasless approvals are supported only for tokens listed in the [gasless
-  approval token
-  endpoint](https://docs.0x.org/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens).
+  Gasless approvals work only for tokens that implement
+  [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) (`permit`). Check the
+  `approval` object in the
+  [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) — if
+  it's not `null`, the token supports gasless approval.
 </Accordion>
 
 <Accordion title="How do I know if an approval is required?">
