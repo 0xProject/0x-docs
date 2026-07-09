@@ -427,7 +427,7 @@ With the introduction of the `issues.allowance` field in Gasless API v2, some fi
 
 ### Standard Token Approval Flow
 
-In v2, for [tokens that do not support gasless approvals](/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens), use the [standard token approval flow](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
+In v2, for tokens that do not support gasless approvals (i.e. `approval` is `null` in the quote response), use the [standard token approval flow](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
 
 <Warning>
 When using the [Standard Approval Flow](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances) (aka Gasless Approvals are not supported)

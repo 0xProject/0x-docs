@@ -461,7 +461,7 @@ If liquidity is available, 2 objects may be returned:
 - `approval`: This is the “approval” object which contains the necessary information to process a gasless approval. See the [quote response](/api-reference/evm-ap-is/gasless/getquote#option-1) for an example.
   - If a gasless approval is possible, this object includes all the required information to process it.
   - If a gasless approval is **not** possible, this object will be `null`, and you must use the [standard approval flow](/evm/gasless-api/guides/understanding-gasless-api#technical-flow-charts) to [set a token allowance](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances). NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
-  - You can also see all the token addresses that support gasless approvals with the [`/gasless-approval-tokens`](/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens) endpoint.
+  - There isn't a separate list of tokens that support gasless approvals to check ahead of time — whether `approval` is `null` in the quote response is the source of truth.
 
 - `trade`: This is the "trade" object which contains the necessary information to process a gasless trade. See the quote response [here](/api-reference#tag/Gasless/operation/gasless::getQuote).
 
@@ -558,8 +558,8 @@ Once the trade is successful, you can display the transaction confirmation to yo
 
 ## Gasless Approval Tokens
 
-Use [`/gasless/gasless-approval-tokens`](/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens) to get token addresses that support gasless approvals on each chain.
+There isn't a static list of tokens that support gasless approvals. Instead, check the `approval` object in the [quote](/api-reference/evm-ap-is/gasless/getquote) response for a given token — if it's not `null`, gasless approval is available.
 
 ## Gasless Chains
 
-Use [`/gasless/chains`](/api-reference/evm-ap-is/gasless/getgaslessapprovaltokens) to get a list of supported chains for gasless.
+Use [`/gasless/chains`](/api-reference/evm-ap-is/gasless/getchains) to get a list of supported chains for gasless.
