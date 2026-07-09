@@ -5965,8 +5965,7 @@
                   { "chainName": "Avalanche", "chainId": "43114" },
                   { "chainName": "Linea", "chainId": "59144" },
                   { "chainName": "Scroll", "chainId": "534352" },
-                  { "chainName": "Mantle", "chainId": "5000" },
-                  { "chainName": "Blast", "chainId": "81457" }
+                  { "chainName": "Mantle", "chainId": "5000" }
                 ]
               }
             }
@@ -8825,8 +8824,7 @@
                   { "chainName": "Arbitrum", "chainId": "42161" },
                   { "chainName": "Avalanche", "chainId": "43114" },
                   { "chainName": "Scroll", "chainId": "534352" },
-                  { "chainName": "Mantle", "chainId": "5000" },
-                  { "chainName": "Blast", "chainId": "81457" }
+                  { "chainName": "Mantle", "chainId": "5000" }
                 ]
               }
             }
