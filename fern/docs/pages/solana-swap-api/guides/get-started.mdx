@@ -21,7 +21,7 @@ Whether you're building a Solana-native experience or expanding an EVM-first pro
 
 ## Steps to Swap Token
 
-This guide will walk you through using the `/swap-instructions` endpoint on 0x’s Solana API to:
+This guide will walk you through using the `/solana/swap-instructions` endpoint on 0x’s Solana API to:
 
 1. Fetch a quote
 2. Build the swap instructions
@@ -65,7 +65,7 @@ const connection = new Connection("https://api.mainnet-beta.solana.com");
 
 ## 1. Fetch a Quote
 
-Start by sending a POST request to the 0x `/swap-instructions` endpoint to get swap instructions for a specific token pair and input amount.
+Start by sending a POST request to the 0x `/solana/swap-instructions` endpoint to get swap instructions for a specific token pair and input amount.
 
 This endpoint returns everything needed to construct and execute a swap transaction.
 
@@ -143,7 +143,7 @@ const instructions = buildInstructions(quote.instructions);
 
 ## 3. Resolve Address Lookup Tables
 
-Before you compile and sign a **v0 (VersionedTransaction)**, you need to resolve any **Address Lookup Tables (ALTs)** returned by the 0x `/swap-instructions `endpoint.
+Before you compile and sign a **v0 (VersionedTransaction)**, you need to resolve any **Address Lookup Tables (ALTs)** returned by the 0x `/solana/swap-instructions `endpoint.
 
 ALTs let Solana v0 transactions reference more accounts than can fit in the static account list by “looking up” additional addresses on-chain. If the quote response includes `address_lookup_tables`, you must:
 
