@@ -6,7 +6,7 @@
   },
   "servers": [{ "url": "https://api.0x.org" }],
   "paths": {
-    "/swap-instructions": {
+    "/solana/swap-instructions": {
       "post": {
         "operationId": "solanaSwap_swapInstructions",
         "summary": "Swap Instructions",
