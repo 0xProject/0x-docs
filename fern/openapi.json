@@ -9244,7 +9244,6 @@
                           },
                           "tradeId": {
                             "type": "integer",
-                            "minimum": 0,
                             "description": "Internal ID of the trade. Can be used together with `chainId`, `transactionHash`, and `zid` to uniquely identify a trade."
                           },
                           "transactionHash": {
@@ -9653,7 +9652,6 @@
                           },
                           "tradeId": {
                             "type": "integer",
-                            "minimum": 0,
                             "description": "Internal ID of the trade. Can be used together with `chainId`, `transactionHash`, and `zid` to uniquely identify a trade."
                           },
                           "transactionHash": {
