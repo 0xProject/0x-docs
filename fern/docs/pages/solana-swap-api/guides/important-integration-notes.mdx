@@ -3,21 +3,17 @@ title: "Important Integration Notes"
 description: Key differences in how the 0x Solana API returns swap instructions, and what integrators are responsible for handling.
 ---
 
-<Info>
-  The 0x Solana Swap API is available via priority access. [Apply
-  now](https://0x.org/products/solana) to start building.
-</Info>
-
-As part of our priority access release, we want to highlight some intentional differences in how our Solana API returns swap instructions, compared to other providers. These differences are important for integrators to be aware of, especially when composing and sending transactions manually.
+We want to highlight some intentional differences in how our Solana API returns swap instructions, compared to other providers. These differences are important for integrators to be aware of, especially when composing and sending transactions manually.
 
 ## Token Support
 
-- **SPL Tokens Only (No Token-2022):**\
-  During the alpha phase, our API **supports only standard SPL tokens**. We do **not support Token-2022 extensions** or any non-standard token types. If your integration requires Token-2022 features, please be aware this functionality is not yet available.
-- **WSOL-Only for SOL:**\
-  In the alpha release, only the wrapped SOL (WSOL) SPL token (`So11111111111111111111111111111111111111112`) is supported. Native SOL accounts (`So11111111111111111111111111111111111111111`) are explicitly rejected.
+- **SPL and Token-2022 Tokens:**\
+  Our API supports both standard SPL tokens (owned by the SPL Token Program) and Token-2022 tokens (owned by the Token-2022 / Token Extensions Program). Most Token-2022 tokens are routable, but we do **not** route a Token-2022 token when any of the following extensions are active:
+  - A **transfer fee** extension with a non-zero fee
+  - A **transfer hook** extension with a non-null (non-default) program address
+  - The **non-transferable** extension
 
-  All SOL inputs and outputs must use WSOL. Any response labeled “SOL” refers to WSOL. The API does not include unwrap or cleanup instructions—integrators are responsible for handling native SOL conversion if needed.
+  Note that the extension merely being present does not disqualify a token. A token can carry a transfer fee extension configured to zero, or a transfer hook set to the null (default) address — these are still routable. Token creators often configure them this way to reserve the ability to enable the extension later, since new extensions cannot be added after the mint is created.
 
 ## Instructions Grouping
 
@@ -39,7 +35,7 @@ We currently return **a single flat array of instructions.** Here's what’s cur
   `swapInstructions`) in a future release.
 </Note>
 
-**🚫 Not Included (for Alpha)**
+**🚫 Not Included**
 
 - **Compute Budget Instructions:**
   - You’ll need to manually add these if your transaction is complex and might exceed compute limits.

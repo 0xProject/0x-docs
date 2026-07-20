@@ -3,11 +3,6 @@ title: "Best Practices to Add Solana to EVM Projects"
 description: Design patterns, integration tips, and architectural considerations for teams adding Solana (SVM) support to an existing EVM-based application.
 ---
 
-<Info>
-  The 0x Solana Swap API is available via priority access. [Apply
-  now](https://0x.org/products/solana) to start building.
-</Info>
-
 This guide outlines design patterns, integration tips, and architectural considerations for teams adding Solana (SVM) support to an existing EVM-based application. It is geared toward engineers familiar with Ethereum who want to offer a unified cross-chain experience.
 
 ### SVM + EVM Integration Checklist
@@ -90,20 +85,20 @@ Be prepared to handle creation of these accounts per swap, especially for new to
 
 [SPL (Solana Program Library) tokens](https://solana.com/pl/docs/tokens) are analogous to ERC-20 tokens.
 
-Each SPL token has an on-chain mint account owned by the SPL Token Program.
+Tokens have an on-chain mint account owned by a *token program*. The 0x Solana Swap API supports both the SPL Token Program and the Token-2022 (Token Extensions) Program, though certain Token-2022 extension configurations are not routable — see [Token Support](/svm/solana-swap-api/guides/important-integration-notes#token-support) for details.
 
 The address `So11111111111111111111111111111111111111112` is the WSOL mint address, but native SOL is not an SPL token mint account.
 
-A simple, effective way to verify if a token address is an SPL token it to check if the account is owned by the SPL Token Program.
+A simple, effective way to verify if a token address is a swappable token is to check whether the account is owned by the SPL Token Program or the Token-2022 Program.
 
-To verify whether a token address on Solana is a valid SPL token mint:
+To verify whether a token address on Solana is a valid SPL or Token-2022 mint:
 
 ```ts
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { Connection, PublicKey } from "@solana/web3.js";
 
 /**
- * Checks whether a list of token addresses are SPL tokens.
+ * Checks whether a list of token addresses are SPL or Token-2022 tokens.
  * @param addresses - An array of base58 token account addresses or mint addresses.
  * @param connection - A Solana RPC connection object.
  */
@@ -123,10 +118,13 @@ export async function classifyTokenAccounts(
 
       const owner = accountInfo.owner.toBase58();
       const isSPL = owner === TOKEN_PROGRAM_ID.toBase58();
+      const isToken2022 = owner === TOKEN_2022_PROGRAM_ID.toBase58();
 
-      console.log(
-        `${address} is ${isSPL ? "an SPL token" : "NOT an SPL token"}`,
-      );
+      let tokenType = "NOT an SPL or Token-2022 token";
+      if (isSPL) tokenType = "an SPL token";
+      else if (isToken2022) tokenType = "a Token-2022 token";
+
+      console.log(`${address} is ${tokenType}`);
     } catch (err) {
       console.error(`Error checking ${address}:`, err);
     }
