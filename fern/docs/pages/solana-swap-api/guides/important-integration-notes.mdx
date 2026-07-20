@@ -14,10 +14,6 @@ We want to highlight some intentional differences in how our Solana API returns 
   - The **non-transferable** extension
 
   Note that the extension merely being present does not disqualify a token. A token can carry a transfer fee extension configured to zero, or a transfer hook set to the null (default) address — these are still routable. Token creators often configure them this way to reserve the ability to enable the extension later, since new extensions cannot be added after the mint is created.
-- **WSOL-Only for SOL:**\
-  Only the wrapped SOL (WSOL) SPL token (`So11111111111111111111111111111111111111112`) is supported. Native SOL accounts (`So11111111111111111111111111111111111111111`) are explicitly rejected.
-
-  All SOL inputs and outputs must use WSOL. Any response labeled “SOL” refers to WSOL. The API does not include unwrap or cleanup instructions—integrators are responsible for handling native SOL conversion if needed.
 
 ## Instructions Grouping
 

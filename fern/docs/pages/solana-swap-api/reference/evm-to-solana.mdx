@@ -85,7 +85,7 @@ Be prepared to handle creation of these accounts per swap, especially for new to
 
 [SPL (Solana Program Library) tokens](https://solana.com/pl/docs/tokens) are analogous to ERC-20 tokens.
 
-Each SPL token has an on-chain mint account owned by either the SPL Token Program or the Token-2022 (Token Extensions) Program. The 0x Solana Swap API supports both, though certain Token-2022 extension configurations are not routable — see [Token Support](/svm/solana-swap-api/guides/important-integration-notes#token-support) for details.
+Tokens have an on-chain mint account owned by a *token program*. The 0x Solana Swap API supports both the SPL Token Program and the Token-2022 (Token Extensions) Program, though certain Token-2022 extension configurations are not routable — see [Token Support](/svm/solana-swap-api/guides/important-integration-notes#token-support) for details.
 
 The address `So11111111111111111111111111111111111111112` is the WSOL mint address, but native SOL is not an SPL token mint account.
 
