@@ -10,6 +10,9 @@ ai-search:
   location:
     - docs
 
+ai-examples:
+  enabled: false
+
 layout:
   searchbar-placement: header
   page-width: full
