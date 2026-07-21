@@ -16,7 +16,7 @@ Whether you're building a Solana-native experience or expanding an EVM-first pro
 
 ## Steps to Swap Token
 
-This guide will walk you through using the `/solana/swap-instructions` endpoint on 0x’s Solana API to:
+This guide will walk you through using the `/swap-instructions` endpoint on 0x’s Solana API to:
 
 1. Fetch a quote
 2. Build the swap instructions
@@ -26,7 +26,7 @@ This guide will walk you through using the `/solana/swap-instructions` endpoint 
 
 Make sure you have:
 
-- [0x API key](https://docs.0x.org/docs/introduction/quickstart/getting-started)
+- [0x API key](/docs/introduction/quickstart/getting-started)
 - A funded Solana keypair (see details below)
 - A RPC Connection (see details below)
 
@@ -60,7 +60,7 @@ const connection = new Connection("https://api.mainnet-beta.solana.com");
 
 ## 1. Fetch a Quote
 
-Start by sending a POST request to the 0x `/solana/swap-instructions` endpoint to get swap instructions for a specific token pair and input amount.
+Start by sending a POST request to the 0x `/swap-instructions` endpoint to get swap instructions for a specific token pair and input amount.
 
 This endpoint returns everything needed to construct and execute a swap transaction.
 
@@ -87,11 +87,11 @@ const quote = await quoteResponse.json();
 
 ### Required Request Parameters
 
-For the complete list of required request parameters, see the [API Reference](https://docs.0x.org/api-reference/api-overview).
+For the complete list of required request parameters, see the [API Reference](/api-reference/api-overview).
 
 ### Example Response
 
-For a sample response, complete schema, and detailed field descriptions, see the [API Reference](https://docs.0x.org/api-reference/api-overview).
+For a sample response, complete schema, and detailed field descriptions, see the [API Reference](/api-reference/api-overview).
 
 ## 2. Build Swap Instructions
 
@@ -138,7 +138,7 @@ const instructions = buildInstructions(quote.instructions);
 
 ## 3. Resolve Address Lookup Tables
 
-Before you compile and sign a **v0 (VersionedTransaction)**, you need to resolve any **Address Lookup Tables (ALTs)** returned by the 0x `/solana/swap-instructions `endpoint.
+Before you compile and sign a **v0 (VersionedTransaction)**, you need to resolve any **Address Lookup Tables (ALTs)** returned by the 0x `/swap-instructions` endpoint.
 
 ALTs let Solana v0 transactions reference more accounts than can fit in the static account list by “looking up” additional addresses on-chain. If the quote response includes `address_lookup_tables`, you must:
 

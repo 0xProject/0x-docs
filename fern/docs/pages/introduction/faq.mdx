@@ -595,7 +595,7 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 
     **For an integrator fee address:** No. You should assume the fee recipient ATA must already exist. If it may not exist, add a `createAssociatedTokenAccountIdempotent` instruction for the fee recipient + fee token mint yourself, **before** the swap/fee transfer path. See the [Integrator Byte Costs](/svm/solana-swap-api/guides/integrator-byte-costs) guide for how to account for the extra bytes this adds.
 
-    The relevant field is [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/solana-swap/solana-swap-swap-instructions#swap_fee_recipient) — it accepts either a wallet address (for native SOL output) or a valid token account address (for token outputs).
+    The relevant field is [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#swap_fee_recipient) — it accepts either a wallet address (for native SOL output) or a valid token account address (for token outputs).
 
   </Accordion>
 </AccordionGroup>
