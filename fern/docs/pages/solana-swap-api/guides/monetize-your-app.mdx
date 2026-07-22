@@ -109,7 +109,7 @@ For the complete response schema and field descriptions, see the [API Reference]
 
 When deciding how much to charge, set your pricing in a way that strengthens your bottom line while aligning with the value you provide to customers. The affiliate fee impacts the price for the end user, so find the sweet spot where your solution remains competitive.
 
-Be aware that `swap_fee_ppm` has a default per-app limit of `100_000` ppm (10%) for security. The cap is enforced **per fee entry**, not on the combined total, so several fees can each be under the cap. If your application requires a higher value, [please reach out to us](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
+Be aware that `swap_fee_ppm` has a default per-app limit of `100_000` ppm (10%) for security. The cap is enforced **per fee entry, not on the combined total**: each fee in the list is validated individually against the limit. For example, two sell-side fees of `60000` ppm (6%) each are both accepted under a `100_000` ppm cap, even though they sum to 12%, because neither individual entry exceeds the cap. If your application requires a higher per-entry value, [please reach out to us](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
 
 ## Option 2: Collect trade surplus
 
