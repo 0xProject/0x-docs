@@ -2,516 +2,325 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Solana API",
-    "version": "0.0.0"
+    "description": "API for generating Solana swap instructions across aggregated DEX liquidity.",
+    "version": "0.3.3"
   },
-  "servers": [{ "url": "https://api.0x.org" }],
+  "servers": [
+    {
+      "url": "https://api.0x.org/solana"
+    }
+  ],
   "paths": {
-    "/solana/swap-instructions": {
-      "post": {
-        "operationId": "solanaSwap_swapInstructions",
-        "summary": "Swap Instructions",
+    "/enabled-sources": {
+      "get": {
         "tags": [
-          "Solana Swap"
+          "Sources"
         ],
-        "description": "Get swap instructions",
-        "parameters": [],
+        "summary": "Get Enabled Sources",
+        "description": "Returns the list of enabled sources for the calling team.",
+        "operationId": "enabled_sources",
+        "parameters": [
+          {
+            "name": "0x-api-key",
+            "in": "header",
+            "description": "Visit dashboard.0x.org to get your API Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "The request has succeeded.",
+            "description": "Enabled DEX sources",
             "content": {
               "application/json": {
                 "schema": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/components/schemas/SwapInstructions.SwapInstructionResponse"
-                    },
-                    {
-                      "$ref": "#/components/schemas/SolanaTypes.Error"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/EnabledSourcesResponse"
                 }
               }
-            },
-            "x-gitbook-description-html": "<p>The request has succeeded.</p>"
+            }
+          },
+          "400": {
+            "description": "Missing or invalid required header",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
-        },
+        }
+      }
+    },
+    "/swap-instructions": {
+      "post": {
+        "tags": [
+          "Swap"
+        ],
+        "summary": "Create Swap Instructions",
+        "description": "Returns Solana swap instructions for a given token pair and amount.",
+        "operationId": "swap_instructions",
+        "parameters": [
+          {
+            "name": "0x-api-key",
+            "in": "header",
+            "description": "Visit dashboard.0x.org to get your API Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SwapInstructions.SwapInstructionRequest"
+                "$ref": "#/components/schemas/SwapInstructionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Swap instructions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapInstructionsResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Client error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
               }
             }
           }
-        },
-        "x-gitbook-description-document": {
-          "object": "document",
-          "data": {
-            "schemaVersion": 9
-          },
-          "nodes": [
-            {
-              "object": "block",
-              "type": "paragraph",
-              "isVoid": false,
-              "data": {},
-              "nodes": [
-                {
-                  "object": "text",
-                  "leaves": [
-                    {
-                      "object": "leaf",
-                      "text": "Get swap instructions",
-                      "marks": []
-                    }
-                  ],
-                  "key": "AJgBf4BVwCdf"
-                }
-              ],
-              "key": "7B2PMI0fZhBo"
-            }
-          ],
-          "key": "nrYeFvxownkh"
-        },
-        "x-gitbook-description-html": "<p>Get swap instructions</p>"
+        }
       }
     }
   },
   "components": {
     "schemas": {
-      "SolanaTypes.AccountMeta": {
+      "AccountMeta": {
         "type": "object",
+        "description": "OpenAPI schema mirror for `solana_instruction::AccountMeta`.",
         "required": [
           "pubkey",
           "is_signer",
           "is_writable"
         ],
         "properties": {
+          "is_signer": {
+            "type": "boolean"
+          },
+          "is_writable": {
+            "type": "boolean"
+          },
           "pubkey": {
             "type": "array",
             "items": {
               "type": "integer",
-              "format": "uint8"
+              "format": "int32",
+              "minimum": 0
             },
-            "description": "Public key of the account",
-            "examples": [
-              [
-                39,
-                100,
-                151,
-                186,
-                11,
-                184,
-                101,
-                145,
-                114,
-                183,
-                46,
-                221,
-                140,
-                102,
-                225,
-                143,
-                86,
-                23,
-                100,
-                217,
-                200,
-                106,
-                97,
-                10,
-                58,
-                126,
-                15,
-                121,
-                192,
-                186,
-                249,
-                219
-              ]
-            ],
-            "x-gitbook-description-html": "<p>Public key of the account</p>"
-          },
-          "is_signer": {
-            "type": "boolean",
-            "description": "True if the account is a signer",
-            "x-gitbook-description-html": "<p>True if the account is a signer</p>"
-          },
-          "is_writable": {
-            "type": "boolean",
-            "description": "True if the account is writable",
-            "x-gitbook-description-html": "<p>True if the account is writable</p>"
+            "description": "Account public key as a 32-byte array.",
+            "maxItems": 32,
+            "minItems": 32
           }
-        },
-        "description": "Account metadata.",
-        "x-gitbook-description-html": "<p>Account metadata.</p>"
+        }
       },
-      "SolanaTypes.Error": {
+      "ApiError": {
         "type": "object",
+        "description": "API error response body.",
         "required": [
           "code",
-          "message"
+          "error"
         ],
         "properties": {
           "code": {
-            "type": "string",
-            "description": "Error code",
-            "x-gitbook-description-html": "<p>Error code</p>"
+            "type": "string"
           },
-          "message": {
-            "type": "string",
-            "description": "Error message",
-            "x-gitbook-description-html": "<p>Error message</p>"
+          "error": {
+            "type": "string"
+          },
+          "zid": {
+            "type": "string"
           }
-        },
-        "description": "Error response model.",
-        "x-gitbook-description-html": "<p>Error response model.</p>"
+        }
       },
-      "SolanaTypes.Instruction": {
+      "EnabledSourcesResponse": {
         "type": "object",
+        "description": "Enabled sources API response.",
+        "required": [
+          "sources"
+        ],
+        "properties": {
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of enabled sources, as DEX labels."
+          }
+        }
+      },
+      "Instruction": {
+        "type": "object",
+        "description": "OpenAPI schema mirror for `solana_instruction::Instruction`.",
         "required": [
           "program_id",
           "accounts",
           "data"
         ],
         "properties": {
-          "program_id": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "uint8"
-            },
-            "description": "Program ID executing the instruction.",
-            "examples": [
-              [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            ],
-            "x-gitbook-description-html": "<p>Program ID executing the instruction.</p>"
-          },
           "accounts": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SolanaTypes.AccountMeta"
-            },
-            "description": "List of accounts used by the instruction.",
-            "examples": [
-              [
-                {
-                  "pubkey": [
-                    39,
-                    100,
-                    151,
-                    186,
-                    11,
-                    184,
-                    101,
-                    145,
-                    114,
-                    183,
-                    46,
-                    221,
-                    140,
-                    102,
-                    225,
-                    143,
-                    86,
-                    23,
-                    100,
-                    217,
-                    200,
-                    106,
-                    97,
-                    10,
-                    58,
-                    126,
-                    15,
-                    121,
-                    192,
-                    186,
-                    249,
-                    219
-                  ],
-                  "is_signer": true,
-                  "is_writable": true
-                },
-                {
-                  "pubkey": [
-                    62,
-                    154,
-                    107,
-                    241,
-                    171,
-                    162,
-                    21,
-                    22,
-                    87,
-                    224,
-                    13,
-                    175,
-                    92,
-                    199,
-                    158,
-                    17,
-                    200,
-                    120,
-                    219,
-                    211,
-                    93,
-                    118,
-                    181,
-                    250,
-                    14,
-                    37,
-                    90,
-                    74,
-                    47,
-                    100,
-                    28,
-                    64
-                  ],
-                  "is_signer": false,
-                  "is_writable": true
-                }
-              ]
-            ],
-            "x-gitbook-description-html": "<p>List of accounts used by the instruction.</p>"
+              "$ref": "#/components/schemas/AccountMeta"
+            }
           },
           "data": {
             "type": "array",
             "items": {
               "type": "integer",
-              "format": "uint8"
+              "format": "int32",
+              "minimum": 0
             },
-            "description": "Instruction Data.",
-            "examples": [
-              [
-                0,
-                0,
-                232,
-                118,
-                72,
-                23,
-                0,
-                0,
-                0,
-                72,
-                105,
-                77,
-                203,
-                3,
-                0,
-                0,
-                0,
-                3,
-                0,
-                17,
-                1,
-                0,
-                3,
-                19,
-                17,
-                9,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                17,
-                1,
-                0,
-                11,
-                37,
-                17,
-                9,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                7,
-                16,
-                39
-              ]
-            ],
-            "x-gitbook-description-html": "<p>Instruction Data.</p>"
+            "description": "Serialized instruction data bytes."
+          },
+          "program_id": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            },
+            "description": "Program ID as a 32-byte array.",
+            "maxItems": 32,
+            "minItems": 32
           }
-        },
-        "description": "Solana instruction.",
-        "x-gitbook-description-html": "<p>Solana instruction.</p>"
+        }
       },
-      "SwapInstructions.SwapInstructionRequest": {
+      "SwapInstructionsRequest": {
         "type": "object",
+        "description": "Request body for the swap-instructions endpoint.",
         "required": [
-          "token_out",
           "token_in",
           "amount_in",
+          "token_out",
           "taker"
         ],
         "properties": {
-          "token_out": {
-            "type": "string",
-            "description": "Output Token Mint. For native SOL output, use `So11111111111111111111111111111111111111111`.",
-            "examples": [
-              "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-            ],
-            "x-gitbook-description-html": "<p>Output Token Mint. For native SOL output, use <code>So11111111111111111111111111111111111111111</code>.</p>"
-          },
-          "token_in": {
-            "type": "string",
-            "description": "Input Token Mint. For native SOL input, use `So11111111111111111111111111111111111111111`.",
-            "examples": [
-              "So11111111111111111111111111111111111111112"
-            ],
-            "x-gitbook-description-html": "<p>Input Token Mint. For native SOL input, use <code>So11111111111111111111111111111111111111111</code>.</p>"
-          },
           "amount_in": {
             "type": "integer",
-            "format": "uint64",
-            "description": "Amount of `tokenIn` in its base units",
-            "examples": [
-              100000000000
-            ],
-            "x-gitbook-description-html": "<p>Amount of <code>tokenIn</code> in its base units</p>"
-          },
-          "taker": {
-            "type": "string",
-            "description": "Taker Account.",
-            "examples": [
-              "3emsAVdmGKERbHjmGfQ6oZ1e35dkf5iYcS6U4CPKFVaa"
-            ],
-            "x-gitbook-description-html": "<p>Taker Account.</p>"
-          },
-          "slippage_bps": {
-            "type": "integer",
-            "format": "uint16",
-            "minimum": 0,
-            "maximum": 10000,
-            "description": "Optional. Slippage tolerance in basis points (bps). Must be between 0 and 10,000. Default is 50 bps (0.5%).",
-            "examples": [
-              50
-            ],
-            "x-gitbook-description-html": "<p>Optional. Slippage tolerance in basis points (bps). Must be between 0 and 10,000. Default is 50 bps (0.5%).</p>"
-          },
-          "recipient": {
-            "type": "string",
-            "description": "Optional. Recipient for swap output. If output token is native SOL this must be the address of the recipient, else a valid token account for that output token mint",
-            "x-gitbook-description-html": "<p>Optional. Recipient for swap output. If output token is native SOL this must be the address of the recipient, else a valid token account for that output token mint</p>"
-          },
-          "reserve_transaction_bytes": {
-            "type": "integer",
-            "format": "uint16",
-            "minimum": 0,
-            "description": "Optional. Requests a minimum number of bytes be free in the returned transaction, for composing the swap with additional instructions. Default is 0 bytes.",
-            "examples": [
-              0
-            ],
-            "x-gitbook-description-html": "<p>Optional. Requests a minimum number of bytes be free in the returned transaction, for composing the swap with additional instructions. Default is 0 bytes.</p>"
-          },
-          "swap_fee_ppm": {
-            "type": "string",
-            "description": "Optional. Comma-separated volume-based swap fees in parts per million (ppm). Must be provided together with `swap_fee_recipient`. Each entry must be between `0` and `1_000_000`. A value of `0` disables that fee entry. Fees are applied sequentially on the same side: each entry is charged on the remaining amount after previous entries on that side have been deducted, and each fee amount is rounded up to the next base unit when needed (e.g. with `swap_fee_ppm=50000,25000` both on the buy side, the second fee is 25000ppm of the amount remaining after the first fee, not of the original amount).",
-            "examples": [
-              "50000,25000,10000"
-            ],
-            "x-gitbook-description-html": "<p>Optional. Comma-separated volume-based swap fees in parts per million (ppm). Must be provided together with <code>swap_fee_recipient</code>. Each entry must be between <code>0</code> and <code>1_000_000</code>. A value of <code>0</code> disables that fee entry. Fees are applied sequentially on the same side: each entry is charged on the remaining amount after previous entries on that side have been deducted, and each fee amount is rounded up to the next base unit when needed (e.g. with <code>swap_fee_ppm=50000,25000</code> both on the buy side, the second fee is 25000ppm of the amount remaining after the first fee, not of the original amount).</p>"
-          },
-          "swap_fee_recipient": {
-            "type": "string",
-            "description": "Optional. Comma-separated recipients for the swap fees. Must be provided together with `swap_fee_ppm`. The number of entries must match `swap_fee_ppm`. If the respective token for `swap_fee_side` is native SOL this must be an address, else a valid token account for that token mint.",
-            "examples": [
-              "3emsAVdmGKERbHjmGfQ6oZ1e35dkf5iYcS6U4CPKFVaa,7A4JQfM4H1R7k2j4m9g5o1TjY3zNwB8pR2xU6cV9dKeP,9fKLMnpQrStUvWxYz1A2B3C4D5E6F7G8H9J0K1L2M3N4"
-            ],
-            "x-gitbook-description-html": "<p>Optional. Comma-separated recipients for the swap fees. Must be provided together with <code>swap_fee_ppm</code>. The number of entries must match <code>swap_fee_ppm</code>. If the respective token for <code>swap_fee_side</code> is native SOL this must be an address, else a valid token account for that token mint.</p>"
-          },
-          "swap_fee_side": {
-            "type": "string",
-            "description": "Optional. Comma-separated fee sides for each fee entry. Supported values are `buy` and `sell`. This field may be omitted only when every fee uses the default `buy` side. When provided, the number of entries must match `swap_fee_ppm`.",
-            "examples": [
-              "buy,buy,sell"
-            ],
-            "x-gitbook-description-html": "<p>Optional. Comma-separated fee sides for each fee entry. Supported values are <code>buy</code> and <code>sell</code>. This field may be omitted only when every fee uses the default <code>buy</code> side. When provided, the number of entries must match <code>swap_fee_ppm</code>.</p>"
-          },
-          "trade_surplus_cap_ppm": {
-            "type": "integer",
-            "format": "uint32",
-            "minimum": 0,
-            "maximum": 1000000,
-            "description": "Optional. Trade surplus cap in parts per million of the total realized trade size. Must be provided together with `trade_surplus_token_account`, or both fields must be omitted. A value of `0` disables trade surplus collection for the request. When 0x controls trade surplus collection, the request value is ignored and the configured 0x policy is applied instead. The transferred amount is capped relative to trade size.",
+            "format": "int64",
+            "description": "Input amount in its base units.",
             "examples": [
               1000000
             ],
-            "x-gitbook-description-html": "<p>Optional. Trade surplus cap in parts per million of the total realized trade size. Must be provided together with <code>trade_surplus_token_account</code>, or both fields must be omitted. A value of <code>0</code> disables trade surplus collection for the request. When 0x controls trade surplus collection, the request value is ignored and the configured 0x policy is applied instead. The transferred amount is capped relative to trade size.</p>"
+            "minimum": 0
+          },
+          "disabled_sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "DEX sources to exclude from routing. Valid source names are returned by `/enabled-sources`."
+          },
+          "recipient": {
+            "type": "string",
+            "description": "Base-58 encoded recipient for swap output.\nIf output token is native SOL this must be the address of the recipient, else a valid token account for that output token mint."
+          },
+          "reserve_transaction_bytes": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Minimum bytes to reserve in the transaction for composing with additional instructions.",
+            "default": 0,
+            "minimum": 0
+          },
+          "slippage_bps": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Slippage tolerance in basis points.",
+            "default": 50,
+            "maximum": 10000,
+            "minimum": 0
+          },
+          "swap_fee_ppm": {
+            "type": "string",
+            "description": "Comma-separated volume-based swap fees in parts per million.\nMust be provided together with `swap_fee_recipient`.\nEach entry must be between `0` and the per-app maximum (`100_000` unless configured otherwise).\nA value of `0` disables that fee entry.\nMultiple fees on the same side are applied sequentially, each on the amount remaining after prior deductions — not the original amount. Fee amounts are rounded up to the nearest base unit."
+          },
+          "swap_fee_recipient": {
+            "type": "string",
+            "description": "Comma-separated base-58 encoded recipients for the swap fees.\nMust be provided together with `swap_fee_ppm`.\nThe number of entries must match `swap_fee_ppm`.\nIf the respective token for `swap_fee_side` is native SOL this must be an address, else a valid token account for that token mint."
+          },
+          "swap_fee_side": {
+            "type": "string",
+            "description": "Comma-separated fee sides for each fee entry.\nSupported values are `buy` and `sell`.\nThis field may be omitted only when every fee uses the default buy side.\nWhen provided, the number of entries must match `swap_fee_ppm`."
+          },
+          "taker": {
+            "type": "string",
+            "description": "Base-58 encoded taker wallet address.",
+            "examples": [
+              "ZeroEx1111111111111111111111111111111111111"
+            ]
+          },
+          "token_in": {
+            "type": "string",
+            "description": "Input token mint, base-58 encoded. Use `So11111111111111111111111111111111111111111` for native SOL.",
+            "examples": [
+              "So11111111111111111111111111111111111111112"
+            ]
+          },
+          "token_out": {
+            "type": "string",
+            "description": "Output token mint, base-58 encoded. Use `So11111111111111111111111111111111111111111` for native SOL.",
+            "examples": [
+              "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+            ]
+          },
+          "trade_surplus_cap_ppm": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Trade surplus cap in parts per million of the total realized trade size.\nMust be provided together with `trade_surplus_recipient`, or both fields must be omitted.\nA value of `0` disables trade surplus collection for the request.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x policy is applied instead.\nThe transferred amount is capped relative to trade size.",
+            "maximum": 1000000,
+            "minimum": 0
           },
           "trade_surplus_recipient": {
             "type": "string",
-            "description": "Optional. Recipient that should receive trade surplus. Must be provided together with `trade_surplus_cap_ppm`, or both fields must be omitted. If the output token is native SOL this must be an address, else a valid token account for that token mint. When 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead.",
-            "examples": [
-              "3emsAVdmGKERbHjmGfQ6oZ1e35dkf5iYcS6U4CPKFVaa"
-            ],
-            "x-gitbook-description-html": "<p>Optional. Recipient that should receive trade surplus. Must be provided together with <code>trade_surplus_cap_ppm</code>, or both fields must be omitted. If the output token is native SOL this must be an address, else a valid token account for that token mint. When 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead.</p>"
+            "description": "Base-58 encoded recipient that should receive trade surplus.\nMust be provided together with `trade_surplus_cap_ppm`, or both fields must be omitted.\nIf the output token is native SOL this must be an address, else a valid token account for that token mint.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead."
           }
         },
-        "description": "Request payload for the swap-instruction endpoint.",
-        "x-gitbook-description-html": "<p>Request payload for the swap-instruction endpoint.</p>"
+        "example": {
+          "amount_in": 1000000000,
+          "slippage_bps": 50,
+          "taker": "ZeroEx1111111111111111111111111111111111111",
+          "token_in": "So11111111111111111111111111111111111111112",
+          "token_out": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+        }
       },
-      "SwapInstructions.SwapInstructionResponse": {
+      "SwapInstructionsResponse": {
         "type": "object",
+        "description": "Swap instructions API response.",
         "required": [
           "amount_out",
           "instructions",
@@ -519,48 +328,105 @@
           "zid"
         ],
         "properties": {
-          "amount_out": {
-            "type": "integer",
-            "format": "uint64",
-            "description": "The estimated amount of the output token received from the swap.",
-            "examples": [
-              16377638151
-            ],
-            "x-gitbook-description-html": "<p>The estimated amount of the output token received from the swap.</p>"
-          },
-          "instructions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SolanaTypes.Instruction"
-            },
-            "description": "Swap Instructions.",
-            "x-gitbook-description-html": "<p>Swap Instructions.</p>"
-          },
           "address_lookup_tables": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Lookup table addresses that must be included as part of serialized versioned transaction.",
-            "examples": [
-              [
-                "Crx2hke6VcSmPbRTqWDUiV9nVNMNoC2qz9VTGvQrEn7W"
-              ]
-            ],
-            "x-gitbook-description-html": "<p>Lookup table addresses that must be included as part of serialized versioned transaction.</p>"
+            "description": "Address Lookup Table addresses that must be included in the versioned transaction."
+          },
+          "amount_out": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The estimated amount of the output token received from the swap, in its base units.",
+            "minimum": 0
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Instruction"
+            },
+            "description": "The instructions to perform the swap."
+          },
+          "route_plan": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SwapInstructionsRoutePlanStep"
+            },
+            "description": "List of swap legs comprising the swap."
           },
           "zid": {
             "type": "string",
-            "description": "The unique ZeroEx 12 byte hex identifier of the request.",
-            "examples": [
-              "0x39c2df48bb55489cc0376110"
-            ],
-            "x-gitbook-description-html": "<p>The unique ZeroEx 12 byte hex identifier of the request.</p>"
+            "description": "Unique 12-byte hex identifier for this request."
           }
-        },
-        "description": "Response model for the swap-instruction endpoint.",
-        "x-gitbook-description-html": "<p>Response model for the swap-instruction endpoint.</p>"
+        }
+      },
+      "SwapInstructionsRoutePlanStep": {
+        "type": "object",
+        "required": [
+          "dex_address",
+          "dex_label",
+          "dex_program_id",
+          "token_in",
+          "token_out",
+          "amount_in",
+          "amount_out",
+          "ppb"
+        ],
+        "properties": {
+          "amount_in": {
+            "type": "string",
+            "description": "The amount of the input token to swap, in its base units."
+          },
+          "amount_out": {
+            "type": "string",
+            "description": "The estimated amount of the output token received from the swap, in its base units."
+          },
+          "dex_address": {
+            "type": "string",
+            "description": "The Base58-encoded address of the DEX."
+          },
+          "dex_label": {
+            "type": "string",
+            "description": "The label for the DEX. Matches labels returned by the `enabled-sources` endpoint."
+          },
+          "dex_program_id": {
+            "type": "string",
+            "description": "The Base58-encoded program ID address of the DEX."
+          },
+          "ppb": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Proportion of _remaining_ amount routed through this step in parts per billion.",
+            "minimum": 0
+          },
+          "token_in": {
+            "type": "string",
+            "description": "The Base58-encoded address of the input mint."
+          },
+          "token_out": {
+            "type": "string",
+            "description": "The Base58-encoded address of the output mint."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "0x-api-key"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Swap",
+      "description": "Solana Swap API"
+    },
+    {
+      "name": "Sources",
+      "description": "Solana Sources API"
+    }
+  ]
 }
