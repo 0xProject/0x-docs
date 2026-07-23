@@ -15,7 +15,7 @@ See below for pricing guidance and code examples.
 
 Out-of-the-box, the 0x Solana Swap API offers two monetization options:
 
-1. [Affiliate fees](/svm/solana-swap-api/guides/monetize-your-app#option-1-collect-affiliate-fees) (aka trading fee or commission) – Available on all pricing plans.
+1. [Volume-based fees](/svm/solana-swap-api/guides/monetize-your-app#option-1-collect-volume-based-fees) (aka affiliate fees, trading fees, or commission) – Available on all pricing plans.
 2. [Trade surplus](/svm/solana-swap-api/guides/monetize-your-app#option-2-collect-trade-surplus) (aka positive slippage) – Available to select integrators on custom plans. For assistance with setting up a custom plan, please [contact support](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
 
 <Tip>
@@ -24,11 +24,11 @@ Out-of-the-box, the 0x Solana Swap API offers two monetization options:
 ⚡️ See the [Solana Swap API reference](/api-reference/solana-swap-ap-is/swap/instructions) for the full request and response schema.
 </Tip>
 
-## Option 1: Collect affiliate fees
+## Option 1: Collect volume-based fees
 
-The 0x Solana Swap API supports one or more affiliate fees (trading fees/commissions) within a single swap request. This lets you route fees to multiple recipients with independently specified amounts and sides — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
+The 0x Solana Swap API supports one or more volume-based fees (aka affiliate fees, trading fees, or commissions) within a single swap request. This lets you route fees to multiple recipients with independently specified amounts and sides — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
 
-To apply affiliate fees, include the following fields in the body of your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions):
+To apply volume-based fees, include the following fields in the body of your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions):
 
 - [`swap_fee_ppm`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_ppm) — the fee amount(s) in **parts per million (ppm)**. Each entry must be between `0` and your per-app maximum (`100_000` ppm / 10% by default — see [Pricing considerations](#pricing-considerations)), and a value of `0` disables that entry. Supports single or multiple comma-separated values.
 - [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient) — the account(s) to receive the fees. Supports single or multiple comma-separated values, and must contain the same number of entries as `swap_fee_ppm`.
@@ -98,7 +98,7 @@ If a fee recipient is the taker's own token account for that side, the fee is tr
 
 Collected fees are itemized in the trade plan returned with the quote. Each volume fee entry includes:
 
-- `type` — `"volume"` for affiliate fees.
+- `type` — `"volume"` for volume-based fees.
 - `recipientTokenAccount` — the account receiving the fee.
 - `tokenMint` — the mint the fee is paid in (equal to the sell token for sell-side fees, the buy token for buy-side fees).
 - `bps` — the fee rate in **basis points**.
@@ -107,7 +107,7 @@ For the complete response schema and field descriptions, see the [API Reference]
 
 ### Pricing considerations
 
-When deciding how much to charge, set your pricing in a way that strengthens your bottom line while aligning with the value you provide to customers. The affiliate fee impacts the price for the end user, so find the sweet spot where your solution remains competitive.
+When deciding how much to charge, set your pricing in a way that strengthens your bottom line while aligning with the value you provide to customers. The volume-based fee impacts the price for the end user, so find the sweet spot where your solution remains competitive.
 
 Be aware that `swap_fee_ppm` has a default per-app limit of `100_000` ppm (10%) for security. The cap is enforced **per fee entry, not on the combined total**: each fee in the list is validated individually against the limit. For example, two sell-side fees of `60000` ppm (6%) each are both accepted under a `100_000` ppm cap, even though they sum to 12%, because neither individual entry exceeds the cap. If your application requires a higher per-entry value, [please reach out to us](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
 
