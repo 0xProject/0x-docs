@@ -93,14 +93,11 @@ If a fee recipient is the taker's own token account for that side, the fee is tr
 
 ### Displaying fees
 
-Collected fees are itemized in the trade plan returned with the quote. Each volume fee entry includes:
+The fee you charge is fully determined by the values you send in the request, so you can display it in your UI directly from those: each `swap_fee_ppm` rate, the token it is charged in (the output token for a `buy` fee, the input token for a `sell` fee), and its `swap_fee_recipient`.
 
-- `type` — `"volume"` for volume-based fees.
-- `recipientTokenAccount` — the account receiving the fee.
-- `tokenMint` — the mint the fee is paid in (equal to the sell token for sell-side fees, the buy token for buy-side fees).
-- `bps` — the fee rate in **basis points**.
+The quote already reflects any buy-side fees: the returned `amount_out` and `min_amount_out` are net of them, so the value you show the user as the amount received is correct as-is. Sell-side fees reduce the amount routed into the swap before the quote is produced.
 
-For the complete response schema and field descriptions, see the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions).
+For the complete request and response schema, see the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions).
 
 ### Pricing considerations
 
