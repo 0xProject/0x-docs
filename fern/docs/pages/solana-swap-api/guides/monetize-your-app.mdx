@@ -23,7 +23,7 @@ Out-of-the-box, the 0x Solana Swap API lets you collect one or more volume-based
 
 ## Collect volume-based fees
 
-The 0x Solana Swap API supports one or more volume-based fees (aka affiliate fees, trading fees, or commissions) within a single swap request. This lets you route fees to multiple recipients with independently specified amounts and sides — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
+The 0x Solana Swap API supports one or more volume-based fees within a single swap request. This lets you route fees to multiple recipients with independently specified amounts and sides — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
 
 To apply volume-based fees, include the following fields in the body of your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions):
 
@@ -32,7 +32,7 @@ To apply volume-based fees, include the following fields in the body of your [`/
 - [`swap_fee_side`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_side) — *(optional)* the side each fee is charged on: `buy` (the output token) or `sell` (the input token). Supports single or multiple comma-separated values. May be omitted only when every fee uses the default `buy` side; otherwise it must contain the same number of entries as `swap_fee_ppm`.
 
 <Note>
-Fees on Solana are expressed in **parts per million (ppm)**, not basis points. `1_000_000` ppm = 100%, so a 1% fee is `10000` ppm and a 5% fee is `50000` ppm. (Basis points are used in the trade-plan response — see [Displaying fees](#displaying-fees) below.)
+Fees on Solana are expressed in **parts per million (ppm)**, not basis points. `1_000_000` ppm = 100%, so a 1% fee is `10000` ppm and a 5% fee is `50000` ppm.
 </Note>
 
 ### Example API call
