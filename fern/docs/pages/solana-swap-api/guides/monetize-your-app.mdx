@@ -1,0 +1,70 @@
+---
+title: Monetize Your App on Solana
+description: This guide covers how you can monetize your app by using the 0x Solana Swap API.
+---
+
+## Introduction
+
+Integrate in-app swaps to let users trade seamlessly and at the best prices across Solana's top DEXs. As your app grows, you can monetize those trades with volume-baesd fees (aka affiliate fees, trading fees, or commision) to generate revenue and build a sustainable business. Available on all pricing plans.
+
+See our [Monetization Report](https://0x.org/reports/monetization-across-defi-report) to learn how top DeFi apps are turning trading activity into millions.
+
+## Collect volume-based fees
+
+The 0x Solana Swap API supports one or more volume-based fees within a single swap request. This lets you route fees to multiple recipients with independently specified amounts and sides — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
+
+To apply volume-based fees, include the following fields in the body of your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions):
+
+- [`swap_fee_ppm`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_ppm) — the fee amount(s) in **parts per million (ppm)**.
+- [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient) — the account(s) to receive the fees.
+- [`swap_fee_side`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_side) — _(optional)_ the side each fee is charged on: `buy` (the output token) or `sell` (the input token).
+
+<Note>
+  Fees on Solana are expressed in **parts per million (ppm)**, not basis points.
+  `1000000` ppm = 100%, so a 1% fee is `10000` ppm and a 5% fee is `50000` ppm.
+</Note>
+
+### Multiple fees and recipients
+
+Each comma-separated position defines one fee entry, so a single request can charge several fees to several recipients across both sides:
+
+```json
+{
+  "swap_fee_ppm": "50000,25000,10000",
+  "swap_fee_recipient": "recipient1,recipient2,recipient3",
+  "swap_fee_side": "buy,buy,sell"
+}
+```
+
+In this example, a 5% and a 2.5% fee are collected on the buy token for two different recipients, and a 1% fee is collected on the sell token for a third.
+
+<Note>
+  Fees on the **same side** are applied **sequentially**: each entry is charged
+  on the amount remaining after the previous entries on that side have been
+  deducted, not on the original amount. For example, two buy-side fees of
+  `50000` and `25000` ppm produce an effective fee of 7.375%, not 7.5%. Each fee
+  amount is rounded up to the next base unit when needed.
+</Note>
+
+### Buy-side vs sell-side fees
+
+- **`buy`** — the fee is taken from the output token. This reduces the `amount_out` returned in the quote.
+- **`sell`** — the fee is taken from the input token before the swap is routed. This reduces the amount routed into the swap.
+
+### Fee recipient accounts
+
+If a fee recipient is the taker's own token account for that side, the fee is treated as absent (not a self-transfer) and is omitted from the quote and the returned instructions. See [Important Integration Notes](/svm/solana-swap-api/guides/important-integration-notes) for details on fee recipient token accounts, including why 0x does not create them for you.
+
+### Displaying fees
+
+The fee you charge is fully determined by the values you send in the request, so you can display it in your UI directly from those: each `swap_fee_ppm` rate, the token it is charged in (the output token for a `buy` fee, the input token for a `sell` fee), and its `swap_fee_recipient`.
+
+The quote already reflects any buy-side fees: the returned `amount_out` is net of them, so the value you show the user as the amount received is correct as-is. Sell-side fees reduce the amount routed into the swap before the quote is produced.
+
+For the complete request and response schema, see the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions).
+
+### Pricing considerations
+
+When deciding how much to charge, set your pricing in a way that strengthens your bottom line while aligning with the value you provide to customers. The volume-based fee impacts the price for the end user, so find the sweet spot where your solution remains competitive.
+
+Be aware that `swap_fee_ppm` has a default per-app limit of `100000` ppm (10%). The cap is enforced **per fee entry, not on the combined total**: each fee in the list is validated individually against the limit. For example, two sell-side fees of `60000` ppm (6%) each are both accepted under a `100000` ppm cap, even though they sum to 12%, because neither individual entry exceeds the cap. If your application requires a higher per-entry value, [please reach out to us](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).

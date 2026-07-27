@@ -306,6 +306,9 @@ navigation:
               - page: Get Started
                 slug: get-started-with-solana-swap-api
                 path: docs/pages/solana-swap-api/guides/get-started.mdx
+              - page: Monetize Your App
+                slug: monetize-your-app
+                path: docs/pages/solana-swap-api/guides/monetize-your-app.mdx
               - page: Important Integration Notes
                 slug: important-integration-notes
                 path: docs/pages/solana-swap-api/guides/important-integration-notes.mdx
