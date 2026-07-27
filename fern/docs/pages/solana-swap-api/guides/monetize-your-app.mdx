@@ -21,8 +21,7 @@ To apply volume-based fees, include the following fields in the body of your [`/
 
 <Note>
   Fees on Solana are expressed in **parts per million (ppm)**, not basis points.
-  `1_000_000` ppm = 100%, so a 1% fee is `10_000` ppm and a 5% fee is `50_000`
-  ppm.
+  `1000000` ppm = 100%, so a 1% fee is `10000` ppm and a 5% fee is `50000` ppm.
 </Note>
 
 ### Multiple fees and recipients
@@ -31,7 +30,7 @@ Each comma-separated position defines one fee entry, so a single request can cha
 
 ```json
 {
-  "swap_fee_ppm": "50_000,25_000,10_000",
+  "swap_fee_ppm": "50000,25000,10000",
   "swap_fee_recipient": "recipient1,recipient2,recipient3",
   "swap_fee_side": "buy,buy,sell"
 }
@@ -43,8 +42,8 @@ In this example, a 5% and a 2.5% fee are collected on the buy token for two diff
   Fees on the **same side** are applied **sequentially**: each entry is charged
   on the amount remaining after the previous entries on that side have been
   deducted, not on the original amount. For example, two buy-side fees of
-  `50_000` and `25_000` ppm produce an effective fee of 7.375%, not 7.5%. Each
-  fee amount is rounded up to the next base unit when needed.
+  `50000` and `25000` ppm produce an effective fee of 7.375%, not 7.5%. Each fee
+  amount is rounded up to the next base unit when needed.
 </Note>
 
 ### Buy-side vs sell-side fees
@@ -68,4 +67,4 @@ For the complete request and response schema, see the [API Reference](/api-refer
 
 When deciding how much to charge, set your pricing in a way that strengthens your bottom line while aligning with the value you provide to customers. The volume-based fee impacts the price for the end user, so find the sweet spot where your solution remains competitive.
 
-Be aware that `swap_fee_ppm` has a default per-app limit of `100_000` ppm (10%). The cap is enforced **per fee entry, not on the combined total**: each fee in the list is validated individually against the limit. For example, two sell-side fees of `60_000` ppm (6%) each are both accepted under a `100_000` ppm cap, even though they sum to 12%, because neither individual entry exceeds the cap. If your application requires a higher per-entry value, [please reach out to us](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
+Be aware that `swap_fee_ppm` has a default per-app limit of `100000` ppm (10%). The cap is enforced **per fee entry, not on the combined total**: each fee in the list is validated individually against the limit. For example, two sell-side fees of `60000` ppm (6%) each are both accepted under a `100000` ppm cap, even though they sum to 12%, because neither individual entry exceeds the cap. If your application requires a higher per-entry value, [please reach out to us](https://docs.0x.org/docs/introduction/need-help#-contact-developer-support-fastest-direct-help).
