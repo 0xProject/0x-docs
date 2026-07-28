@@ -603,6 +603,61 @@
                                                                         "nullable": true,
                                                                         "description": "The details about the fee collected by 0x"
                                                                     },
+                                                                    "providerAppFee": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "amount": {
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "type": "integer",
+                                                                                        "format": "int64"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                                                                                    }
+                                                                                ],
+                                                                                "description": "The provider app fee amount in token's base units"
+                                                                            },
+                                                                            "token": {
+                                                                                "anyOf": [
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^0x(?!0{40})[a-fA-F0-9]{40}$"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^0x[a-fA-F0-9]{32}$"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                ],
+                                                                                "description": "The contract address of the token in which the provider collected an app fee"
+                                                                            },
+                                                                            "type": {
+                                                                                "type": "string",
+                                                                                "enum": ["volume"],
+                                                                                "description": "The fee type indicating it is calculated as a percentage of trade volume"
+                                                                            },
+                                                                            "chainId": {
+                                                                                "type": "number",
+                                                                                "description": "The chain ID of the provider app fee currency"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "amount",
+                                                                            "token",
+                                                                            "type",
+                                                                            "chainId"
+                                                                        ],
+                                                                        "additionalProperties": false,
+                                                                        "nullable": true,
+                                                                        "description": "Provider-native app fee collected by the bridge provider (currently only Relay). The chain ID identifies the fee currency and may differ from the origin and destination chains"
+                                                                    },
                                                                     "bridgeNativeFee": {
                                                                         "type": "object",
                                                                         "properties": {
@@ -691,6 +746,7 @@
                                                                     "integratorFee",
                                                                     "integratorFees",
                                                                     "zeroExFee",
+                                                                    "providerAppFee",
                                                                     "bridgeNativeFee"
                                                                 ],
                                                                 "additionalProperties": false,
@@ -1524,6 +1580,7 @@
                                                     "token": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
                                                     "type": "volume"
                                                 },
+                                                "providerAppFee": null,
                                                 "bridgeNativeFee": null
                                             },
                                             "gasCosts": {
@@ -3111,6 +3168,61 @@
                                                                                     "nullable": true,
                                                                                     "description": "The details about the fee collected by 0x"
                                                                                 },
+                                                                                "providerAppFee": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "amount": {
+                                                                                            "allOf": [
+                                                                                                {
+                                                                                                    "type": "integer",
+                                                                                                    "format": "int64"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                                                                                                }
+                                                                                            ],
+                                                                                            "description": "The provider app fee amount in token's base units"
+                                                                                        },
+                                                                                        "token": {
+                                                                                            "anyOf": [
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "pattern": "^0x(?!0{40})[a-fA-F0-9]{40}$"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "pattern": "^0x[a-fA-F0-9]{32}$"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            ],
+                                                                                            "description": "The contract address of the token in which the provider collected an app fee"
+                                                                                        },
+                                                                                        "type": {
+                                                                                            "type": "string",
+                                                                                            "enum": ["volume"],
+                                                                                            "description": "The fee type indicating it is calculated as a percentage of trade volume"
+                                                                                        },
+                                                                                        "chainId": {
+                                                                                            "type": "number",
+                                                                                            "description": "The chain ID of the provider app fee currency"
+                                                                                        }
+                                                                                    },
+                                                                                    "required": [
+                                                                                        "amount",
+                                                                                        "token",
+                                                                                        "type",
+                                                                                        "chainId"
+                                                                                    ],
+                                                                                    "additionalProperties": false,
+                                                                                    "nullable": true,
+                                                                                    "description": "Provider-native app fee collected by the bridge provider (currently only Relay). The chain ID identifies the fee currency and may differ from the origin and destination chains"
+                                                                                },
                                                                                 "bridgeNativeFee": {
                                                                                     "type": "object",
                                                                                     "properties": {
@@ -3207,6 +3319,7 @@
                                                                                 "integratorFee",
                                                                                 "integratorFees",
                                                                                 "zeroExFee",
+                                                                                "providerAppFee",
                                                                                 "bridgeNativeFee"
                                                                             ],
                                                                             "additionalProperties": false,
@@ -4048,6 +4161,7 @@
                                                         "token": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
                                                         "type": "volume"
                                                     },
+                                                    "providerAppFee": null,
                                                     "bridgeNativeFee": null
                                                 },
                                                 "gasCosts": {
