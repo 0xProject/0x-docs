@@ -3,7 +3,7 @@
   "info": {
     "title": "Solana API",
     "description": "API for generating Solana swap instructions across aggregated DEX liquidity.",
-    "version": "0.3.3"
+    "version": "0.3.6"
   },
   "servers": [
     {
@@ -237,7 +237,7 @@
             "examples": [
               1000000
             ],
-            "minimum": 0
+            "minimum": 1
           },
           "disabled_sources": {
             "type": "array",
@@ -275,7 +275,7 @@
           },
           "swap_fee_side": {
             "type": "string",
-            "description": "Comma-separated fee sides for each fee entry.\nSupported values are `buy` and `sell`.\nThis field may be omitted only when every fee uses the default buy side.\nWhen provided, the number of entries must match `swap_fee_ppm`."
+            "description": "Comma-separated fee sides for each fee entry.\nSupported values are `buy` and `sell`.\nThis field may be omitted only when every fee uses the default `buy` side.\nWhen provided, the number of entries must match `swap_fee_ppm`."
           },
           "taker": {
             "type": "string",
@@ -325,6 +325,7 @@
           "amount_out",
           "instructions",
           "address_lookup_tables",
+          "route_plan",
           "zid"
         ],
         "properties": {
@@ -363,6 +364,7 @@
       },
       "SwapInstructionsRoutePlanStep": {
         "type": "object",
+        "description": "One swap leg in the swap route plan.",
         "required": [
           "dex_address",
           "dex_label",
@@ -384,7 +386,7 @@
           },
           "dex_address": {
             "type": "string",
-            "description": "The Base58-encoded address of the DEX."
+            "description": "The base-58 encoded address of the DEX."
           },
           "dex_label": {
             "type": "string",
@@ -392,7 +394,7 @@
           },
           "dex_program_id": {
             "type": "string",
-            "description": "The Base58-encoded program ID address of the DEX."
+            "description": "The base-58 encoded program ID address of the DEX."
           },
           "ppb": {
             "type": "integer",
@@ -402,11 +404,11 @@
           },
           "token_in": {
             "type": "string",
-            "description": "The Base58-encoded address of the input mint."
+            "description": "The base-58 encoded address of the input mint."
           },
           "token_out": {
             "type": "string",
-            "description": "The Base58-encoded address of the output mint."
+            "description": "The base-58 encoded address of the output mint."
           }
         }
       }
