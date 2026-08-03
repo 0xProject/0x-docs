@@ -3,7 +3,7 @@
   "info": {
     "title": "Solana API",
     "description": "API for generating Solana swap instructions across aggregated DEX liquidity.",
-    "version": "0.3.6"
+    "version": "0.3.7"
   },
   "servers": [
     {
@@ -323,6 +323,7 @@
         "description": "Swap instructions API response.",
         "required": [
           "amount_out",
+          "min_amount_out",
           "instructions",
           "address_lookup_tables",
           "route_plan",
@@ -339,7 +340,7 @@
           "amount_out": {
             "type": "integer",
             "format": "int64",
-            "description": "The estimated amount of the output token received from the swap, in its base units.",
+            "description": "The estimated output amount after fees, in its base units.",
             "minimum": 0
           },
           "instructions": {
@@ -348,6 +349,12 @@
               "$ref": "#/components/schemas/Instruction"
             },
             "description": "The instructions to perform the swap."
+          },
+          "min_amount_out": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The minimum output amount after slippage and fees, in its base units. Transaction will fail if this amount is not met.",
+            "minimum": 0
           },
           "route_plan": {
             "type": "array",
