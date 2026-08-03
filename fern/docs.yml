@@ -203,6 +203,8 @@ navigation:
           - link: Example Code
             href: https://github.com/0xProject/0x-examples#swap-api
             target: _blank
+          - link: API Reference
+            href: /api-reference/evm-ap-is/swap/allowanceholder-getquote
           - section: Additional Topics
             slug: additional-topics
             contents:
@@ -315,20 +317,17 @@ navigation:
               - page: Integrator Byte Costs
                 slug: integrator-byte-costs
                 path: docs/pages/solana-swap-api/guides/integrator-byte-costs.mdx
-          - link: Example Code
-            href: https://github.com/0xProject/0x-examples#solana-swap-api
-            target: _blank
-          - section: Reference
-            slug: references
-            contents:
               - page: Add Solana to EVM Projects
                 slug: evm-to-solana
                 path: docs/pages/solana-swap-api/reference/evm-to-solana.mdx
-              - page: Troubleshooting
-                slug: troubleshooting
-                path: docs/pages/solana-swap-api/reference/troubleshooting.mdx
-              - link: Rate Limits
-                href: /docs/developer-resources/rate-limits
+          - link: Example Code
+            href: https://github.com/0xProject/0x-examples#solana-swap-api
+            target: _blank
+          - link: API Reference
+            href: /api-reference/solana-swap-ap-is/swap/instructions
+          - page: Troubleshooting
+            slug: troubleshooting
+            path: docs/pages/solana-swap-api/reference/troubleshooting.mdx
 
       - section: Need Help?
         slug: need-help
@@ -356,6 +355,8 @@ navigation:
           - page: Introduction
             slug: introduction
             path: docs/pages/cross-chain-api/introduction.mdx
+          - link: Supported Chains and Providers
+            href: /docs/introduction/supported-chains#cross-chain-api
           - section: Guides
             slug: guides
             contents:
@@ -379,6 +380,8 @@ navigation:
                 path: docs/pages/cross-chain-api/guides/monetize-your-app.mdx
           - link: Example Code
             href: https://github.com/0xProject/0x-examples#cross-chain-api
+          - link: API Reference
+            href: /api-reference/cross-chain-ap-is/cross-chain/cross-chain-get-quotes
           - section: Key Concepts
             slug: key-concepts
             contents:
@@ -394,16 +397,9 @@ navigation:
               - page: Understanding Bridging Costs
                 slug: understanding-bridging-costs
                 path: docs/pages/cross-chain-api/key-concepts/understanding-bridging-costs.mdx
-          - section: Reference
-            slug: reference
-            contents:
-              - link: Supported Chains and Providers
-                href: /docs/introduction/supported-chains#cross-chain-api
-              - page: Troubleshooting
-                slug: troubleshooting
-                path: docs/pages/cross-chain-api/reference/troubleshooting.mdx
-              - link: Rate Limits
-                href: /docs/developer-resources/rate-limits
+          - page: Troubleshooting
+            slug: troubleshooting
+            path: docs/pages/cross-chain-api/reference/troubleshooting.mdx
           - link: Learn More
             href: https://0x.org/products/cross-chain
             target: _blank
