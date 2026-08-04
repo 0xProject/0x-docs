@@ -19,7 +19,7 @@ layout:
   tabs-placement: header
 
 announcement:
-  message: '⚡️ Solana API is available via priority access.  <a href="https://0x.org/products/solana" target="_blank">Apply now</a> to start building.'
+  message: '⚡️ Solana Swap API is now in open beta.  <a href="https://dashboard.0x.org/create-account" target="_blank">Get an API key</a> to start building.'
 
 # Metadata configuration (SEO / Open Graph / Twitter cards)
 metadata:
