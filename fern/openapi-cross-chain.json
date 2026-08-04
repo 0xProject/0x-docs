@@ -511,9 +511,20 @@
                                                                             "chainId": {
                                                                                 "type": "number",
                                                                                 "description": "The chain ID where this fee will be collected"
+                                                                            },
+                                                                            "collectedBy": {
+                                                                                "type": "string",
+                                                                                "enum": ["relay"],
+                                                                                "nullable": true,
+                                                                                "description": "How this fee is collected. null: transferred on-chain as part of the trade. \"relay\": collected and paid out by Relay, so it is not a transfer in the origin transaction and may use the token entering the bridge rather than feeToken"
                                                                             }
                                                                         },
-                                                                        "required": ["amount", "token", "type"],
+                                                                        "required": [
+                                                                            "amount",
+                                                                            "token",
+                                                                            "type",
+                                                                            "collectedBy"
+                                                                        ],
                                                                         "additionalProperties": false,
                                                                         "nullable": true,
                                                                         "description": "The details about the first fee collected by the integrator"
@@ -556,9 +567,20 @@
                                                                                 "chainId": {
                                                                                     "type": "number",
                                                                                     "description": "The chain ID where this fee will be collected"
+                                                                                },
+                                                                                "collectedBy": {
+                                                                                    "type": "string",
+                                                                                    "enum": ["relay"],
+                                                                                    "nullable": true,
+                                                                                    "description": "How this fee is collected. null: transferred on-chain as part of the trade. \"relay\": collected and paid out by Relay, so it is not a transfer in the origin transaction and may use the token entering the bridge rather than feeToken"
                                                                                 }
                                                                             },
-                                                                            "required": ["amount", "token", "type"],
+                                                                            "required": [
+                                                                                "amount",
+                                                                                "token",
+                                                                                "type",
+                                                                                "collectedBy"
+                                                                            ],
                                                                             "additionalProperties": false
                                                                         },
                                                                         "nullable": true,
@@ -596,9 +618,20 @@
                                                                                 "type": "string",
                                                                                 "enum": ["volume"],
                                                                                 "description": "The fee type indicating it is calculated as a percentage of trade volume"
+                                                                            },
+                                                                            "collectedBy": {
+                                                                                "type": "string",
+                                                                                "enum": ["relay"],
+                                                                                "nullable": true,
+                                                                                "description": "How this fee is collected. null: transferred on-chain as part of the trade. \"relay\": collected and paid out by Relay, so it is not a transfer in the origin transaction and may use the token entering the bridge rather than feeToken"
                                                                             }
                                                                         },
-                                                                        "required": ["amount", "token", "type"],
+                                                                        "required": [
+                                                                            "amount",
+                                                                            "token",
+                                                                            "type",
+                                                                            "collectedBy"
+                                                                        ],
                                                                         "additionalProperties": false,
                                                                         "nullable": true,
                                                                         "description": "The details about the fee collected by 0x"
@@ -3064,12 +3097,19 @@
                                                                                         "chainId": {
                                                                                             "type": "number",
                                                                                             "description": "The chain ID where this fee will be collected"
+                                                                                        },
+                                                                                        "collectedBy": {
+                                                                                            "type": "string",
+                                                                                            "enum": ["relay"],
+                                                                                            "nullable": true,
+                                                                                            "description": "How this fee is collected. null: transferred on-chain as part of the trade. \"relay\": collected and paid out by Relay, so it is not a transfer in the origin transaction and may use the token entering the bridge rather than feeToken"
                                                                                         }
                                                                                     },
                                                                                     "required": [
                                                                                         "amount",
                                                                                         "token",
-                                                                                        "type"
+                                                                                        "type",
+                                                                                        "collectedBy"
                                                                                     ],
                                                                                     "additionalProperties": false,
                                                                                     "nullable": true,
@@ -3113,12 +3153,19 @@
                                                                                             "chainId": {
                                                                                                 "type": "number",
                                                                                                 "description": "The chain ID where this fee will be collected"
+                                                                                            },
+                                                                                            "collectedBy": {
+                                                                                                "type": "string",
+                                                                                                "enum": ["relay"],
+                                                                                                "nullable": true,
+                                                                                                "description": "How this fee is collected. null: transferred on-chain as part of the trade. \"relay\": collected and paid out by Relay, so it is not a transfer in the origin transaction and may use the token entering the bridge rather than feeToken"
                                                                                             }
                                                                                         },
                                                                                         "required": [
                                                                                             "amount",
                                                                                             "token",
-                                                                                            "type"
+                                                                                            "type",
+                                                                                            "collectedBy"
                                                                                         ],
                                                                                         "additionalProperties": false
                                                                                     },
@@ -3157,12 +3204,19 @@
                                                                                             "type": "string",
                                                                                             "enum": ["volume"],
                                                                                             "description": "The fee type indicating it is calculated as a percentage of trade volume"
+                                                                                        },
+                                                                                        "collectedBy": {
+                                                                                            "type": "string",
+                                                                                            "enum": ["relay"],
+                                                                                            "nullable": true,
+                                                                                            "description": "How this fee is collected. null: transferred on-chain as part of the trade. \"relay\": collected and paid out by Relay, so it is not a transfer in the origin transaction and may use the token entering the bridge rather than feeToken"
                                                                                         }
                                                                                     },
                                                                                     "required": [
                                                                                         "amount",
                                                                                         "token",
-                                                                                        "type"
+                                                                                        "type",
+                                                                                        "collectedBy"
                                                                                     ],
                                                                                     "additionalProperties": false,
                                                                                     "nullable": true,
