@@ -1,0 +1,60 @@
+---
+tags: []
+---
+
+#### 📣 Announcements
+
+- **Robinhood Chain is now public**: Robinhood Chain (`4663`) is generally available across the Swap, Gasless, and Cross-Chain APIs, with a broad set of native DEXes routed from day one. [See supported chains](https://docs.0x.org/introduction/supported-chains).
+
+#### New Chains
+
+- **Robinhood Chain:** Now supported in Swap API, Gasless API, and Cross-Chain API (chain ID `4663`).
+
+#### New Liquidity Sources
+
+- **Base:** Added BinaryFi (MX Trading) prop AMM, DeltaSwap, Metric V2, Morphex, PancakeSwap Infinity Bin, and the st0x PropAMM hook (Uniswap V4).
+- **Berachain:** Added BeraSwap and BurrBear, plus full factory-event DEX indexing.
+- **BSC:** Added Flap, FlapHook (PancakeSwap Infinity), Kipseli, and PancakeSwap Infinity Bin.
+- **Ethereum:** Added Bancor V3.
+- **HyperEVM:** Added LiquidCore, ERC-4626 vault discovery, and full factory-event DEX indexing.
+- **Ink:** Added full factory-event DEX indexing.
+- **Monad:** Added NadDotFun V2 and LFJ POE.
+- **Robinhood Chain:** Added Alley (Catnip), Bags bonding curve, Baseline, Ekubo V3, Ekubo ve(3,3), Fermi, Flap, Giga CL, Giga Classic, Hanji, Kaliber, Kipseli, LiquidCore, Metric V1, Metric V2, PancakeSwap V2, PancakeSwap V3, Pons V2 bonding curve, Ramses V3, Ramses DLMM, Ramses legacy (Solidly), RobinSwap V3, SectorOne, Sheriff (Algebra), SushiSwap V3, Swaap V2, SwapHood V2, SwapHood V3, Uniswap V2, V3, and V4, Up, UpCL, and Virtuals.
+- **Sonic:** Added full factory-event DEX indexing.
+
+#### New Features
+
+- **Fee collection on RWA trades in Swap and Cross-Chain API**: Trades involving real-world assets no longer block fee collection. Fees are still only collected in monetizable tokens, so a trade with an RWA on one side can now be monetized on the other.
+- **Coinbase RWA and Maple token classification in Token API**: Coinbase-issued RWAs are now recognized and gated behind tokenized-equity opt-in, and syrupUSDC, syrupUSDT, and syrupUSDG now return `issuer.name = "maple"`.
+- **BStocks support in Swap and Token API**: BStocks tokenized equities are now recognized and routable for integrators with tokenized-equity access.
+- **`recipient` with exact-out in Swap API**: Exact-out requests where `recipient` differs from `taker` are now accepted instead of returning a 500.
+- **kBTC and WBTC bridging in Cross-Chain API**: Added LayerZero OFT routes for kBTC (Ethereum, Ink, Optimism, Unichain) and WBTC (Base, BSC, Berachain, Unichain, Sonic, Monad, plus OFT Adapter routes on Ethereum and Optimism).
+- **Robinhood Chain bridging in Cross-Chain API**: Robinhood Chain is now reachable via Across, CCIP, Relay, the canonical ETH bridge, and OFT routes for USDG, USDe, sUSDe, and weETH.
+- **`etaSource` and provider ETAs in Cross-Chain API**: Quotes and trade plans now carry the bridge provider's own quoted ETA alongside the recalibrated `estimatedTimeSeconds`, and report which model produced it.
+- **Same-token bridging pricing in Cross-Chain API**: Quotes are now priced by end-to-end token pair using a registry of canonical asset deployments across chains, so bridging the same asset (e.g. USDC → USDC) is priced separately from cross-asset routes. Tron corridors are included.
+- **Token-pair fee tiers in Cross-Chain API**: 0x fees can now be configured per pricing bucket — `sameTokenBridging`, `likeLike`, `blueChip`, and `all` — with Standard Plan defaults applied per tier.
+- **Integrator fees via Relay app fees in Cross-Chain API**: Integrator fees can now be collected through Relay's app-fee mechanism instead of on-chain, for apps configured to do so.
+- **Zero minimum output allowed in Cross-Chain API**: `minAmountOut` of `0` is now valid, which is reachable at 100% slippage.
+- **Expanded Relay and NEAR Intents coverage in Cross-Chain API**: Added intermediate tokens on less liquid chains for Relay and refreshed the bridgeable token and NEAR Intents token sets.
+
+#### Bug Fixes
+
+- Uniswap V4 quotes now account for the protocol fee on Ethereum, Optimism, Arbitrum, and Polygon. Quotes from the tick-data sampling path were ~0.05% optimistic after Uniswap enabled protocol fees.
+- Banned the Angstrom Uniswap V4 hook, which could be routed through during its brief unlocked window and revert on fill.
+- Fixed route buy amounts being re-costed from stale sample curves, which over-estimated quotes under gas pressure.
+- Fixed reverts from negligible fills on gas-aware routes (Balancer `BAL#510`).
+- Registered PancakeSwap Infinity Bin only on BSC and Base, where it is deployed.
+- Updated WooFi router addresses on Monad and HyperEVM, and refreshed Settler addresses across chains.
+- Lowered the Monad `eth_call` gas limit to 150M for MIP-12 compatibility, and marked Sonic as `eth_simulateV1`-capable while excluding Mantle, whose RPC does not support it.
+- Fixed rounding of Mayan bridge amounts and corrected pyUSD and USDG token recognition in Cross-Chain API.
+
+#### Breaking Changes
+
+- **Mode removed**: Mode (`34443`) is no longer supported by the Swap, Gasless, Cross-Chain, or Token APIs. Requests for chain `34443` are rejected.
+- **Blast fully removed**: Following its removal from Cross-Chain API in June, Blast (`81457`) is no longer supported for same-chain swaps either. Status lookups for older trades with a Blast leg will error.
+- **`/gasless-approval-token` removed**: The endpoint has been retired and removed from the API reference. Approval requirements are returned in the `issues.allowance` and `approval` fields of `/gasless/quote`.
+- **Legacy Gasless Intents bridge removed**: `/gasless/quote`, `/gasless/submit`, and `/gasless/status` now handle meta-transactions only. The `useIntents` contract path has been retired.
+
+#### Documentation
+
+- Removed the retired `/gasless-approval-token` endpoint and the internal `tx-history-beta` endpoint from the generated OpenAPI reference.

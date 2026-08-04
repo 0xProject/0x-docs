@@ -1,0 +1,51 @@
+---
+tags: []
+---
+
+#### New Liquidity Sources
+
+- **Arbitrum:** Added Integral.
+- **Base:** Added AlienBase Stable, BaseSwap, Infusion, Kinetix, Nabla, Rubicon CLMM, Thick, wBLT, and expanded LunarBase and Virtuals coverage.
+- **BSC:** Added BabySwap.
+- **Ethereum:** Added Integral.
+
+#### New Features
+
+- **Exact-out available to all integrators in Swap API**: The app/team allowlist on exact-out requests has been removed, so any integrator can pass a `buyAmount` to receive an exact output amount. RFQ liquidity is now eligible for exact-out routes, and `txOrigin` may differ from `taker` — smart contract wallets can now supply the true origin EOA so RFQ orders pin correctly. [See `buyAmount` in API reference](https://docs.0x.org/api-reference/evm-ap-is/swap/allowanceholder-getprice).
+- **Longer gasless approval validity in Gasless API**: Generated EIP-2612 `permit` and `daiPermit` approval messages now expire after 1 day instead of 10 minutes, so takers who wait before submitting a signed trade no longer hit expired approvals.
+- **Smart wallet approvals in Gasless API**: `permit` approvals now accept arbitrary ERC-1271 signatures from smart wallets via the bytes-signature overload. `daiPermit` and `executeMetaTransaction::approve` still require split ECDSA components and remain unsupported for smart wallets.
+- **CCTP support for Solana in Cross-Chain API**: USDC now bridges in both directions between Solana and supported EVM chains over Circle's CCTP V2.
+- **PAXG bridging in Cross-Chain API**: PAXG is now bridgeable between Ethereum and Optimism, including swap-and-bridge routes that acquire or dispose of PAXG on either end.
+- **PYUSD and USDG bridging in Cross-Chain API**: Added LayerZero OFT routes for PayPal PYUSD (Ethereum ↔ Arbitrum) and Paxos USDG (Ethereum ↔ Ink).
+- **Mayan Swift on HyperEVM in Cross-Chain API**: HyperEVM swap-and-bridge routes are now quotable through Mayan Swift.
+- **Recalibrated bridge ETAs in Cross-Chain API**: `estimatedTimeSeconds` is now derived from historical fill data rather than provider estimates alone, giving more realistic completion times per corridor.
+- **Trade plans for Solana and Tron origins in Cross-Chain API**: Solana- and Tron-origin routes now publish trade plans, bringing them to parity with EVM origins for analytics and monitoring.
+- **Ondo assets in Swap and Gasless API**: Ondo-issued tokens are now tradable by integrators with tokenized-equity access enabled, and the Token API returns the Ondo issuer on those tokens.
+- **Integrator fee cap validation in Swap API**: Cumulative integrator fees are now validated against the configured cap at request time, returning a clear error instead of failing later in routing.
+
+#### Bug Fixes
+
+- Fixed Gasless quotes defaulting to buy-token gas fees instead of selecting the gas fee token by token priority.
+- Removed redundant local slippage on the exact-out refund leg, which was tightening effective slippage beyond the requested amount.
+- Corrected the MKR → SKY conversion rate after the on-chain converter fee rose from 3% to 4%, which was overestimating output by ~1%.
+- Fixed a panic on Cross-Chain sell amounts above `u128`; oversized sell amounts are now rejected at the API layer with a validation error.
+- Cross-Chain plans are now dropped when the origin swap partially fills, preventing funds from getting stuck mid-route.
+- Quotes returning zero output are now rejected in Cross-Chain API instead of being returned as valid.
+- Relay trade status is now queried by request ID rather than origin transaction hash, fixing missed status updates.
+- Tron addresses without a `0x` prefix are now accepted by the Cross-Chain status endpoint.
+- Fixed Mayan Swift v2 calldata omitting the quote ID, which broke status attribution.
+- Fixed missing Uniswap V3 fork pools caused by a discovery/parse mismatch.
+- Relaxed the Curve TVL filter on Arbitrum to restore routing through thin but healthy pools.
+- Curve pools with unverified oracles are now filtered out, and a malicious Curve pool was removed from routing.
+- Banned a set of Uniswap V4 hooks — AtlasHook JIT-style pools and a hook wrapping Aerodrome liquidity — that produced unrealizable quotes.
+- Removed drained SyncSwap AquaV2 pools on Linea and disabled Obric on BSC while its pools are locked on-chain.
+- Fixed the Velodrome multiquoter for Aborean CL pools and replaced the stale SquadSwap V3 factory on BSC.
+
+#### Breaking Changes
+
+- **Blast removed from Cross-Chain API**: Blast (`81457`) is no longer supported as an origin or destination chain. Quotes for Blast routes now return no liquidity.
+- **Mayan Swift v1 removed from Cross-Chain API**: Only Mayan Swift v2 is routed. The `mayan_swift` provider ID is unchanged.
+
+#### Documentation
+
+- Clarified in the Swap API reference that exactly one of `sellAmount` or `buyAmount` is required — the two are mutually exclusive.
