@@ -8900,7 +8900,7 @@
             "required": false,
             "schema": { "type": "string" },
             "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
-            "example": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+            "example": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAwMDAsInRyYW5zYWN0aW9uSGFzaCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIiwidHJhZGVJZCI6MH0="
           },
           {
             "name": "startTimestamp",
@@ -9308,7 +9308,7 @@
             "required": false,
             "schema": { "type": "string" },
             "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
-            "example": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+            "example": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAwMDAsInRyYW5zYWN0aW9uSGFzaCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIiwidHJhZGVJZCI6MH0="
           },
           {
             "name": "startTimestamp",
