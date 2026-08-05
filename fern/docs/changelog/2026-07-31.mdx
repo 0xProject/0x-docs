@@ -13,23 +13,18 @@ tags: []
 #### New Liquidity Sources
 
 - **Base:** Added BinaryFi (MX Trading) prop AMM, DeltaSwap, Metric V2, Morphex, PancakeSwap Infinity Bin, and the st0x PropAMM hook (Uniswap V4).
-- **Berachain:** Added BeraSwap and BurrBear, plus full factory-event DEX indexing.
 - **BSC:** Added Flap, FlapHook (PancakeSwap Infinity), Kipseli, and PancakeSwap Infinity Bin.
 - **Ethereum:** Added Bancor V3.
-- **HyperEVM:** Added LiquidCore, ERC-4626 vault discovery, and full factory-event DEX indexing.
-- **Ink:** Added full factory-event DEX indexing.
-- **Monad:** Added NadDotFun V2 and LFJ POE.
+- **HyperEVM:** Added LiquidCore.
+- **Monad:** Added NadDotFun V2.
 - **Robinhood Chain:** Added Alley (Catnip), Bags bonding curve, Baseline, Ekubo V3, Ekubo ve(3,3), Fermi, Flap, Giga CL, Giga Classic, Hanji, Kaliber, Kipseli, LiquidCore, Metric V1, Metric V2, PancakeSwap V2, PancakeSwap V3, Pons V2 bonding curve, Ramses V3, Ramses DLMM, Ramses legacy (Solidly), RobinSwap V3, SectorOne, Sheriff (Algebra), SushiSwap V3, Swaap V2, SwapHood V2, SwapHood V3, Uniswap V2, V3, and V4, Up, UpCL, and Virtuals.
-- **Sonic:** Added full factory-event DEX indexing.
 
 #### New Features
 
 - **BStocks support in Swap and Token API**: BStocks tokenized equities are now recognized and routable for integrators with tokenized-equity access.
 - **kBTC and WBTC bridging in Cross-Chain API**: Added LayerZero OFT routes for kBTC (Ethereum, Ink, Optimism, Unichain) and WBTC (Base, BSC, Berachain, Unichain, Sonic, Monad, plus OFT Adapter routes on Ethereum and Optimism).
 - **Robinhood Chain bridging in Cross-Chain API**: Robinhood Chain is now reachable via Across, CCIP, Relay, the canonical ETH bridge, and OFT routes for USDG, USDe, sUSDe, and weETH.
-- **`etaSource` and provider ETAs in Cross-Chain API**: Quotes and trade plans now carry the bridge provider's own quoted ETA alongside the recalibrated `estimatedTimeSeconds`, and report which model produced it.
-- **Token-pair fee tiers in Cross-Chain API**: 0x fees can now be configured per pricing bucket — `sameTokenBridging`, `likeLike`, `blueChip`, and `all` — with Standard Plan defaults applied per tier.
-- **Zero minimum output allowed in Cross-Chain API**: `minAmountOut` of `0` is now valid, which is reachable at 100% slippage.
+- **Zero minimum output allowed in Cross-Chain API**: A `minBuyAmount` of `0` is now valid, which is reachable at 100% slippage.
 
 #### Breaking Changes
 
