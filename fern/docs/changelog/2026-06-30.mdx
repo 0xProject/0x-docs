@@ -1,0 +1,27 @@
+---
+tags: []
+---
+
+#### New Liquidity Sources
+
+- **Arbitrum:** Added Integral.
+- **Base:** Added AlienBase Stable, BaseSwap, Infusion, Kinetix, Nabla, Rubicon CLMM, Thick, wBLT, and expanded LunarBase and Virtuals coverage.
+- **BSC:** Added BabySwap.
+- **Ethereum:** Added Integral.
+
+#### New Features
+
+- **CCTP support for Solana in Cross-Chain API**: USDC now bridges in both directions between Solana and supported EVM chains over Circle's CCTP V2.
+- **Mayan Swift on HyperEVM in Cross-Chain API**: HyperEVM swap-and-bridge routes are now quotable through Mayan Swift.
+- **Ondo assets in Swap and Gasless API**: Ondo-issued tokens are now tradable by integrators with tokenized-equity access enabled.
+
+#### Bug Fixes
+
+- Cross-Chain plans are now dropped when the origin swap partially fills, preventing funds from getting stuck mid-route.
+- Quotes returning zero output are now rejected in Cross-Chain API instead of being returned as valid.
+- Tron addresses without a `0x` prefix are now accepted by the Cross-Chain status endpoint.
+
+#### Breaking Changes
+
+- **Blast removed from Cross-Chain API**: Blast (`81457`) is no longer supported as an origin or destination chain. Quotes for Blast routes now return no liquidity.
+- **Mayan Swift v1 removed from Cross-Chain API**: Only Mayan Swift v2 is routed. The `mayan_swift` provider ID is unchanged.
