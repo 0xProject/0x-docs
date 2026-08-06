@@ -29,5 +29,5 @@ tags: []
 #### Breaking Changes
 
 - **Mode removed**: Mode (`34443`) is no longer supported by the Swap, Gasless, Cross-Chain, or Token APIs. Requests for chain `34443` are rejected.
-- **Blast fully removed**: Following its removal from Cross-Chain API in June, Blast (`81457`) is no longer supported for same-chain swaps either. Status lookups for older trades with a Blast leg will error.
+- **Blast fully removed**: Blast (`81457`) is no longer supported for Swap API.
 - **`/gasless-approval-token` removed**: The endpoint has been retired and removed from the API reference. Approval requirements are returned in the `issues.allowance` and `approval` fields of `/gasless/quote`.

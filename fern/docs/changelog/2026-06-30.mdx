@@ -17,7 +17,6 @@ tags: []
 
 #### Bug Fixes
 
-- Fixed Gasless quotes defaulting to buy-token gas fees instead of selecting the gas fee token by token priority.
 - Cross-Chain plans are now dropped when the origin swap partially fills, preventing funds from getting stuck mid-route.
 - Quotes returning zero output are now rejected in Cross-Chain API instead of being returned as valid.
 - Tron addresses without a `0x` prefix are now accepted by the Cross-Chain status endpoint.
