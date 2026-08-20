@@ -248,6 +248,67 @@ Read more about the contracts [here](/docs/core-concepts/contracts).
 
 {" "}
 
+<Accordion title="Has the AllowanceHolder contract been formally verified?">
+  Yes. On top of the{" "}
+  <a href="https://github.com/0xProject/0x-settler/tree/master/audits">
+    audits
+  </a>{" "}
+  covering 0x Settler, <code>AllowanceHolder</code> has been independently{" "}
+  <strong>formally verified</strong> by Bailsec using the Certora Prover.
+  Formal verification mathematically proves the contract satisfies a written
+  specification across <em>every</em> reachable state and execution path,
+  rather than only the paths that testing and fuzzing happen to explore.
+  <br />
+  <br />
+  The specification covers 50+ properties across five verification targets,
+  including:
+  <ul>
+    <li>
+      <strong>Allowance accounting</strong>: <code>exec</code> sets exactly the
+      granted allowance, <code>transferFrom</code> moves exactly the requested
+      amount and decrements the allowance by that amount, and allowances can
+      never increase outside those two paths.
+    </li>
+    <li>
+      <strong>No passive approvals</strong>: allowances live entirely in
+      EIP-1153 transient storage, and an invariant proves{" "}
+      <code>AllowanceHolder</code> never writes persistent storage — so no
+      allowance can outlive the transaction that granted it.
+    </li>
+    <li>
+      <strong>Operator isolation</strong>: only the operator named in the grant
+      can consume it; a non-operator caller cannot spend another user's
+      allowance.
+    </li>
+    <li>
+      <strong>Confused-deputy protection</strong>: calls whose target looks like
+      an ERC-20 are proven to revert, and the forwarded <code>msgSender</code>{" "}
+      recovery is proven to return the original caller.
+    </li>
+    <li>
+      <strong>Fallback routing</strong>: <code>AllowanceHolder</code> dispatches
+      through a hand-written assembly fallback — each selector is proven to
+      reach the correct branch, the branches are proven mutually exclusive, and
+      unknown selectors are proven to revert.
+    </li>
+    <li>
+      <strong>No stuck ETH</strong>: no ether is retained by the contract after{" "}
+      <code>exec</code> or <code>transferFrom</code>, including callback flows.
+    </li>
+  </ul>
+  Read the full{" "}
+  <a href="https://github.com/0xProject/0x-settler/blob/master/audits/Bailsec%20AllowanceHolder%20FV/Bailsec_0x_%E2%80%93_AllowanceHolder_%E2%80%93_Formal_Verification_1st_FV_Report.pdf">
+    AllowanceHolder Formal Verification report
+  </a>{" "}
+  or browse the{" "}
+  <a href="https://github.com/0xProject/0x-settler/tree/master/audits/Bailsec%20AllowanceHolder%20FV/certora">
+    Certora specs
+  </a>{" "}
+  used to produce it.
+</Accordion>
+
+{" "}
+
 <Accordion title="Should I use AllowanceHolder or Permit2 for my meta-aggregator project?">
   Depends on UX and integration type:
   <ul>
@@ -693,6 +754,10 @@ Read more about [accessing 0x transaction data here](/docs/core-concepts/transac
     <a href="https://github.com/0xProject/0x-settler/tree/master/audits">
       {" "}
       audit reports{" "}
+    </a>
+    . The <code>AllowanceHolder</code> contract has additionally been{" "}
+    <a href="https://github.com/0xProject/0x-settler/blob/master/audits/Bailsec%20AllowanceHolder%20FV/Bailsec_0x_%E2%80%93_AllowanceHolder_%E2%80%93_Formal_Verification_1st_FV_Report.pdf">
+      formally verified
     </a>
     . Check out our{" "}
     <a href="/docs/developer-resources/bounties">bounty program</a>.
