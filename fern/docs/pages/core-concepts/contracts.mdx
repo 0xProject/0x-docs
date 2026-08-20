@@ -45,9 +45,8 @@ This separation enhances security by isolating allowance management from swap ex
   These contracts have been fully audited with [four
   audits](https://github.com/0xProject/0x-settler/tree/master/audits) from three
   separate firms, including Ourovoros, Trail of Bits, OpenZeppelin, and Trail of
-  Bits a second time. The `AllowanceHolder` contract has additionally been
-  [formally
-  verified](https://github.com/0xProject/0x-settler/blob/master/audits/Bailsec%20AllowanceHolder%20FV/Bailsec_0x_%E2%80%93_AllowanceHolder_%E2%80%93_Formal_Verification_1st_FV_Report.pdf).
+  Bits a second time. The AllowanceHolder contract has also undergone [formal
+  verification](https://github.com/0xProject/0x-settler/blob/master/audits/Bailsec%20AllowanceHolder%20FV/Bailsec_0x_%E2%80%93_AllowanceHolder_%E2%80%93_Formal_Verification_1st_FV_Report.pdf).
 </Tip>
 
 ### Finding 0x Settler Contracts Addresses
@@ -88,7 +87,7 @@ For v2, we strongly advise **against hardcoding** any entry point contract addre
 
 ## AllowanceHolder (Recommended)
 
-[AllowanceHolder](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#allowanceholder) is the default and recommended allowance contract for most integrators. It provides a better UX, lower gas costs, and is designed to minimize common integration pitfalls that can occur with using Permit2.
+[AllowanceHolder](https://github.com/0xProject/0x-settler/?tab=readme-ov-file#allowanceholder) is the default and recommended allowance contract for most integrators. It provides a better UX, lower gas costs, and is designed to minimize common integration pitfalls that can occur with using Permit2. The AllowanceHolder contract has undergone multiple external [security audits](https://github.com/0xProject/0x-settler/tree/master/audits) and [formal verification](https://github.com/0xProject/0x-settler/blob/master/audits/Bailsec%20AllowanceHolder%20FV/Bailsec_0x_%E2%80%93_AllowanceHolder_%E2%80%93_Formal_Verification_1st_FV_Report.pdf).
 
 ### Key Benefits
 
