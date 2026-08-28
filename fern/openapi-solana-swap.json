@@ -3,7 +3,7 @@
   "info": {
     "title": "Solana API",
     "description": "API for generating Solana swap instructions across aggregated DEX liquidity.",
-    "version": "0.3.7"
+    "version": "0.3.13"
   },
   "servers": [
     {
@@ -167,6 +167,44 @@
           }
         }
       },
+      "AssociatedTokenAccountDestination": {
+        "type": "object",
+        "required": [
+          "associatedTokenAccount"
+        ],
+        "properties": {
+          "associatedTokenAccount": {
+            "$ref": "#/components/schemas/AssociatedTokenAccountOwner"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssociatedTokenAccountOwner": {
+        "type": "object",
+        "required": [
+          "owner"
+        ],
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Base-58 encoded owner address that the created token account belongs to."
+          }
+        },
+        "additionalProperties": false
+      },
+      "Destination": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "An existing base-58 encoded token account (or wallet for native SOL) address."
+          },
+          {
+            "$ref": "#/components/schemas/AssociatedTokenAccountDestination",
+            "description": "A base-58 encoded owner address for a token account."
+          }
+        ],
+        "description": "A swap destination: either an existing token account (or wallet for native SOL)\naddress, or an owner whose token account should be used, and created if required.\nIf an account is created, its rent is paid by `sponsor` if present, else by `taker`.\nIf the created ATA belongs to the taker, the sponsor keeps close authority and can\nreclaim the rent once the account is empty. ATAs created for anyone else (custom\nrecipient, fee or surplus recipient) leave the rent as a permanent sponsor cost."
+      },
       "EnabledSourcesResponse": {
         "type": "object",
         "description": "Enabled sources API response.",
@@ -182,6 +220,22 @@
             "description": "List of enabled sources, as DEX labels."
           }
         }
+      },
+      "FeeRecipients": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "Comma-separated base-58 encoded token account addresses."
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Destination"
+            },
+            "description": "Structured list of destinations, one per fee entry."
+          }
+        ],
+        "description": "Fee recipients for the swap fees: either a comma-separated list of\nexisting token accounts, or a structured list mixing addresses with\nowners whose token accounts should be the fee recipient."
       },
       "Instruction": {
         "type": "object",
@@ -247,8 +301,15 @@
             "description": "DEX sources to exclude from routing. Valid source names are returned by `/enabled-sources`."
           },
           "recipient": {
-            "type": "string",
-            "description": "Base-58 encoded recipient for swap output.\nIf output token is native SOL this must be the address of the recipient, else a valid token account for that output token mint."
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Destination",
+                "description": "Base-58 encoded recipient for swap output."
+              }
+            ]
           },
           "reserve_transaction_bytes": {
             "type": "integer",
@@ -265,13 +326,27 @@
             "maximum": 10000,
             "minimum": 0
           },
+          "sponsor": {
+            "type": "string",
+            "description": "Transaction fee payer and rent payer for a fully-sponsored swap.\nMust differ from the taker and from every native destination in the request.\nThe taker remains the swap authority and must still sign.",
+            "examples": [
+              "Sponsor111111111111111111111111111111111111"
+            ]
+          },
           "swap_fee_ppm": {
             "type": "string",
             "description": "Comma-separated volume-based swap fees in parts per million.\nMust be provided together with `swap_fee_recipient`.\nEach entry must be between `0` and the per-app maximum (`100_000` unless configured otherwise).\nA value of `0` disables that fee entry.\nMultiple fees on the same side are applied sequentially, each on the amount remaining after prior deductions — not the original amount. Fee amounts are rounded up to the nearest base unit."
           },
           "swap_fee_recipient": {
-            "type": "string",
-            "description": "Comma-separated base-58 encoded recipients for the swap fees.\nMust be provided together with `swap_fee_ppm`.\nThe number of entries must match `swap_fee_ppm`.\nIf the respective token for `swap_fee_side` is native SOL this must be an address, else a valid token account for that token mint."
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FeeRecipients",
+                "description": "Fee recipients for the swap fees.\nMust be provided together with `swap_fee_ppm`.\nThe number of entries must match `swap_fee_ppm`.\nA sponsored swap rejects the owner form for wSOL fee recipients: the sponsor\nwould pay rent to create the account, and closing (unwrapping) a wSOL account\nsends that rent to its owner. Use an existing token account instead."
+              }
+            ]
           },
           "swap_fee_side": {
             "type": "string",
@@ -306,8 +381,15 @@
             "minimum": 0
           },
           "trade_surplus_recipient": {
-            "type": "string",
-            "description": "Base-58 encoded recipient that should receive trade surplus.\nMust be provided together with `trade_surplus_cap_ppm`, or both fields must be omitted.\nIf the output token is native SOL this must be an address, else a valid token account for that token mint.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead."
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Destination",
+                "description": "Recipient that should receive trade surplus.\nMust be provided together with `trade_surplus_cap_ppm`, or both fields must be omitted.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead."
+              }
+            ]
           }
         },
         "example": {
@@ -362,6 +444,10 @@
               "$ref": "#/components/schemas/SwapInstructionsRoutePlanStep"
             },
             "description": "List of swap legs comprising the swap."
+          },
+          "sponsor": {
+            "type": "string",
+            "description": "Present when the caller requested full sponsorship. The returned\ntransaction must use this address as fee payer; both sponsor and taker sign."
           },
           "zid": {
             "type": "string",
