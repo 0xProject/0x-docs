@@ -162,6 +162,12 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 
 <Accordion title="How can I find the tokens that 0x supports for trading?">
   0x supports all tokens by default except those blocked for compliance reasons.
+
+  Note: Balancer V3 pool tokens (BPTs) are not supported by 0x API. Selling a
+  BPT is effectively redeeming an LP position, which 0x API does not support —
+  it routes trades between tokens rather than entering or exiting liquidity
+  pools. To exit a Balancer V3 position, withdraw through Balancer first, then
+  swap the underlying tokens through 0x.
 </Accordion>
 
 {" "}
