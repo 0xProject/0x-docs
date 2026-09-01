@@ -61,9 +61,9 @@ console.log(await quoteResponse.json());
 
 <Info>
   The API automatically selects the best available bridge based on your request
-  parameters. HyperCore is currently served by the [Across V4 and
-  Relay](/docs/introduction/supported-chains#cross-chain-api) bridges, and
-  available quotes depend on each bridge's token coverage.
+  parameters. HyperCore is currently served by the
+  [Relay](/docs/introduction/supported-chains#cross-chain-api) bridge, and
+  available quotes depend on the bridge's token coverage.
 </Info>
 
 <Accordion title="Example response">
@@ -274,6 +274,6 @@ curl -X POST https://api.hyperliquid.xyz/info \
 | **Token format**         | 20-byte address, `0x`-prefixed | Base58 (Pubkey)            | 16-byte token ID (32 hex chars)               | Base58Check (e.g. `T...`) |
 | **User address format**  | Hex, `0x`-prefixed             | Base58 (Pubkey)            | Hex, `0x`-prefixed (standard EVM)             | Base58Check (e.g. `T...`) |
 | **Balance / chain data** | JSON-RPC node                  | JSON-RPC node              | HyperCore API (`api.hyperliquid.xyz/info`)    | Tron HTTP API             |
-| **Bridges**              | Varies by chain                | Across V4, Relay, others   | Across V4, Relay                              | Relay, NEAR Intents       |
+| **Bridges**              | Varies by chain                | Relay, NEAR Intents, others | Relay                                        | Relay, NEAR Intents       |
 
 **Want to collect fees?** See [Monetize Your App](/cross-chain/cross-chain-api/guides/monetize-your-app) to learn how to add integrator fees to cross-chain swaps.
