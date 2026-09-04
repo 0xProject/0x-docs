@@ -97,6 +97,11 @@ navigation:
           - page: Supported Chains and Providers
             slug: supported-chains
             path: docs/pages/introduction/supported-chains.mdx
+          # TODO(pre-launch): remove `hidden: true` when RWA self-serve opt-in ships.
+          - page: Enable RWA Trading
+            slug: rwa-access
+            path: docs/pages/introduction/rwa-access.mdx
+            hidden: true
           - link: Example Code
             href: https://github.com/0xProject/0x-examples
             target: _blank

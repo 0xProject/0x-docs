@@ -1,0 +1,107 @@
+---
+title: "Enable RWA Trading"
+description: "Opt in to trading tokenized real-world assets (RWAs) from the 0x Dashboard."
+---
+
+Trading tokenized real-world assets (RWAs) through 0x requires a one-time opt-in. Opting in is self-serve: you accept the RWA trading agreement from the [0x Dashboard](https://dashboard.0x.org/), and access is enabled immediately. There is no application to fill out and no waiting on manual review.
+
+<Note>
+  RWA access is granted at the **team** level, not per app. Once your team opts
+  in, every app and API key belonging to that team can trade RWAs. You only need
+  to opt in once.
+</Note>
+
+{/* TODO(pre-launch): add a short paragraph defining which assets 0x classifies as RWAs, and link to the supported RWA token list once it exists. */}
+
+## Before you begin
+
+<Steps>
+  <Step>
+    You need a 0x account and a team. If you do not have one yet, see [Create a
+    0x API Key](/docs/introduction/quickstart/getting-started).
+  </Step>
+  <Step>
+    Review the RWA trading agreement with your legal or compliance team before
+    accepting. Accepting is an agreement on behalf of your organization.
+  </Step>
+</Steps>
+
+## Opt in during signup
+
+New teams are offered RWA access as a step during signup. You can accept it then, or **skip** the step and opt in later from the dashboard — skipping does not affect the rest of your account setup, and you can come back to it at any time.
+
+{/* TODO(pre-launch): screenshot of the signup RWA step. Save to ../../assets/img/introduction/0x-dashboard-rwa-signup-step.png */}
+
+## Opt in from the dashboard
+
+If you skipped the signup step, or your team was created before RWA opt-in was available:
+
+<Steps>
+  <Step>
+    Sign in to the [0x Dashboard](https://dashboard.0x.org/).
+  </Step>
+  <Step>
+    Open the **RWA** tab.
+    {/* TODO(pre-launch): confirm the final tab name and its location in the dashboard nav. */}
+  </Step>
+  <Step>
+    Read the RWA trading agreement.
+  </Step>
+  <Step>
+    Check the box to confirm you accept the agreement on behalf of your team,
+    then submit.
+    {/* TODO(pre-launch): §5.4.2 may require additional fields (legal entity name, jurisdictions served). Document them here once legal confirms. */}
+  </Step>
+</Steps>
+
+{/* TODO(pre-launch): screenshot of the RWA tab and the agreement/checkbox state. Save to ../../assets/img/introduction/0x-dashboard-rwa-tab.png */}
+
+## What happens after you accept
+
+Everything is automated — there is no manual enablement step on the 0x side. When you accept:
+
+<Steps>
+  <Step>
+    Your acceptance is recorded and RWA trading is enabled for your team in the
+    same write, so the two can never drift apart.
+  </Step>
+  <Step>
+    Your API gateway is re-provisioned so your existing API keys pick up the new
+    permission.
+  </Step>
+  <Step>
+    RWA access is live immediately. You do not need to create a new app or
+    rotate your API key.
+  </Step>
+</Steps>
+
+<Tip>
+  Because your existing API keys keep working, the only change you should notice
+  is that RWA quotes stop being rejected. No code change is required.
+</Tip>
+
+## Confirm RWA access is live
+
+{/* TODO(pre-launch): document how an integrator verifies opt-in took effect. Either a status indicator in the RWA tab, or a sample /swap/permit2/price call against an RWA token that returns a quote instead of an authorization error. Include the exact error code returned before opt-in (likely BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE / SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE) so users can recognize it. */}
+
+## Have a question?
+
+If you are signed in to the [0x Dashboard](https://dashboard.0x.org/), you can reach our team directly through the Pylon Messenger in the bottom-right corner. For questions about the agreement itself, contact [0x Support](/docs/introduction/need-help).
+
+## Related
+
+<CardGroup>
+
+<Card
+  title="Create a 0x API Key"
+  href="/docs/introduction/quickstart/getting-started"
+  icon="key"
+>
+  Set up an account, create a team, and get a live API key.
+</Card>
+
+<Card title="FAQ" href="/docs/introduction/faq" icon="circle-question">
+  Common questions about the 0x Dashboard and the 0x APIs.
+</Card>
+
+</CardGroup>
