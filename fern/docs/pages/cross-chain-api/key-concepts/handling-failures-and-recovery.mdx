@@ -68,11 +68,11 @@ Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending
 
 | Status | Description |
 | --- | --- |
-| `refund_pending` | An automatic refund has been initiated by the bridge provider. Keep polling. |
-| `refund_succeeded` | The refund has been issued. The user receives the funds in `originAddress` or `destinationAddress`. Check `failure.recovery` for chain, token, and `settledAmount`. |
-| `manual_action_required` | Dest is incomplete. 0x submits the retry and `manualTransaction` is null. Keep polling. 0x does not yet submit CCIP retries. |
-| `no_actions_required` | The bridge failed before transferring tokens from origin. Funds never left. No further action. |
-| `failed` | Terminal. The user cannot recover from here. Contact 0x support with the `zid` from `/status`. |
+| `refund_pending` | The bridge provider has started an automatic refund. Continue polling `/status` until the refund is complete. |
+| `refund_succeeded` | The bridge provider has issued the refund. The user receives the funds in `originAddress` or `destinationAddress`, depending on where the refund occurs. Check `failure.recovery` for the chain, token, and `settledAmount`. |
+| `manual_action_required` | The destination call did not complete and requires recovery. `manualTransaction` remains null because the user does not need to sign anything. 0x submits the recovery transaction, except for CCIP. Continue polling `/status`. |
+| `no_actions_required` | The bridge failed before transferring the tokens from the origin chain, so the user still has their funds and no action is required. |
+| `failed` | The recovery process failed and the status is terminal. The user cannot recover the funds through `/status`. Contact 0x support with the `zid` from the response. |
 
 ## Recovery Step Fields
 
