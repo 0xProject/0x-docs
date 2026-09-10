@@ -7,18 +7,16 @@ Cross-chain swaps are non-atomic as they span two chains and a bridge provider i
 
 This page explains what happens when a bridge fails, how recovery works, and what your integration should do for each scenario. For the happy-path status lifecycle, see [Tracking Transaction Status](/cross-chain/cross-chain-api/key-concepts/tracking-transaction-status).
 
-## Origin refund vs dest retry vs dest claim
+## Origin refund vs dest retry
 
 The recovery path depends on where the transfer fails.
 
 **Origin refund.** If the bridge fails, the bridge provider automatically returns the tokens on the origin chain. The status changes from `refund_pending` to `refund_succeeded` when the refund is complete.
 
-**Dest retry.** If the bridge provider's call on the destination chain fails, `/status` omits `manualTransaction` and 0x retries that call. A successful retry changes the status to `bridge_filled`. If the status does not change, contact 0x support with your `zid`.
-
-**Dest claim.** Some routes with destination fees first deliver the tokens to a 0x contract. If the bridge transfer succeeds but the final transfer to the recipient fails, the tokens may remain in that contract. `/status` then includes a `manualTransaction`, which the recipient must sign on `recovery.chainId`. 0x cannot submit this transaction. This can occur on OFT and Mayan routes with destination fees.
+**Dest retry.** If the bridge provider's call on the destination chain fails, `/status` returns `manualTransaction: null` and 0x retries that call. A successful retry changes the status to `bridge_filled`. If the status does not change, contact 0x support with the `zid` from `/status`.
 
 <Note>
-**CCIP is the exception.** 0x does not submit a dest retry for CCIP. Contact 0x support with your `zid`.
+**CCIP is the exception.** 0x does not submit a dest retry for CCIP. Contact 0x support with the `zid` from `/status`.
 </Note>
 
 <Warning>
@@ -29,7 +27,7 @@ The recovery path depends on where the transfer fails.
 
 When you poll `GET /cross-chain/status` and the response has `status: "bridge_failed"`, it includes a `failure` object with everything needed to understand what went wrong and what to do next.
 
-Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending`, or `manual_action_required` with `manualTransaction` omitted. A dest retry that lands flips the top-level status to `bridge_filled` and drops the `failure` object.
+Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending` or `manual_action_required`. A dest retry that lands flips the top-level status to `bridge_filled` and drops the `failure` object.
 
 ## Failure Object Structure
 
@@ -72,29 +70,28 @@ Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending
 | --- | --- |
 | `refund_pending` | An automatic refund has been initiated by the bridge provider. Keep polling. |
 | `refund_succeeded` | The refund has been issued. The user receives the funds in `originAddress` or `destinationAddress`. Check `failure.recovery` for chain, token, and `settledAmount`. |
-| `manual_action_required` | Dest is incomplete. Dest retry: 0x submits, `manualTransaction` is omitted, keep polling. Dest claim: `manualTransaction` is present, the recipient must sign it. `/status` does not track a transaction you submit yourself. |
+| `manual_action_required` | Dest is incomplete. 0x submits the retry and `manualTransaction` is null. Keep polling. For CCIP, contact 0x support instead. |
 | `no_actions_required` | The bridge failed before transferring tokens from origin. Funds never left. No further action. |
-| `failed` | Terminal. The user cannot recover from here. Contact 0x with the `zid`. |
+| `failed` | Terminal. The user cannot recover from here. Contact 0x support with the `zid` from `/status`. |
 
 ## Recovery Step Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `chainId` | number | Chain where recovery occurs. Dest for dest retries and dest claims. Origin (or dest for Mayan MCTP / FastMCTP) for refunds. |
+| `chainId` | number | Chain where recovery occurs. Dest for dest retries. Origin (or dest for Mayan MCTP / FastMCTP) for refunds. |
 | `token` | string | Token recovered or delivered. Dest retries complete dest in the bridge step's `buyToken`. Origin refunds return the bridge step's `sellToken` (USDC for Mayan MCTP / FastMCTP dest refunds). May differ from the quote `sellToken`. |
 | `amount` | string | Expected recovery amount (bigint). |
 | `estimatedTimeSeconds` | number or null | Seconds until automatic refund. Present when `refund_pending`. |
 | `deadline` | number or null | Unix timestamp after which an Arbitrum Bridge recovery can change to `failed`. Only Arbitrum Bridge uses this field. |
-| `manualTransaction` | object or null | Ready-to-sign dest claim. Present only when the recipient must sign. Null when 0x submits dest retries, and when no tx is available (CCIP). |
+| `manualTransaction` | object or null | Currently null. 0x submits supported dest retries. |
 | `settledAmount` | string or null | Actual refunded amount. Populated after a refund confirms. May differ from `amount`. |
 
 ## What your integration should do
 
 1. Poll `/status`.
 2. If `failure.status` is `refund_pending` or `refund_succeeded`, treat it as a refund. Do not ask the user to sign dest.
-3. If `failure.status` is `manual_action_required` and `manualTransaction` is `null`, keep polling. 0x submits the dest retry unless the bridge is CCIP. Do not prompt the user to sign.
-4. If `manualTransaction` is present, the recipient signs it on `recovery.chainId`. This is a dest claim. 0x cannot submit it.
-5. If `failure.status` is `failed`, contact 0x with the `zid`.
+3. If `failure.status` is `manual_action_required`, keep polling. 0x submits the dest retry unless the bridge is CCIP. Do not prompt the user to sign.
+4. If `failure.status` is `failed`, contact 0x support with the `zid` from `/status`.
 
 ## Refund Token and Chain
 
@@ -110,31 +107,6 @@ The main thing to understand: the refund token is based on the **bridge step's**
 
 The `recovery.token`, `recovery.chainId`, and `recovery.amount` fields contain the exact details. For dest retries those fields describe dest delivery, not an origin refund.
 
-## Manual Recovery Transactions
-
-`manualTransaction` is omitted for dest retries 0x submits. Do not build a dest retry yourself when the field is null.
-
-When `manualTransaction` is present, it is a dest claim. The recipient must sign it. 0x cannot submit it. Anyone else sending it reverts.
-
-**EVM:**
-
-```json
-{ "chainType": "evm", "to": "0x...", "data": "0x...", "value": "0", "gas": "200000", "gasPrice": "30000000000" }
-```
-
-Submit via `eth_sendTransaction` on chain `recovery.chainId`.
-
-**Solana:**
-
-```json
-{ "chainType": "svm", "serializedTransaction": "<base64>" }
-```
-
-Base64-decode, sign, submit.
-
-- The recipient must sign. This is not an anyone-can-submit dest retry.
-- If `deadline` is set, that field is for Arbitrum dest retry, not dest claim.
-
 ## Tracking Refund Progress
 
 For automatic refunds, keep polling `/status`:
@@ -148,7 +120,7 @@ For dest retries 0x submits, keep polling `/status`:
 
 1. `bridge_failed` + `manual_action_required`, `manualTransaction` null - dest retry in progress. Dest-retry hashes can appear in `failure.transactions` and top-level `transactions`. They may still be unmined. Do not treat a dest-chain hash as fill.
 2. `bridge_filled` - dest landed. The `failure` object is gone
-3. Still `manual_action_required` after a while - dest did not land. Contact 0x with the `zid`. Only Arbitrum Bridge can move to `failed` after `deadline`.
+3. Still `manual_action_required` after a while - dest did not land. Contact 0x support with the `zid` from `/status`. Only Arbitrum Bridge can move to `failed` after `deadline`.
 
 ## Recovery Behavior by Bridge
 
@@ -173,7 +145,7 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | Stargate V2 | 0x dest retry | Destination | Bridge step's `buyToken` |
 | Superchain | 0x dest retry | Destination | Bridge step's `buyToken` |
 
-For bridges marked "Not tracked", the 0x status service does not track the recovery process. The bridge provider may still offer recovery through their own tools. Contact 0x support with the `zid` for assistance.
+For bridges marked "Not tracked", the 0x status service does not track the recovery process. The bridge provider may still offer recovery through their own tools. Contact 0x support with the `zid` from `/status` for assistance.
 
 ## Example: Automatic Refund (Across)
 
@@ -188,7 +160,7 @@ For bridges marked "Not tracked", the 0x status service does not track the recov
 
 ## Example: Dest Retry in Progress (Stargate)
 
-A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destination. 0x submits dest. `manualTransaction` is omitted. Dest-retry hashes can appear in `transactions` while status is still `bridge_failed`. Keep polling until `bridge_filled`.
+A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destination. 0x submits dest. `manualTransaction` is null. Dest-retry hashes can appear in `transactions` while status is still `bridge_failed`. Keep polling until `bridge_filled`.
 
 ```json
 {
@@ -209,20 +181,6 @@ A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destina
   "failure": {
     "reason": "out_of_gas", "status": "manual_action_required",
     "recovery": { "chainId": 42161, "deadline": 1713000000, "manualTransaction": null }
-  }
-}
-```
-
-## Example: Dest Claim
-
-On a destination-fee route, the tokens reached the 0x contract but the final transfer to the recipient failed. The recipient signs `manualTransaction`. 0x cannot submit it.
-
-```json
-{
-  "failure": {
-    "reason": "internal", "status": "manual_action_required",
-    "recovery": { "chainId": 8453, "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "amount": "2500000000",
-      "manualTransaction": { "chainType": "evm", "to": "0x...", "data": "0x...", "value": "0", "gas": "200000", "gasPrice": "30000000000" } }
   }
 }
 ```
