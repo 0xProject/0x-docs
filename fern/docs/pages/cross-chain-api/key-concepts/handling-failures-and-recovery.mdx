@@ -78,8 +78,8 @@ Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `chainId` | number | Chain where recovery occurs. Destination retries use the destination chain. Refunds use the origin chain, except for Mayan MCTP and FastMCTP refunds, which use the destination chain. |
-| `token` | string | Token recovered or delivered. A destination retry delivers the bridge step's `buyToken`. An origin refund returns the bridge step's `sellToken`. Mayan MCTP and FastMCTP destination refunds return USDC. The token may differ from the quote's `sellToken`. |
+| `chainId` | number | Chain where recovery occurs. Destination retries use the destination chain. Refunds usually use the origin chain, but Mayan MCTP and FastMCTP refunds can use the origin or destination chain. |
+| `token` | string | Token recovered or delivered. A destination retry delivers the bridge step's `buyToken`. A refund returns the bridge step's `sellToken` on the origin chain or `buyToken` on the destination chain. The token may differ from the quote's `sellToken`. |
 | `amount` | string | Expected recovery amount (bigint). |
 | `estimatedTimeSeconds` | number or null | Seconds until automatic refund. Present when `refund_pending`. |
 | `deadline` | number or null | Unix timestamp after which an Arbitrum Bridge recovery can change to `failed`. Only Arbitrum Bridge uses this field. |
@@ -136,7 +136,7 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | HyperCore Bridge | Not tracked | - | - |
 | Linea Bridge | Not tracked | - | - |
 | Mayan Swift | Automatic origin refund | Origin | Bridge step's `sellToken` |
-| Mayan MCTP / FastMCTP | Automatic dest refund | Destination | USDC |
+| Mayan MCTP / FastMCTP | Automatic refund | Origin or destination | Bridge step's `sellToken` on origin or `buyToken` on destination |
 | NEAR Intents | Automatic origin refund | Origin | Bridge step's `sellToken` |
 | OFT (LayerZero) | 0x dest retry | Destination | Bridge step's `buyToken` |
 | PAXG | 0x dest retry | Destination | Bridge step's `buyToken` |
