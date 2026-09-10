@@ -236,7 +236,6 @@ console.log(`✅ Swap complete: https://solscan.io/tx/${signature}`);
 - The transaction must be signed by the **taker** (payer of the swap)
 - You’ll need a **funded wallet** that can cover gas (SOL)
 - If you add **extra instructions** (compute budget, unwrap/cleanup, transfers, etc.), be mindful of the **v0 transaction** 1232-byte limit and use the [Integrator Byte Costs guide](/svm/solana-swap-api/guides/integrator-byte-costs) to reserve bytes appropriately.
-- Solana is activating transaction format v1. Quotes you compile from this guide stay v0. If you call `getTransaction` or `getBlock`, pass `maxSupportedTransactionVersion: 1`. See [Solana transaction v1](/svm/solana-swap-api/guides/solana-transaction-v1).
 
 ## sendTransaction Options
 
@@ -317,6 +316,18 @@ if (confirmation.value.err) {
 ```
 
 For additional best practices on confirming transactions and handling errors, see the [transaction confirmation tips guide](https://solana.com/pl/developers/guides/advanced/confirmation#transaction-confirmation-tips).
+
+## Solana transaction v1
+
+Solana is rolling out [transaction format v1](https://solana.com/upgrades/larger-transaction-sizes). Use that page for activation timing, library versions, and RPC behavior.
+
+This guide still builds a v0 transaction. Stay under the 1232-byte v0 limit.
+
+The Cross-Chain API prefers v0 for compatibility. It may return v1 when a bridge provider sends a v1 transaction, or when the instructions cannot fit in v0.
+
+If you call `getTransaction`, pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. You do not need `getBlock` for the 0x Swap or Cross-Chain flow.
+
+Decode Cross-Chain `serializedTransaction` from base64. To sign and send v1, use `@solana/kit` 8+ or `@solana/web3.js` 3.x. `@solana/web3.js` 1.x cannot send v1.
 
 ## Important Integration Notes
 
