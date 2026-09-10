@@ -153,8 +153,6 @@ const confirmation = await connection.confirmTransaction(
 );
 ```
 
-For Solana transaction v1, see the [Get Started](/svm/solana-swap-api/guides/get-started-with-solana-swap-api#solana-transaction-v1) notes.
-
 ### 3. Monitor the cross chain execution
 
 The last step is to monitor the execution of the cross chain transaction, including the fill on the destination chain. For that, we will use the `/status` endpoint.
@@ -199,6 +197,16 @@ In your application, you might need to monitor the status repeatedly, as bridgin
 }
 ```
 </Accordion>
+
+## Solana transaction v1
+
+Solana is rolling out [transaction format v1](https://solana.com/upgrades/larger-transaction-sizes). Use that page for activation timing, library versions, and RPC behavior.
+
+The Cross-Chain API prefers v0 for compatibility. It may return v1 when a bridge provider sends a v1 transaction, or when the instructions cannot fit in v0.
+
+Keep decoding `serializedTransaction` from base64. To sign and send v1, use `@solana/kit` 8+ or `@solana/web3.js` 3.x. `@solana/web3.js` 1.x cannot send v1.
+
+If you call `getTransaction`, pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. You do not need `getBlock` for this API. Tracking the swap with `/status` does not require that RPC call.
 
 ## Extra - using alternative gas payer
 

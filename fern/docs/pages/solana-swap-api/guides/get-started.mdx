@@ -317,18 +317,6 @@ if (confirmation.value.err) {
 
 For additional best practices on confirming transactions and handling errors, see the [transaction confirmation tips guide](https://solana.com/pl/developers/guides/advanced/confirmation#transaction-confirmation-tips).
 
-## Solana transaction v1
-
-Solana is rolling out [transaction format v1](https://solana.com/upgrades/larger-transaction-sizes). Use that page for activation timing, library versions, and RPC behavior.
-
-This guide still builds a v0 transaction. Stay under the 1232-byte v0 limit.
-
-The Cross-Chain API prefers v0 for compatibility. It may return v1 when a bridge provider sends a v1 transaction, or when the instructions cannot fit in v0.
-
-If you call `getTransaction`, pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. You do not need `getBlock` for the 0x Swap or Cross-Chain flow.
-
-Decode Cross-Chain `serializedTransaction` from base64. To sign and send v1, use `@solana/kit` 8+ or `@solana/web3.js` 3.x. `@solana/web3.js` 1.x cannot send v1.
-
 ## Important Integration Notes
 
 Coming from another swap provider? Make sure to review the [Important Integration Notes](/svm/solana-swap-api/guides/important-integration-notes)
