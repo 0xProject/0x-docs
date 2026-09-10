@@ -3,7 +3,7 @@ title: "Tracking Transaction Status"
 description: "Understand the status lifecycle of a cross-chain transaction returned by /status."
 ---
 
-When monitoring a transaction's execution via `/status`, you may encounter various statuses that indicate the current stage of the transaction lifecycle.
+Poll `/status` to track a cross-chain transaction.
 
 ## Transaction Lifecycle
 
@@ -15,7 +15,7 @@ Statuses can be skipped. A single poll may jump from `origin_tx_pending` directl
 
 ## Top-level Status
 
-Users may refer to the top-level status to locate the funds transferred upon execution. The list of status enums below is in approximately chronological order.
+The top-level status shows where the funds are. Statuses appear below in approximate order.
 
 | Status | Description | Is Terminal? |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ Users may refer to the top-level status to locate the funds transferred upon exe
 | `origin_tx_reverted` | The origin transaction is reverted. The transaction has reached the end of the lifecycle, and the funds still remain in the `originAddress`. | ✅ |
 | `bridge_pending` | The bridge is in flight. The quoted bridge provider has received the funds from the `originAddress` and is in process of executing the trade. | ❌ |
 | `bridge_filled` | The bridge has been fulfilled. The funds have landed in the `destinationAddress`. | ✅ |
-| `bridge_failed` | The bridge did not complete. Keep polling while `failure.status` is `refund_pending`, or `manual_action_required` with `manualTransaction` omitted. A dest retry that lands becomes `bridge_filled`. If `manualTransaction` is present, the recipient signs it. See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery). | ❌ |
+| `bridge_failed` | The bridge did not complete, but recovery may still be in progress. Check `failure.status` before you stop polling. See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery). | ❌ |
 | `unknown` | The transaction status is unknown. Please reach out to 0x, as it is likely that there is an internal error. | ❌ |
 
 ## How Confirmation Works
@@ -51,6 +51,8 @@ For refunds, `recovery.settledAmount` similarly shows the actual refunded amount
 
 ## Failure Context
 
-When `status` is `bridge_failed`, the response includes a `failure` object with the failure reason and recovery status. Dest retries 0x submits omit `manualTransaction`. Dest-retry hashes can appear in `transactions` and `failure.transactions` before fill. Filled means `status` is `bridge_filled`. If `manualTransaction` is present, the recipient must sign it. That is a dest claim, not a dest retry. `/status` does not follow that tx.
+When `status` is `bridge_failed`, the `failure` object explains what happened and how recovery works.
 
-See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery) for the complete guide.
+Keep polling while an automatic refund or 0x dest retry is in progress. Dest-retry hashes can appear in `transactions` before the funds arrive. Only `bridge_filled` confirms delivery.
+
+If `manualTransaction` is present, the recipient must sign it. `/status` does not track that transaction. See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery) for details.
