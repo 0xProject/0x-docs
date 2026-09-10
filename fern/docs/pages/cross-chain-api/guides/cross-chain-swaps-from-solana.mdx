@@ -198,6 +198,16 @@ In your application, you might need to monitor the status repeatedly, as bridgin
 ```
 </Accordion>
 
+## Solana transaction v1
+
+Solana is rolling out [transaction format v1](https://solana.com/upgrades/larger-transaction-sizes).
+
+The Cross-Chain API will keep returning v0 whenever possible, so existing integrations continue to work. In some cases, the returned transaction may use v1. This can happen when a bridge provider gives us a v1 transaction or when the transaction is too large for v0.
+
+`serializedTransaction` remains base64 encoded for both versions. Make sure your client can deserialize, sign, and send v1 before submitting the transaction.
+
+If your app calls `getTransaction` after submission, pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. If you track the swap through the 0x `/status` endpoint, you do not need to make this RPC call yourself.
+
 ## Extra - using alternative gas payer
 
 One thing that is specific to cross chain swaps originating from Solana is the ability to specify an alternative wallet as a gas payer. When requesting a `/quote`, you need to pass an extra `gasPayer` parameter, equal to base58-encoded pubkey of the gas payer. Then, when processing the response, you need to additionally sign the transaction with the gas payer wallet.
