@@ -13,10 +13,10 @@ The recovery path depends on where the transfer fails.
 
 **Origin refund.** If the bridge fails, the bridge provider automatically returns the tokens on the origin chain. The status changes from `refund_pending` to `refund_succeeded` when the refund is complete.
 
-**Dest retry.** If the bridge provider's call on the destination chain fails, `/status` returns `manualTransaction: null` and 0x retries that call. A successful retry changes the status to `bridge_filled`. If the status does not change, contact 0x support with the `zid` from `/status`.
+**Dest retry.** If the bridge provider's call on the destination chain fails, `/status` returns `manualTransaction: null` and 0x retries that call. A successful retry changes the status to `bridge_filled`.
 
 <Note>
-**CCIP is the exception.** 0x does not submit a dest retry for CCIP. Contact 0x support with the `zid` from `/status`.
+**CCIP is the exception.** 0x does not yet submit dest retries for CCIP.
 </Note>
 
 <Warning>
@@ -70,7 +70,7 @@ Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending
 | --- | --- |
 | `refund_pending` | An automatic refund has been initiated by the bridge provider. Keep polling. |
 | `refund_succeeded` | The refund has been issued. The user receives the funds in `originAddress` or `destinationAddress`. Check `failure.recovery` for chain, token, and `settledAmount`. |
-| `manual_action_required` | Dest is incomplete. 0x submits the retry and `manualTransaction` is null. Keep polling. For CCIP, contact 0x support instead. |
+| `manual_action_required` | Dest is incomplete. 0x submits the retry and `manualTransaction` is null. Keep polling. 0x does not yet submit CCIP retries. |
 | `no_actions_required` | The bridge failed before transferring tokens from origin. Funds never left. No further action. |
 | `failed` | Terminal. The user cannot recover from here. Contact 0x support with the `zid` from `/status`. |
 
@@ -120,7 +120,7 @@ For dest retries 0x submits, keep polling `/status`:
 
 1. `bridge_failed` + `manual_action_required`, `manualTransaction` null - dest retry in progress. Dest-retry hashes can appear in `failure.transactions` and top-level `transactions`. They may still be unmined. Do not treat a dest-chain hash as fill.
 2. `bridge_filled` - dest landed. The `failure` object is gone
-3. Still `manual_action_required` after a while - dest did not land. Contact 0x support with the `zid` from `/status`. Only Arbitrum Bridge can move to `failed` after `deadline`.
+3. Still `manual_action_required` after a while - dest did not land. Only Arbitrum Bridge can move to `failed` after `deadline`.
 
 ## Recovery Behavior by Bridge
 
@@ -131,7 +131,7 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | Across V4 | Automatic origin refund | Origin | Bridge step's `sellToken` |
 | Arbitrum Bridge | 0x dest retry (has deadline) | Destination | Bridge step's `buyToken` |
 | Circle Forwarder | 0x dest retry | Destination | Bridge step's `buyToken` |
-| CCIP | Dest retry (contact 0x) | Destination | Bridge step's `buyToken` |
+| CCIP | Dest retry not submitted by 0x | Destination | Bridge step's `buyToken` |
 | Gas.zip | Automatic origin refund | Origin | Bridge step's `sellToken` |
 | HyperCore Bridge | Not tracked | - | - |
 | Linea Bridge | Not tracked | - | - |
@@ -145,7 +145,7 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | Stargate V2 | 0x dest retry | Destination | Bridge step's `buyToken` |
 | Superchain | 0x dest retry | Destination | Bridge step's `buyToken` |
 
-For bridges marked "Not tracked", the 0x status service does not track the recovery process. The bridge provider may still offer recovery through their own tools. Contact 0x support with the `zid` from `/status` for assistance.
+For bridges marked "Not tracked", the 0x status service does not track the recovery process. The bridge provider may still offer recovery through their own tools.
 
 ## Example: Automatic Refund (Across)
 
@@ -160,7 +160,7 @@ For bridges marked "Not tracked", the 0x status service does not track the recov
 
 ## Example: Dest Retry in Progress (Stargate)
 
-A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destination. 0x submits dest. `manualTransaction` is null. Dest-retry hashes can appear in `transactions` while status is still `bridge_failed`. Keep polling until `bridge_filled`.
+A Stargate transfer to Arbitrum (chain 42161) ran out of gas while executing on the destination chain. 0x submits a recovery transaction to retry the destination call, so `manualTransaction` is null. Recovery transaction hashes can appear in `transactions` while status remains `bridge_failed`. Keep polling until the status changes to `bridge_filled`.
 
 ```json
 {
