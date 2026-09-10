@@ -21,7 +21,7 @@ Three different recoveries can follow a failed bridge. Do not treat them as the 
 
 When you poll `GET /cross-chain/status` and the response has `status: "bridge_failed"`, it includes a `failure` object with everything needed to understand what went wrong and what to do next.
 
-Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending` or `manual_action_required`. A dest retry that lands flips the top-level status to `bridge_filled` and drops the `failure` object.
+Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending`, or `manual_action_required` with `manualTransaction` omitted. A dest retry that lands flips the top-level status to `bridge_filled` and drops the `failure` object.
 
 ## Failure Object Structure
 
@@ -138,7 +138,7 @@ For automatic refunds, keep polling `/status`:
 
 For dest retries 0x submits, keep polling `/status`:
 
-1. `bridge_failed` + `manual_action_required`, `manualTransaction` null - dest retry in progress
+1. `bridge_failed` + `manual_action_required`, `manualTransaction` null - dest retry in progress. Dest-retry hashes can appear in `failure.transactions` and top-level `transactions`. They may still be unmined. Do not treat a dest-chain hash as fill.
 2. `bridge_filled` - dest landed. The `failure` object is gone
 3. Still `manual_action_required` after a while - dest did not land. Contact 0x with the `zid`. Only Arbitrum Bridge can move to `failed` after `deadline`.
 
@@ -186,7 +186,7 @@ For CCIP, `/status` does not return a dest retry transaction and 0x does not sub
 
 ## Example: Dest Retry in Progress (Stargate)
 
-A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destination. 0x submits dest. `manualTransaction` is omitted. Keep polling.
+A Stargate bridge delivering to Arbitrum (chain 42161) ran out of gas on destination. 0x submits dest. `manualTransaction` is omitted. Dest-retry hashes can appear in `transactions` while status is still `bridge_failed`. Keep polling until `bridge_filled`.
 
 ```json
 {
