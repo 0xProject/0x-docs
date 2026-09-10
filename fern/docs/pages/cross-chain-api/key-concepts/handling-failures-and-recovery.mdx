@@ -13,9 +13,17 @@ Three different recoveries can follow a failed bridge.
 
 **Origin refund.** If the bridge fails, the bridge provider automatically returns the tokens on the origin chain. The status changes from `refund_pending` to `refund_succeeded` when the refund is complete.
 
-**Dest retry.** If the bridge succeeds but delivery on the destination chain fails, 0x retries the delivery using the bridge step's `buyToken`. For bridges that support 0x dest retries, keep polling for updates. A successful retry changes the status to `bridge_filled`. Otherwise, the status usually remains `manual_action_required`. Arbitrum Bridge is the exception: its status can change to `failed` after the deadline. If the status does not change, contact 0x support with your `zid`.
+**Dest retry.** If the bridge reaches the destination chain but token delivery fails, `/status` omits `manualTransaction` and 0x retries the delivery. Keep polling for updates. A successful retry changes the status to `bridge_filled`. If the status does not change, contact 0x support with your `zid`.
 
-**Dest claim.** If the bridge fills but a later swap on the destination chain fails, the tokens remain in a destination contract. The `/status` response includes a `manualTransaction`, which the recipient must sign on `recovery.chainId`. 0x cannot submit this transaction.
+**Dest claim.** If token delivery succeeds but a later swap on the destination chain fails, the tokens remain in a destination contract. `/status` includes a `manualTransaction`, which the recipient must sign on `recovery.chainId`. 0x cannot submit this transaction.
+
+<Note>
+**CCIP is the exception.** 0x does not submit a dest retry for CCIP. Contact 0x support with your `zid`.
+</Note>
+
+<Warning>
+**Arbitrum Bridge** is the only bridge with a recovery **deadline**. Display it. 0x attempts dest a few times. It does not keep retrying until the deadline. After `deadline`, status can become `failed` and funds may be permanently lost.
+</Warning>
 
 ## How Failures Surface
 
@@ -84,7 +92,7 @@ Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending
 
 1. Poll `/status`.
 2. If `failure.status` is `refund_pending` or `refund_succeeded`, treat it as a refund. Do not ask the user to sign dest.
-3. If `failure.status` is `manual_action_required` and `manualTransaction` is `null`, keep polling. For dest-retry bridges in the table, 0x submits dest. Do not prompt the user to sign. If it stays here, contact 0x with the `zid`. Only Arbitrum Bridge can move to `failed`.
+3. If `failure.status` is `manual_action_required` and `manualTransaction` is `null`, keep polling. 0x submits the dest retry unless the bridge is CCIP. Do not prompt the user to sign.
 4. If `manualTransaction` is present, the recipient signs it on `recovery.chainId`. This is a dest claim. 0x cannot submit it.
 5. If `failure.status` is `failed`, contact 0x with the `zid`.
 
@@ -165,13 +173,7 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | Stargate V2 | 0x dest retry | Destination | Bridge step's `buyToken` |
 | Superchain | 0x dest retry | Destination | Bridge step's `buyToken` |
 
-<Warning>
-**Arbitrum Bridge** is the only bridge with a recovery **deadline**. Display it. 0x attempts dest a few times. It does not keep retrying until the deadline. After `deadline`, status can become `failed` and funds may be permanently lost.
-</Warning>
-
 For bridges marked "Not tracked", the 0x status service does not track the recovery process. The bridge provider may still offer recovery through their own tools. Contact 0x support with the `zid` for assistance.
-
-For CCIP, `/status` does not return a dest retry transaction and 0x does not submit dest. Contact 0x with the `zid`.
 
 ## Example: Automatic Refund (Across)
 
