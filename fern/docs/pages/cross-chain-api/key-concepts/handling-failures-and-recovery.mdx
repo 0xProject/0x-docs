@@ -100,7 +100,7 @@ Submit via `eth_sendTransaction` on chain `recovery.chainId`.
 { "chainType": "svm", "serializedTransaction": "<base64>" }
 ```
 
-Base64-decode, sign, submit.
+Base64-decode, sign, submit. Recovery transactions follow the same v0/v1 rules as quotes. See [Solana transaction v1](/svm/solana-swap-api/guides/solana-transaction-v1).
 
 - Can be submitted by anyone, not just the original sender
 - If `deadline` is set, submit before it expires as otherwise funds might be lost

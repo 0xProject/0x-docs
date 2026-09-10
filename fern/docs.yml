@@ -314,6 +314,9 @@ navigation:
               - page: Important Integration Notes
                 slug: important-integration-notes
                 path: docs/pages/solana-swap-api/guides/important-integration-notes.mdx
+              - page: Solana transaction v1
+                slug: solana-transaction-v1
+                path: docs/pages/solana-swap-api/guides/solana-transaction-v1.mdx
               - page: Integrator Byte Costs
                 slug: integrator-byte-costs
                 path: docs/pages/solana-swap-api/guides/integrator-byte-costs.mdx
@@ -397,6 +400,9 @@ navigation:
               - page: Understanding Bridging Costs
                 slug: understanding-bridging-costs
                 path: docs/pages/cross-chain-api/key-concepts/understanding-bridging-costs.mdx
+              - page: Solana transaction v1
+                slug: solana-transaction-v1
+                path: docs/pages/solana-swap-api/guides/solana-transaction-v1.mdx
           - page: Troubleshooting
             slug: troubleshooting
             path: docs/pages/cross-chain-api/reference/troubleshooting.mdx

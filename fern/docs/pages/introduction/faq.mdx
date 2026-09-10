@@ -618,6 +618,12 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
     The relevant field is [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient) — it accepts either a wallet address (for native SOL output) or a valid token account address (for token outputs).
 
   </Accordion>
+
+  <Accordion title="Does 0x support Solana transaction v1?">
+    Swap instructions and Cross-Chain quotes are still v0. After Solana activates v1, any `getTransaction` or `getBlock` call you make must pass `maxSupportedTransactionVersion: 1`. `@solana/web3.js` 1.x can read v1 from 1.99.0 but cannot sign or send it.
+
+    See [Solana transaction v1](/svm/solana-swap-api/guides/solana-transaction-v1).
+  </Accordion>
 </AccordionGroup>
 
 ---

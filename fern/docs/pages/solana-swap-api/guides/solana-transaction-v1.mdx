@@ -1,0 +1,68 @@
+---
+title: "Solana transaction v1"
+description: "What 0x Solana Swap and Cross-Chain integrators need to change for Solana transaction format v1."
+---
+
+Solana activates transaction format v1 on mainnet at the start of epoch 1035, expected September 15, 2026 around 01:20 UTC. v1 raises the size limit from 1232 bytes to 4096 bytes. Legacy and v0 transactions keep working.
+
+This page is the 0x-specific checklist. Solana's [larger transaction sizes](https://solana.com/upgrades/larger-transaction-sizes) page has the full migration guide.
+
+## What 0x returns
+
+The Solana Swap API still returns instruction lists. You compile those into a v0 `VersionedTransaction`, including any address lookup tables. The 1232-byte v0 cap still applies. See [Integrator byte costs](/svm/solana-swap-api/guides/integrator-byte-costs).
+
+The Cross-Chain API still returns a base64 `serializedTransaction`. Those quotes are v0 today. Keep decoding them from base64, as the [Solana cross-chain guide](/cross-chain/cross-chain-api/guides/cross-chain-swaps-from-solana) already does.
+
+Use a library that can deserialize, sign, and send v1. A quote that does not fit v0 may come back as v1.
+
+## If you read transactions
+
+Once v1 lands on chain, RPC methods that return a transaction fail unless you opt in. That is true even if the 0x quote you sent was v0. Other transactions in the same slot can be v1.
+
+Pass `maxSupportedTransactionVersion: 1` on `getTransaction` and `getBlock`. Use the JSON integer `1`, not the string `"1"`. Passing `0` fails on a v1 transaction the same way omitting the parameter does.
+
+```js
+const tx = await connection.getTransaction(signature, {
+  commitment: "confirmed",
+  maxSupportedTransactionVersion: 1,
+});
+```
+
+Without the opt-in:
+
+| Method | What happens on a v1 transaction |
+| --- | --- |
+| `getTransaction` | Fails with error `-32015` |
+| `getBlock` | The whole block fails. There is no partial result. |
+| `blockSubscribe` | Emits `block: null` and stops advancing. |
+
+`getSignaturesForAddress` does not inspect transaction bodies, so v1 signatures still list.
+
+If you track Cross-Chain swaps with `/status`, you do not need to call `getTransaction` yourself for that flow.
+
+## Compute budget and priority fees
+
+v1 stores compute unit limit, loaded accounts data size, heap size, and priority fee in a `transactionConfig` object on the message. That object is absent for legacy and v0.
+
+If you scan instructions for the ComputeBudget program, every v1 transaction looks like it has zero compute budget and zero priority fee. Read `transactionConfig` instead.
+
+v0 states priority fee as micro-lamports per compute unit. v1 states a total in lamports. Convert before you compare them.
+
+## Sending and decoding
+
+Keep using base64 for Cross-Chain `serializedTransaction`, and for `sendTransaction` or `simulateTransaction` when the transaction is over 1232 bytes. base58 encoding is still capped at the old size.
+
+`@solana/web3.js` 1.x can read v1 from 1.99.0. It cannot build, sign, or send v1. Use one of these if you need to submit v1:
+
+| Library | Minimum version | v1 support |
+| --- | --- | --- |
+| `@solana/kit` | 8.0.0 | Read and send |
+| `@solana/web3.js` 3.x | 3.0.0-rc.3 | Read and send |
+| `@solana/web3.js` 1.x | 1.99.0 | Read only |
+| `solana-*` crates | 4.2.x | Read and send |
+
+The [Get Started](/svm/solana-swap-api/guides/get-started-with-solana-swap-api) guide still uses `@solana/web3.js` 1.x against v0 quotes. That path keeps working for v0. It cannot submit a v1 quote.
+
+## Address lookup tables
+
+v1 does not use address lookup tables. Every account is inline, up to 64. If you compile v1 yourself, do not pass ALTs.

@@ -53,7 +53,7 @@ We currently return **a single flat array of instructions.** Here's what’s cur
 
 ## Byte Budgeting
 
-Solana v0 transactions are limited to **1232 bytes**.
+Solana v0 transactions are limited to **1232 bytes**. v1 raises that cap to 4096 bytes. 0x swap instructions are still compiled as v0, so stay under 1232 unless you are compiling v1 yourself. See [Solana transaction v1](/svm/solana-swap-api/guides/solana-transaction-v1).
 
 Each 0x swap transaction reserves a fixed portion of that space. When you add instructions around the swap (compute budget, transfers, close account, referral logic, etc.), you must ensure your serialized transaction remains under the limit.
 

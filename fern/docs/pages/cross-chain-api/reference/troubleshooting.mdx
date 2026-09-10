@@ -58,6 +58,7 @@ All API error responses follow this structure:
 | Signature verification errors | Wrong signer, unsigned transaction, or corrupted transaction data | Verify the transaction is signed by the correct keypair (or keypairs) |
 | RPC timeout or errors during transaction submission | Network issues or overloaded RPC node | Try switching to a different RPC endpoint or add retries |
 | Unexpected API errors or bad responses | Incorrect API key or malformed request payload | Double-check API keys, endpoint URLs, and request parameters |
+| `getTransaction` returns `-32015`, or `getBlock` fails for the whole slot | A v1 transaction is on chain and the RPC call did not opt in | Pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. See [Solana transaction v1](/svm/solana-swap-api/guides/solana-transaction-v1) |
 
 ## Debugging Tips
 

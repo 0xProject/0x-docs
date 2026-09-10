@@ -19,7 +19,9 @@ description: A step-by-step guide to estimating byte costs for custom instructio
 
 How to calculate the byte cost of instructions you add around a 0x swap.
 
-V0 transaction limit: **1232 bytes**. Each 0x swap has a defined structure, which reserves a fixed fraction of bytes.
+V0 transaction limit: **1232 bytes**. v1 raises the cap to 4096 bytes, but 0x swap instructions are still compiled as v0. Stay under 1232 unless you compile v1 yourself. See [Solana transaction v1](/svm/solana-swap-api/guides/solana-transaction-v1).
+
+Each 0x swap has a defined structure, which reserves a fixed fraction of bytes.
 
 On top of this, adding your own instructions will require some bytes. Follow these steps to calculate byte costs from your own instructions
 
