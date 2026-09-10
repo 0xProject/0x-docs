@@ -9,13 +9,13 @@ This page explains what happens when a bridge fails, how recovery works, and wha
 
 ## Origin refund vs dest retry vs dest claim
 
-Three different recoveries can follow a failed bridge. Do not treat them as the same thing.
+Three different recoveries can follow a failed bridge.
 
-**Origin refund.** The bridge returns tokens on origin (or dest USDC for Mayan MCTP / FastMCTP). Status moves `refund_pending` → `refund_succeeded`. The bridge provider runs this. Keep polling `/status`.
+**Origin refund.** If the bridge fails, the bridge provider automatically returns the tokens on the origin chain. The status changes from `refund_pending` to `refund_succeeded` when the refund is complete.
 
-**Dest retry.** Origin already locked, burned, or posted the message. Dest execution failed. A dest retry completes dest delivery in the bridge step's `buyToken`. It does not mint an origin refund. 0x submits dest retries for the bridges marked "0x dest retry" below. Keep polling. A dest retry that lands becomes `bridge_filled`. If dest never lands, status stays `manual_action_required` except on Arbitrum Bridge, which can become `failed` after `deadline`. Contact 0x with the `zid` if it stays stuck.
+**Dest retry.** If the bridge succeeds but delivery on the destination chain fails, 0x retries the delivery using the bridge step's `buyToken`. For bridges that support 0x dest retries, keep polling for updates. A successful retry changes the status to `bridge_filled`. Otherwise, the status usually remains `manual_action_required`. Arbitrum Bridge is the exception: its status can change to `failed` after the deadline. If the status does not change, contact 0x support with your `zid`.
 
-**Dest claim.** Dest already filled. A dest swap after fill failed. Tokens sit in a dest contract the recipient owns. `/status` returns `manualTransaction`. The recipient must sign it on `recovery.chainId`. 0x cannot submit that tx.
+**Dest claim.** If the bridge fills but a later swap on the destination chain fails, the tokens remain in a destination contract. The `/status` response includes a `manualTransaction`, which the recipient must sign on `recovery.chainId`. 0x cannot submit this transaction.
 
 ## How Failures Surface
 
