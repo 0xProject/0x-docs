@@ -53,6 +53,6 @@ For refunds, `recovery.settledAmount` similarly shows the actual refunded amount
 
 When `status` is `bridge_failed`, the `failure` object explains what happened and how recovery works.
 
-Keep polling while an automatic refund or 0x dest retry is in progress. Dest-retry hashes can appear in `transactions` before the funds arrive. Only `bridge_filled` confirms delivery.
+Continue polling while an automatic refund or a destination retry submitted by 0x is in progress. Retry transaction hashes can appear in `transactions` before the funds arrive. Only `bridge_filled` confirms delivery.
 
 See [Handling Failures and Recovery](/cross-chain/cross-chain-api/key-concepts/handling-failures-and-recovery) for details.

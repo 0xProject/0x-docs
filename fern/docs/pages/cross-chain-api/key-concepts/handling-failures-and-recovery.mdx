@@ -27,7 +27,7 @@ The recovery path depends on where the transfer fails.
 
 When you poll `GET /cross-chain/status` and the response has `status: "bridge_failed"`, it includes a `failure` object with everything needed to understand what went wrong and what to do next.
 
-Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending` or `manual_action_required`. A dest retry that lands flips the top-level status to `bridge_filled` and drops the `failure` object.
+Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending` or `manual_action_required`. When a destination retry succeeds, the top-level status changes to `bridge_filled` and the `failure` object is removed.
 
 ## Failure Object Structure
 
@@ -78,19 +78,19 @@ Do not stop polling on `bridge_failed` while `failure.status` is `refund_pending
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `chainId` | number | Chain where recovery occurs. Dest for dest retries. Origin (or dest for Mayan MCTP / FastMCTP) for refunds. |
-| `token` | string | Token recovered or delivered. Dest retries complete dest in the bridge step's `buyToken`. Origin refunds return the bridge step's `sellToken` (USDC for Mayan MCTP / FastMCTP dest refunds). May differ from the quote `sellToken`. |
+| `chainId` | number | Chain where recovery occurs. Destination retries use the destination chain. Refunds use the origin chain, except for Mayan MCTP and FastMCTP refunds, which use the destination chain. |
+| `token` | string | Token recovered or delivered. A destination retry delivers the bridge step's `buyToken`. An origin refund returns the bridge step's `sellToken`. Mayan MCTP and FastMCTP destination refunds return USDC. The token may differ from the quote's `sellToken`. |
 | `amount` | string | Expected recovery amount (bigint). |
 | `estimatedTimeSeconds` | number or null | Seconds until automatic refund. Present when `refund_pending`. |
 | `deadline` | number or null | Unix timestamp after which an Arbitrum Bridge recovery can change to `failed`. Only Arbitrum Bridge uses this field. |
-| `manualTransaction` | object or null | Currently null. 0x submits supported dest retries. |
+| `manualTransaction` | object or null | Currently null. The user does not need to sign or submit a destination retry transaction. |
 | `settledAmount` | string or null | Actual refunded amount. Populated after a refund confirms. May differ from `amount`. |
 
 ## What your integration should do
 
 1. Poll `/status`.
-2. If `failure.status` is `refund_pending` or `refund_succeeded`, treat it as a refund. Do not ask the user to sign dest.
-3. If `failure.status` is `manual_action_required`, keep polling. 0x submits the dest retry unless the bridge is CCIP. Do not prompt the user to sign.
+2. If `failure.status` is `refund_pending` or `refund_succeeded`, treat it as a refund. Do not ask the user to sign a transaction.
+3. If `failure.status` is `manual_action_required`, continue polling. 0x submits the destination retry unless the bridge is CCIP. Do not ask the user to sign a transaction.
 4. If `failure.status` is `failed`, contact 0x support with the `zid` from `/status`.
 
 ## Refund Token and Chain
@@ -105,7 +105,7 @@ The main thing to understand: the refund token is based on the **bridge step's**
 | ETH → wrap → WETH → bridge | ETH | WETH | WETH (not ETH) |
 | ETH → swap → USDC → bridge | ETH | USDC | USDC (not ETH) |
 
-The `recovery.token`, `recovery.chainId`, and `recovery.amount` fields contain the exact details. For dest retries those fields describe dest delivery, not an origin refund.
+The `recovery.token`, `recovery.chainId`, and `recovery.amount` fields contain the exact details. For destination retries, these fields describe delivery on the destination chain, not an origin refund.
 
 ## Tracking Refund Progress
 
@@ -116,11 +116,11 @@ For automatic refunds, keep polling `/status`:
 
 ## Tracking Dest Retry Progress
 
-For dest retries 0x submits, keep polling `/status`:
+For destination retries submitted by 0x, continue polling `/status`:
 
-1. `bridge_failed` + `manual_action_required`, `manualTransaction` null - dest retry in progress. Dest-retry hashes can appear in `failure.transactions` and top-level `transactions`. They may still be unmined. Do not treat a dest-chain hash as fill.
-2. `bridge_filled` - dest landed. The `failure` object is gone
-3. Still `manual_action_required` after a while - dest did not land. Only Arbitrum Bridge can move to `failed` after `deadline`.
+1. When the top-level status is `bridge_failed` and `failure.status` is `manual_action_required`, the destination retry is in progress. `manualTransaction` is null. Retry transaction hashes may appear in `failure.transactions` and the top-level `transactions` array before they are mined. A transaction hash does not mean that recovery is complete.
+2. When the retry succeeds, the top-level status changes to `bridge_filled` and the `failure` object is removed.
+3. If `failure.status` remains `manual_action_required`, the destination retry has not completed. Only Arbitrum Bridge can move to `failed` after `deadline`.
 
 ## Recovery Behavior by Bridge
 
@@ -174,7 +174,7 @@ A Stargate transfer to Arbitrum (chain 42161) ran out of gas while executing on 
 
 ## Example: Arbitrum Bridge Deadline
 
-0x retries the recovery transaction a few times, but does not keep retrying until `deadline`. Do not wait for a user-signed dest retry.
+0x retries the recovery transaction a few times, but does not keep retrying until `deadline`. The user does not need to sign or submit the recovery transaction.
 
 ```json
 {
