@@ -200,13 +200,13 @@ In your application, you might need to monitor the status repeatedly, as bridgin
 
 ## Solana transaction v1
 
-Solana is rolling out [transaction format v1](https://solana.com/upgrades/larger-transaction-sizes). Use that page for activation timing, library versions, and RPC behavior.
+Solana is rolling out [transaction format v1](https://solana.com/upgrades/larger-transaction-sizes). The official guide covers activation timing, supported libraries, and the full migration details.
 
-The Cross-Chain API prefers v0 for compatibility. It may return v1 when a bridge provider sends a v1 transaction, or when the instructions cannot fit in v0.
+The Cross-Chain API will keep returning v0 whenever possible, so existing integrations continue to work. In some cases, the returned transaction may use v1. This can happen when a bridge provider gives us a v1 transaction or when the transaction is too large for v0.
 
-Keep decoding `serializedTransaction` from base64. To sign and send v1, use `@solana/kit` 8+ or `@solana/web3.js` 3.x. `@solana/web3.js` 1.x cannot send v1.
+`serializedTransaction` remains base64 encoded for both versions. Make sure your client can deserialize, sign, and send v1 before submitting the transaction. Use `@solana/kit` 8+ or `@solana/web3.js` 3.x. `@solana/web3.js` 1.x cannot send v1.
 
-If you call `getTransaction`, pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. You do not need `getBlock` for this API. Tracking the swap with `/status` does not require that RPC call.
+If your app calls `getTransaction` after submission, pass `maxSupportedTransactionVersion: 1` as the JSON integer `1`. If you track the swap through the 0x `/status` endpoint, you do not need to make this RPC call yourself.
 
 ## Extra - using alternative gas payer
 
