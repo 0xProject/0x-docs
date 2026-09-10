@@ -48,6 +48,10 @@ tabs:
     display-name: SVM
   cross-chain:
     display-name: Cross-Chain
+  # TODO(pre-launch): remove `hidden: true` when RWA self-serve opt-in ships.
+  rwa:
+    display-name: RWA
+    hidden: true
   api-reference:
     display-name: API Reference
   liquidity:
@@ -402,6 +406,47 @@ navigation:
             path: docs/pages/cross-chain-api/reference/troubleshooting.mdx
           - link: Learn More
             href: https://0x.org/products/cross-chain
+            target: _blank
+
+      - section: Need Help?
+        slug: need-help
+        icon: fa-regular fa-circle-question
+        contents:
+          - page: FAQ
+            slug: faq
+            path: docs/pages/introduction/faq.mdx
+          - page: API Issues & Error Codes
+            slug: api-issues
+            path: docs/pages/introduction/api-issues.mdx
+          - page: Contact Support
+            slug: contact-support
+            path: docs/pages/need-help/contact-support.mdx
+          - link: Contact Sales
+            href: https://0x.org/contact
+            target: _blank
+
+  - tab: rwa
+    layout:
+      - section: RWA
+        slug: rwa
+        icon: fa-regular fa-building-columns
+        contents:
+          - page: Introduction
+            slug: introduction
+            path: docs/pages/rwa/introduction.mdx
+          - section: Guides
+            slug: guides
+            contents:
+              - page: Enable RWA Trading
+                slug: enable-rwa-trading
+                path: docs/pages/rwa/guides/enable-rwa-trading.mdx
+              - page: RWA Quickstart
+                slug: quickstart
+                path: docs/pages/rwa/guides/quickstart.mdx
+          - link: Supported Chains and Providers
+            href: /docs/introduction/supported-chains
+          - link: Learn More
+            href: https://0x.org/solution/rwas
             target: _blank
 
       - section: Need Help?

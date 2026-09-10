@@ -1,0 +1,109 @@
+---
+title: "Introduction to RWAs"
+description: "Trade tokenized real-world assets — equities, commodities, and treasuries — through the same 0x APIs you already use."
+---
+
+Real-world assets (RWAs) are tokenized representations of off-chain instruments: equities, ETFs, commodities, and treasuries. 0x provides neutral on-chain infrastructure for trading them, so you can offer tokenized stocks and gold alongside crypto-native assets without standing up a second execution stack.
+
+RWAs are available through the APIs you already use. If you have a Swap API integration, adding RWAs is a configuration change, not a rewrite.
+
+<Note>
+  RWA trading is **blocked by default**. Your team must opt in once before any
+  RWA quote will be returned. See [Enable RWA
+  Trading](/rwa/guides/enable-rwa-trading).
+</Note>
+
+## Why RWAs are different
+
+Tokenized real-world assets trade by different rules than crypto-native tokens, and that shapes how 0x handles them:
+
+<Steps>
+  <Step>
+    **They are regulated instruments.** Access is gated on your team explicitly
+    opting in and accepting the RWA trading agreement, rather than being open by
+    default like ERC-20 trading.
+  </Step>
+  <Step>
+    **Liquidity is thinner and more concentrated.** RWA markets do not have the
+    deep AMM pools that major crypto pairs do, so routing leans more heavily on
+    professional market makers via [0x RFQ](/evm/0x-swap-api/additional-topics/about-the-rfq-system).
+  </Step>
+  <Step>
+    **Availability varies by jurisdiction.** Which assets you can offer, and to
+    whom, depends on where you and your users are.
+    {/* TODO(pre-launch): document the jurisdiction/geoblocking controls once legal confirms what integrators configure and where. */}
+  </Step>
+</Steps>
+
+## What you can trade
+
+<CardGroup>
+
+<Card title="Tokenized equities and ETFs" icon="chart-line">
+  On-chain representations of listed stocks and index funds.
+</Card>
+
+<Card title="Commodities" icon="coins">
+  Tokenized gold and other commodity-backed tokens, including cross-chain
+  variants. 0x already supports [PAXG as a cross-chain
+  provider](/docs/introduction/supported-chains).
+</Card>
+
+<Card title="Treasuries and yield-bearing assets" icon="building-columns">
+  On-chain cash-equivalent instruments.
+</Card>
+
+</CardGroup>
+
+{/* TODO(pre-launch): confirm with marketing/legal which issuers and asset names can be listed by name in docs (e.g. xStocks by Backed, PAXG, Tether Gold), then name concrete examples per category above. Marketing lists these publicly at https://0x.org/solution/rwas but docs should only name assets we actually route today. */}
+
+## How 0x handles RWAs
+
+<AccordionGroup>
+
+<Accordion title="New RWA tokens are indexed automatically">
+  0x indexes new RWA tokens as they launch, so newly issued assets become
+  quotable without you maintaining a manual allowlist.
+</Accordion>
+
+<Accordion title="Access is opt-in and controlled by you">
+  RWAs are blocked by default. Your team opts in once, and that opt-in applies
+  to every app and API key on the team.
+</Accordion>
+
+<Accordion title="Thin markets route to professional market makers">
+  For regulated and less liquid markets, 0x routes to professional market makers
+  through RFQ rather than relying on public AMM liquidity alone.
+</Accordion>
+
+<Accordion title="Same multi-chain coverage">
+  RWA trading runs across 0x's supported chains. See [Supported Chains and
+  Providers](/docs/introduction/supported-chains) for the current list.
+  {/* TODO(pre-launch): confirm whether RWA support is limited to a subset of chains. If so, list them explicitly here instead of linking the general chain table. */}
+</Accordion>
+
+</AccordionGroup>
+
+## Get started
+
+<CardGroup>
+
+<Card
+  title="Enable RWA Trading"
+  href="/rwa/guides/enable-rwa-trading"
+  icon="unlock"
+>
+  Opt in from the 0x Dashboard. Required before your first RWA quote.
+</Card>
+
+<Card title="RWA Quickstart" href="/rwa/guides/quickstart" icon="rocket">
+  Price and execute your first RWA trade with Swap API.
+</Card>
+
+</CardGroup>
+
+<Tip>
+  Building the commercial case rather than the integration? The [0x RWA solution
+  page](https://0x.org/solution/rwas) covers coverage, execution quality, and
+  the teams already live.
+</Tip>

@@ -1,0 +1,137 @@
+---
+title: "RWA Quickstart"
+description: "Price and execute your first tokenized real-world asset trade with 0x Swap API."
+---
+
+This guide walks through your first RWA trade end to end. If you have used [Swap API](/evm/0x-swap-api/guides/swap-tokens-with-0x-swap-api) before, the request shape is identical — the only RWA-specific step is the one-time opt-in in step 1.
+
+## What you will need
+
+<Steps>
+  <Step>
+    A 0x API key. See [Create a 0x API
+    Key](/docs/introduction/quickstart/getting-started).
+  </Step>
+  <Step>
+    RWA trading enabled for your team. See [Enable RWA
+    Trading](/rwa/guides/enable-rwa-trading).
+  </Step>
+  <Step>
+    A funded wallet on a supported chain, and a web3 library such as `viem` or
+    `ethers` to sign and submit.
+  </Step>
+</Steps>
+
+## 1. Enable RWA trading
+
+RWAs are blocked by default. Before any of the requests below return a quote, someone on your team must accept the RWA trading agreement in the [0x Dashboard](https://dashboard.0x.org/).
+
+If you skip this step, the API rejects RWA quotes rather than returning a price.
+
+{/* TODO(pre-launch): confirm and document the exact error returned for a non-opted-in team — likely BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE / SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE (see /docs/introduction/api-issues). Show the real error body here so users can recognize it. */}
+
+## 2. Pick an RWA token
+
+RWA tokens are ordinary ERC-20 contracts, so you address them by contract address exactly like any other token.
+
+{/* TODO(pre-launch): replace the placeholder below with a verified RWA token address and chain. Do not ship this page with a placeholder — a wrong address in a copy-pasteable example is worse than no example. Confirm with the team which asset makes the best canonical quickstart example (tokenized gold is likely the most liquid and least jurisdiction-sensitive). */}
+
+```bash
+# Replace with the RWA token you want to trade, and the chain it lives on.
+RWA_TOKEN=0xRWA_TOKEN_ADDRESS
+CHAIN_ID=1
+USDC=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+```
+
+<Tip>
+  0x indexes new RWA tokens as they launch, so an asset does not need to be
+  added to an allowlist before you can quote it.
+</Tip>
+
+## 3. Get an indicative price
+
+Use `/swap/permit2/price` to show a user what a trade would cost. A price is indicative and not executable — it does not reserve liquidity or return transaction data.
+
+This example buys an RWA token with 1,000 USDC:
+
+```bash
+curl --request GET \
+  --url "https://api.0x.org/swap/permit2/price?chainId=$CHAIN_ID&sellToken=$USDC&buyToken=$RWA_TOKEN&sellAmount=1000000000&taker=0xYOUR_TAKER_ADDRESS" \
+  --header "0x-api-key: YOUR_API_KEY" \
+  --header "0x-version: v2"
+```
+
+<Note>
+  `sellAmount` is in the sell token's base units. USDC has 6 decimals, so 1,000
+  USDC is `1000000000`. RWA token decimals vary by issuer — read `decimals` from
+  the token contract rather than assuming 18.
+</Note>
+
+Check `liquidityAvailable` in the response before showing a price. RWA markets are thinner than major crypto pairs, so a pair that quotes at one size may not quote at another.
+
+## 4. Fetch a firm quote
+
+When the user commits, call `/swap/permit2/quote` for an executable quote with transaction data attached:
+
+```bash
+curl --request GET \
+  --url "https://api.0x.org/swap/permit2/quote?chainId=$CHAIN_ID&sellToken=$USDC&buyToken=$RWA_TOKEN&sellAmount=1000000000&taker=0xYOUR_TAKER_ADDRESS" \
+  --header "0x-api-key: YOUR_API_KEY" \
+  --header "0x-version: v2"
+```
+
+The response includes `transaction`, a valid unsigned Ethereum transaction, plus `permit2.eip712` if a Permit2 signature is required.
+
+<Warning>
+  Always pass `taker` on `/quote`. Without it the API skips validation, and for
+  RWAs that validation is what surfaces jurisdiction and eligibility problems
+  before the user signs.
+</Warning>
+
+## 5. Set an allowance and submit
+
+From here the flow is standard Swap API — there is nothing RWA-specific about signing or submission:
+
+<Steps>
+  <Step>
+    Check `issues.allowance` in the quote response. If it is non-null, have the
+    taker approve the returned `spender`. See [How to set your token
+    allowances](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
+  </Step>
+  <Step>
+    If `permit2.eip712` is present, have the taker sign it and append the
+    signature to `transaction.data` as described in [Get Started with Swap
+    API](/evm/0x-swap-api/guides/swap-tokens-with-0x-swap-api).
+  </Step>
+  <Step>Sign and submit `transaction` with your web3 library.</Step>
+</Steps>
+
+## Next steps
+
+<CardGroup>
+
+<Card
+  title="Enable RWA Trading"
+  href="/rwa/guides/enable-rwa-trading"
+  icon="unlock"
+>
+  The one-time dashboard opt-in, in full.
+</Card>
+
+<Card
+  title="About the RFQ System"
+  href="/evm/0x-swap-api/additional-topics/about-the-rfq-system"
+  icon="tower-broadcast"
+>
+  How 0x sources liquidity from professional market makers for thin markets.
+</Card>
+
+<Card
+  title="API Issues & Error Codes"
+  href="/docs/introduction/api-issues"
+  icon="triangle-exclamation"
+>
+  Recognize and resolve the errors these endpoints can return.
+</Card>
+
+</CardGroup>
