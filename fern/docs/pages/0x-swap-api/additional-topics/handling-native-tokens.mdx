@@ -136,16 +136,16 @@ https://api.0x.org/swap/allowance-holder/quote?buyToken=0xEeeeeEeeeEeEeeEeEeEeeE
 
 USDC plays two roles on Arc at once. It is the native gas token, and it is also an ERC-20 token that the chain has built in at a fixed address. There is no wrapped-native token, and Circle does not plan to deploy one, so the ETH/WETH pattern described above does not apply.
 
-### The two identities of USDC
+### The two interfaces of USDC
 
-|                       | Native USDC                                  | ERC-20 USDC                                  |
-| --------------------- | -------------------------------------------- | -------------------------------------------- |
-| Address to pass to 0x | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` | `0x3600000000000000000000000000000000000000` |
-| Decimals              | 18                                           | 6                                            |
-| How it moves          | `msg.value` / account balance                | `transfer` / `transferFrom`                  |
-| Allowance required    | No                                           | Yes                                          |
+|                       | Native                                                | ERC-20                                                  |
+| --------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| Address to pass to 0x | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`          | `0x3600000000000000000000000000000000000000`            |
+| Decimals              | 18                                                    | 6                                                       |
+| Purpose               | Gas accounting, native sends, and `msg.value`         | Application-level transfers, approvals, and allowances  |
+| Allowance required    | No                                                    | Yes                                                     |
 
-Both identities are backed by a **single balance**. Sending native USDC and transferring ERC-20 USDC move the same money, and the two forms are entangled at the protocol level: an ERC-20 transfer also emits a native transfer.
+Both interfaces are backed by a **single balance**. Sending native USDC and transferring ERC-20 USDC move the same money, and the two forms are entangled at the protocol level: an ERC-20 transfer also emits a native transfer.
 
 ### What this means for your integration
 
@@ -155,22 +155,22 @@ Native USDC and ERC-20 USDC differ in scale by a factor of 10^12. `1` USDC is `1
 
 </Warning>
 
-The Swap API returns amounts in the base units of whichever identity you requested, and performs no conversion between them. Follow these rules:
+The Swap API returns amounts in the base units of whichever interface you requested, and performs no conversion between them. Follow these rules:
 
 <Steps>
-  <Step title="Pick one identity per request">
+  <Step title="Pick one interface per request">
     Use `0x3600000000000000000000000000000000000000` if you want to work in 6
     decimals, or `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` if you want to
     work in 18 decimals. Do not mix the two within a single quote.
   </Step>
-  <Step title="Read decimals from the identity you sent, not from the symbol">
+  <Step title="Read decimals from the interface you sent, not from the symbol">
     `sellAmount`, `buyAmount`, `minBuyAmount` and fee amounts are all
     denominated in the base units of the address you passed. Balance checks,
     allowance logic and any USD display must use the same decimals.
   </Step>
-  <Step title="Apply the usual native-token rules only to the native identity">
-    If you requested the ERC-20 identity, the standard ERC-20 flow applies,
-    including an allowance. If you requested the native identity, skip the
+  <Step title="Apply the usual native-token rules only to the native interface">
+    If you requested the ERC-20 interface, the standard ERC-20 flow applies,
+    including an allowance. If you requested the native interface, skip the
     approval and set `transaction.value`, as described in [Steps for Handling
     Native Tokens](#steps-for-handling-native-tokens).
   </Step>
@@ -184,12 +184,12 @@ The Swap API returns amounts in the base units of whichever identity you request
 
 <Note>
 
-There is no wrap or unwrap step to build on Arc. A quote between the native and ERC-20 identities of USDC is not a supported swap; move between them by using the interface you need, since they share one balance.
+There is no wrap or unwrap step to build on Arc. A quote between the native and ERC-20 interfaces of USDC is not a supported swap; move between them by using the interface you need, since they share one balance.
 
 </Note>
 
 ### Notes for wallets and analytics
 
 - **Show one USDC balance.** Displaying gas balance and USDC balance as separate rows suggests a user holds two assets when they hold one.
-- **Expect duplicate transfer logs.** Because the two identities are entangled, a single movement of USDC emits both a native transfer and an ERC-20 `Transfer` event. Indexers that count both will double-count USDC volume.
+- **Expect duplicate transfer logs.** Because the two interfaces are entangled, a single movement of USDC emits both a native transfer and an ERC-20 `Transfer` event. Indexers that count both will double-count USDC volume.
 - **Avoid `SELFDESTRUCT` patterns.** Arc forbids burning USDC, so a self-destructed account cannot receive value-bearing calls. Contracts that rely on `SELFDESTRUCT` can revert in ways that are hard for users to interpret.
