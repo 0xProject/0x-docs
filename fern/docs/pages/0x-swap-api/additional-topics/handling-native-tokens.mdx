@@ -7,19 +7,21 @@ description: This guide explains how to properly handle native tokens properly i
 
 Native tokens are the base currencies of their blockchains—for example, ETH on Ethereum, BNB on BNB Chain, and POL on Polygon. Because native tokens do not have contract addresses like ERC-20 tokens, the placeholder address: `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is commonly used to represent native tokens in blockchain transactions.
 
-### Notes on Native Token Representation
+## Conventional Native Token Representation
 
 For most of the EVM-compatible chains that we support, the native token is represented using the placeholder address `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`. This convention exists because native assets (e.g., ETH on Ethereum) do not have contract addresses like ERC-20 tokens.
 
-#### Mantle Network Exception
+## Exceptions
+
+### Mantle Network Exception
 
 Mantle’s native token, **MNT**, does not follow this convention. On the Mantle EVM chain, MNT has a designated contract address: `0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000`.
 
 This address applies only to the native `MNT` token on Mantle and should not be used for wrapped or bridged versions on other networks. Refer to the linked guide for additional [differences between Ethereum and Mantle](https://docs.mantle.xyz/network/for-developers/difference-between-ethereum-and-mantle).
 
-#### Arc Exception
+### Arc Exception
 
-Arc's native gas token is **USDC**, which also exists as an enshrined ERC-20 at `0x3600000000000000000000000000000000000000`. Both identities are accepted by the Swap API, but they use different decimals. See [Arc: USDC as the native gas token](#arc-usdc-as-the-native-gas-token) below before you integrate.
+On Arc, the native gas token is **USDC**. The same USDC is also available as a regular ERC-20 token, built into the chain at `0x3600000000000000000000000000000000000000`. You can trade either one through the Swap API, but each uses a different number of decimals. See [Arc: USDC as the native gas token](#arc-usdc-as-the-native-gas-token) below before you integrate.
 
 For more context on native token addresses:
 
@@ -132,16 +134,16 @@ https://api.0x.org/swap/allowance-holder/quote?buyToken=0xEeeeeEeeeEeEeeEeEeEeeE
 
 ## Arc: USDC as the native gas token
 
-On Arc, USDC is both the native gas token and an enshrined ERC-20 contract. There is no wrapped-native token, and Circle does not plan to deploy one, so the ETH/WETH pattern described above does not apply.
+USDC plays two roles on Arc at once. It is the native gas token, and it is also an ERC-20 token that the chain has built in at a fixed address. There is no wrapped-native token, and Circle does not plan to deploy one, so the ETH/WETH pattern described above does not apply.
 
 ### The two identities of USDC
 
-| | Native USDC | ERC-20 USDC |
-| --- | --- | --- |
+|                       | Native USDC                                  | ERC-20 USDC                                  |
+| --------------------- | -------------------------------------------- | -------------------------------------------- |
 | Address to pass to 0x | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` | `0x3600000000000000000000000000000000000000` |
-| Decimals | 18 | 6 |
-| How it moves | `msg.value` / account balance | `transfer` / `transferFrom` |
-| Allowance required | No | Yes |
+| Decimals              | 18                                           | 6                                            |
+| How it moves          | `msg.value` / account balance                | `transfer` / `transferFrom`                  |
+| Allowance required    | No                                           | Yes                                          |
 
 Both identities are backed by a **single balance**. Sending native USDC and transferring ERC-20 USDC move the same money, and the two forms are entangled at the protocol level: an ERC-20 transfer also emits a native transfer.
 
@@ -157,16 +159,26 @@ The Swap API returns amounts in the base units of whichever identity you request
 
 <Steps>
   <Step title="Pick one identity per request">
-    Use `0x3600000000000000000000000000000000000000` if you want to work in 6 decimals, or `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` if you want to work in 18 decimals. Do not mix the two within a single quote.
+    Use `0x3600000000000000000000000000000000000000` if you want to work in 6
+    decimals, or `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` if you want to
+    work in 18 decimals. Do not mix the two within a single quote.
   </Step>
   <Step title="Read decimals from the identity you sent, not from the symbol">
-    `sellAmount`, `buyAmount`, `minBuyAmount` and fee amounts are all denominated in the base units of the address you passed. Balance checks, allowance logic and any USD display must use the same decimals.
+    `sellAmount`, `buyAmount`, `minBuyAmount` and fee amounts are all
+    denominated in the base units of the address you passed. Balance checks,
+    allowance logic and any USD display must use the same decimals.
   </Step>
   <Step title="Apply the usual native-token rules only to the native identity">
-    If you requested the ERC-20 identity, the standard ERC-20 flow applies, including an allowance. If you requested the native identity, skip the approval and set `transaction.value`, as described in [Steps for Handling Native Tokens](#steps-for-handling-native-tokens).
+    If you requested the ERC-20 identity, the standard ERC-20 flow applies,
+    including an allowance. If you requested the native identity, skip the
+    approval and set `transaction.value`, as described in [Steps for Handling
+    Native Tokens](#steps-for-handling-native-tokens).
   </Step>
   <Step title="Set maxFeePerGas to at least 20 gwei">
-    Arc enforces a 20 gwei floor on `maxFeePerGas`. Transactions submitted below it can stay pending indefinitely or fail outright. A small tip (for example 1 gwei) on `maxPriorityFeePerGas` improves inclusion during high utilization.
+    Arc enforces a 20 gwei floor on `maxFeePerGas`. Transactions submitted below
+    it can stay pending indefinitely or fail outright. A small tip (for example
+    1 gwei) on `maxPriorityFeePerGas` improves inclusion during high
+    utilization.
   </Step>
 </Steps>
 
