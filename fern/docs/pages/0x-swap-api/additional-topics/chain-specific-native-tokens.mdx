@@ -5,7 +5,7 @@ description: How to handle native tokens on Mantle and Arc, the chains that do n
 
 Most chains we support represent their native token with the placeholder address `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`, and the flow described in [Handle Native Tokens](/evm/0x-swap-api/additional-topics/handling-native-tokens) applies without changes. This page covers the two chains that behave differently.
 
-## Mantle: MNT has a contract address
+## Mantle: MNT is the native gas token
 
 Mantle’s native token, **MNT**, does not follow this convention. On the Mantle EVM chain, MNT has a designated contract address: `0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000`.
 
@@ -17,12 +17,10 @@ USDC plays two roles on Arc at once. It is the native gas token, and it is also 
 
 ### The two interfaces of USDC
 
-|                       | Native                                        | ERC-20                                                 |
-| --------------------- | --------------------------------------------- | ------------------------------------------------------ |
-| Address to pass to 0x | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`  | `0x3600000000000000000000000000000000000000`           |
-| Decimals              | 18                                            | 6                                                      |
-| Purpose               | Gas accounting, native sends, and `msg.value` | Application-level transfers, approvals, and allowances |
-| Allowance required    | No                                            | Yes                                                    |
+| Interface | Decimals | Purpose                                                | Address to pass to 0x                        |
+| --------- | -------- | ------------------------------------------------------ | -------------------------------------------- |
+| Native    | 18       | Gas accounting, native sends, and `msg.value`          | `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` |
+| ERC-20    | 6        | Application-level transfers, approvals, and allowances | `0x3600000000000000000000000000000000000000` |
 
 Both interfaces are backed by a **single balance**. Sending native USDC and transferring ERC-20 USDC move the same money, and the two forms are entangled at the protocol level: an ERC-20 transfer also emits a native transfer.
 
