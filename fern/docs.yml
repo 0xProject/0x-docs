@@ -214,6 +214,9 @@ navigation:
               - page: Handle Native Tokens
                 slug: handling-native-tokens
                 path: docs/pages/0x-swap-api/additional-topics/handling-native-tokens.mdx
+              - page: Chain-Specific Native Tokens
+                slug: chain-specific-native-tokens
+                path: docs/pages/0x-swap-api/additional-topics/chain-specific-native-tokens.mdx
               - page: 0x Parser
                 slug: 0x-parser
                 path: docs/pages/0x-swap-api/additional-topics/0x-parser.mdx
