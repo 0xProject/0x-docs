@@ -7,22 +7,27 @@ description: This guide explains how to properly handle native tokens properly i
 
 Native tokens are the base currencies of their blockchains—for example, ETH on Ethereum, BNB on BNB Chain, and POL on Polygon. Because native tokens do not have contract addresses like ERC-20 tokens, the placeholder address: `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` is commonly used to represent native tokens in blockchain transactions.
 
-### Notes on Native Token Representation
+## Standard Native Token Representation
 
 For most of the EVM-compatible chains that we support, the native token is represented using the placeholder address `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE`. This convention exists because native assets (e.g., ETH on Ethereum) do not have contract addresses like ERC-20 tokens.
 
-#### Mantle Network Exception
+## Chain-Specific Exceptions
 
-Mantle’s native token, **MNT**, does not follow this convention. On the Mantle EVM chain, MNT has a designated contract address: `0xdeaddeaddeaddeaddeaddeaddeaddeaddead0000`.
+Two chains we support do not follow this convention:
 
-This address applies only to the native `MNT` token on Mantle and should not be used for wrapped or bridged versions on other networks. Refer to the linked guide for additional [differences between Ethereum and Mantle](https://docs.mantle.xyz/network/for-developers/difference-between-ethereum-and-mantle).
+- **Mantle** uses a designated contract address for its native token, **MNT**.
+- **Arc** uses **USDC** as its native gas token, exposed through two interfaces that use different decimals.
+
+Before integrating on either, read [Chain-Specific Native Tokens](/evm/0x-swap-api/additional-topics/chain-specific-native-tokens).
+
+## Additional Resources
 
 For more context on native token addresses:
 
 - [Discussion on native token address](https://www.reddit.com/r/ethereum/comments/iatr1d/what_is_the_significance_of_this_address/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
 - [Stack Exchange explanation](https://ethereum.stackexchange.com/a/87444/85979).
 
-## Steps for Handling Native Tokens
+## Steps for Handling Standard Native Tokens
 
 <Steps>
   <Step title="Skip the allowance check:">
