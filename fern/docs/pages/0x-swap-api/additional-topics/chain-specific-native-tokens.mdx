@@ -30,7 +30,7 @@ Both interfaces are backed by a **single balance**. Sending native USDC and tran
 
 <Warning>
 
-Native USDC and ERC-20 USDC differ in scale by a factor of 10^12. `1` USDC is `1000000` in ERC-20 base units and `1000000000000000000` in native base units. Mixing the two misprices a swap by a factor of one trillion.
+Native USDC and ERC-20 USDC differ in scale by a factor of 10^12. One whole USDC ($1.00) is `1000000` in ERC-20 base units and `1000000000000000000` in native base units. Mixing the two misprices a swap by a factor of one trillion.
 
 </Warning>
 
@@ -70,5 +70,5 @@ There is no wrap or unwrap step to build on Arc. A quote between the native and 
 ### Notes for wallets and analytics
 
 - **Show one USDC balance.** Displaying gas balance and USDC balance as separate rows suggests a user holds two assets when they hold one.
-- **Expect duplicate transfer logs.** Because the two interfaces are entangled, a single movement of USDC emits both a native transfer and an ERC-20 `Transfer` event. Indexers that count both will double-count USDC volume.
+- **Expect duplicate transfer logs on ERC-20 moves only.** Moving USDC through the ERC-20 interface emits both a native transfer and an ERC-20 `Transfer` event, so indexers that count both will double-count USDC volume. Moving it through the native interface emits a single log.
 - **Avoid `SELFDESTRUCT` patterns.** Arc forbids burning USDC, so a self-destructed account cannot receive value-bearing calls. Contracts that rely on `SELFDESTRUCT` can revert in ways that are hard for users to interpret.
