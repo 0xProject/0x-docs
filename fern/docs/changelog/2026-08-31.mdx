@@ -1,0 +1,28 @@
+---
+tags: []
+---
+
+#### New Liquidity Sources
+
+- **Base:** Added Forte.
+- **BSC:** Added Lista V3 (Uniswap V3).
+- **HyperEVM:** Added BrownFi V3, Funnel (Uniswap V3), HyperTrade (Uniswap V3), Turbo (Uniswap V3), and Upheaval V3 (Uniswap V3).
+- **Polygon:** Added QuickSwap V4 (Algebra).
+- **Robinhood Chain:** Added Alandale (Velodrome V2), Alandale CL (Algebra), BrownFi V3, Curve, ERC-4626 vaults, and Parity V3 (Uniswap V3).
+
+#### New Features
+
+- **`collectedBy` in Cross-Chain API**: Every `integratorFee`, `integratorFees` and `zeroExFee` entry on `/cross-chain/quotes` and `/cross-chain/quotes/stream` now reports how the fee is collected: `null` when it is transferred on-chain as part of the trade, or `"relay"` when Relay collects it and pays it out.
+- **ERC-7597 approvals in Gasless API**: `/gasless/quote` and `/gasless/submit` now return `erc7597Permit` as an `approval.type`, so tokens whose `permit` takes a bytes signature can be approved gaslessly.
+
+#### Bug Fixes
+
+- Fixed `buyTaxBps` and `sellTaxBps` returning `0` for fee-on-transfer tokens in Swap and Gasless API quotes.
+- Integrator fees collected by Relay are no longer undercollected when a 0x fee is charged on the same trade; they are now calculated from the sell amount, matching the on-chain path.
+- `/cross-chain/quotes` now returns `400 INPUT_INVALID` naming the offending field instead of `500` when a request parameter is rejected.
+- `/cross-chain/status` no longer returns a stale `failure` block alongside `bridge_filled` after a transaction recovers.
+
+#### Breaking Changes
+
+- **Across V4 no longer serves Solana or HyperCore in Cross-Chain API**: Across V4 is no longer quoted for Solana or HyperCore routes. Both chains remain reachable through other bridges. [See supported chains](https://docs.0x.org/docs/introduction/supported-chains).
+- **Mayan origin routes removed for Monad in Cross-Chain API**: Monad is no longer quoted as an origin on Mayan Swift, Mayan MCTP, or Mayan FastMCTP. Monad remains available as a destination.
