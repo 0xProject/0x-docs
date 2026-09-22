@@ -41,7 +41,7 @@ Once these steps are complete, the Gasless API will execute the transaction with
 
 Gasless API provides a gasless experience at two points of the trade experience where the user normally needs to pay gas:
 
-- **Gasless approvals** work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) or a related permit ABI, such as [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) or the non-standard DAI permit. Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token, and `approval.type` tells you which permit flavor it uses.
+- **Gasless approvals** work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) or a related permit ABI, such as [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) or the non-standard DAI permit. Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token, and `approval.type` tells you which permit flavor it uses. See [Gasless Approval Tokens](/evm/gasless-api/guides/get-started-with-gasless-api#gasless-approval-tokens) for the full list of values.
 
 - **Gasless swaps** work for selling any non‑native token (anything that’s an ERC‑20 or similar).
 
