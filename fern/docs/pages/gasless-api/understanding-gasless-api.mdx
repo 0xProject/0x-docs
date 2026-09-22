@@ -41,7 +41,7 @@ Once these steps are complete, the Gasless API will execute the transaction with
 
 Gasless API provides a gasless experience at two points of the trade experience where the user normally needs to pay gas:
 
-- **Gasless approvals** work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token.
+- **Gasless approvals** work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) or a related permit ABI, such as [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) or the non-standard DAI permit. Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token, and `approval.type` tells you which permit flavor it uses.
 
 - **Gasless swaps** work for selling any non‑native token (anything that’s an ERC‑20 or similar).
 
@@ -65,6 +65,22 @@ Understanding the difference between Permit (aka EIP-2612) and Permit2 is crucia
 ### What is Permit (EIP‑2612)?
 
 Permit aka [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) is an extension standard to ERC-20 that allows for gasless setting of allowances. If a token supports EIP-2612 (or one of a couple related non-standard ABIs with equivalent functionality), then it is possible to set allowances gaslessly through Gasless API. However, this requires built-in support in the token. For tokens that were deployed before ERC2612 or where the token developer didn't add ERC2612 support, approvals can only be set gasfully, by calling approve. For example, WETH is an ERC-20 token without EIP-2612 support
+
+### What is ERC-7597?
+
+[ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) is a permit variant that takes the signature as a single `bytes` value instead of the split `(v, r, s)` values used by EIP-2612:
+
+```solidity
+// EIP-2612
+permit(owner, spender, value, deadline, uint8 v, bytes32 r, bytes32 s)
+
+// ERC-7597
+permit(owner, spender, value, deadline, bytes signature)
+```
+
+A 65-byte `(v, r, s)` tuple can only carry an ECDSA signature from an EOA, so smart contract wallets — Safe, smart accounts, and [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)-delegated EOAs — cannot use the EIP-2612 permit at all. The `bytes` form accepts [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) contract signatures, so those wallets can approve gaslessly too. USDC is the most widely used token that supports it.
+
+Gasless API returns `approval.type` of `erc7597Permit` only after verifying on-chain that the bytes-signature permit path succeeds for that token. If your integration ignores this value, smart contract wallet takers fall back to a standard on-chain approval and pay gas for it.
 
 ### What is Permit2?
 

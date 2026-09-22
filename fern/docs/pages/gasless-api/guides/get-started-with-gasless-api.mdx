@@ -461,7 +461,7 @@ If liquidity is available, 2 objects may be returned:
 - `approval`: This is the “approval” object which contains the necessary information to process a gasless approval. See the [quote response](/api-reference/evm-ap-is/gasless/getquote#option-1) for an example.
   - If a gasless approval is possible, this object includes all the required information to process it.
   - If a gasless approval is **not** possible, this object will be `null`, and you must use the [standard approval flow](/evm/gasless-api/guides/understanding-gasless-api#technical-flow-charts) to [set a token allowance](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances). NEVER SET AN ALLOWANCE ON THE SETTLER CONTRACT.
-  - Gasless approvals work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token.
+  - Gasless approvals work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) or a related permit ABI, such as [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) or the non-standard DAI permit. Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token, and `approval.type` tells you which permit flavor it uses.
 
 - `trade`: This is the "trade" object which contains the necessary information to process a gasless trade. See the quote response [here](/api-reference#tag/Gasless/operation/gasless::getQuote).
 
@@ -558,7 +558,16 @@ Once the trade is successful, you can display the transaction confirmation to yo
 
 ## Gasless Approval Tokens
 
-Gasless approvals work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token.
+Gasless approvals work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) or a related permit ABI, such as [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) or the non-standard DAI permit. Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token, and `approval.type` tells you which permit flavor it uses.
+
+`approval.type` can be any of the following. Sign `approval.eip712` exactly as returned in every case — the value only affects how Gasless API submits the approval on-chain, not how you produce the signature. See [Sign gasless approval object](./gasless-api-technical-appendix#sign-gasless-approval-object) for details.
+
+| `approval.type` | Standard |
+| --- | --- |
+| `permit` | [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) |
+| `erc7597Permit` | [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) — permit with a `bytes` signature, which also supports smart contract wallets via [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) |
+| `daiPermit` | Non-standard DAI-style permit |
+| `executeMetaTransaction::approve` | Non-standard meta-transaction approval |
 
 ## Gasless Chains
 
