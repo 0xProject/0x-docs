@@ -3,7 +3,7 @@
   "info": {
     "title": "Solana API",
     "description": "API for generating Solana swap instructions across aggregated DEX liquidity.",
-    "version": "0.3.13"
+    "version": "0.3.18"
   },
   "servers": [
     {
@@ -311,10 +311,17 @@
               }
             ]
           },
+          "reserve_transaction_accounts": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Minimum static account keys to reserve in the transaction for composing with additional instructions.\nOnly applies to `v1` transactions; ignored when `transaction_version` is `v0`.",
+            "default": 0,
+            "minimum": 0
+          },
           "reserve_transaction_bytes": {
             "type": "integer",
             "format": "int64",
-            "description": "Minimum bytes to reserve in the transaction for composing with additional instructions.",
+            "description": "Minimum bytes to reserve in the transaction for composing with additional instructions.\nOnly applies to `v0` transactions; ignored when `transaction_version` is `v1`.",
             "default": 0,
             "minimum": 0
           },
@@ -390,6 +397,18 @@
                 "description": "Recipient that should receive trade surplus.\nMust be provided together with `trade_surplus_cap_ppm`, or both fields must be omitted.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead."
               }
             ]
+          },
+          "transaction_version": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/TransactionVersion",
+                "description": "Transaction format to target.\n`v0` (default) budgets routing by transaction bytes and the response may include address lookup tables.\n`v1` budgets routing by static account count (max 64) and never returns address lookup tables."
+              }
+            ],
+            "default": "v0"
           }
         },
         "example": {
@@ -504,6 +523,14 @@
             "description": "The base-58 encoded address of the output mint."
           }
         }
+      },
+      "TransactionVersion": {
+        "type": "string",
+        "description": "Transaction format the client will compile the instructions into.",
+        "enum": [
+          "v0",
+          "v1"
+        ]
       }
     },
     "securitySchemes": {
