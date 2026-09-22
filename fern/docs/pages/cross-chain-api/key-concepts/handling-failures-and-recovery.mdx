@@ -130,7 +130,7 @@ In this table, "bridge step's sell/buy token" refers to the tokens on the bridge
 | --- | --- | --- | --- |
 | Across V4 | Automatic origin refund | Origin | Bridge step's `sellToken` |
 | Arbitrum Bridge | 0x dest retry (has deadline) | Destination | Bridge step's `buyToken` |
-| Circle Forwarder | 0x dest retry | Destination | Bridge step's `buyToken` |
+| Circle Forwarder | 0x dest retry (including Solana) | Destination | Bridge step's `buyToken` |
 | CCIP | Dest retry not submitted by 0x | Destination | Bridge step's `buyToken` |
 | Gas.zip | Automatic origin refund | Origin | Bridge step's `sellToken` |
 | HyperCore Bridge | Not tracked | - | - |
