@@ -66,22 +66,6 @@ Understanding the difference between Permit (aka EIP-2612) and Permit2 is crucia
 
 Permit aka [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) is an extension standard to ERC-20 that allows for gasless setting of allowances. If a token supports EIP-2612 (or one of a couple related non-standard ABIs with equivalent functionality), then it is possible to set allowances gaslessly through Gasless API. However, this requires built-in support in the token. For tokens that were deployed before ERC2612 or where the token developer didn't add ERC2612 support, approvals can only be set gasfully, by calling approve. For example, WETH is an ERC-20 token without EIP-2612 support
 
-### What is ERC-7597?
-
-[ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) is a permit variant that takes the signature as a single `bytes` value instead of the split `(v, r, s)` values used by EIP-2612:
-
-```solidity
-// EIP-2612
-permit(owner, spender, value, deadline, uint8 v, bytes32 r, bytes32 s)
-
-// ERC-7597
-permit(owner, spender, value, deadline, bytes signature)
-```
-
-A 65-byte `(v, r, s)` tuple can only carry an ECDSA signature from an EOA, so smart contract wallets — Safe, smart accounts, and [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)-delegated EOAs — cannot use the EIP-2612 permit at all. The `bytes` form accepts [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) contract signatures, so those wallets can approve gaslessly too. USDC is the most widely used token that supports it.
-
-Gasless API returns `approval.type` of `erc7597Permit` only after verifying on-chain that the bytes-signature permit path succeeds for that token. If your integration ignores this value, smart contract wallet takers fall back to a standard on-chain approval and pay gas for it.
-
 ### What is Permit2?
 
 [Permit2](https://docs.uniswap.org/contracts/permit2/overview) is a contract developed by Uniswap Labs, deployed to `0x000000000022D473030F116dDEE9F6B43aC78BA3` on all chains.
@@ -116,6 +100,22 @@ Gasless leverages EIP-712 messages to enable [gasless approvals](./understanding
 ### EIP-2612: Permit Extension for Gaslss Approvals
 
 [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) unlocked gasless token approvals by introducting a new Permit function to ERC-20 tokens. The Permit function enables enables users to grant permission to others to spend their tokens in a single transaction which offer more efficient token approvals and enabled gasless transactions.
+
+### ERC-7597: Permit Extension for Smart Contract Wallets
+
+Used when a token's `permit` function takes the signature as a single `bytes` value instead of the split `(v, r, s)` values that [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) uses. Gasless API reports these tokens with an `approval.type` of `erc7597Permit`.
+
+```solidity
+// EIP-2612
+permit(owner, spender, value, deadline, uint8 v, bytes32 r, bytes32 s)
+
+// ERC-7597
+permit(owner, spender, value, deadline, bytes signature)
+```
+
+A 65-byte `(v, r, s)` tuple can only carry an ECDSA signature from an EOA, so smart contract wallets — Safe, smart accounts, and [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)-delegated EOAs — cannot use an EIP-2612 permit at all. The `bytes` form accepts [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) contract signatures, so those wallets can approve gaslessly too. USDC is the most widely used token that supports it.
+
+Gasless API returns `erc7597Permit` only after verifying on-chain that the bytes-signature permit path succeeds for that token.
 
 ### Gasless Approvals
 

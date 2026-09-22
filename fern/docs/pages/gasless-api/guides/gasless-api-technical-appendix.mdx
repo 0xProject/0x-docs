@@ -61,7 +61,7 @@ If a token supports [gasless approvals](/evm/gasless-api/guides/understanding-ga
 
 <Note>
 
-If you branch on `approval.type`, handle `erc7597Permit` alongside `permit`. Tokens that only expose the `bytes` signature permit — and takers using smart contract wallets — otherwise fall back to a gasful on-chain approval.
+Handle every `approval.type` your integration can receive, including `erc7597Permit`. Any type your code does not recognize sends the user through a regular on-chain approval, which costs them gas.
 
 </Note>
 
