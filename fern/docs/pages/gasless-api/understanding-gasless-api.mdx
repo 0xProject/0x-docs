@@ -41,7 +41,7 @@ Once these steps are complete, the Gasless API will execute the transaction with
 
 Gasless API provides a gasless experience at two points of the trade experience where the user normally needs to pay gas:
 
-- **Gasless approvals** work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612). Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token.
+- **Gasless approvals** work only for tokens that support [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) or a related permit ABI, such as [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) or the non-standard DAI permit. Check the `approval` object in the [quote](https://docs.0x.org/api-reference/evm-ap-is/gasless/getquote) response — if it's not `null`, gasless approval is available for that token, and `approval.type` tells you which permit flavor it uses. See [Gasless Approval Tokens](/evm/gasless-api/guides/get-started-with-gasless-api#gasless-approval-tokens) for the full list of values.
 
 - **Gasless swaps** work for selling any non‑native token (anything that’s an ERC‑20 or similar).
 
@@ -97,9 +97,25 @@ For tokens that do not support gasless approvals, such as native tokens, you nee
 
 Gasless leverages EIP-712 messages to enable [gasless approvals](./understanding-gasless-api#gasless-approvals) and [gasless transactions](./understanding-gasless-api#gasless-transactions).
 
-### EIP-2612: Permit Extension for Gaslss Approvals
+### EIP-2612: Permit Extension for Gasless Approvals
 
-[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) unlocked gasless token approvals by introducting a new Permit function to ERC-20 tokens. The Permit function enables enables users to grant permission to others to spend their tokens in a single transaction which offer more efficient token approvals and enabled gasless transactions.
+[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) unlocked gasless token approvals by introducing a new Permit function to ERC-20 tokens. The Permit function enables users to grant permission to others to spend their tokens in a single transaction, which makes token approvals more efficient and enables gasless transactions.
+
+### ERC-7597: Permit Extension for Smart Contract Wallets
+
+Used when a token's `permit` function takes the signature as a single `bytes` value instead of the split `(v, r, s)` values that [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) uses. Gasless API reports these tokens with an `approval.type` of `erc7597Permit`.
+
+```solidity
+// EIP-2612
+permit(owner, spender, value, deadline, uint8 v, bytes32 r, bytes32 s)
+
+// ERC-7597
+permit(owner, spender, value, deadline, bytes signature)
+```
+
+A 65-byte `(v, r, s)` tuple can only carry an ECDSA signature from an EOA, so smart contract wallets — Safe, smart accounts, and [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702)-delegated EOAs — cannot use an EIP-2612 permit at all. The `bytes` form accepts [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271) contract signatures, so those wallets can approve gaslessly too. USDC is the most widely used token that supports it.
+
+Gasless API returns `erc7597Permit` only after verifying on-chain that the bytes-signature permit path succeeds for that token.
 
 ### Gasless Approvals
 

@@ -50,6 +50,21 @@ If a token supports [gasless approvals](/evm/gasless-api/guides/understanding-ga
   }
 ```
 
+`approval.type` tells you which permit ABI the token uses. Sign `approval.eip712` exactly as returned in every case — the value only affects how Gasless API submits the approval on-chain, not how you produce the signature.
+
+| `approval.type` | Standard | Notes |
+| --- | --- | --- |
+| `permit` | [EIP-2612](https://eips.ethereum.org/EIPS/eip-2612) | The standard permit, with a split `(v, r, s)` signature. |
+| `erc7597Permit` | [ERC-7597](https://eips.ethereum.org/EIPS/eip-7597) | Permit with a `bytes` signature. Also supports smart contract wallet signatures via [ERC-1271](https://eips.ethereum.org/EIPS/eip-1271). |
+| `daiPermit` | Non-standard | The DAI-style permit, which approves an unlimited allowance rather than a specific amount. |
+| `executeMetaTransaction::approve` | Non-standard | Meta-transaction approval used by tokens on Polygon PoS and similar bridged deployments. |
+
+<Note>
+
+Handle every `approval.type` your integration can receive, including `erc7597Permit`. Any type your code does not recognize sends the user through a regular on-chain approval, which costs them gas.
+
+</Note>
+
 Keep in mind that the `domain` field of this object must follow a strict ordering as specified in EIP-712. The `approval.eip712` object will present the correct ordering, but make sure that this ordering is preserved when obtaining the signature:
 
 - `name` , `version`, `chainId`, `verifyingContract`, `salt`
