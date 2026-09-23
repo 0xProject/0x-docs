@@ -13,6 +13,12 @@ RWAs are available through the APIs you already use. If you have a Swap API inte
   Trading](/rwa/guides/enable-rwa-trading).
 </Note>
 
+<Tip>
+  Evaluating 0x for RWAs? See the [RWA solution
+  page](https://0x.org/solution/rwas) for supported assets, execution quality,
+  and teams already live.
+</Tip>
+
 ## Why RWAs are different
 
 Tokenized real-world assets trade by different rules than crypto-native tokens, and that shapes how 0x handles them:
@@ -20,8 +26,7 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
 <Steps>
   <Step>
     **They are regulated instruments.** Access is gated on your team explicitly
-    opting in and accepting the RWA trading agreement, rather than being open by
-    default like ERC-20 trading.
+    opting in and accepting the RWA trading agreement.
   </Step>
   <Step>
     **Liquidity is thinner and more concentrated.** RWA markets do not have the
@@ -29,13 +34,15 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
     professional market makers via [0x RFQ](/evm/0x-swap-api/additional-topics/about-the-rfq-system).
   </Step>
   <Step>
-    **Availability varies by jurisdiction.** Which assets you can offer, and to
-    whom, depends on where you and your users are.
-    {/* TODO(pre-launch): document the jurisdiction/geoblocking controls once legal confirms what integrators configure and where. */}
+    **You control who can trade them.** You are responsible for restricting
+    access on your platform by jurisdiction. See [Your
+    responsibilities](#your-responsibilities).
   </Step>
 </Steps>
 
 ## What you can trade
+
+0x supports a broad range of RWAs rather than a fixed list of issuers. 0x identifies RWA tokens using third-party data vendors. When a new asset is indexed and has liquidity 0x can route, it is typically quotable through the API.
 
 <CardGroup>
 
@@ -55,18 +62,27 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
 
 </CardGroup>
 
-{/* TODO(pre-launch): confirm with marketing/legal which issuers and asset names can be listed by name in docs (e.g. xStocks by Backed, PAXG, Tether Gold), then name concrete examples per category above. Marketing lists these publicly at https://0x.org/solution/rwas but docs should only name assets we actually route today. */}
+## Your responsibilities
+
+The RWA trading agreement requires you to prevent access by users located in:
+
+- The United States
+- Any jurisdiction subject to comprehensive sanctions
+- Any jurisdiction where offering the relevant asset is prohibited by applicable law
+- Any jurisdiction excluded by the asset's issuer
+
+How you enforce this is up to you, for example geo-blocking restricted regions and applying any issuer-specific rules. A common pattern is to keep the token visible but disable trading, with a message such as "NVDA is not available for trading in your region at this time."
 
 ## How 0x handles RWAs
 
 <AccordionGroup>
 
 <Accordion title="New RWA tokens are indexed automatically">
-  0x indexes new RWA tokens as they launch, so newly issued assets become
-  quotable without you maintaining a manual allowlist.
+  0x identifies new RWA tokens through its data vendors, so newly issued assets
+  with routable liquidity become quotable without a manual allowlist.
 </Accordion>
 
-<Accordion title="Access is opt-in and controlled by you">
+<Accordion title="Access is opt-in at the team level">
   RWAs are blocked by default. Your team opts in once, and that opt-in applies
   to every app and API key on the team.
 </Accordion>
@@ -101,9 +117,3 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
 </Card>
 
 </CardGroup>
-
-<Tip>
-  Building the commercial case rather than the integration? The [0x RWA solution
-  page](https://0x.org/solution/rwas) covers coverage, execution quality, and
-  the teams already live.
-</Tip>

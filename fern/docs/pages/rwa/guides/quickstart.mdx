@@ -32,60 +32,51 @@ If you skip this step, the API rejects RWA quotes rather than returning a price.
 
 ## 2. Pick an RWA token
 
-RWA tokens are ordinary ERC-20 contracts, so you address them by contract address exactly like any other token.
-
-{/* TODO(pre-launch): replace the placeholder below with a verified RWA token address and chain. Do not ship this page with a placeholder — a wrong address in a copy-pasteable example is worse than no example. Confirm with the team which asset makes the best canonical quickstart example (tokenized gold is likely the most liquid and least jurisdiction-sensitive). */}
+RWA tokens are ordinary ERC-20 contracts, so you address them by contract address exactly like any other token. This guide buys tokenized NVIDIA (NVDA) with USDG on Robinhood Chain:
 
 ```bash
-# Replace with the RWA token you want to trade, and the chain it lives on.
-RWA_TOKEN=0xRWA_TOKEN_ADDRESS
-CHAIN_ID=1
-USDC=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
+CHAIN_ID=4663                                     # Robinhood Chain
+NVDA=0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec   # tokenized NVIDIA, 18 decimals
+USDG=0x5fc5360d0400a0fd4f2af552add042d716f1d168   # Global Dollar, 6 decimals
 ```
-
-<Tip>
-  0x indexes new RWA tokens as they launch, so an asset does not need to be
-  added to an allowlist before you can quote it.
-</Tip>
 
 ## 3. Get an indicative price
 
-Use `/swap/permit2/price` to show a user what a trade would cost. A price is indicative and not executable — it does not reserve liquidity or return transaction data.
+Use `/swap/allowance-holder/price` to show a user what a trade would cost. A price is indicative and not executable — it does not reserve liquidity or return transaction data.
 
-This example buys an RWA token with 1,000 USDC:
+This example buys NVDA with 1,000 USDG:
 
 ```bash
 curl --request GET \
-  --url "https://api.0x.org/swap/permit2/price?chainId=$CHAIN_ID&sellToken=$USDC&buyToken=$RWA_TOKEN&sellAmount=1000000000&taker=0xYOUR_TAKER_ADDRESS" \
+  --url "https://api.0x.org/swap/allowance-holder/price?chainId=$CHAIN_ID&sellToken=$USDG&buyToken=$NVDA&sellAmount=1000000000&taker=0xYOUR_TAKER_ADDRESS" \
   --header "0x-api-key: YOUR_API_KEY" \
   --header "0x-version: v2"
 ```
 
 <Note>
-  `sellAmount` is in the sell token's base units. USDC has 6 decimals, so 1,000
-  USDC is `1000000000`. RWA token decimals vary by issuer — read `decimals` from
-  the token contract rather than assuming 18.
+  `sellAmount` is in the sell token's base units. USDG has 6 decimals, so 1,000
+  USDG is `1000000000`. RWA token decimals vary by issuer, so read `decimals`
+  from the token contract rather than assuming 18.
 </Note>
 
 Check `liquidityAvailable` in the response before showing a price. RWA markets are thinner than major crypto pairs, so a pair that quotes at one size may not quote at another.
 
 ## 4. Fetch a firm quote
 
-When the user commits, call `/swap/permit2/quote` for an executable quote with transaction data attached:
+When the user commits, call `/swap/allowance-holder/quote` for an executable quote with transaction data attached:
 
 ```bash
 curl --request GET \
-  --url "https://api.0x.org/swap/permit2/quote?chainId=$CHAIN_ID&sellToken=$USDC&buyToken=$RWA_TOKEN&sellAmount=1000000000&taker=0xYOUR_TAKER_ADDRESS" \
+  --url "https://api.0x.org/swap/allowance-holder/quote?chainId=$CHAIN_ID&sellToken=$USDG&buyToken=$NVDA&sellAmount=1000000000&taker=0xYOUR_TAKER_ADDRESS" \
   --header "0x-api-key: YOUR_API_KEY" \
   --header "0x-version: v2"
 ```
 
-The response includes `transaction`, a valid unsigned Ethereum transaction, plus `permit2.eip712` if a Permit2 signature is required.
+The response includes `transaction`, a valid unsigned Ethereum transaction.
 
 <Warning>
-  Always pass `taker` on `/quote`. Without it the API skips validation, and for
-  RWAs that validation is what surfaces jurisdiction and eligibility problems
-  before the user signs.
+  `taker` is required on `/quote`. It lets the API validate the trade and
+  return calldata, so failures surface before the user signs.
 </Warning>
 
 ## 5. Set an allowance and submit
@@ -95,13 +86,9 @@ From here the flow is standard Swap API — there is nothing RWA-specific about 
 <Steps>
   <Step>
     Check `issues.allowance` in the quote response. If it is non-null, have the
-    taker approve the returned `spender`. See [How to set your token
+    taker approve the returned `spender` (the AllowanceHolder contract) to spend
+    USDG. See [How to set your token
     allowances](/evm/0x-swap-api/additional-topics/how-to-set-your-token-allowances).
-  </Step>
-  <Step>
-    If `permit2.eip712` is present, have the taker sign it and append the
-    signature to `transaction.data` as described in [Get Started with Swap
-    API](/evm/0x-swap-api/guides/swap-tokens-with-0x-swap-api).
   </Step>
   <Step>Sign and submit `transaction` with your web3 library.</Step>
 </Steps>
