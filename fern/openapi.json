@@ -10526,12 +10526,17 @@
           "data": {
             "type": "object",
             "properties": {
+              "token": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "Unsupported token address"
+              },
               "zid": {
                 "type": "string",
                 "description": "The unique ZeroEx identifier of the request"
               }
             },
-            "required": ["zid"],
+            "required": ["token", "zid"],
             "additionalProperties": false
           }
         },
