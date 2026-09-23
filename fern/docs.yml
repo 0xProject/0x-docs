@@ -48,10 +48,8 @@ tabs:
     display-name: SVM
   cross-chain:
     display-name: Cross-Chain
-  # TODO(pre-launch): remove `hidden: true` when RWA self-serve opt-in ships.
   rwa:
     display-name: RWA
-    hidden: true
   api-reference:
     display-name: API Reference
   liquidity:
