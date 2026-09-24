@@ -1687,6 +1687,40 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "403 error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "422 error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "500 error response",
                         "content": {
@@ -4291,6 +4325,40 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "403 error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/TAKER_NOT_AUTHORIZED_FOR_TRADE"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "422 error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "500 error response",
                         "content": {
@@ -4418,6 +4486,31 @@
                 "required": ["name", "message", "data"],
                 "additionalProperties": false
             },
+            "BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "enum": ["BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE"]
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "zid": {
+                                "type": "string",
+                                "description": "The unique ZeroEx identifier of the request"
+                            }
+                        },
+                        "required": ["zid"],
+                        "additionalProperties": false
+                    }
+                },
+                "required": ["name", "message", "data"],
+                "additionalProperties": false
+            },
             "INPUT_INVALID": {
                 "type": "object",
                 "properties": {
@@ -4468,6 +4561,81 @@
                     "name": {
                         "type": "string",
                         "enum": ["INTERNAL_SERVER_ERROR"]
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "zid": {
+                                "type": "string",
+                                "description": "The unique ZeroEx identifier of the request"
+                            }
+                        },
+                        "required": ["zid"],
+                        "additionalProperties": false
+                    }
+                },
+                "required": ["name", "message", "data"],
+                "additionalProperties": false
+            },
+            "RECIPIENT_NOT_AUTHORIZED_FOR_TRADE": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "enum": ["RECIPIENT_NOT_AUTHORIZED_FOR_TRADE"]
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "zid": {
+                                "type": "string",
+                                "description": "The unique ZeroEx identifier of the request"
+                            }
+                        },
+                        "required": ["zid"],
+                        "additionalProperties": false
+                    }
+                },
+                "required": ["name", "message", "data"],
+                "additionalProperties": false
+            },
+            "SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "enum": ["SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE"]
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "zid": {
+                                "type": "string",
+                                "description": "The unique ZeroEx identifier of the request"
+                            }
+                        },
+                        "required": ["zid"],
+                        "additionalProperties": false
+                    }
+                },
+                "required": ["name", "message", "data"],
+                "additionalProperties": false
+            },
+            "TAKER_NOT_AUTHORIZED_FOR_TRADE": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "enum": ["TAKER_NOT_AUTHORIZED_FOR_TRADE"]
                     },
                     "message": {
                         "type": "string"
