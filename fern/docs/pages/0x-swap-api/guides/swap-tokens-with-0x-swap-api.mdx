@@ -310,6 +310,10 @@ When you're ready to execute a trade, request a firm quote from the Swap API usi
 
 The response includes a full 0x order, ready for submission to the network. The Market Maker is expected to have reserved the necessary assets, reducing the likelihood of order reversion.
 
+<Tip>
+  To verify that a quote came from 0x and was not altered in transit, request a signed response by adding an `Accept-Signature` header. See [Response Signatures](/docs/developer-resources/response-signatures).
+</Tip>
+
 ### Example Request
 
 Here is an example to fetch a firm quote sell 100 WETH for DAI using `/quote`.
@@ -483,3 +487,4 @@ This wraps up the Swap API AllowanceHolder quickstart. Check out the starter pro
 - [(Code) Next.js 0x Demo App](https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app)
 - [(Code) Examples Repo](https://github.com/0xProject/0x-examples)
 - [(Guide) Build a Next.js App with 0x Swap API](/evm/0x-swap-api/guides/build-token-swap-dapp-nextjs)
+- [(Guide) Verify Response Signatures](/docs/developer-resources/response-signatures)

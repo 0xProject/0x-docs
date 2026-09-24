@@ -27,6 +27,10 @@ Whether you're building a Solana-native experience or expanding an EVM-first pro
 
 The 0x Solana Swap API is in open beta and available to everyone. Get started for free by creating an account at the [0x Dashboard](https://dashboard.0x.org/create-account) to get a live API key.
 
+## Verifying Responses
+
+Swap instruction responses can be signed so you can verify that they came from 0x and answer your exact order. Add an `Accept-Signature` header, and a `Content-Digest` header with the sha-256 of your request body to bind the order to the signature. See [Response Signatures](/docs/developer-resources/response-signatures).
+
 ## Supported Chains
 
 0x Solana Swap API supports Solana Mainnet Beta.
