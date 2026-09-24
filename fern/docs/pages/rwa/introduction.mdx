@@ -31,7 +31,8 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
   <Step>
     **Liquidity is thinner and more concentrated.** RWA markets do not have the
     deep AMM pools that major crypto pairs do, so routing leans more heavily on
-    professional market makers via [0x RFQ](/evm/0x-swap-api/additional-topics/about-the-rfq-system).
+    professional market makers via [0x
+    RFQ](/evm/0x-swap-api/additional-topics/about-the-rfq-system).
   </Step>
   <Step>
     **You control who can trade them.** You are responsible for restricting
@@ -50,12 +51,6 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
   On-chain representations of listed stocks and index funds.
 </Card>
 
-<Card title="Commodities" icon="coins">
-  Tokenized gold and other commodity-backed tokens, including cross-chain
-  variants. 0x already supports [PAXG as a cross-chain
-  provider](/docs/introduction/supported-chains).
-</Card>
-
 <Card title="Treasuries and yield-bearing assets" icon="building-columns">
   On-chain cash-equivalent instruments.
 </Card>
@@ -64,12 +59,13 @@ Tokenized real-world assets trade by different rules than crypto-native tokens, 
 
 ## Your responsibilities
 
-The RWA trading agreement requires you to prevent access by users located in:
+The RWA trading agreement requires you to prevent access by users located in the following, and to comply with the last item:
 
 - The United States
 - Any jurisdiction subject to comprehensive sanctions
 - Any jurisdiction where offering the relevant asset is prohibited by applicable law
 - Any jurisdiction excluded by the asset's issuer
+- Any other restrictions, conditions, or requirements stipulated by the asset's issuer or under applicable law
 
 How you enforce this is up to you, for example geo-blocking restricted regions and applying any issuer-specific rules. A common pattern is to keep the token visible but disable trading, with a message such as "NVDA is not available for trading in your region at this time." See [how Matcha handles this](https://matcha.xyz/tokens/robinhood/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec?buyAddress=0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec&buyChain=4663&sellAddress=0x5fc5360d0400a0fd4f2af552add042d716f1d168&sellChain=4663&sellAmount=1000) for NVDA on Robinhood Chain.
 
