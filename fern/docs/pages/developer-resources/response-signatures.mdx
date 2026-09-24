@@ -1,0 +1,146 @@
+---
+title: Response Signatures
+description: Verify that 0x API responses come from 0x and answer the exact request you sent
+---
+
+0x can sign API responses with [RFC 9421 HTTP Message Signatures](https://www.rfc-editor.org/rfc/rfc9421) using Ed25519. A valid signature proves that a response came from 0x and that it answers the exact request you sent, so a quote cannot be altered in transit or reused for a different order.
+
+Signing is useful when the component that acts on a quote cannot trust the network path to 0x, for example a secure enclave that checks calldata against a user's intent before signing a transaction.
+
+<Tip>
+  See the [signed responses example](https://github.com/0xProject/0x-examples/tree/main/swap-signed-responses-example) for a complete TypeScript implementation that requests and verifies signed EVM quotes and Solana swap instructions.
+</Tip>
+
+## Supported Endpoints
+
+- **Swap API:** `/swap/allowance-holder/price`, `/swap/allowance-holder/quote`, `/swap/permit2/price`, `/swap/permit2/quote`
+- **Gasless API:** `/gasless/price`, `/gasless/quote`, `/gasless/submit`, `/gasless/status`
+- **Solana Swap API:** `/solana/swap-instructions`
+
+## Requesting a Signed Response
+
+Signing is opt-in per request. Add an `Accept-Signature` header with any value:
+
+```bash
+curl "https://api.0x.org/swap/allowance-holder/quote?chainId=8453&sellToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&buyToken=0x4200000000000000000000000000000000000006&sellAmount=1000000&taker=0x70a9f34f9b34c64957b9c401a97bfed35b95049e" \
+  -H "0x-api-key: <YOUR_API_KEY>" \
+  -H "0x-version: v2" \
+  -H "Accept-Signature: sig=()"
+```
+
+The response carries three extra headers:
+
+```
+Content-Digest: sha-256=:<base64 sha-256 of the response body>:
+Signature-Input: sig=("@status" "content-type" "content-digest" "@method";req "@authority";req "@path";req "@query";req);created=1790267249;keyid="0x-signing-key-prod-24092026";alg="ed25519";tag="0x-swap-api"
+Signature: sig=:<base64 ed25519 signature>:
+```
+
+Requests without `Accept-Signature` are unchanged.
+
+## What the Signature Covers
+
+| Component | Value |
+|---|---|
+| `@status` | The response status code |
+| `content-type` | The response `Content-Type` |
+| `content-digest` | The sha-256 of the response body |
+| `@method;req` | The request method |
+| `@authority;req` | The request host, lowercased, without a default port |
+| `@path;req` | The request path |
+| `@query;req` | The request query string, including the leading `?` |
+| `content-digest;req` | The request's `Content-Digest`, when the request sends one |
+
+The signature parameters are `created`, `keyid`, `alg="ed25519"` and `tag="0x-swap-api"`. The signature label is `sig`.
+
+### Binding POST Requests
+
+For `POST` requests the order is in the request body, which the query string does not cover. Send a `Content-Digest` header with the sha-256 of your request body, and the signature covers it too:
+
+```
+Content-Digest: sha-256=:<base64 sha-256 of the request body>:
+```
+
+0x checks the header against the body before signing. The request is rejected with `400` if:
+
+- the `Content-Digest` does not match the body,
+- the `Content-Digest` has no `sha-256` member,
+- or the body is larger than 1 MB.
+
+The `400` response has a JSON body with a `message`:
+
+| Cause | `message` |
+|---|---|
+| Digest does not match the body | `Content-Digest does not match the request body` |
+| No `sha-256` member | `Content-Digest must include a sha-256 member` |
+| Body larger than 1 MB | `Request body is too large to verify Content-Digest` |
+
+```json
+{
+  "message": "Content-Digest does not match the request body"
+}
+```
+
+<Warning>
+  Always send `Content-Digest` on `POST` requests you want signed, such as Solana swap instructions. Without it, the signature does not bind the response to your order.
+</Warning>
+
+## Verifying a Response
+
+Reject the response if any of these checks fails:
+
+<Steps>
+  <Step title="Check the key and algorithm">
+    Parse `Signature-Input` and look up the `keyid` in the [public keys](#public-keys) you trust. Reject unknown key ids, and reject any `alg` other than `ed25519`.
+  </Step>
+
+  <Step title="Check freshness">
+    Reject signatures whose `created` time is more than 60 seconds from your clock.
+  </Step>
+
+  <Step title="Check coverage">
+    Read the covered components from `Signature-Input` rather than assuming a fixed list. Require at least `@status`, `content-digest`, `@method;req`, `@authority;req`, `@path;req` and `@query;req`, plus `content-digest;req` for `POST` requests.
+  </Step>
+
+  <Step title="Check the digests">
+    Compute the sha-256 of the response body and compare it with the response's `Content-Digest`. For `POST` requests, also compare your request body with the `Content-Digest` you sent.
+  </Step>
+
+  <Step title="Verify the signature">
+    Rebuild the signature base as described in [RFC 9421 section 2.5](https://www.rfc-editor.org/rfc/rfc9421#section-2.5), using the values from your request and the response. Verify the `Signature` over it with the Ed25519 public key.
+  </Step>
+</Steps>
+
+For a complete, dependency-free TypeScript implementation, see the [signed responses example](https://github.com/0xProject/0x-examples/tree/main/swap-signed-responses-example).
+
+<Note>
+  A signature binds a response to the request's parameters, not to a single request. The same signed response could be returned again for an identical request. The freshness check limits that to responses at most 60 seconds old.
+</Note>
+
+## Public Keys
+
+| Key ID | Status |
+|---|---|
+| `0x-signing-key-prod-24092026` | Active |
+
+```json
+{
+  "kty": "OKP",
+  "crv": "Ed25519",
+  "kid": "0x-signing-key-prod-24092026",
+  "x": "19P3C981JsyQsqwVho8Tlabx51rslvdruSH59mGuWn0"
+}
+```
+
+## Key Rotation
+
+Signing keys are rotated. This page always lists the current keys.
+
+- Select the verification key by the signature's `keyid`, never by position.
+- Before a rotation, the new key is published here next to the current one. Add it to your trusted keys before it becomes active.
+- A retired key is removed from this page. Stop trusting it once it is removed.
+
+## Not Signed
+
+- Responses rejected before reaching the API, such as invalid API keys, missing permissions or rate limits.
+- Streaming endpoints.

@@ -146,6 +146,9 @@ navigation:
           - page: Rate Limits
             slug: rate-limits
             path: docs/pages/developer-resources/rate-limits.mdx
+          - page: Response Signatures
+            slug: response-signatures
+            path: docs/pages/developer-resources/response-signatures.mdx
           - link: System Status
             href: https://0x.statuspal.io/
             target: _blank
