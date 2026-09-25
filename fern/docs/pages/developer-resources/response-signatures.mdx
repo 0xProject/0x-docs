@@ -8,7 +8,7 @@ description: Verify that 0x API responses come from 0x and answer the exact requ
 Signing is useful when the component that acts on a quote cannot trust the network path to 0x, for example a secure enclave that checks calldata against a user's intent before signing a transaction.
 
 <Tip>
-  See the [signed responses example](https://github.com/0xProject/0x-examples/tree/main/swap-signed-responses-example) for a complete TypeScript implementation that requests and verifies signed EVM quotes and Solana swap instructions.
+  See the [signed responses example](https://github.com/0xProject/0x-examples/tree/main/swap-signed-responses-example) for a complete TypeScript implementation that requests and verifies signed EVM quotes, Solana swap instructions and cross-chain quotes.
 </Tip>
 
 ## Supported Endpoints
@@ -16,6 +16,11 @@ Signing is useful when the component that acts on a quote cannot trust the netwo
 - **Swap API:** `/swap/allowance-holder/price`, `/swap/allowance-holder/quote`, `/swap/permit2/price`, `/swap/permit2/quote`
 - **Gasless API:** `/gasless/price`, `/gasless/quote`, `/gasless/submit`, `/gasless/status`
 - **Solana Swap API:** `/solana/swap-instructions`
+- **Cross-Chain API:** `/cross-chain/quotes`, `/cross-chain/status`, `/cross-chain/sources`
+
+<Note>
+  Streaming endpoints such as `/cross-chain/quotes/stream` are never signed. Do not send `Accept-Signature` to them: the response is held until the stream ends.
+</Note>
 
 ## Requesting a Signed Response
 
@@ -143,4 +148,4 @@ Signing keys are rotated. This page always lists the current keys.
 ## Not Signed
 
 - Responses rejected before reaching the API, such as invalid API keys, missing permissions or rate limits.
-- Streaming endpoints.
+- Streaming endpoints, such as `/cross-chain/quotes/stream`.
