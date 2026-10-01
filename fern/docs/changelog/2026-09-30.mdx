@@ -1,0 +1,44 @@
+---
+tags: []
+---
+
+#### 📣 Announcements
+
+- **Arc is now live**: Arc (`5042`) is generally available across the Swap, Gasless, and Cross-Chain APIs, with native DEX and launchpad coverage from day one. [See supported chains](https://docs.0x.org/docs/introduction/supported-chains).
+
+#### New Chains
+
+- **Arc:** Now supported in Swap API, Gasless API, and Cross-Chain API (chain ID `5042`).
+
+#### New Liquidity Sources
+
+- **Arbitrum:** Added Rubicon CLMM (Uniswap V3).
+- **Arc:** Added AchSwap V2 (Uniswap V2), AchSwap V3 (Uniswap V3), Aero Lite (Uniswap V3), CooCoo, DegenX, DYORSwap (Uniswap V2), Faze, Flap, Foci, Lotus, Peach, SushiSwap and SushiSwap V3, Synthra V3 (Uniswap V3), Virtuals, and WarpDex (Uniswap V2).
+- **Base:** Added BaiBai and Manta.
+- **BSC:** Added FourMeme, Kaliber, Metric V2, and Prism.
+- **Ethereum:** Added Motoswap and Rubicon CLMM (Uniswap V3).
+- **Ink:** Added BlotSwap V2 (Uniswap V2), BlotSwap V3 (Uniswap V3), Tsunami (Uniswap V4), Tsunami Curve, Uniswap V2, and Uniswap V4.
+- **Monad:** Added Pendle.
+- **Optimism:** Added Rubicon CLMM (Uniswap V3).
+- **Robinhood Chain:** Added Bags V3, CooCoo, ElfomoFi, Kittenswap (Algebra), Manta, Orvex CL (PancakeSwap Infinity), Pendle, Proto, Rubicon CLMM (Uniswap V3), Synthra V3 (Uniswap V3), TesseraSwap, and WOOFi V2.
+
+#### New Features
+
+- **Arc native USDC in Swap and Gasless API**: USDC is both Arc's native gas token and an ERC-20 at `0x3600000000000000000000000000000000000000`. The two are quoted as separate assets — 18 decimals for the native interface, 6 for the ERC-20 — and Arc has no wrapped native token. [See chain-specific native tokens](https://docs.0x.org/evm/0x-swap-api/additional-topics/chain-specific-native-tokens).
+- **Arc bridging in Cross-Chain API**: Arc is quotable as both origin and destination over Relay, Across V4, and Circle CCTP in standard and fast modes.
+- **New LayerZero OFT routes in Cross-Chain API**: Added OFT routes for USDS (Ethereum, Avalanche, Solana), PENDLE (Ethereum, Berachain, HyperEVM, Monad, Plasma, Robinhood Chain), USDai and sUSDai (Ethereum, Base, Solana, and Arbitrum to Arc), and USDe and sUSDe on Monad and Solana.
+- **`TOKEN_NOT_SUPPORTED` now names the token**: The error's `data` object carries the unsupported `token` address in Swap and Gasless API.
+
+#### Bug Fixes
+
+- Fixed incorrect buy amounts on Across V4 routes when a single transaction filled several orders.
+- `/cross-chain/status` now reports fast CCTP transfers as `circle_forwarder_fast` instead of `circle_forwarder_standard`, with the matching ETA.
+- `/cross-chain/status` now resolves Solana destination fills sent as version 1 transactions.
+- `/cross-chain/status` no longer walks a terminal status back to `bridge_pending` after a refund lands.
+- Solana-origin OFT quotes are no longer dropped when the seller holds no token account for the token being sold.
+- Routes no longer place fills below a pool's minimum sell amount, which previously caused DODO DPP trades to revert on execution.
+
+#### Breaking Changes
+
+- **Authorization failures in Cross-Chain API have their own error codes**: `/cross-chain/quotes` now returns `TAKER_NOT_AUTHORIZED_FOR_TRADE` or `RECIPIENT_NOT_AUTHORIZED_FOR_TRADE` (403) and `SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE` or `BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE` (422) where it previously returned `INPUT_INVALID`.
+- **Reserve DTF tokens and PAXGy now require RWA access**: PHOTON, BUILDOUT, POWER, NEOCLOUD, and ROBOTS on BSC, and Paxos PAXGy, are gated behind the same opt-in as other tokenized real-world assets. Integrators without it are rejected on Swap, Gasless, and Cross-Chain requests.
