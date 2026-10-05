@@ -155,7 +155,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
-            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps. Deprecated: use `slippagePpm` instead. `slippageBps` accepts only whole numbers."
           },
           {
             "name": "slippagePpm",
@@ -459,7 +459,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
+                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippagePpm` or `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
                             },
                             "mode": { "type": "string", "enum": ["exact-in"] },
                             "route": {
@@ -1543,7 +1543,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
-            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps. Deprecated: use `slippagePpm` instead. `slippageBps` accepts only whole numbers."
           },
           {
             "name": "slippagePpm",
@@ -1847,7 +1847,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
+                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippagePpm` or `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
                             },
                             "mode": { "type": "string", "enum": ["exact-in"] },
                             "route": {
@@ -3000,7 +3000,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
-            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps. Deprecated: use `slippagePpm` instead. `slippageBps` accepts only whole numbers."
           },
           {
             "name": "slippagePpm",
@@ -3304,7 +3304,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
+                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippagePpm` or `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
                             },
                             "mode": { "type": "string", "enum": ["exact-in"] },
                             "route": {
@@ -4388,7 +4388,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 0, "maximum": 10000 },
-            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps. Deprecated: use `slippagePpm` instead. `slippageBps` accepts only whole numbers."
           },
           {
             "name": "slippagePpm",
@@ -4692,7 +4692,7 @@
                                   "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                                 }
                               ],
-                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
+                              "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippagePpm` or `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
                             },
                             "mode": { "type": "string", "enum": ["exact-in"] },
                             "route": {
@@ -6113,7 +6113,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 30, "maximum": 10000 },
-            "description": "The maximum acceptable slippage of the `buyToken` in Bps. 0x sets the optimal slippage tolerance per trade by default. To mitigate the risk of MEV attacks, we recommend adjusting this value only when trading low-liquidity tokens."
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. 0x sets the optimal slippage tolerance per trade by default. To mitigate the risk of MEV attacks, we recommend adjusting this value only when trading low-liquidity tokens. Deprecated: use `slippagePpm` instead. `slippageBps` accepts only whole numbers."
           },
           {
             "name": "slippagePpm",
@@ -6383,7 +6383,7 @@
                               "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                             }
                           ],
-                          "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
+                          "description": "The price which must be met or else the entire transaction will revert. This price is influenced by the `slippagePpm` or `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
                         },
                         "route": {
                           "type": "object",
@@ -6880,7 +6880,7 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 30, "maximum": 10000 },
-            "description": "The maximum acceptable slippage of the `buyToken` in Bps. 0x sets the optimal slippage tolerance per trade by default. To mitigate the risk of MEV attacks, we recommend adjusting this value only when trading low-liquidity tokens."
+            "description": "The maximum acceptable slippage of the `buyToken` in Bps. 0x sets the optimal slippage tolerance per trade by default. To mitigate the risk of MEV attacks, we recommend adjusting this value only when trading low-liquidity tokens. Deprecated: use `slippagePpm` instead. `slippageBps` accepts only whole numbers."
           },
           {
             "name": "slippagePpm",
@@ -7235,7 +7235,7 @@
                               "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
                             }
                           ],
-                          "description": "The price which must be met or else the transaction will revert. This price is influenced by the `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
+                          "description": "The price which must be met or else the transaction will revert. This price is influenced by the `slippagePpm` or `slippageBps` parameter. On-chain sources may encounter price movements from quote to settlement"
                         },
                         "route": {
                           "type": "object",
