@@ -1405,6 +1405,29 @@
                                                                         },
                                                                         "required": ["chainType", "details"],
                                                                         "additionalProperties": false
+                                                                    },
+                                                                    {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "chainType": {
+                                                                                "type": "string",
+                                                                                "enum": ["btc"],
+                                                                                "description": "The blockchain type for Bitcoin"
+                                                                            },
+                                                                            "details": {
+                                                                                "type": "object",
+                                                                                "properties": {
+                                                                                    "psbt": {
+                                                                                        "type": "string",
+                                                                                        "description": "Hex PSBT the wallet signs and broadcasts. Do not rebuild it."
+                                                                                    }
+                                                                                },
+                                                                                "required": ["psbt"],
+                                                                                "additionalProperties": false
+                                                                            }
+                                                                        },
+                                                                        "required": ["chainType", "details"],
+                                                                        "additionalProperties": false
                                                                     }
                                                                 ],
                                                                 "description": "The transaction details to execute on the origin chain to initiate the cross-chain swap"
@@ -2510,6 +2533,29 @@
                                                                                 "value",
                                                                                 "ownerAddress"
                                                                             ],
+                                                                            "additionalProperties": false
+                                                                        }
+                                                                    },
+                                                                    "required": ["chainType", "details"],
+                                                                    "additionalProperties": false
+                                                                },
+                                                                {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "chainType": {
+                                                                            "type": "string",
+                                                                            "enum": ["btc"],
+                                                                            "description": "The blockchain type for Bitcoin"
+                                                                        },
+                                                                        "details": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "psbt": {
+                                                                                    "type": "string",
+                                                                                    "description": "Hex PSBT the wallet signs and broadcasts. Do not rebuild it."
+                                                                                }
+                                                                            },
+                                                                            "required": ["psbt"],
                                                                             "additionalProperties": false
                                                                         }
                                                                     },
@@ -4036,6 +4082,32 @@
                                                                                                 "value",
                                                                                                 "ownerAddress"
                                                                                             ],
+                                                                                            "additionalProperties": false
+                                                                                        }
+                                                                                    },
+                                                                                    "required": [
+                                                                                        "chainType",
+                                                                                        "details"
+                                                                                    ],
+                                                                                    "additionalProperties": false
+                                                                                },
+                                                                                {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "chainType": {
+                                                                                            "type": "string",
+                                                                                            "enum": ["btc"],
+                                                                                            "description": "The blockchain type for Bitcoin"
+                                                                                        },
+                                                                                        "details": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "psbt": {
+                                                                                                    "type": "string",
+                                                                                                    "description": "Hex PSBT the wallet signs and broadcasts. Do not rebuild it."
+                                                                                                }
+                                                                                            },
+                                                                                            "required": ["psbt"],
                                                                                             "additionalProperties": false
                                                                                         }
                                                                                     },
