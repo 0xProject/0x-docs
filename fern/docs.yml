@@ -153,20 +153,6 @@ navigation:
             href: https://0x.statuspal.io/
             target: _blank
 
-      - section: Upgrading
-        slug: upgrading
-        icon: fa-regular fa-arrow-up-right-dots
-        contents:
-          - page: Overview
-            slug: overview
-            path: docs/pages/upgrading/overview.mdx
-          - page: Upgrading to Swap API v2
-            slug: upgrading-to-swap-v2
-            path: docs/pages/upgrading/upgrading-to-swap-v2.mdx
-          - page: Upgrading to Gasless API v2
-            slug: upgrading-to-gasless-v2
-            path: docs/pages/upgrading/upgrading-to-gasless-v2.mdx
-
   - tab: evm
     layout:
       - section: EVM Swap API
@@ -528,3 +514,9 @@ redirects:
     destination: /evm/0x-swap-api/guides/monetize-your-app-using-swap
   - source: /docs/solana-swap-api/introduction
     destination: /svm/solana-swap-api/introduction
+  - source: /docs/upgrading/overview
+    destination: /evm/0x-swap-api/introduction
+  - source: /docs/upgrading/upgrading-to-swap-v2
+    destination: /evm/0x-swap-api/introduction
+  - source: /docs/upgrading/upgrading-to-gasless-v2
+    destination: /evm/gasless-api/introduction
