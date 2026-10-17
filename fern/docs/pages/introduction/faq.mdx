@@ -161,18 +161,19 @@ http://localhost:3000 has been blocked by CORS policy: Request header field 0x-v
 {" "}
 
 <Accordion title="How can I find the tokens that 0x supports for trading?">
-  0x supports tokens by default, except those blocked for compliance reasons or
-  unsupported for technical reasons.
+  0x supports all tokens by default except those blocked for compliance
+  reasons, and a small number of token types that are incompatible with the 0x
+  settlement contracts:
 
-  Note: Balancer V3 pool tokens (BPTs) are not supported by 0x API. Selling a
-  BPT is effectively redeeming an LP position, which 0x API does not support —
-  it routes trades between tokens rather than entering or exiting liquidity
-  pools. To exit a Balancer V3 position, withdraw through Balancer first, then
-  swap the underlying tokens through 0x.
-
-  ERC777 tokens and AMP (`0xfF20817765cB7f73d4bde2e66e067E58D11095C2` on
-  Ethereum) are also not supported by 0x API. Do not use these tokens in Swap API
-  requests.
+  - **Balancer V3 pool tokens (BPTs)** — Selling a BPT is effectively redeeming
+    an LP position, which 0x API does not support — it routes trades between
+    tokens rather than entering or exiting liquidity pools. To exit a Balancer
+    V3 position, withdraw through Balancer first, then swap the underlying
+    tokens through 0x.
+  - **ERC777 tokens** — Tokens implementing the ERC777 standard (including close
+    variants such as AMP) are not supported for sale via 0x API. ERC777 transfer
+    hooks are incompatible with how 0x settles trades. To trade these tokens,
+    convert them to a standard ERC20 representation where one exists.
 </Accordion>
 
 {" "}
