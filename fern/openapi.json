@@ -670,7 +670,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -1216,7 +1216,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -2075,7 +2075,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -2653,7 +2653,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -3549,7 +3549,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -4095,7 +4095,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -4954,7 +4954,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
@@ -5617,7 +5617,7 @@
                                 }
                               ],
                               "nullable": true,
-                              "description": "The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice` + L1 data cost."
+                              "description": "The estimated total network cost of the swap: the expected gas * `gasPrice`, plus the L1 data cost on chains that have one. `gas` is the transaction gas limit and can exceed the expected gas when the transaction carries a fallback route, so this can be less than `gas` * `gasPrice`."
                             },
                             "zid": {
                               "type": "string",
