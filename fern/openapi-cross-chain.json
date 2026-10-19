@@ -249,6 +249,10 @@
                                                         },
                                                         {
                                                             "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "enum": ["bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"]
                                                         }
                                                     ],
                                                     "nullable": true,
@@ -285,6 +289,10 @@
                                                         },
                                                         {
                                                             "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "enum": ["bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"]
                                                         }
                                                     ],
                                                     "description": "The contract address of the token being sold on the origin chain"
@@ -304,6 +312,10 @@
                                                         },
                                                         {
                                                             "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "string",
+                                                            "enum": ["bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"]
                                                         }
                                                     ],
                                                     "description": "The contract address of the token being bought on the destination chain"
@@ -342,6 +354,12 @@
                                                                         },
                                                                         {
                                                                             "type": "string"
+                                                                        },
+                                                                        {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                            ]
                                                                         }
                                                                     ],
                                                                     "description": "The address to set the allowance on"
@@ -370,6 +388,12 @@
                                                                         },
                                                                         {
                                                                             "type": "string"
+                                                                        },
+                                                                        {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                            ]
                                                                         }
                                                                     ],
                                                                     "description": "The contract address of the `sellToken`"
@@ -677,6 +701,12 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "string"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                        ]
                                                                                     }
                                                                                 ],
                                                                                 "description": "The contract address of the token in which the provider collected an app fee"
@@ -732,6 +762,12 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "string"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                        ]
                                                                                     }
                                                                                 ],
                                                                                 "description": "The contract address of the token in which the bridge fee is collected"
@@ -967,6 +1003,31 @@
                                                                             "total"
                                                                         ],
                                                                         "additionalProperties": false
+                                                                    },
+                                                                    {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "chainType": {
+                                                                                "type": "string",
+                                                                                "enum": ["btc"],
+                                                                                "description": "The blockchain type for Bitcoin"
+                                                                            },
+                                                                            "total": {
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "type": "integer",
+                                                                                        "format": "int64"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                                                                                    }
+                                                                                ],
+                                                                                "description": "The total network fee in satoshis"
+                                                                            }
+                                                                        },
+                                                                        "required": ["chainType", "total"],
+                                                                        "additionalProperties": false
                                                                     }
                                                                 ],
                                                                 "description": "Estimated gas costs for executing the transaction on the origin chain, formatted by chain type"
@@ -1172,6 +1233,12 @@
                                                                                         },
                                                                                         {
                                                                                             "type": "string"
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "string",
+                                                                                            "enum": [
+                                                                                                "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                            ]
                                                                                         }
                                                                                     ],
                                                                                     "description": "The token address on the origin chain"
@@ -1191,6 +1258,12 @@
                                                                                         },
                                                                                         {
                                                                                             "type": "string"
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "string",
+                                                                                            "enum": [
+                                                                                                "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                            ]
                                                                                         }
                                                                                     ],
                                                                                     "description": "The token address on the destination chain"
@@ -1482,6 +1555,12 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "string"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                        ]
                                                                                     }
                                                                                 ],
                                                                                 "description": "The address to set the allowance on"
@@ -1510,6 +1589,12 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "string"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "string",
+                                                                                        "enum": [
+                                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                        ]
                                                                                     }
                                                                                 ],
                                                                                 "description": "The contract address of the `sellToken`"
@@ -2155,6 +2240,12 @@
                                                                     },
                                                                     {
                                                                         "type": "string"
+                                                                    },
+                                                                    {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                        ]
                                                                     }
                                                                 ],
                                                                 "description": "The input token address for this bridge"
@@ -2174,6 +2265,12 @@
                                                                     },
                                                                     {
                                                                         "type": "string"
+                                                                    },
+                                                                    {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                        ]
                                                                     }
                                                                 ],
                                                                 "description": "The output token address for this bridge"
@@ -2367,6 +2464,12 @@
                                                                 },
                                                                 {
                                                                     "type": "string"
+                                                                },
+                                                                {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                    ]
                                                                 }
                                                             ],
                                                             "description": "The token address of the funds to be recovered"
@@ -3353,6 +3456,12 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "enum": [
+                                                                                                        "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                                    ]
                                                                                                 }
                                                                                             ],
                                                                                             "description": "The contract address of the token in which the provider collected an app fee"
@@ -3408,6 +3517,12 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "enum": [
+                                                                                                        "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                                    ]
                                                                                                 }
                                                                                             ],
                                                                                             "description": "The contract address of the token in which the bridge fee is collected"
@@ -3651,6 +3766,31 @@
                                                                                         "total"
                                                                                     ],
                                                                                     "additionalProperties": false
+                                                                                },
+                                                                                {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "chainType": {
+                                                                                            "type": "string",
+                                                                                            "enum": ["btc"],
+                                                                                            "description": "The blockchain type for Bitcoin"
+                                                                                        },
+                                                                                        "total": {
+                                                                                            "allOf": [
+                                                                                                {
+                                                                                                    "type": "integer",
+                                                                                                    "format": "int64"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "pattern": "^[-+]?(0|[1-9]\\d*)(\\.\\d+)?$"
+                                                                                                }
+                                                                                            ],
+                                                                                            "description": "The total network fee in satoshis"
+                                                                                        }
+                                                                                    },
+                                                                                    "required": ["chainType", "total"],
+                                                                                    "additionalProperties": false
                                                                                 }
                                                                             ],
                                                                             "description": "Estimated gas costs for executing the transaction on the origin chain, formatted by chain type"
@@ -3856,6 +3996,12 @@
                                                                                                     },
                                                                                                     {
                                                                                                         "type": "string"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "type": "string",
+                                                                                                        "enum": [
+                                                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                                        ]
                                                                                                     }
                                                                                                 ],
                                                                                                 "description": "The token address on the origin chain"
@@ -3875,6 +4021,12 @@
                                                                                                     },
                                                                                                     {
                                                                                                         "type": "string"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "type": "string",
+                                                                                                        "enum": [
+                                                                                                            "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                                        ]
                                                                                                     }
                                                                                                 ],
                                                                                                 "description": "The token address on the destination chain"
@@ -4180,6 +4332,12 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "enum": [
+                                                                                                        "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                                    ]
                                                                                                 }
                                                                                             ],
                                                                                             "description": "The address to set the allowance on"
@@ -4208,6 +4366,12 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "type": "string"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "string",
+                                                                                                    "enum": [
+                                                                                                        "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8"
+                                                                                                    ]
                                                                                                 }
                                                                                             ],
                                                                                             "description": "The contract address of the `sellToken`"
