@@ -41,4 +41,3 @@ tags: []
 #### Breaking Changes
 
 - **Authorization failures in Cross-Chain API have their own error codes**: `/cross-chain/quotes` now returns `TAKER_NOT_AUTHORIZED_FOR_TRADE` or `RECIPIENT_NOT_AUTHORIZED_FOR_TRADE` (403) and `SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE` or `BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE` (422) where it previously returned `INPUT_INVALID`.
-- **Reserve DTF tokens and PAXGy now require RWA access**: PHOTON, BUILDOUT, POWER, NEOCLOUD, and ROBOTS on BSC, and Paxos PAXGy, are gated behind the same opt-in as other tokenized real-world assets. Integrators without it are rejected on Swap, Gasless, and Cross-Chain requests.
