@@ -1,0 +1,264 @@
+---
+title: "Cross Chain Swaps with Bitcoin"
+description: "Learn how to use the 0x Cross Chain API to quote, send, and track a cross chain swap that sells or buys native BTC."
+---
+
+## Steps to Cross Chain Swap Native BTC
+
+You can use the `/quotes` and `/status` endpoints to move value in both directions:
+
+- Buy BTC: sell a token on an EVM chain and receive native BTC at a Bitcoin address.
+- Sell BTC: sell native BTC from a Bitcoin address and receive a token on another chain.
+
+The examples use USDC on Base as the other side of the swap.
+
+### 0. Prerequisites
+
+Make sure you have:
+
+- [0x API key](https://dashboard.0x.org/apps)
+- A mainnet Bitcoin address. Use a P2WPKH address that starts with `bc1q` when you can.
+- To buy BTC: a funded EVM wallet, set up as in [Get started](/cross-chain/cross-chain-api/guides/get-started).
+- To sell BTC: BTC at your Bitcoin address in a confirmed UTXO. The amount must cover the sell amount and the miner fee.
+- To sell BTC: a way to sign a PSBT and broadcast a raw Bitcoin transaction. The example below uses [bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib).
+
+## Bitcoin values
+
+Use these values in every Bitcoin request:
+
+| Item | Value |
+| --- | --- |
+| Chain name | `bitcoin` |
+| Chain ID | `999999999994` |
+| Native BTC token | `bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8` |
+| Decimals | 8. `100000000` is 1 BTC. `1000000` is 0.01 BTC. |
+
+The chain name is `bitcoin`. The API does not accept `btc` as a chain name. You see `btc` only as the `chainType` value of a Bitcoin-origin quote.
+
+The native BTC token is a token id. It is not a wallet. Put it in `sellToken` or `buyToken` only. The API rejects it as `originAddress` or `destinationAddress`.
+
+The API supports native BTC only. It rejects any other token on Bitcoin. A swap from Bitcoin to Bitcoin is not a route.
+
+<Accordion title="Supported Bitcoin address types">
+The API accepts mainnet addresses of these types:
+
+| Type | Starts with |
+| --- | --- |
+| P2PKH | `1` |
+| P2SH | `3` |
+| P2WPKH | `bc1q`, 42 characters |
+| P2WSH | `bc1q`, 62 characters |
+| P2TR | `bc1p` |
+
+The API rejects testnet addresses that start with `tb1`. It also rejects bech32 addresses that mix upper and lower case.
+
+Some routes quote a P2WPKH origin address only. If a route you expect is missing, request the quote again with a P2WPKH address.
+</Accordion>
+
+## Buy BTC with a token on an EVM chain
+
+### 1. Fetch a quote
+
+Set `destinationChain` to `bitcoin` and `buyToken` to the native BTC token. Put the Bitcoin address that receives the BTC in `destinationAddress`.
+
+```typescript
+const quotesParams = new URLSearchParams({
+    originChain: 'base', // Base mainnet
+    destinationChain: 'bitcoin', // Bitcoin mainnet
+    sellToken: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC on Base
+    buyToken: 'bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8', // native BTC
+    sellAmount: '20000000', // 20 USDC (6 decimals)
+    originAddress: '$USER_EVM_ADDRESS', // Base address that sells the USDC
+    destinationAddress: '$USER_BITCOIN_ADDRESS', // Bitcoin address that receives the BTC
+    sortQuotesBy: 'price',
+    maxNumQuotes: '3',
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const response = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
+const quoteResponse = await response.json();
+```
+
+`destinationAddress` is required. Without it, the API returns HTTP 400 `INPUT_INVALID` with the reason `Bitcoin destinationAddress is required`.
+
+The response has the same shape as an EVM quote. `destinationChainId` is `999999999994`. Each bridge step names its `provider`, such as `relay` or `near_intents`. Keep the `quoteId` of the quote you pick.
+
+You can add integrator fees to this request. See [Monetize Your App](/cross-chain/cross-chain-api/guides/monetize-your-app).
+
+### 2. Set an allowance and send the transaction
+
+The origin is an EVM chain, so you follow the EVM flow:
+
+1. If `issues.allowance` is not `null`, approve the sell token for `allowanceTarget`.
+2. Sign and send `transaction.details` from the quote you picked.
+
+[Get started](/cross-chain/cross-chain-api/guides/get-started) shows both steps with viem. Bitcoin adds no approval of its own.
+
+### 3. Monitor the cross chain execution
+
+Poll `/status` with the Base transaction hash and the `quoteId`.
+
+```typescript
+const statusParams = new URLSearchParams({
+    originChain: 'base',
+    originTxHash: txHash, // hash of the Base transaction from step 2
+    quoteId: quoteResponse.quotes[0].quoteId,
+});
+
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
+
+console.log(await statusResponse.json());
+```
+
+The BTC is at `destinationAddress` when `status` is `bridge_filled`.
+
+## Sell BTC for a token on another chain
+
+### 1. Fetch a quote
+
+Set `originChain` to `bitcoin` and `sellToken` to the native BTC token. Put the Bitcoin address that holds the BTC in `originAddress`.
+
+```typescript
+const quotesParams = new URLSearchParams({
+    originChain: 'bitcoin', // Bitcoin mainnet
+    destinationChain: 'base', // Base mainnet
+    sellToken: 'bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8', // native BTC
+    buyToken: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', // USDC on Base
+    sellAmount: '1000000', // 0.01 BTC (8 decimals)
+    originAddress: '$USER_BITCOIN_ADDRESS', // Bitcoin address that holds the BTC
+    destinationAddress: '$USER_EVM_ADDRESS', // Base address that receives the USDC
+    sortQuotesBy: 'price',
+    maxNumQuotes: '3',
+});
+
+const headers = {
+    '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+
+const response = await fetch('https://api.0x.org/cross-chain/quotes?' + quotesParams.toString(), { headers });
+const quoteResponse = await response.json();
+```
+
+Check these points before you use the quote:
+
+- `originAddress` must hold the sell amount and the miner fee in confirmed UTXOs. If it does not, the response can have `liquidityAvailable: false` and no quotes. Fund the address, wait for a confirmation, and request the quote again.
+- Do not send `feeBps`, `feeRecipient`, or `feeToken`. The API returns HTTP 400 with the reason `Fee collection is not supported when origin chain is Bitcoin`.
+- `allowanceTarget` is `null`. Bitcoin has no approval step and no wrap step.
+
+<Accordion title="Example response">
+Amounts are illustrations. The `psbt` value is shortened.
+
+```json
+{
+    "liquidityAvailable": true,
+    "allowanceTarget": null,
+    "originChainId": 999999999994,
+    "originChain": "bitcoin",
+    "destinationChainId": 8453,
+    "destinationChain": "base",
+    "sellToken": "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8",
+    "buyToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "issues": {
+        "allowance": null,
+        "balance": null
+    },
+    "quotes": [
+        {
+            "sellAmount": "1000000",
+            "buyAmount": "<USDC base units>",
+            "minBuyAmount": "<USDC base units>",
+            "quoteId": "<quote id>",
+            "gasCosts": {
+                "chainType": "btc",
+                "total": "<satoshis>"
+            },
+            "steps": [
+                {
+                    "type": "bridge",
+                    "originChainId": 999999999994,
+                    "destinationChainId": 8453,
+                    "sellToken": "bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8",
+                    "buyToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+                    "sellAmount": "1000000",
+                    "buyAmount": "<USDC base units>",
+                    "minBuyAmount": "<USDC base units>",
+                    "provider": "near_intents",
+                    "estimatedTimeSeconds": "<seconds>"
+                }
+            ],
+            "transaction": {
+                "chainType": "btc",
+                "details": {
+                    "psbt": "70736274ff..."
+                }
+            },
+            "estimatedTimeSeconds": "<seconds>"
+        }
+    ]
+}
+```
+</Accordion>
+
+Read these fields on the quote you pick:
+
+| Field | Meaning |
+| --- | --- |
+| `transaction.details.psbt` | The unsigned transaction, as a hex PSBT. It starts with `70736274`, the bytes for `psbt`. It is not base64. |
+| `gasCosts.total` | The miner fee in satoshis. The PSBT already pays it. Your wallet does not add a second fee. |
+| `steps[].provider` | The bridge for the route, such as `relay` or `near_intents`. |
+| `estimatedTimeSeconds` | The quote's time estimate. It is not a promise. |
+
+A Bitcoin confirmation takes about 10 minutes. Plan your UI for that wait.
+
+### 2. Sign the PSBT
+
+Sign the PSBT from the quote you picked with the key for `originAddress`. Follow these rules:
+
+- Do not add, remove, or reorder inputs or outputs.
+- Do not build a new transaction from the quote. The PSBT already pays the miner fee.
+- Finalize the inputs after you sign them.
+
+```typescript
+import { Psbt } from 'bitcoinjs-lib';
+
+const quote = quoteResponse.quotes[0];
+const psbt = Psbt.fromHex(quote.transaction.details.psbt.replace(/^0x/, ''));
+
+// `keyPair` signs for $USER_BITCOIN_ADDRESS.
+// Load it from your wallet or key store. Do not put a private key in your code.
+psbt.signAllInputs(keyPair);
+psbt.finalizeAllInputs();
+
+const tx = psbt.extractTransaction();
+const rawTx = tx.toHex();
+const txid = tx.getId();
+```
+
+If a wallet app signs for your user, pass it the same PSBT hex.
+
+### 3. Broadcast the transaction
+
+Send `rawTx` to the Bitcoin network through your own node or a broadcast service. Keep `txid`. You need it for `/status`.
+
+### 4. Monitor the cross chain execution
+
+Poll `/status` with `originChain` set to `bitcoin`, `originTxHash` set to the txid, and the `quoteId`.
+
+```typescript
+const statusParams = new URLSearchParams({
+    originChain: 'bitcoin',
+    originTxHash: txid, // 64 hex characters, with or without a 0x prefix
+    quoteId: quoteResponse.quotes[0].quoteId,
+});
+
+const statusResponse = await fetch('https://api.0x.org/cross-chain/status?' + statusParams.toString(), { headers });
+
+console.log(await statusResponse.json());
+```
+
+If the API cannot find the txid on chain, it returns HTTP 404 `TRANSACTION_NOT_FOUND` with the message `The transaction is not found on-chain`. Check that the broadcast succeeded, then poll again.
+
+For the status lifecycle and failure handling, see [Tracking Transaction Status](/cross-chain/cross-chain-api/key-concepts/tracking-transaction-status).
