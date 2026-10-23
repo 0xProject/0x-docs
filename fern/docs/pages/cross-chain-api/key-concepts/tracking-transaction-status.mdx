@@ -45,7 +45,7 @@ Without `quoteId` in those cases, the `/status` endpoint returns a 400 error: `"
 
 After `bridge_filled`, the bridge step in the `steps` array includes a `settledBuyAmount` field which represents the actual amount the recipient received on the destination chain. This may differ from `quotedBuyAmount` due to slippage.
 
-Settled amounts are supported on all chain types (EVM, Solana, Tron, HyperCore, Bitcoin).
+Settled amounts are supported on all chain types (EVM, Solana, Tron, HyperCore).
 
 For refunds, `recovery.settledAmount` similarly shows the actual refunded amount.
 
