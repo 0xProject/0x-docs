@@ -361,6 +361,9 @@ navigation:
               - page: Cross Chain Swaps from Tron
                 slug: cross-chain-swaps-from-tron
                 path: docs/pages/cross-chain-api/guides/cross-chain-swaps-from-tron.mdx
+              - page: Cross Chain Swaps with Bitcoin
+                slug: cross-chain-swaps-with-bitcoin
+                path: docs/pages/cross-chain-api/guides/cross-chain-swaps-with-bitcoin.mdx
               - page: Cross Chain Swaps to HyperCore
                 slug: cross-chain-swaps-to-hypercore
                 path: docs/pages/cross-chain-api/guides/cross-chain-swaps-to-hypercore.mdx

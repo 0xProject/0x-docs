@@ -1,9 +1,9 @@
 ---
 title: "Native Tokens Handling"
-description: "How native tokens (ETH, SOL, TRX) work in cross-chain swaps."
+description: "How native tokens (ETH, SOL, TRX, BTC) work in cross-chain swaps."
 ---
 
-This page explains how native tokens (ETH, SOL, TRX) work in cross-chain swaps.
+This page explains how native tokens (ETH, SOL, TRX, BTC) work in cross-chain swaps.
 
 ## Native Token Addresses
 
@@ -14,6 +14,7 @@ Each chain type uses a specific address to represent the native token:
 | EVM | `0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` | ETH, AVAX, BNB, POL, etc. |
 | Solana | `So11111111111111111111111111111111111111111` | SOL |
 | Tron | `T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb` | TRX |
+| Bitcoin | `bc1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmql8k8` | BTC |
 
 Pass these as `sellToken` or `buyToken` when swapping the chain's native token.
 

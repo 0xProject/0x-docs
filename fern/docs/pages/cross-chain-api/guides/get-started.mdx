@@ -201,7 +201,7 @@ await walletClient.waitForTransactionReceipt({
 ```
 
 <Info>
-**Important:** Only EVM chains require token allowances. Solana and Tron do not need an approval step and `allowanceTarget` will be `null` for those chains. Native tokens (ETH, BNB, etc.) also do not need approvals.
+**Important:** Only EVM chains require token allowances. Solana, Tron, and Bitcoin do not need an approval step. `allowanceTarget` will be `null` when one of them is the origin chain. Native tokens (ETH, BNB, etc.) also do not need approvals.
 </Info>
 
 ### 3. Sign and submit a transaction

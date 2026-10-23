@@ -109,6 +109,7 @@ When multiple fees are used, the response contains `integratorFees` (array) inst
 - `feeBps` and `feeRecipient` must **both** be provided, or neither.
 - If `feeToken` is provided, array length must match `feeBps`.
 - `feeRecipient` addresses must be valid for the origin chain's address format.
+- The API rejects `feeBps`, `feeRecipient`, and `feeToken` with HTTP 400 when the origin chain is Bitcoin.
 
 ## Pricing Considerations
 
