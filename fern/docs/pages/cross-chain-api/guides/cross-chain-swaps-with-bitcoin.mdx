@@ -12,6 +12,14 @@ You can use the `/quotes` and `/status` endpoints to move value in both directio
 
 The examples use USDC on Base as the other side of the swap.
 
+## Terms
+
+**UTXO.** An unspent output of an earlier Bitcoin transaction. The sell amount and the miner fee are paid from the UTXOs at your address. See [Transaction data](https://developer.bitcoin.org/devguide/transactions.html).
+
+**PSBT.** A Partially Signed Bitcoin Transaction. The sell quote returns one as hex. See [BIP 174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki).
+
+**WIF.** A text form of a Bitcoin private key. The sign step reads it from `BITCOIN_WIF`.
+
 ### 0. Prerequisites
 
 Make sure you have:
@@ -20,7 +28,7 @@ Make sure you have:
 - A mainnet Bitcoin address. Use a P2WPKH address that starts with `bc1q` when you can.
 - To buy BTC: a funded EVM wallet, set up as in [Get started](/cross-chain/cross-chain-api/guides/get-started).
 - To sell BTC: BTC at your Bitcoin address in a confirmed UTXO. The amount must cover the sell amount and the miner fee.
-- To sell BTC: a way to sign a PSBT and broadcast a raw Bitcoin transaction. The example below uses [bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib).
+- To sell BTC: a WIF in `BITCOIN_WIF`. The example uses [bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib), `ecpair`, and `tiny-secp256k1`.
 
 ## Bitcoin values
 
@@ -74,6 +82,10 @@ const quotesParams = new URLSearchParams({
     maxNumQuotes: '3',
 });
 
+// The origin chain is EVM. Delete both lines to charge no fee.
+quotesParams.set('feeBps', '50');
+quotesParams.set('feeRecipient', '$FEE_RECIPIENT_ADDRESS');
+
 const headers = {
     '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
@@ -84,14 +96,41 @@ const quoteResponse = await response.json();
 
 `destinationAddress` is required. Without it, the API returns HTTP 400 `INPUT_INVALID` with the reason `Bitcoin destinationAddress is required`.
 
+`feeBps` and `feeRecipient` collect a fee on this request because the origin chain is EVM. See [Monetize Your App](/cross-chain/cross-chain-api/guides/monetize-your-app). A request with `originChain` set to `bitcoin` rejects those fields.
+
 ### 2. Set an allowance and send the transaction
 
-The origin is an EVM chain, so you follow the EVM flow:
+```typescript
+import { createWalletClient, http, erc20Abi } from 'viem';
+import { base } from 'viem/chains';
+import { privateKeyToAccount } from 'viem/accounts';
 
-1. If `issues.allowance` is not `null`, approve the sell token for `allowanceTarget`.
-2. Sign and send `transaction.details` from the quote you picked.
+const account = privateKeyToAccount(process.env.EVM_PRIVATE_KEY as `0x${string}`);
+const walletClient = createWalletClient({
+    account,
+    chain: base,
+    transport: http('https://mainnet.base.org'),
+});
 
-[Get started](/cross-chain/cross-chain-api/guides/get-started) shows both steps with viem.
+const quote = quoteResponse.quotes[0];
+
+if (quote.issues.allowance) {
+    const approveTxHash = await walletClient.writeContract({
+        address: quoteResponse.sellToken as `0x${string}`,
+        abi: erc20Abi,
+        functionName: 'approve',
+        args: [quote.issues.allowance.spender as `0x${string}`, BigInt(quote.sellAmount)],
+    });
+    await walletClient.waitForTransactionReceipt({ hash: approveTxHash });
+}
+
+const txHash = await walletClient.sendTransaction({
+    to: quote.transaction.details.to as `0x${string}`,
+    data: quote.transaction.details.data as `0x${string}`,
+    value: BigInt(quote.transaction.details.value),
+    gas: quote.transaction.details.gas ? BigInt(quote.transaction.details.gas) : undefined,
+});
+```
 
 ### 3. Monitor the cross chain execution
 
@@ -199,32 +238,39 @@ A Bitcoin confirmation takes about 10 minutes.
 
 ### 2. Sign the PSBT
 
-Sign the PSBT from the quote you picked with the key for `originAddress`. Follow these rules:
-
-- Do not add, remove, or reorder inputs or outputs.
-- Do not build a new transaction from the quote. The PSBT already pays the miner fee.
-
 ```typescript
-import { Psbt } from 'bitcoinjs-lib';
+import * as bitcoin from 'bitcoinjs-lib';
+import * as ecc from 'tiny-secp256k1';
+import { ECPairFactory } from 'ecpair';
+
+bitcoin.initEccLib(ecc);
+const ECPair = ECPairFactory(ecc);
+const keyPair = ECPair.fromWIF(process.env.BITCOIN_WIF);
 
 const quote = quoteResponse.quotes[0];
-const psbt = Psbt.fromHex(quote.transaction.details.psbt.replace(/^0x/, ''));
-
-// `keyPair` signs for $USER_BITCOIN_ADDRESS.
-// Load it from your wallet or key store. Do not put a private key in your code.
+const psbt = bitcoin.Psbt.fromHex(quote.transaction.details.psbt.replace(/^0x/, ''));
 psbt.signAllInputs(keyPair);
 psbt.finalizeAllInputs();
 
-const tx = psbt.extractTransaction();
-const rawTx = tx.toHex();
-const txid = tx.getId();
+const rawTx = psbt.extractTransaction().toHex();
 ```
-
-If a wallet app signs for your user, pass it the same PSBT hex.
 
 ### 3. Broadcast the transaction
 
-Send `rawTx` to the Bitcoin network through your own node or a broadcast service.
+[mempool.space](https://mempool.space/docs/api/rest) returns the txid.
+
+```typescript
+const broadcastResponse = await fetch('https://mempool.space/api/tx', {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: rawTx,
+});
+
+const txid = (await broadcastResponse.text()).trim();
+if (!broadcastResponse.ok) {
+    throw new Error(txid);
+}
+```
 
 ### 4. Monitor the cross chain execution
 
