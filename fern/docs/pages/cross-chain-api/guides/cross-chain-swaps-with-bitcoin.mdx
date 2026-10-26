@@ -5,7 +5,7 @@ description: "Learn how to use the 0x Cross Chain API to quote, send, and track 
 
 ## Steps to Cross Chain Swap Native BTC
 
-You can use the `/quotes` and `/status` endpoints to move value in both directions:
+This guide will walk you through using the `/quotes` and `/status` endpoints on 0x's Cross Chain API to:
 
 - Buy BTC: sell a token on an EVM chain and receive native BTC at a Bitcoin address.
 - Sell BTC: sell native BTC from a Bitcoin address and receive a token on another chain.
@@ -14,11 +14,11 @@ The examples use USDC on Base as the other side of the swap.
 
 ## Terms
 
-**UTXO.** An unspent output of an earlier Bitcoin transaction. The sell amount and the miner fee are paid from the UTXOs at your address. See [Transaction data](https://developer.bitcoin.org/devguide/transactions.html).
-
-**PSBT.** A Partially Signed Bitcoin Transaction. The sell quote returns one as hex. See [BIP 174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki).
-
-**WIF.** A text form of a Bitcoin private key. The sign step reads it from `BITCOIN_WIF`.
+| Term | Meaning |
+| --- | --- |
+| UTXO | An unspent output of an earlier Bitcoin transaction. The sell amount and the miner fee are paid from the UTXOs at your address. See [Transaction data](https://developer.bitcoin.org/devguide/transactions.html). |
+| PSBT | A Partially Signed Bitcoin Transaction. The sell quote returns one as hex. See [BIP 174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki). |
+| WIF | A text form of a Bitcoin private key. The sign step reads it from `BITCOIN_WIF`. |
 
 ### 0. Prerequisites
 
@@ -42,13 +42,6 @@ Use these values in every Bitcoin request:
 | Decimals | `8` |
 
 Write BTC amounts as integers in base units, the same as EVM token amounts. The base unit of BTC is the satoshi. BTC has 8 decimals, so 1 BTC = 100,000,000 satoshis.
-
-- `100000000` = 1 BTC
-- `1000000` = 0.01 BTC
-
-The native BTC token is a token id. Put it in `sellToken` or `buyToken` only. The API rejects it as `originAddress` or `destinationAddress`.
-
-The API supports native BTC only.
 
 <Accordion title="Supported Bitcoin address types">
 The API accepts mainnet addresses of these types:
