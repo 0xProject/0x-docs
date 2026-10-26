@@ -82,10 +82,6 @@ const quotesParams = new URLSearchParams({
     maxNumQuotes: '3',
 });
 
-// The origin chain is EVM. Delete both lines to charge no fee.
-quotesParams.set('feeBps', '50');
-quotesParams.set('feeRecipient', '$FEE_RECIPIENT_ADDRESS');
-
 const headers = {
     '0x-api-key': '[api-key]', // Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
@@ -95,8 +91,6 @@ const quoteResponse = await response.json();
 ```
 
 `destinationAddress` is required. Without it, the API returns HTTP 400 `INPUT_INVALID` with the reason `Bitcoin destinationAddress is required`.
-
-`feeBps` and `feeRecipient` collect a fee on this request because the origin chain is EVM. See [Monetize Your App](/cross-chain/cross-chain-api/guides/monetize-your-app). A request with `originChain` set to `bitcoin` rejects those fields.
 
 ### 2. Set an allowance and send the transaction
 
