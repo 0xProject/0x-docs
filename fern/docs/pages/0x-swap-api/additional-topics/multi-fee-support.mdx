@@ -10,7 +10,7 @@ The Swap and Gasless APIs support collecting fees for **multiple recipients in a
 Fee splitting is controlled by three query parameters that work together:
 
 - `swapFeeRecipient` — one or more wallet addresses (comma-separated) that receive fees at settlement
-- `swapFeeBps` — one or more fee amounts in basis points (comma-separated), defining how much each recipient earns
+- `swapFeeBps` — one or more fee amounts in basis points (comma-separated), defining how much each recipient earns. `swapFeePpm` can be used instead for parts-per-million precision.
 - `swapFeeToken`*(optional)* — the token fees are collected in; can be omitted or set to either the address of `buyToken` or `sellToken`
 
 `swapFeeRecipient` and `swapFeeBps` are positionally matched and co-dependent. The first value in `swapFeeBps` applies to the first address in `swapFeeRecipient`, the second to the second, and so on. Both must be present and the same length.\

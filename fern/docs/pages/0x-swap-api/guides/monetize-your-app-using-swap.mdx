@@ -34,7 +34,7 @@ Out-of-the-box, 0x Swap API offers two monetization options:
 To apply affiliate fees, include the following parameters in your [Swap API request](/api-reference/evm-ap-is/swap/allowanceholder-getprice):
 
 - `swapFeeRecipient` - The wallet address to receive the specified trading fees (supports single or multiple comma-separated values).
-- `swapFeeBps` - The fee amount(s), in basis points, to send to each corresponding `swapFeeRecipient`. Denoted in basis points (0–1000 Bps = 0–10%).
+- `swapFeeBps` - The fee amount(s), in basis points, to send to each corresponding `swapFeeRecipient`. Denoted in basis points (0–1000 Bps = 0–10%). For finer precision, use `swapFeePpm` (parts-per-million) instead, e.g. 5000 PPM = 50 Bps = 0.5%.
 - `swapFeeToken` - The contract address of token in which fees should be paid. This must be set to either the value of `buyToken` or the `sellToken`.
 
 ### Example API call
