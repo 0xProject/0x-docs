@@ -611,9 +611,9 @@ https://api.0x.org/gasless/quote                          # Request a firm quote
 
 <AccordionGroup>
   <Accordion title="Does 0x create ATAs if we don't have one, specifically for our fee address?">
-    **For the user/taker:** Yes. The setup instructions 0x returns automatically create associated token accounts (ATAs) for the taker as needed, using `createAssociatedTokenAccountIdempotent` — so these won't fail if an ATA already exists. See [what's included in the instructions](/svm/solana-swap-api/guides/important-integration-notes#instructions-grouping) for the full list.
+    **For the user/taker:** Yes. The setup instructions 0x returns automatically create associated token accounts (ATAs) for the taker as needed, using `createAssociatedTokenAccountIdempotent` — so these won't fail if an ATA already exists. See [what's included in the instructions](/solana/solana-swap-api/guides/important-integration-notes#instructions-grouping) for the full list.
 
-    **For an integrator fee address:** No. You should assume the fee recipient ATA must already exist. If it may not exist, add a `createAssociatedTokenAccountIdempotent` instruction for the fee recipient + fee token mint yourself, **before** the swap/fee transfer path. See the [Integrator Byte Costs](/svm/solana-swap-api/guides/integrator-byte-costs) guide for how to account for the extra bytes this adds.
+    **For an integrator fee address:** No. You should assume the fee recipient ATA must already exist. If it may not exist, add a `createAssociatedTokenAccountIdempotent` instruction for the fee recipient + fee token mint yourself, **before** the swap/fee transfer path. See the [Integrator Byte Costs](/solana/solana-swap-api/guides/integrator-byte-costs) guide for how to account for the extra bytes this adds.
 
     The relevant field is [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient) — it accepts either a wallet address (for native SOL output) or a valid token account address (for token outputs).
 

@@ -1,15 +1,15 @@
 ---
 title: "Best Practices to Add Solana to EVM Projects"
-description: Design patterns, integration tips, and architectural considerations for teams adding Solana (SVM) support to an existing EVM-based application.
+description: Design patterns, integration tips, and architectural considerations for teams adding Solana support to an existing EVM-based application.
 ---
 
 <Note>
   The 0x Solana Swap API is in **open beta** — [get an API key](https://dashboard.0x.org/create-account) to start building. Interfaces may still change; share feedback in [Discord](https://discord.com/invite/official0x).
 </Note>
 
-This guide outlines design patterns, integration tips, and architectural considerations for teams adding Solana (SVM) support to an existing EVM-based application. It is geared toward engineers familiar with Ethereum who want to offer a unified cross-chain experience.
+This guide outlines design patterns, integration tips, and architectural considerations for teams adding Solana support to an existing EVM-based application. It is geared toward engineers familiar with Ethereum who want to offer a unified cross-chain experience.
 
-### SVM + EVM Integration Checklist
+### Solana + EVM Integration Checklist
 
 - [ ] Abstract tokens, wallets, and transaction logic across chains
 - [ ] Normalize the transaction UX flow
@@ -22,11 +22,11 @@ This guide outlines design patterns, integration tips, and architectural conside
 
 ### 1. Abstract Core Concepts
 
-Avoid hardcoding chain-specific assumptions in your app. Design your architecture around abstract interfaces to encapsulate EVM and SVM differences:
+Avoid hardcoding chain-specific assumptions in your app. Design your architecture around abstract interfaces to encapsulate EVM and Solana differences:
 
 - **Token abstraction**: Define a generic token model that hides differences like hexadecimal (EVM) vs base58 (Solana) addresses.
 - **Wallet abstraction**: Represent wallets as objects that can return addresses, sign messages, and send transactions across chains.
-- **Chain awareness**: Add utility methods to check if a wallet or token belongs to EVM or SVM to help enforce compatibility or limit unsupported operations.
+- **Chain awareness**: Add utility methods to check if a wallet or token belongs to EVM or Solana to help enforce compatibility or limit unsupported operations.
 
 ---
 
@@ -52,7 +52,7 @@ Choose your wallet provider carefully. The abstractions they expose can signific
 
 ### 3. Normalize Transaction Flow
 
-While EVM and SVM transactions are different at the protocol level, you can normalize the user experience:
+While EVM and Solana transactions are different at the protocol level, you can normalize the user experience:
 
 | UX Behavior        | EVM                         | Solana                     |
 | ------------------ | --------------------------- | -------------------------- |
@@ -89,7 +89,7 @@ Be prepared to handle creation of these accounts per swap, especially for new to
 
 [SPL (Solana Program Library) tokens](https://solana.com/pl/docs/tokens) are analogous to ERC-20 tokens.
 
-Tokens have an on-chain mint account owned by a *token program*. The 0x Solana Swap API supports both the SPL Token Program and the Token-2022 (Token Extensions) Program, though certain Token-2022 extension configurations are not routable — see [Token Support](/svm/solana-swap-api/guides/important-integration-notes#token-support) for details.
+Tokens have an on-chain mint account owned by a *token program*. The 0x Solana Swap API supports both the SPL Token Program and the Token-2022 (Token Extensions) Program, though certain Token-2022 extension configurations are not routable — see [Token Support](/solana/solana-swap-api/guides/important-integration-notes#token-support) for details.
 
 The address `So11111111111111111111111111111111111111112` is the WSOL mint address, but native SOL is not an SPL token mint account.
 
