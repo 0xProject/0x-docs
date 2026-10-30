@@ -44,8 +44,8 @@ tabs:
     slug: docs
   evm:
     display-name: EVM
-  svm:
-    display-name: SVM
+  solana:
+    display-name: Solana
   cross-chain:
     display-name: Cross-Chain
   api-reference:
@@ -285,7 +285,7 @@ navigation:
             href: https://0x.org/contact
             target: _blank
 
-  - tab: svm
+  - tab: solana
     layout:
       - section: Solana Swap API
         slug: solana-swap-api
@@ -516,10 +516,34 @@ redirects:
   - source: /docs/0x-swap-api/guides/monetize-your-app-using-swap
     destination: /evm/0x-swap-api/guides/monetize-your-app-using-swap
   - source: /docs/solana-swap-api/introduction
-    destination: /svm/solana-swap-api/introduction
+    destination: /solana/solana-swap-api/introduction
   - source: /docs/upgrading/overview
     destination: /evm/0x-swap-api/introduction
   - source: /docs/upgrading/upgrading-to-swap-v2
     destination: /evm/0x-swap-api/introduction
   - source: /docs/upgrading/upgrading-to-gasless-v2
     destination: /evm/gasless-api/introduction
+  - source: /svm
+    destination: /solana/solana-swap-api/introduction
+  - source: /svm/solana-swap-api
+    destination: /solana/solana-swap-api/introduction
+  - source: /svm/solana-swap-api/introduction
+    destination: /solana/solana-swap-api/introduction
+  - source: /svm/solana-swap-api/guides/get-started-with-solana-swap-api
+    destination: /solana/solana-swap-api/guides/get-started-with-solana-swap-api
+  - source: /svm/solana-swap-api/guides/monetize-your-app
+    destination: /solana/solana-swap-api/guides/monetize-your-app
+  - source: /svm/solana-swap-api/guides/important-integration-notes
+    destination: /solana/solana-swap-api/guides/important-integration-notes
+  - source: /svm/solana-swap-api/guides/integrator-byte-costs
+    destination: /solana/solana-swap-api/guides/integrator-byte-costs
+  - source: /svm/solana-swap-api/guides/evm-to-solana
+    destination: /solana/solana-swap-api/guides/evm-to-solana
+  - source: /svm/solana-swap-api/troubleshooting
+    destination: /solana/solana-swap-api/troubleshooting
+  - source: /svm/need-help/faq
+    destination: /solana/need-help/faq
+  - source: /svm/need-help/api-issues
+    destination: /solana/need-help/api-issues
+  - source: /svm/need-help/contact-support
+    destination: /solana/need-help/contact-support

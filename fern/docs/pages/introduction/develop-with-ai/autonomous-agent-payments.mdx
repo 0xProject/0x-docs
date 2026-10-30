@@ -80,7 +80,7 @@ Every payment includes the agent's **wallet address** and an **on-chain transact
 
 ## x402
 
-[x402](https://www.x402.org/) is an open standard that repurposes the HTTP `402 Payment Required` status code for real-time stablecoin payments. Agents sign a USDC [EIP-3009](https://eips.ethereum.org/EIPS/eip-3009) `transferWithAuthorization` payload (EVM) or a Solana USDC transfer transaction (SVM), then retry the request with the encoded signature.
+[x402](https://www.x402.org/) is an open standard that repurposes the HTTP `402 Payment Required` status code for real-time stablecoin payments. Agents sign a USDC [EIP-3009](https://eips.ethereum.org/EIPS/eip-3009) `transferWithAuthorization` payload (EVM) or a Solana USDC transfer transaction, then retry the request with the encoded signature.
 
 ### Endpoints
 
@@ -148,7 +148,7 @@ const quote = await quoteRes.json();
 ```
 
   </Tab>
-  <Tab title="Solana (SVM)">
+  <Tab title="Solana">
 
 ```js
 import bs58 from "bs58";
@@ -164,13 +164,13 @@ import { privateKeyToAccount } from "viem/accounts";
 // Solana key — base58 encoded 64-byte keypair (export from Phantom/Solflare)
 const keyBytes = bs58.decode(process.env.SOLANA_PRIVATE_KEY);
 const keypairSigner = await createKeyPairSignerFromBytes(keyBytes);
-const svmSigner = toClientSvmSigner(keypairSigner);
+const solanaSigner = toClientSvmSigner(keypairSigner);
 
 // EVM account used as the taker address in swap quotes
 const evmAccount = privateKeyToAccount(process.env.WALLET_PRIVATE_KEY);
 
 const core = new x402Client();
-core.register(SOLANA_MAINNET_CAIP2, new ExactSvmScheme(svmSigner));
+core.register(SOLANA_MAINNET_CAIP2, new ExactSvmScheme(solanaSigner));
 
 // Refuse to sign any payment over $0.02
 core.registerPolicy((_version, requirements) =>
