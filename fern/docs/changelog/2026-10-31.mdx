@@ -1,0 +1,40 @@
+---
+tags: []
+---
+
+#### 📣 Announcements
+
+- **Bitcoin is now supported in Cross-Chain API**: Native BTC can be bought and sold against tokens on supported chains, routed through Relay and NEAR Intents. [See supported chains](https://docs.0x.org/docs/introduction/supported-chains).
+- **`slippageBps` is deprecated in Swap and Gasless API**: Use `slippagePpm` instead for parts-per-million precision. `slippageBps` keeps working and still accepts whole numbers only.
+
+#### New Chains
+
+- **Bitcoin:** Now supported in Cross-Chain API (chain ID `999999999994`, chain name `bitcoin`).
+
+#### New Liquidity Sources
+
+- **Arc:** Added Prism, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+- **Base:** Added Daikon, Everlong, Fermi, Flux, TideFi, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+- **BSC:** Added Flux, Genius (Pons V2), and Loong (Pons V2).
+- **Ethereum:** Added Origin WETH ARM, Origin USDC ARM, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+- **Robinhood Chain:** Added Flux, Flywheel, Goo V3 (Uniswap V3), Icarus V2 (Velodrome V2), Icarus CL (Slipstream), Prism, Raphael V2 (Velodrome V2), Raphael V3 (Uniswap V3), Reafund (Pons V2), Standard Reserve V2, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+
+#### New Features
+
+- **`swapFeePpm` and `tradeSurplusMaxPpm` in Swap and Gasless API**: Affiliate fees and the trade-surplus cap can now be set in parts-per-million (0–1,000,000). Each is mutually exclusive with its basis-point equivalent, `swapFeeBps` and `tradeSurplusMaxBps`.
+- **`feePpm` in Cross-Chain API**: `/cross-chain/quotes` and `/cross-chain/quotes/stream` accept integrator fees in parts-per-million, as a single value or a comma-separated list. Mutually exclusive with `feeBps`.
+- **MoonPay bridge in Cross-Chain API**: Added `moonpay` as a bridge provider on Ethereum, Arbitrum, Base, BSC, and Polygon.
+- **New LayerZero OFT routes in Cross-Chain API**: Added ENA between Ethereum and HyperEVM, Monad, Plasma, and Robinhood Chain; USDG between Ethereum and Arbitrum; and sUSDe between Ethereum and Solana.
+
+#### Bug Fixes
+
+- `/cross-chain/status` now resolves Tron NEAR Intents trades that previously stayed in `origin_tx_pending` once their quote expired.
+- Bridge steps now report `sellAmount` in the bridge token's own units, which was wrong for NEAR Intents and several Solana routes when the trade included an origin swap.
+- Mayan routes now cap slippage just under 5%, which Mayan rejects outright, and a rejected Mayan quote returns `400` instead of `500`.
+- Fluid pools no longer return quotes on amounts the pool would revert on.
+- Tokens with a buy-side transfer tax now keep their Uniswap V4 liquidity instead of having those pools dropped as inaccurately priced.
+
+#### Documentation
+
+- Added a [Cross Chain Swaps with Bitcoin](https://docs.0x.org/cross-chain/cross-chain-api/guides/cross-chain-swaps-with-bitcoin) guide covering quoting, signing a PSBT, broadcasting, and tracking status for native BTC.
+- The affiliate-fee guides for Swap and Cross-Chain API now document the parts-per-million fee parameters alongside the basis-point ones.
