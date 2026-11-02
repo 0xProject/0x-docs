@@ -5,7 +5,6 @@ tags: []
 #### 📣 Announcements
 
 - **Bitcoin is now supported in Cross-Chain API**: Native BTC can be bought and sold against tokens on supported chains, routed through Relay and NEAR Intents. [See supported chains](https://docs.0x.org/docs/introduction/supported-chains).
-- **`slippageBps` is deprecated in Swap and Gasless API**: Use `slippagePpm` instead for parts-per-million precision. `slippageBps` keeps working and still accepts whole numbers only.
 
 #### New Chains
 
@@ -21,7 +20,8 @@ tags: []
 
 #### New Features
 
-- **`swapFeePpm` and `tradeSurplusMaxPpm` in Swap and Gasless API**: Affiliate fees and the trade-surplus cap can now be set in parts-per-million (0–1,000,000). Each is mutually exclusive with its basis-point equivalent, `swapFeeBps` and `tradeSurplusMaxBps`.
+- **`slippagePpm` in Swap and Gasless API**: Slippage can now be set in parts-per-million, the API's native precision. New integrations should use `slippagePpm`. `slippageBps` is marked as deprecated but keeps working, so existing integrations don't need to change anything.
+- **`swapFeePpm` and `tradeSurplusMaxPpm` in Swap and Gasless API**: Affiliate fees and the trade surplus cap can now be set in parts per million (PPM), from 0 to 1,000,000. PPM is the API's native precision, so we recommend these parameters going forward. `swapFeeBps` and `tradeSurplusMaxBps` remain supported for backward compatibility, but can't be combined with their PPM equivalents in the same request.
 - **`feePpm` in Cross-Chain API**: `/cross-chain/quotes` and `/cross-chain/quotes/stream` accept integrator fees in parts-per-million, as a single value or a comma-separated list. Mutually exclusive with `feeBps`.
 - **MoonPay bridge in Cross-Chain API**: Added `moonpay` as a bridge provider on Ethereum, Arbitrum, Base, BSC, and Polygon.
 - **New LayerZero OFT routes in Cross-Chain API**: Added ENA between Ethereum and HyperEVM, Monad, Plasma, and Robinhood Chain; USDG between Ethereum and Arbitrum; and sUSDe between Ethereum and Solana.
@@ -37,4 +37,3 @@ tags: []
 #### Documentation
 
 - Added a [Cross Chain Swaps with Bitcoin](https://docs.0x.org/cross-chain/cross-chain-api/guides/cross-chain-swaps-with-bitcoin) guide covering quoting, signing a PSBT, broadcasting, and tracking status for native BTC.
-- The affiliate-fee guides for Swap and Cross-Chain API now document the parts-per-million fee parameters alongside the basis-point ones.
