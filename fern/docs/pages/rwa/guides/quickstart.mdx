@@ -61,6 +61,8 @@ curl --request GET \
 
 Check `liquidityAvailable` in the response before showing a price. RWA markets are thinner than major crypto pairs, so a pair that quotes at one size may not quote at another.
 
+{/* TODO(pre-launch): if RWA token metadata (asset class, issuer, jurisdiction) ships in the price/quote response, show the field in a sample response here and link to "Use token metadata to set your own rules" on /rwa/introduction. */}
+
 ## 4. Fetch a firm quote
 
 When the user commits, call `/swap/allowance-holder/quote` for an executable quote with transaction data attached:

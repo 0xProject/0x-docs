@@ -22,23 +22,44 @@ To opt in from the dashboard:
 
 <Steps>
   <Step>
-    Sign in to the [0x Dashboard](https://dashboard.0x.org/) and open the **RWA** tab.
-    {/* TODO(pre-launch): confirm the final tab name and its location in the dashboard nav. */}
+    Sign in to the [0x Dashboard](https://dashboard.0x.org/), open **Settings**,
+    and select the **RWA access** tab.
+    {/* TODO(pre-launch): confirm how users open Settings from the dashboard home (e.g. avatar menu or sidebar). */}
   </Step>
   <Step>
-    Read the RWA trading agreement, check the box to accept it on behalf of your
-    team, then submit.
-    {/* TODO(pre-launch): §5.4.2 may require additional fields (legal entity name, jurisdictions served). Document them here once legal confirms. */}
+    Select **Request access**.
+
+    <img
+      src="../../../assets/img/rwa/dashboard-rwa-access-tab.png"
+      alt="0x Dashboard Settings with the RWA access tab open, showing Real-world assets as Not enabled and a Request access button"
+      width="500"
+    />
+  </Step>
+  <Step>
+    Complete each section of the request form, then submit:
+
+    - **Overview**: your website or product URLs and a short description of your business, such as a wallet, front-end app, or aggregator.
+    - **Requester**: details about you, the person submitting the request.
+    - **Entity**: the legal entity you are requesting access for.
+    - **Geography**: where you offer your product.
+    - **Terms**: review and accept the Regulated Digital Assets Terms.
+    - **Signature**: sign on behalf of your organization.
+
+    {/* TODO(pre-launch): confirm the fields in Requester, Entity, and Geography and list anything integrators should prepare in advance. */}
+
+    <img
+      src="../../../assets/img/rwa/dashboard-rwa-request-form.png"
+      alt="RWA access request form, Section 1 Integration overview, with fields for website or product URLs and a description of the business"
+      width="500"
+    />
   </Step>
 </Steps>
 
-{/* TODO(pre-launch): screenshot of the RWA tab and the agreement/checkbox state. Save to ../../assets/img/introduction/0x-dashboard-rwa-tab.png */}
-
-After you submit, RWA quotes work with your existing API keys.
-
 ## Confirm RWA access is live
 
-{/* TODO(pre-launch): document how an integrator verifies opt-in took effect. Either a status indicator in the RWA tab, or a sample /swap/permit2/price call against an RWA token that returns a quote instead of an authorization error. Include the exact error code returned before opt-in (likely BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE / SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE) so users can recognize it. */}
+The **RWA access** tab shows your team's status. Before you request access, it shows **Not enabled**.
+
+{/* TODO(pre-launch): document the status labels after submission (e.g. pending, enabled) and include the exact error code returned before access is enabled (likely BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE / SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE) so users can recognize it. */}
 
 ## Have a question?
 
