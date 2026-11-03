@@ -1,0 +1,30 @@
+---
+tags: []
+---
+
+#### 📣 Announcements
+
+- **Bitcoin is now supported in Cross-Chain API**: Native BTC can be bought and sold against tokens on supported chains, routed through Relay and NEAR Intents. [See supported chains](https://docs.0x.org/docs/introduction/supported-chains).
+
+#### New Chains
+
+- **Bitcoin:** Now supported in Cross-Chain API (chain ID `999999999994`, chain name `bitcoin`).
+
+#### New Liquidity Sources
+
+- **Arc:** Added Prism, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+- **Base:** Added Daikon, Everlong, Fermi, Flux, TideFi, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+- **BSC:** Added Flux, Genius (Pons V2), and Loong (Pons V2).
+- **Ethereum:** Added Origin WETH ARM, Origin USDC ARM, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+- **Robinhood Chain:** Added Flux, Flywheel, Goo V3 (Uniswap V3), Icarus V2 (Velodrome V2), Icarus CL (Slipstream), Prism, Raphael V2 (Velodrome V2), Raphael V3 (Uniswap V3), Reafund (Pons V2), Standard Reserve V2, Topaz V2 (Velodrome V2), and Topaz CL (Uniswap V3).
+
+#### New Features
+
+- **`swapFeePpm` and `tradeSurplusMaxPpm` in Swap and Gasless APIs**: Affiliate fees and trade surplus caps can now be specified in parts per million (PPM), the APIs' native precision. PPM is recommended for new integrations. `swapFeeBps` and `tradeSurplusMaxBps` remain supported for backward compatibility. BPS and PPM equivalents cannot be combined in the same request.
+- **`feePpm` in Cross-Chain API**: `/cross-chain/quotes` and `/cross-chain/quotes/stream` accept integrator fees in parts-per-million, as a single value or a comma-separated list. Mutually exclusive with `feeBps`.
+- **MoonPay bridge in Cross-Chain API**: Added `moonpay` as a bridge provider on Ethereum, Arbitrum, Base, BSC, and Polygon.
+- **New LayerZero OFT routes in Cross-Chain API**: Added ENA between Ethereum and HyperEVM, Monad, Plasma, and Robinhood Chain; USDG between Ethereum and Arbitrum; and sUSDe between Ethereum and Solana.
+
+#### Documentation
+
+- Added a [Cross Chain Swaps with Bitcoin](https://docs.0x.org/cross-chain/cross-chain-api/guides/cross-chain-swaps-with-bitcoin) guide covering quoting, signing a PSBT, broadcasting, and tracking status for native BTC.
