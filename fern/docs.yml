@@ -443,7 +443,7 @@ navigation:
                 path: docs/pages/rwa/guides/quickstart.mdx
           - link: Supported Chains and Providers
             href: /docs/introduction/supported-chains
-          - link: Learn More
+          - link: Supported Issuers
             href: https://0x.org/solution/rwas
             target: _blank
 
