@@ -26,14 +26,6 @@ tags: []
 - **MoonPay bridge in Cross-Chain API**: Added `moonpay` as a bridge provider on Ethereum, Arbitrum, Base, BSC, and Polygon.
 - **New LayerZero OFT routes in Cross-Chain API**: Added ENA between Ethereum and HyperEVM, Monad, Plasma, and Robinhood Chain; USDG between Ethereum and Arbitrum; and sUSDe between Ethereum and Solana.
 
-#### Bug Fixes
-
-- `/cross-chain/status` now resolves Tron NEAR Intents trades that previously stayed in `origin_tx_pending` once their quote expired.
-- Bridge steps now report `sellAmount` in the bridge token's own units, which was wrong for NEAR Intents and several Solana routes when the trade included an origin swap.
-- Mayan routes now cap slippage just under 5%, which Mayan rejects outright, and a rejected Mayan quote returns `400` instead of `500`.
-- Fluid pools no longer return quotes on amounts the pool would revert on.
-- Tokens with a buy-side transfer tax now keep their Uniswap V4 liquidity instead of having those pools dropped as inaccurately priced.
-
 #### Documentation
 
 - Added a [Cross Chain Swaps with Bitcoin](https://docs.0x.org/cross-chain/cross-chain-api/guides/cross-chain-swaps-with-bitcoin) guide covering quoting, signing a PSBT, broadcasting, and tracking status for native BTC.
