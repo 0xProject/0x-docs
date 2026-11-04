@@ -28,14 +28,17 @@
 .hero-btn-secondary {
   display: inline-flex;
   align-items: center;
-  padding: 3px 22px;
-  border-radius: 9999px;
+  justify-content: center;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
   text-decoration: none !important;
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 14px;
   line-height: 1;
   white-space: nowrap;
   width: fit-content;
+  transition: background-color 0.15s ease;
 }
 
 /* Hide the auto-injected external link icon */
@@ -47,22 +50,81 @@
 .hero-btn-primary {
   background-color: #01a74d;
   color: #ffffff !important;
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
 }
 
-.dark .hero-btn-primary {
-  background-color: #01a74d;
-  color: #ffffff !important;
+.hero-btn-primary:hover {
+  background-color: #018f42;
 }
 
 .hero-btn-secondary {
-  background-color: white;
+  background-color: transparent;
   color: #25272a !important;
-  border: 1.5px solid rgba(37, 39, 42, 0.2);
+  border: 1px solid #e5e7eb;
+}
+
+.hero-btn-secondary:hover {
+  background-color: rgba(1, 167, 77, 0.08);
 }
 
 .dark .hero-btn-secondary {
-  background-color: #ffffff;
-  color: #25272a !important;
-  border-color: transparent;
+  color: #ffffff !important;
+  border-color: #27272a;
+}
+
+.dark .hero-btn-secondary:hover {
+  background-color: #18181b;
+}
+
+/* Build with AI links on the Welcome page */
+.ai-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 1rem 0 2.5rem;
+}
+
+.ai-links a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.ai-links a:hover {
+  border-color: #01a74d;
+  background-color: rgba(1, 167, 77, 0.05);
+}
+
+.ai-links a svg {
+  display: none !important;
+}
+
+.ai-links strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ai-links span {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #6b7280;
+}
+
+.dark .ai-links a {
+  border-color: #27272a;
+}
+
+.dark .ai-links a:hover {
+  border-color: #01a74d;
+  background-color: #18181b;
+}
+
+.dark .ai-links span {
+  color: #a1a1aa;
 }
