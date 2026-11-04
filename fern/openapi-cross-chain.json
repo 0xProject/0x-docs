@@ -85,7 +85,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                        "description": "The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction. For Bitcoin, quotes are supported from one native SegWit (P2WPKH, `bc1q`) address with confirmed coins. The quote returns a PSBT to sign with SIGHASH_ALL.",
                         "example": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
                     },
                     {
@@ -95,7 +95,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                        "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain. A Bitcoin destination accepts any mainnet address type.",
                         "example": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
                     },
                     {
@@ -3071,7 +3071,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                        "description": "The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction. For Bitcoin, quotes are supported from one native SegWit (P2WPKH, `bc1q`) address with confirmed coins. The quote returns a PSBT to sign with SIGHASH_ALL.",
                         "example": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
                     },
                     {
@@ -3081,7 +3081,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                        "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain. A Bitcoin destination accepts any mainnet address type.",
                         "example": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
                     },
                     {
