@@ -92,3 +92,8 @@
 .home-cards .fern-card-icon-row > * + * {
   margin-top: 0 !important;
 }
+
+/* Need Help cards have no description, so drop the shared min-height */
+.home-cards .help-cards .fern-card {
+  min-height: 0;
+}

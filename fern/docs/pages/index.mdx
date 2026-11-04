@@ -220,28 +220,28 @@ hide-nav-links: true
 
 <h2 style={{ textAlign: "center" }}>Need Help?</h2>
 
-<CardGroup cols={3}>
+<div className="help-cards">
 
-<Card title="FAQ" href="/docs/introduction/faq" icon="wrench">
-  Answers to common integration issues
-</Card>
+<CardGroup cols={4}>
+
+<Card title="FAQ" href="/docs/introduction/faq" icon="wrench" />
 
 <Card
   title="API Issues & Error Codes"
   href="/docs/introduction/api-issues"
   icon="triangle-exclamation"
->
-  Troubleshoot common API errors and what they mean
-</Card>
+/>
 
 <Card
   title="Support"
   href="/docs/introduction/need-help#-contact-developer-support-fastest-direct-help"
   icon="life-ring"
->
-  Contact the 0x developer support team
-</Card>
+/>
+
+<Card title="System Status" href="https://0x.statuspal.io" icon="signal" />
 
 </CardGroup>
+
+</div>
 
 </div>
