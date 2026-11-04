@@ -72,32 +72,39 @@ hide-nav-links: true
   </div>
 </div>
 
+<div className="home-cards">
+
 {/* ── Build with AI ── */}
 
 <h2 style={{ textAlign: "center" }}>Build with AI</h2>
 
-<div className="ai-links">
-  <a href="/docs/introduction/develop-with-ai/using-ai-with-0x">
-    <strong>Overview</strong>
-    <span>Use 0x Docs with LLMs and AI tools.</span>
-  </a>
-  <a href="/docs/introduction/develop-with-ai/agent-skills">
-    <strong>Agent Skills</strong>
-    <span>Give your coding agent full knowledge of the 0x APIs.</span>
-  </a>
-  <a href="/docs/introduction/develop-with-ai/mcp-setup">
-    <strong>MCP Server</strong>
-    <span>Connect AI tools to the 0x docs.</span>
-  </a>
-  <a href="/docs/introduction/develop-with-ai/0x-cli">
-    <strong>CLI</strong>
-    <span>Trade across EVM and Solana from your terminal.</span>
-  </a>
-  <a href="/docs/introduction/develop-with-ai/autonomous-agent-payments">
-    <strong>x402 / MPP</strong>
-    <span>Pay per request in USDC, no API key needed.</span>
-  </a>
-</div>
+<CardGroup cols={3}>
+
+<Card title="Overview" href="/docs/introduction/develop-with-ai/using-ai-with-0x" icon="book-open">
+  Use 0x Docs with LLMs and AI tools.
+</Card>
+
+<Card title="Agent Skills" href="/docs/introduction/develop-with-ai/agent-skills" icon="wand-magic-sparkles">
+  Give your coding agent full knowledge of the 0x APIs.
+</Card>
+
+<Card title="MCP Server" href="/docs/introduction/develop-with-ai/mcp-setup" icon="plug">
+  Connect AI tools to the 0x docs.
+</Card>
+
+<Card title="CLI" href="/docs/introduction/develop-with-ai/0x-cli" icon="terminal">
+  Trade across EVM and Solana from your terminal.
+</Card>
+
+<Card title="x402 / MPP" href="/docs/introduction/develop-with-ai/autonomous-agent-payments" icon="coins">
+  Pay per request in USDC, no API key needed.
+</Card>
+
+<Card title="AI Project Showcase" href="/docs/introduction/develop-with-ai/ai-tools" icon="rocket">
+  Explore AI tools and apps built with 0x.
+</Card>
+
+</CardGroup>
 
 {/* ── Explore 0x Products ── */}
 
@@ -148,15 +155,7 @@ hide-nav-links: true
 
 <h2 style={{ textAlign: "center" }}>Quick Links</h2>
 
-<CardGroup cols={4}>
-
-<Card
-  title="Build with AI"
-  href="/docs/introduction/develop-with-ai/using-ai-with-0x"
-  icon="microchip"
->
-  Accelerate your 0x integration using AI tools
-</Card>
+<CardGroup cols={3}>
 
 <Card
   title="Build with Swap API"
@@ -268,3 +267,5 @@ hide-nav-links: true
 </Card>
 
 </CardGroup>
+
+</div>

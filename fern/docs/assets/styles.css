@@ -76,55 +76,18 @@
   background-color: #18181b;
 }
 
-/* Build with AI links on the Welcome page */
-.ai-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin: 1rem 0 2.5rem;
+/* Welcome page cards: one uniform, compact size across every section */
+.home-cards .fern-card {
+  height: 100%;
+  min-height: 132px;
+  padding: 16px 18px;
+  font-size: 14px;
 }
 
-.ai-links a {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 14px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  text-decoration: none !important;
-  color: inherit !important;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+.home-cards .fern-card-icon-row {
+  row-gap: 8px;
 }
 
-.ai-links a:hover {
-  border-color: #01a74d;
-  background-color: rgba(1, 167, 77, 0.05);
-}
-
-.ai-links a svg {
-  display: none !important;
-}
-
-.ai-links strong {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.ai-links span {
-  font-size: 13px;
-  line-height: 1.4;
-  color: #6b7280;
-}
-
-.dark .ai-links a {
-  border-color: #27272a;
-}
-
-.dark .ai-links a:hover {
-  border-color: #01a74d;
-  background-color: #18181b;
-}
-
-.dark .ai-links span {
-  color: #a1a1aa;
+.home-cards .fern-card-icon-row > * + * {
+  margin-top: 0 !important;
 }
