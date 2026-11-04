@@ -29,12 +29,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 8px;
+  height: 48px;
+  min-width: 180px;
+  padding: 0 24px;
+  border-radius: 10px;
   text-decoration: none !important;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1;
   white-space: nowrap;
   width: fit-content;
