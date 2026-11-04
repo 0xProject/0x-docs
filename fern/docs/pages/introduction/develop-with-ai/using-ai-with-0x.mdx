@@ -114,6 +114,25 @@ Use the CLI when you want an agent to *execute* trades as a tool, rather than wr
 
 ---
 
+### Use llms.txt
+
+0x Docs publishes an [llms.txt](https://docs.0x.org/llms.txt) file: a plain-text index of every docs page, with a link and a one-line summary for each. AI tools and agents can read it to find the right page without crawling the site.
+
+```
+https://docs.0x.org/llms.txt
+```
+
+- **Section indexes:** append `/llms.txt` to any section URL to get an index of just that section, such as `https://docs.0x.org/evm/0x-swap-api/llms.txt`.
+- **Markdown for any page:** append `.md` to a page URL to get clean Markdown, such as `https://docs.0x.org/docs/introduction/faq.md`.
+
+**When to use**  
+Give an agent or custom tool a starting point for 0x Docs when it can't connect to the [MCP server](/docs/introduction/develop-with-ai/mcp-setup), or when you want to load docs into your own RAG pipeline.
+
+**How to use**  
+Paste the URL into your AI tool, or have your agent fetch it and follow the links to the pages it needs.
+
+---
+
 ### Copy Page
 
 Copies the page in a format optimized for AI tools.
