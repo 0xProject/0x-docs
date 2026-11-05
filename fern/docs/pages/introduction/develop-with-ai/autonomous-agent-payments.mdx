@@ -28,6 +28,10 @@ AI agents need to call APIs autonomously — without human-managed API keys, bil
 | **Standard**              | [x402.org](https://www.x402.org)                                                                 | [mpp.dev](https://mpp.dev)                                                                       |
 
 <Note>
+  **Looking for runnable code?** Try the [x402 TypeScript example](https://github.com/0xProject/0x-examples/tree/main/x402-headless-example) or the [MPP TypeScript example](https://github.com/0xProject/0x-examples/tree/main/mpp-headless-example).
+</Note>
+
+<Note>
   **Prefer the command line?** The [0x CLI](/docs/introduction/develop-with-ai/0x-cli) implements both rails natively — run `0x price`/`0x swap` with `--pay x402-evm` or `--pay mpp` to pay per request from a funded wallet, no API key and no code. It enforces a `--max-payment` cap before signing.
 </Note>
 
@@ -99,6 +103,10 @@ The same URLs are used regardless of payment network. The payment scheme your cl
 | Solana (mainnet) | USDC     | $0.01             |
 
 **Wallet requirement:** EVM wallet funded with USDC on Base (`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`), or a Solana wallet funded with USDC on Solana mainnet (`EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`). When paying via Solana, an EVM wallet is also required — swap execution runs on EVM, so the `taker` in the quote must be an EVM address.
+
+<Note>
+  **Runnable TypeScript example:** The [x402 headless example](https://github.com/0xProject/0x-examples/tree/main/x402-headless-example) includes price and quote commands for standard payments and batch settlement, cooperative refunds, and setup instructions for Base Sepolia and Base.
+</Note>
 
 ### Get a swap price and quote
 
@@ -247,6 +255,10 @@ Both endpoints proxy the 0x Swap API v2 (AllowanceHolder flow). The `chainId` pa
 | Tempo Mainnet | USDC.e   | $0.01             |
 
 **Wallet requirement:** EVM wallet funded with USDC.e on Tempo Mainnet (`0x20C000000000000000000000b9537d11c60E8b50`).
+
+<Note>
+  **Runnable TypeScript example:** The [MPP headless example](https://github.com/0xProject/0x-examples/tree/main/mpp-headless-example) includes price and quote commands, payment limits, and setup instructions for Tempo testnet and mainnet.
+</Note>
 
 ### Get a swap price and quote
 
