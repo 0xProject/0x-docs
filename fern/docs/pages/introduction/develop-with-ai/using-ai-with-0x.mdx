@@ -12,61 +12,55 @@ See the options available from the **page actions menu** on any documentation pa
 
 ## Get started
 
+<div className="ai-start-cards">
+
 <CardGroup cols={2}>
 
 <Card
   title="Connect to the 0x MCP Server"
   href="/docs/introduction/develop-with-ai/mcp-setup"
-  icon="plug"
 >
-  Connect AI tools to 0x documentation for an enhanced development experience.
+  Give AI tools live access to 0x Docs.
 </Card>
 
 <Card
   title="Install 0x Agent Skills"
   href="/docs/introduction/develop-with-ai/agent-skills"
-  icon="wand-magic-sparkles"
 >
-  Give your AI coding agent instant knowledge of the 0x Swap & Gasless API —
-  swap flows, auth, error handling, and more with a single command.
+  Teach your coding agent the 0x APIs in one command.
 </Card>
 
 <Card
   title="Trade from the terminal with the 0x CLI"
   href="/docs/introduction/develop-with-ai/0x-cli"
-  icon="terminal"
 >
-  An agent-first command-line tool for swaps, gasless trades, and cross-chain
-  bridging — JSON envelopes, stable exit codes, and a bundled agent skill.
+  Swap, bridge, and trade gasless from your terminal.
 </Card>
 
 <Card
   title="Use an LLM"
-  href="/docs/introduction/develop-with-ai/using-ai-with-0x#copy-page"
-  icon="brain"
+  href="/docs/introduction/develop-with-ai/using-ai-with-0x#use-llmstxt"
 >
-  Use 0x docs directly in your AI workflow with context-menu copy options,
-  direct AI tool integrations, and one-click IDE setup.
+  Bring 0x Docs into any LLM with llms.txt or copy options.
 </Card>
 
 <Card
   title="AI Projects with 0x"
   href="/docs/introduction/develop-with-ai/ai-tools"
-  icon="robot"
 >
-  Explore consumer and developer tools using AI and 0x in production.
+  See AI tools built on 0x.
 </Card>
 
 <Card
-  title="Autonomous Agent Payments"
+  title="x402 & MPP"
   href="/docs/introduction/develop-with-ai/autonomous-agent-payments"
-  icon="coins"
 >
-  Access 0x EVM Swap API without an API key using per-request USDC payments via
-  x402 or MPP.
+  Pay per request in USDC with x402 or MPP. No API key needed.
 </Card>
 
 </CardGroup>
+
+</div>
 
 ## Available Options
 
@@ -114,6 +108,27 @@ Use the CLI when you want an agent to *execute* trades as a tool, rather than wr
 
 ---
 
+### Use llms.txt
+
+0x Docs publishes an [llms.txt](https://docs.0x.org/llms.txt) file: a plain-text index of every docs page, with a link and a one-line summary for each. AI tools and agents can read it to find the right page without crawling the site.
+
+```
+https://docs.0x.org/llms.txt
+```
+
+- **Section indexes:** append `/llms.txt` to any section URL to get an index of just that section, such as `https://docs.0x.org/evm/0x-swap-api/llms.txt`.
+- **Markdown for any page:** append `.md` to a page URL to get clean Markdown, such as `https://docs.0x.org/docs/introduction/faq.md`.
+
+#### When to use
+
+Give an agent or custom tool a starting point for 0x Docs when it can't connect to the [MCP server](/docs/introduction/develop-with-ai/mcp-setup), or when you want to load docs into your own RAG pipeline.
+
+#### How to use
+
+Paste the URL into your AI tool, or have your agent fetch it and follow the links to the pages it needs.
+
+---
+
 ### Copy Page
 
 Copies the page in a format optimized for AI tools.
@@ -121,10 +136,12 @@ Copies the page in a format optimized for AI tools.
 - Preserves structure and code blocks
 - Removes UI and navigation noise
 
-**When to use**  
+#### When to use
+
 Paste into any LLM to ask questions or generate code using the current page as context.
 
-**How to use**  
+#### How to use
+
 Select **Copy page**, then paste into your AI tool.
 
 ---
@@ -133,10 +150,12 @@ Select **Copy page**, then paste into your AI tool.
 
 Shows the raw Markdown source of the page.
 
-**When to use**  
+#### When to use
+
 Inspect, edit, or selectively share content before sending it to an AI tool.
 
-**How to use**  
+#### How to use
+
 Select **View as Markdown**, then copy what you need.
 
 ---
@@ -145,10 +164,12 @@ Select **View as Markdown**, then copy what you need.
 
 Ask questions about the current page directly in the docs.
 
-**When to use**  
+#### When to use
+
 Get quick explanations without leaving the documentation site.
 
-**How to use**  
+#### How to use
+
 Select **Ask AI** and enter your question.
 
 ---
@@ -157,10 +178,12 @@ Select **Ask AI** and enter your question.
 
 Opens the page in ChatGPT with context included.
 
-**When to use**  
+#### When to use
+
 Quick Q&A or code generation based on a single page.
 
-**How to use**  
+#### How to use
+
 Select **Open in ChatGPT** to continue in ChatGPT.
 
 ---
@@ -169,8 +192,10 @@ Select **Open in ChatGPT** to continue in ChatGPT.
 
 Opens the page in Claude with full context.
 
-**When to use**  
+#### When to use
+
 Deeper analysis or longer-form reasoning about the page.
 
-**How to use**  
+#### How to use
+
 Select **Open in Claude** to continue in Claude.

@@ -231,7 +231,7 @@ For autonomous agents, `price` and `swap` can pay **~$0.01 in USDC per request**
 - `--max-payment <USD>` (default `0.05`) caps the spend; the CLI refuses **before signing/broadcasting** if the gateway asks for more (exit 41, nothing spent).
 - The payment is real, non-refundable money charged per request — including if a later on-chain swap reverts. The settlement (tx hash, payer, amount) is reported under `metadata.payment`. `swap --pay` pays only for the quote; the swap itself still uses your wallet and RPC.
 
-See [Autonomous Agent Payments](/docs/introduction/develop-with-ai/autonomous-agent-payments) for how x402 and MPP work end to end.
+See [x402 & MPP](/docs/introduction/develop-with-ai/autonomous-agent-payments) for how x402 and MPP work end to end.
 
 ### Non-interactive by design
 

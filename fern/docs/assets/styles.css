@@ -28,14 +28,18 @@
 .hero-btn-secondary {
   display: inline-flex;
   align-items: center;
-  padding: 3px 22px;
-  border-radius: 9999px;
+  justify-content: center;
+  height: 48px;
+  min-width: 180px;
+  padding: 0 24px;
+  border-radius: 10px;
   text-decoration: none !important;
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 500;
+  font-size: 16px;
   line-height: 1;
   white-space: nowrap;
   width: fit-content;
+  transition: background-color 0.15s ease;
 }
 
 /* Hide the auto-injected external link icon */
@@ -47,22 +51,61 @@
 .hero-btn-primary {
   background-color: #01a74d;
   color: #ffffff !important;
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
 }
 
-.dark .hero-btn-primary {
-  background-color: #01a74d;
-  color: #ffffff !important;
+.hero-btn-primary:hover {
+  background-color: #018f42;
 }
 
 .hero-btn-secondary {
-  background-color: white;
+  background-color: transparent;
   color: #25272a !important;
-  border: 1.5px solid rgba(37, 39, 42, 0.2);
+  border: 1px solid #e5e7eb;
+}
+
+.hero-btn-secondary:hover {
+  background-color: rgba(1, 167, 77, 0.08);
 }
 
 .dark .hero-btn-secondary {
-  background-color: #ffffff;
-  color: #25272a !important;
-  border-color: transparent;
+  color: #ffffff !important;
+  border-color: #27272a;
+}
+
+.dark .hero-btn-secondary:hover {
+  background-color: #18181b;
+}
+
+/* Welcome page cards: one uniform, compact size across every section */
+.home-cards .fern-card {
+  height: 100%;
+  min-height: 96px;
+  padding: 16px 18px;
+  font-size: 14px;
+}
+
+.home-cards .fern-card-icon-row {
+  row-gap: 8px;
+}
+
+.home-cards .fern-card-icon-row > * + * {
+  margin-top: 0 !important;
+}
+
+/* Need Help cards have no description, so drop the shared min-height */
+.home-cards .help-cards .fern-card {
+  min-height: 0;
+}
+
+/* Larger card titles in Get started on Using AI with 0x */
+.ai-start-cards .fern-card .space-y-1 > div:first-child {
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+/* Slightly larger card titles on the Welcome page */
+.home-cards .fern-card .space-y-1 > div:first-child {
+  font-size: 17px;
+  line-height: 1.3;
 }
