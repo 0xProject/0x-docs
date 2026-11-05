@@ -97,3 +97,9 @@
 .home-cards .help-cards .fern-card {
   min-height: 0;
 }
+
+/* Larger card titles in Get started on Using AI with 0x */
+.ai-start-cards .fern-card .space-y-1 > div:first-child {
+  font-size: 19px;
+  line-height: 1.3;
+}
