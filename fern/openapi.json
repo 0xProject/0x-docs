@@ -510,6 +510,11 @@
                                           }
                                         ],
                                         "description": "The proportion of the trade to be filled by the `source`"
+                                      },
+                                      "poolFeePpm": {
+                                        "type": "integer",
+                                        "nullable": true,
+                                        "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                       }
                                     },
                                     "required": [
@@ -982,6 +987,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -1051,6 +1061,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -1915,6 +1930,11 @@
                                           }
                                         ],
                                         "description": "The proportion of the trade to be filled by the `source`"
+                                      },
+                                      "poolFeePpm": {
+                                        "type": "integer",
+                                        "nullable": true,
+                                        "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                       }
                                     },
                                     "required": [
@@ -2419,6 +2439,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -2488,6 +2513,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -3389,6 +3419,11 @@
                                           }
                                         ],
                                         "description": "The proportion of the trade to be filled by the `source`"
+                                      },
+                                      "poolFeePpm": {
+                                        "type": "integer",
+                                        "nullable": true,
+                                        "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                       }
                                     },
                                     "required": [
@@ -3861,6 +3896,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -3930,6 +3970,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -4794,6 +4839,11 @@
                                           }
                                         ],
                                         "description": "The proportion of the trade to be filled by the `source`"
+                                      },
+                                      "poolFeePpm": {
+                                        "type": "integer",
+                                        "nullable": true,
+                                        "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                       }
                                     },
                                     "required": [
@@ -5383,6 +5433,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -5452,6 +5507,11 @@
                                               }
                                             ],
                                             "description": "The proportion of the trade to be filled by the `source`"
+                                          },
+                                          "poolFeePpm": {
+                                            "type": "integer",
+                                            "nullable": true,
+                                            "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                           }
                                         },
                                         "required": [
@@ -6501,6 +6561,11 @@
                                       }
                                     ],
                                     "description": "The proportion of the trade to be filled by the `source`"
+                                  },
+                                  "poolFeePpm": {
+                                    "type": "integer",
+                                    "nullable": true,
+                                    "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                   }
                                 },
                                 "required": [
@@ -7370,6 +7435,11 @@
                                       }
                                     ],
                                     "description": "The proportion of the trade to be filled by the `source`"
+                                  },
+                                  "poolFeePpm": {
+                                    "type": "integer",
+                                    "nullable": true,
+                                    "description": "The pool's fee from its pool key in parts per million (10000 = 1%), or `null` when it is not known. Uniswap v4 and PancakeSwap Infinity pools may charge a small protocol fee on top. Only returned to enabled integrators"
                                   }
                                 },
                                 "required": [
