@@ -10239,6 +10239,43 @@
         "required": ["name", "message", "data"],
         "additionalProperties": false
       },
+      "SMART_WALLET_SIGNATURE_UNSUPPORTED": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["SMART_WALLET_SIGNATURE_UNSUPPORTED"]
+          },
+          "message": { "type": "string" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "zid": {
+                "type": "string",
+                "description": "The unique ZeroEx identifier of the request"
+              },
+              "tradeHash": {
+                "type": "string",
+                "description": "The hash of the trade provided by the caller"
+              },
+              "taker": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "The taker of the trade"
+              },
+              "delegate": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "EIP-7702 delegate address when the taker code is a delegation designator"
+              }
+            },
+            "required": ["zid", "tradeHash", "taker"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["name", "message", "data"],
+        "additionalProperties": false
+      },
       "INVALID_SIGNER": {
         "type": "object",
         "properties": {
