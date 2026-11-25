@@ -117,6 +117,16 @@
                         "description": "Pubkey of an integrator-held ephemeral keypair used as a one-shot extra transaction signer for Solana origin routes that require one (e.g. the CCTP event account). Generate a fresh keypair per request and sign the returned transaction with it; the account must not already exist on-chain and is not reusable afterwards. Routes requiring an ephemeral signer are only quoted when this is set. Only applicable for Solana origin chains"
                     },
                     {
+                        "name": "bitcoinOriginPublicKey",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^(02|03)[a-fA-F0-9]{64}$"
+                        },
+                        "description": "Compressed SEC1 public key in hex without a 0x prefix. Required for a P2SH-P2WPKH Bitcoin origin. The key must derive originAddress."
+                    },
+                    {
                         "name": "slippageBps",
                         "in": "query",
                         "required": false,
@@ -3102,6 +3112,16 @@
                             "type": "string"
                         },
                         "description": "Pubkey of an integrator-held ephemeral keypair used as a one-shot extra transaction signer for Solana origin routes that require one (e.g. the CCTP event account). Generate a fresh keypair per request and sign the returned transaction with it; the account must not already exist on-chain and is not reusable afterwards. Routes requiring an ephemeral signer are only quoted when this is set. Only applicable for Solana origin chains"
+                    },
+                    {
+                        "name": "bitcoinOriginPublicKey",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^(02|03)[a-fA-F0-9]{64}$"
+                        },
+                        "description": "Compressed SEC1 public key in hex without a 0x prefix. Required for a P2SH-P2WPKH Bitcoin origin. The key must derive originAddress."
                     },
                     {
                         "name": "slippageBps",
