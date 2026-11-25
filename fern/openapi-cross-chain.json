@@ -4779,6 +4779,22 @@
                             "zid": {
                                 "type": "string",
                                 "description": "The unique ZeroEx identifier of the request"
+                            },
+                            "authorization": {
+                                "type": "object",
+                                "properties": {
+                                    "issuer": {
+                                        "type": "string",
+                                        "description": "The issuer of the unauthorized token"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "enum": ["ISSUER_OPT_IN_REQUIRED"],
+                                        "description": "The team must opt in to trade tokens from this issuer"
+                                    }
+                                },
+                                "required": ["issuer", "reason"],
+                                "additionalProperties": false
                             }
                         },
                         "required": ["zid"],
@@ -4898,6 +4914,22 @@
                             "zid": {
                                 "type": "string",
                                 "description": "The unique ZeroEx identifier of the request"
+                            },
+                            "authorization": {
+                                "type": "object",
+                                "properties": {
+                                    "issuer": {
+                                        "type": "string",
+                                        "description": "The issuer of the unauthorized token"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "enum": ["ISSUER_OPT_IN_REQUIRED"],
+                                        "description": "The team must opt in to trade tokens from this issuer"
+                                    }
+                                },
+                                "required": ["issuer", "reason"],
+                                "additionalProperties": false
                             }
                         },
                         "required": ["zid"],
