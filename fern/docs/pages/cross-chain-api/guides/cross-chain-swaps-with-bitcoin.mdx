@@ -43,8 +43,8 @@ Use these values in every Bitcoin request:
 
 Write BTC amounts as integers in base units, the same as EVM token amounts. The base unit of BTC is the satoshi. BTC has 8 decimals, so 1 BTC = 100,000,000 satoshis.
 
-<Accordion title="Supported Bitcoin address types">
-The API accepts mainnet addresses of these types:
+<Accordion title="Addresses that can receive BTC">
+Use one of these mainnet address types for `destinationAddress` when buying BTC:
 
 | Type | Starts with |
 | --- | --- |
@@ -55,6 +55,29 @@ The API accepts mainnet addresses of these types:
 | P2TR | `bc1p` |
 
 </Accordion>
+
+## Wallet requirements when selling BTC
+
+Quotes use confirmed coins from one `originAddress`. The wallet must sign the returned PSBT with `SIGHASH_ALL`.
+
+| Origin address | NEAR Intents | Relay |
+| --- | --- | --- |
+| Native SegWit, P2WPKH (`bc1q`, 42 characters) | Supported. | Quote generation and signing were verified with a single-key signer. |
+| Legacy, P2PKH (`1...`), compressed public key | Supported. | Quote generation was verified. Signing compatibility requires a separate check with your wallet. |
+| Legacy, P2PKH, uncompressed public key | Not supported by the current signer and fee estimate. | Not verified by this guide. |
+| Other input types or coins from multiple addresses | Outside the current NEAR funding scope. | Provider and wallet compatibility require separate verification. |
+
+A receiving address type does not establish that a wallet can spend coins of that type. Browser and hardware wallets require their own signing checks.
+
+<Accordion title="Legacy signing requirements">
+A legacy input needs its full previous transaction in `non_witness_utxo`. The signer uses that transaction to verify the input's amount and locking script.
+
+The NEAR Intents path supplies this data. Observed Relay legacy quotes returned only `witness_utxo`, so a successful Relay quote alone does not establish legacy signing support. A compatible integration must retrieve and verify the full parents before signing. See [BIP 174](https://bips.dev/174/).
+
+The current legacy contract requires compressed public keys. An address alone does not reveal the public-key encoding. Confirm that your wallet supports this contract before requesting a legacy quote.
+</Accordion>
+
+NEAR Intents supports at most 50 selected legacy inputs per payment. This limit counts the coins needed for the payment, rather than every coin at the address. If no alternative route succeeds, a quote that exceeds the limit returns `INPUT_INVALID` with an `originAddress` reason. Consolidate the confirmed coins or reduce `sellAmount`.
 
 ## Buy BTC with a token on an EVM chain
 
