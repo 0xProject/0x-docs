@@ -60,7 +60,7 @@
           "Swap"
         ],
         "summary": "Create Swap Instructions",
-        "description": "Returns Solana swap instructions for a given token pair and amount.",
+        "description": "Returns the instructions for a swap on Solana. Add them, in order, to a transaction that the taker signs.",
         "operationId": "swap_instructions",
         "parameters": [
           {
@@ -130,10 +130,12 @@
         ],
         "properties": {
           "is_signer": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the account must sign the transaction."
           },
           "is_writable": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the instruction can change the account."
           },
           "pubkey": {
             "type": "array",
@@ -142,7 +144,7 @@
               "format": "int32",
               "minimum": 0
             },
-            "description": "Account public key as a 32-byte array.",
+            "description": "Account address, as 32 bytes.",
             "maxItems": 32,
             "minItems": 32
           }
@@ -187,7 +189,7 @@
         "properties": {
           "owner": {
             "type": "string",
-            "description": "Base-58 encoded owner address that the created token account belongs to."
+            "description": "Wallet that owns the associated token account."
           }
         },
         "additionalProperties": false
@@ -196,14 +198,14 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "An existing base-58 encoded token account (or wallet for native SOL) address."
+            "description": "Address of an existing token account, or of a wallet for native SOL."
           },
           {
             "$ref": "#/components/schemas/AssociatedTokenAccountDestination",
-            "description": "A base-58 encoded owner address for a token account."
+            "description": "Wallet whose associated token account to use."
           }
         ],
-        "description": "A swap destination: either an existing token account (or wallet for native SOL)\naddress, or an owner whose token account should be used, and created if required.\nIf an account is created, its rent is paid by `sponsor` if present, else by `taker`.\nIf the created ATA belongs to the taker, the sponsor keeps close authority and can\nreclaim the rent once the account is empty. ATAs created for anyone else (custom\nrecipient, fee or surplus recipient) leave the rent as a permanent sponsor cost."
+        "description": "A token account address (a wallet address for native SOL), or\n{\"associatedTokenAccount\": {\"owner\": \"<wallet>\"}} to use that wallet's associated token account,\ncreated if it does not exist. The sponsor pays the rent for a created account, or the taker when there is no sponsor.\nThe sponsor can close a created taker account once it is empty and get the rent back."
       },
       "EnabledSourcesResponse": {
         "type": "object",
@@ -225,17 +227,17 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "Comma-separated base-58 encoded token account addresses."
+            "description": "Comma-separated token account addresses."
           },
           {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Destination"
             },
-            "description": "Structured list of destinations, one per fee entry."
+            "description": "One destination per fee."
           }
         ],
-        "description": "Fee recipients for the swap fees: either a comma-separated list of\nexisting token accounts, or a structured list mixing addresses with\nowners whose token accounts should be the fee recipient."
+        "description": "A comma-separated list of token account addresses, or a list in which each\nentry is an address or {\"associatedTokenAccount\": {\"owner\": \"<wallet>\"}}."
       },
       "Instruction": {
         "type": "object",
@@ -250,7 +252,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccountMeta"
-            }
+            },
+            "description": "Accounts the instruction uses, in order."
           },
           "data": {
             "type": "array",
@@ -259,7 +262,7 @@
               "format": "int32",
               "minimum": 0
             },
-            "description": "Serialized instruction data bytes."
+            "description": "Instruction data, as bytes."
           },
           "program_id": {
             "type": "array",
@@ -268,7 +271,7 @@
               "format": "int32",
               "minimum": 0
             },
-            "description": "Program ID as a 32-byte array.",
+            "description": "Program to call, as 32 bytes.",
             "maxItems": 32,
             "minItems": 32
           }
@@ -287,7 +290,7 @@
           "amount_in": {
             "type": "integer",
             "format": "int64",
-            "description": "Input amount in its base units.",
+            "description": "Amount of token_in to sell, in base units. For example, 1 USDC is 1000000.",
             "examples": [
               1000000
             ],
@@ -298,84 +301,70 @@
             "items": {
               "type": "string"
             },
-            "description": "DEX sources to exclude from routing. Valid source names are returned by `/enabled-sources`."
+            "description": "Sources not to route through. GET /enabled-sources lists the valid names."
           },
           "recipient": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/Destination",
-                "description": "Base-58 encoded recipient for swap output."
-              }
-            ]
+            "$ref": "#/components/schemas/Destination",
+            "description": "Where the bought tokens go. Default is the taker's associated token account (the taker's wallet for native SOL)."
           },
           "reserve_transaction_accounts": {
             "type": "integer",
             "format": "int64",
-            "description": "Minimum static account keys to reserve in the transaction for composing with additional instructions.\nOnly applies to `v1` transactions; ignored when `transaction_version` is `v0`.",
+            "description": "Accounts to leave free in a v1 transaction for instructions you add.\nCount each account, including each program, that your instructions use and the swap does not.\nIgnored for v0. Default is 0.",
             "default": 0,
             "minimum": 0
           },
           "reserve_transaction_bytes": {
             "type": "integer",
             "format": "int64",
-            "description": "Minimum bytes to reserve in the transaction for composing with additional instructions.\nOnly applies to `v0` transactions; ignored when `transaction_version` is `v1`.",
+            "description": "Bytes to leave free in a v0 transaction for instructions you add, such as compute budget instructions.\nIgnored for v1. Default is 0. See [Integrator Byte Costs](/solana/solana-swap-api/guides/integrator-byte-costs).",
             "default": 0,
             "minimum": 0
           },
           "slippage_bps": {
             "type": "integer",
             "format": "int32",
-            "description": "Slippage tolerance in basis points.",
+            "description": "How far below amount_out the swap may settle, in basis points. 100 is 1%. Default is 50.",
             "default": 50,
             "maximum": 10000,
             "minimum": 0
           },
           "sponsor": {
             "type": "string",
-            "description": "Transaction fee payer and rent payer for a fully-sponsored swap.\nMust differ from the taker and from every native destination in the request.\nThe taker remains the swap authority and must still sign.",
+            "description": "Address that pays the transaction fee and any account rent, so the taker pays nothing.\nMust differ from the taker and from every address in the request that receives native SOL.\nThe taker still signs.",
             "examples": [
               "Sponsor111111111111111111111111111111111111"
             ]
           },
           "swap_fee_ppm": {
             "type": "string",
-            "description": "Comma-separated volume-based swap fees in parts per million.\nMust be provided together with `swap_fee_recipient`.\nEach entry must be between `0` and the per-app maximum (`100_000` unless configured otherwise).\nA value of `0` disables that fee entry.\nMultiple fees on the same side are applied sequentially, each on the amount remaining after prior deductions — not the original amount. Fee amounts are rounded up to the nearest base unit."
+            "description": "Your fees, as a comma-separated list in parts per million of the trade. 10000 is 1%.\nEach fee is at most 100000 (10%) unless your app has a different limit.\nRequires swap_fee_recipient with one entry per fee.\nFees on the same side apply one after another, each to what is left after the earlier ones. Each fee rounds up to a whole base unit."
           },
           "swap_fee_recipient": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FeeRecipients",
-                "description": "Fee recipients for the swap fees.\nMust be provided together with `swap_fee_ppm`.\nThe number of entries must match `swap_fee_ppm`.\nA sponsored swap rejects the owner form for wSOL fee recipients: the sponsor\nwould pay rent to create the account, and closing (unwrapping) a wSOL account\nsends that rent to its owner. Use an existing token account instead."
-              }
-            ]
+            "$ref": "#/components/schemas/FeeRecipients",
+            "description": "Where each fee goes, with one entry per fee in swap_fee_ppm.\nIn a sponsored swap, a wrapped SOL fee must go to an existing token account."
           },
           "swap_fee_side": {
             "type": "string",
-            "description": "Comma-separated fee sides for each fee entry.\nSupported values are `buy` and `sell`.\nThis field may be omitted only when every fee uses the default `buy` side.\nWhen provided, the number of entries must match `swap_fee_ppm`."
+            "description": "Token each fee is taken in, as a comma-separated list with one entry per fee:\nbuy takes it from token_out, sell from token_in. Default is buy for every fee."
           },
           "taker": {
             "type": "string",
-            "description": "Base-58 encoded taker wallet address.",
+            "description": "Address of the wallet that sells token_in and signs the transaction.",
             "examples": [
               "ZeroEx1111111111111111111111111111111111111"
             ]
           },
           "token_in": {
             "type": "string",
-            "description": "Input token mint, base-58 encoded. Use `So11111111111111111111111111111111111111111` for native SOL.",
+            "description": "Mint address of the token to sell. For native SOL, use So11111111111111111111111111111111111111111; for wrapped SOL, use So11111111111111111111111111111111111111112.",
             "examples": [
               "So11111111111111111111111111111111111111112"
             ]
           },
           "token_out": {
             "type": "string",
-            "description": "Output token mint, base-58 encoded. Use `So11111111111111111111111111111111111111111` for native SOL.",
+            "description": "Mint address of the token to buy. For native SOL, use So11111111111111111111111111111111111111111; for wrapped SOL, use So11111111111111111111111111111111111111112.",
             "examples": [
               "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
             ]
@@ -383,36 +372,22 @@
           "trade_surplus_cap_ppm": {
             "type": "integer",
             "format": "int32",
-            "description": "Trade surplus cap in parts per million of the total realized trade size.\nMust be provided together with `trade_surplus_recipient`, or both fields must be omitted.\nA value of `0` disables trade surplus collection for the request.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x policy is applied instead.\nThe transferred amount is capped relative to trade size.",
+            "description": "Most trade surplus to collect, in parts per million of the trade. Trade surplus is any output above amount_out.\nRequires trade_surplus_recipient. 0 turns collection off.\nIgnored for apps where 0x collects the trade surplus.",
             "maximum": 1000000,
             "minimum": 0
           },
           "trade_surplus_recipient": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/Destination",
-                "description": "Recipient that should receive trade surplus.\nMust be provided together with `trade_surplus_cap_ppm`, or both fields must be omitted.\nWhen 0x controls trade surplus collection, the request value is ignored and the configured 0x recipient is used instead."
-              }
-            ]
+            "$ref": "#/components/schemas/Destination",
+            "description": "Where the trade surplus goes. Requires trade_surplus_cap_ppm.\nIgnored for apps where 0x collects the trade surplus."
           },
           "transaction_version": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "v0",
-                  "v1"
-                ]
-              }
-            ],
-            "description": "Transaction format to target.\n`v0` budgets routing by transaction bytes and the response may include address lookup tables.\n`v1` (default) budgets routing by static account count (max 64) and never returns address lookup tables.",
-            "default": "v1"
+            "type": "string",
+            "description": "Transaction format to build. Default is v1.\n\n- v1: up to 64 accounts and no address lookup tables.\n- v0: up to 1,232 bytes; the response may include address lookup tables.",
+            "default": "v1",
+            "enum": [
+              "v0",
+              "v1"
+            ]
           }
         },
         "example": {
@@ -431,6 +406,7 @@
           "min_amount_out",
           "instructions",
           "address_lookup_tables",
+          "transaction_version",
           "route_plan",
           "zid"
         ],
@@ -440,12 +416,12 @@
             "items": {
               "type": "string"
             },
-            "description": "Address Lookup Table addresses that must be included in the versioned transaction."
+            "description": "Address lookup tables to pass when you compile a v0 transaction. Always empty for v1."
           },
           "amount_out": {
             "type": "integer",
             "format": "int64",
-            "description": "The estimated output amount after fees, in its base units.",
+            "description": "Estimated amount of token_out received after fees, in base units.",
             "minimum": 0
           },
           "instructions": {
@@ -453,12 +429,12 @@
             "items": {
               "$ref": "#/components/schemas/Instruction"
             },
-            "description": "The instructions to perform the swap."
+            "description": "Instructions to add to the transaction, in this order. Compute budget instructions are not included."
           },
           "min_amount_out": {
             "type": "integer",
             "format": "int64",
-            "description": "The minimum output amount after slippage and fees, in its base units. Transaction will fail if this amount is not met.",
+            "description": "Smallest amount of token_out received after slippage and fees, in base units.\nThe transaction fails if the swap would return less.",
             "minimum": 0
           },
           "route_plan": {
@@ -466,15 +442,23 @@
             "items": {
               "$ref": "#/components/schemas/SwapInstructionsRoutePlanStep"
             },
-            "description": "List of swap legs comprising the swap."
+            "description": "Legs of the route, in execution order."
           },
           "sponsor": {
             "type": "string",
-            "description": "Present when the caller requested full sponsorship. The returned\ntransaction must use this address as fee payer; both sponsor and taker sign."
+            "description": "The sponsor from the request, if one was given. Use it as the transaction's fee payer;\nthe sponsor and the taker both sign."
+          },
+          "transaction_version": {
+            "type": "string",
+            "description": "Transaction format these instructions are built for.",
+            "enum": [
+              "v0",
+              "v1"
+            ]
           },
           "zid": {
             "type": "string",
-            "description": "Unique 12-byte hex identifier for this request."
+            "description": "ID of this request. Include it when you contact support."
           }
         }
       },
@@ -494,46 +478,39 @@
         "properties": {
           "amount_in": {
             "type": "string",
-            "description": "The amount of the input token to swap, in its base units."
+            "description": "Amount this leg sells, in base units."
           },
           "amount_out": {
             "type": "string",
-            "description": "The estimated amount of the output token received from the swap, in its base units."
+            "description": "Estimated amount this leg buys, in base units."
           },
           "dex_address": {
             "type": "string",
-            "description": "The base-58 encoded address of the DEX."
+            "description": "Address of the pool."
           },
           "dex_label": {
             "type": "string",
-            "description": "The label for the DEX. Matches labels returned by the `enabled-sources` endpoint."
+            "description": "Name of the source, as listed by GET /enabled-sources."
           },
           "dex_program_id": {
             "type": "string",
-            "description": "The base-58 encoded program ID address of the DEX."
+            "description": "Program ID of the source."
           },
           "ppb": {
             "type": "integer",
             "format": "int32",
-            "description": "Proportion of _remaining_ amount routed through this step in parts per billion.",
+            "description": "Share of this leg's token_in that earlier legs have not used, in parts per billion. 1000000000 is all of it.",
             "minimum": 0
           },
           "token_in": {
             "type": "string",
-            "description": "The base-58 encoded address of the input mint."
+            "description": "Mint address of the token this leg sells."
           },
           "token_out": {
             "type": "string",
-            "description": "The base-58 encoded address of the output mint."
+            "description": "Mint address of the token this leg buys."
           }
         }
-      },
-      "TransactionVersion": {
-        "type": "string",
-        "enum": [
-          "v0",
-          "v1"
-        ]
       }
     },
     "securitySchemes": {
