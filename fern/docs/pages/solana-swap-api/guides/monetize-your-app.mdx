@@ -17,11 +17,11 @@ See our [Monetization Report](https://0x.org/reports/monetization-across-defi-re
 
 The 0x Solana Swap API supports one or more volume-based fees within a single swap request. This lets you route fees to multiple recipients with independently specified amounts and sides — perfect for multi-product apps, partner revenue-share setups, or flexible monetization strategies.
 
-To apply volume-based fees, include the following fields in the body of your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions):
+To apply volume-based fees, include the following fields in the body of your [`/solana/swap-instructions` request](/api-reference/solana-swap-api/swap/instructions):
 
-- [`swap_fee_ppm`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_ppm) — the fee amount(s) in **parts per million (ppm)**.
-- [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient) — the account(s) to receive the fees.
-- [`swap_fee_side`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_side) — _(optional)_ the side each fee is charged on: `buy` (the output token) or `sell` (the input token).
+- [`swap_fee_ppm`](/api-reference/solana-swap-api/swap/instructions#request.body.swap_fee_ppm) — the fee amount(s) in **parts per million (ppm)**.
+- [`swap_fee_recipient`](/api-reference/solana-swap-api/swap/instructions#request.body.swap_fee_recipient) — the account(s) to receive the fees.
+- [`swap_fee_side`](/api-reference/solana-swap-api/swap/instructions#request.body.swap_fee_side) — _(optional)_ the side each fee is charged on: `buy` (the output token) or `sell` (the input token).
 
 <Note>
   Fees on Solana are expressed in **parts per million (ppm)**, not basis points.
@@ -65,7 +65,7 @@ The fee you charge is fully determined by the values you send in the request, so
 
 The quote already reflects any buy-side fees: the returned `amount_out` is net of them, so the value you show the user as the amount received is correct as-is. Sell-side fees reduce the amount routed into the swap before the quote is produced.
 
-For the complete request and response schema, see the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions).
+For the complete request and response schema, see the [API Reference](/api-reference/solana-swap-api/swap/instructions).
 
 ### Pricing considerations
 
