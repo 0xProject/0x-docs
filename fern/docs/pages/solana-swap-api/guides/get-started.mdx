@@ -3,7 +3,7 @@ title: "Get Started"
 description: "Request swap instructions, build a v1 transaction, and land it on Solana."
 ---
 
-The [example code](https://github.com/0xProject/0x-examples/tree/main/solana-example) does everything on this page in one TypeScript file with [Solana Kit](https://github.com/anza-xyz/kit). With only an API key it quotes and simulates a swap; add a private key to send one.
+The [example code](https://github.com/0xProject/0x-examples/tree/main/solana-example) does everything on this page with [Solana Kit](https://github.com/anza-xyz/kit): `src/swap.ts` has one function per step. With only an API key it quotes and simulates a swap; add a private key to send one.
 
 <Prompt title="Build it with an AI agent" actions={["claude", "cursor", "chatgpt"]}>
 Add a 0x Solana swap to my app. Request instructions from `POST https://api.0x.org/solana/swap-instructions` with `transaction_version: "v1"`, then build, simulate, sign, and send a v1 transaction with `@solana/kit`, following https://docs.0x.org/solana/guides/get-started.md and the example at https://github.com/0xProject/0x-examples/tree/main/solana-example. Read my API key from an environment variable and call the API from server code.
