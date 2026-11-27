@@ -41,6 +41,10 @@ See the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions) for 
 4. Optionally set a priority fee. In v1 it is the total fee in lamports, not a price per compute unit.
 5. Have the taker sign, then send.
 
+<llms-only>
+Solana Kit functions for these steps: `createTransactionMessage({ version: 1 })`, `setTransactionMessageFeePayerSigner`, `setTransactionMessageLifetimeUsingBlockhash`, `appendTransactionMessageInstructions`, `setTransactionMessagePriorityFeeLamports`, `estimateResourceLimitsFactory({ rpc })` (simulation), `setTransactionMessageComputeUnitLimit`, `setTransactionMessageLoadedAccountsDataSizeLimit`, `signTransactionMessageWithSigners`, `sendAndConfirmTransactionFactory`. Convert each instruction with `getAddressDecoder().decode(Uint8Array.from(bytes))` for addresses and `AccountRole` from `is_signer` and `is_writable`.
+</llms-only>
+
 The user's wallet and your Solana library must support v1 transactions. Solana Kit 8.5 or later does; `@solana/web3.js` 1.x does not.
 
 ## Tips for landing swaps

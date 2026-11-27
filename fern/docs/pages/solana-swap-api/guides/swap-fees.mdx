@@ -12,7 +12,7 @@ Add these fields to your [`/solana/swap-instructions` request](/api-reference/so
 ```json
 {
   "swap_fee_ppm": "10000",
-  "swap_fee_recipient": "<fee wallet>",
+  "swap_fee_recipient": { "associatedTokenAccount": { "owner": "<fee wallet>" } },
   "swap_fee_side": "buy"
 }
 ```
