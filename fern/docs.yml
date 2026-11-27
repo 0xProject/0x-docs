@@ -318,7 +318,7 @@ navigation:
             href: https://github.com/0xProject/0x-examples#solana-swap-api
             target: _blank
           - link: API Reference
-            href: /api-reference/solana-swap-ap-is/swap/instructions
+            href: /api-reference/solana-swap-api/swap/instructions
           - page: Troubleshooting
             slug: troubleshooting
             path: docs/pages/solana-swap-api/reference/troubleshooting.mdx
@@ -469,6 +469,7 @@ navigation:
         api-name: evm
       - api: Solana Swap APIs
         api-name: solana
+        slug: solana-swap-api
       - api: Cross-Chain APIs
         api-name: cross-chain
 
@@ -548,6 +549,8 @@ integrations:
   context7: ./context7.json
 
 redirects:
+  - source: /api-reference/solana-swap-ap-is/:path*
+    destination: /api-reference/solana-swap-api/:path*
   - source: /api-reference/openapi-json/swap/allowanceholder-getprice
     destination: /api-reference/evm-ap-is/api-reference/evm-ap-is/swap/api-reference/evm-ap-is/swap/allowanceholder-getquote
   - source: /developer-resources/bounties
