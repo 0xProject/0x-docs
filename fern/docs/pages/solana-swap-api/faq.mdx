@@ -27,7 +27,7 @@ description: Common questions about the 0x Solana Swap API.
 
 <AccordionGroup>
   <Accordion title="Which tokens can I swap?">
-    SPL tokens and Token-2022 tokens, including tokens that are still on a pump.fun bonding curve. Token-2022 tokens with a transfer fee are supported, and the quote is net of the fee. The API refuses a Token-2022 token that has an active transfer hook, has the non-transferable extension, or is paused, with the error `TOKEN_HAS_UNSUPPORTED_EXTENSIONS`.
+    SPL tokens and Token-2022 tokens, including tokens that are still on a pump.fun bonding curve. Token-2022 tokens with a transfer fee are supported, and the quote is net of the fee. The API refuses a Token-2022 token that has an active transfer hook, has the non-transferable extension, or is paused.
   </Accordion>
 
   <Accordion title="How do I swap native SOL?">
@@ -62,12 +62,12 @@ description: Common questions about the 0x Solana Swap API.
 ## Errors
 
 <AccordionGroup>
-  <Accordion title="I get NO_POOLS_FOUND or ROUTING_FAILED.">
-    The API found no route for the pair at that size. Check that both mint addresses are correct and that `amount_in` is in base units, then try a smaller amount.
+  <Accordion title="The API found no route for my swap.">
+    No route exists for the pair at that size. Check that both mint addresses are correct and that `amount_in` is in base units, then try a smaller amount.
   </Accordion>
 
-  <Accordion title="My v1 transaction fails on compute units or loaded accounts data size.">
-    A v1 transaction that does not set the compute unit limit and the loaded accounts data size limit has limits of zero. Simulate the transaction and set both; see [Get Started](/solana/guides/get-started#2-build-sign-and-send-a-v1-transaction).
+  <Accordion title="My transaction fails on compute units or loaded accounts data size.">
+    A version 1 transaction that does not set the compute unit limit and the loaded accounts data size limit has limits of zero. Simulate the transaction and set both; see [Get Started](/solana/guides/get-started#2-build-sign-and-send-a-v1-transaction).
   </Accordion>
 
   <Accordion title="My transaction is too large after I add my own instructions.">
