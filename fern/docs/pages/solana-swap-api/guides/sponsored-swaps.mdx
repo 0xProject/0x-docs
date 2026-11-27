@@ -33,14 +33,14 @@ Some costs come back to the sponsor in the same transaction. The rest are spent.
 
 **Spent**
 
-| Cost | Typical amount | Can it be recovered? |
-| --- | --- | --- |
-| Transaction fee (two signatures) and any priority fee you set | 0.00001 SOL plus your priority fee | No |
-| The taker's output token account, if it does not exist yet | 0.00204 SOL | Yes, later: the sponsor becomes its close authority and can close it once the taker has emptied it |
-| Fee and recipient token accounts created from an `{"associatedTokenAccount": {"owner": ...}}` destination | 0.00204 SOL each | No: the owner controls them |
-| One-time accounts some DEXs create for a new trader | Varies | No |
+| Cost | Can it be recovered? |
+| --- | --- |
+| Transaction fee for two signatures, and any priority fee you set | No |
+| Rent for the taker's output token account, if it does not exist yet | Yes, later: the sponsor becomes its close authority and can close it once the taker has emptied it |
+| Rent for fee and recipient token accounts created from an `{"associatedTokenAccount": {"owner": ...}}` destination | No: the owner controls them |
+| Rent for one-time accounts some DEXs create for a new trader | No |
 
-Token-2022 accounts cost more rent when the mint has extensions.
+Rent depends on the account size and the network's current rate; `getMinimumBalanceForRentExemption` returns it. Token-2022 accounts cost more when the mint has extensions.
 
 ## Protection against rent farming
 
@@ -52,6 +52,8 @@ A sponsor that pays rent for accounts someone else can close is open to abuse: a
 - Temporary accounts must be closed in the same transaction, or the swap fails.
 - The swap fails if the sponsor ends up paying more than the costs listed above.
 
+Accounts created from an owner destination belong to that owner, who can close them and keep the rent. Use the owner form only for addresses you control, such as your own fee wallet. If your users choose `recipient`, require an existing token account or leave `recipient` unset.
+
 ## Requirements
 
 The API rejects a sponsored request when:
@@ -59,5 +61,5 @@ The API rejects a sponsored request when:
 - `sponsor` is the taker, or any address in the request that receives native SOL.
 - The output is wrapped SOL.
 - A token account given as a plain address for the output or a fee does not exist, or holds a different token.
-- A native SOL fee or surplus recipient does not already hold the rent-exempt minimum (0.00089 SOL for an empty wallet).
+- A native SOL fee or surplus recipient does not already hold the rent-exempt minimum.
 - For native SOL output, the destination's balance plus `min_amount_out` would stay below that minimum.
