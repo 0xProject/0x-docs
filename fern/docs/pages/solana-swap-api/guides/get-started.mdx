@@ -25,30 +25,25 @@ const response = await fetch("https://api.0x.org/solana/swap-instructions", {
 ```
 
 - Tokens are mint addresses and amounts are in base units. `So11111111111111111111111111111111111111111` is native SOL; `So11111111111111111111111111111111111111112` is the wSOL mint.
-- The response contains the `instructions` to execute, in order, the expected `amount_out`, and `min_amount_out`, the least the taker receives after slippage. If the swap cannot deliver `min_amount_out`, the transaction fails and no tokens move.
+- The response contains the `instructions` to execute, in order, the expected `amount_out`, and `min_amount_out`, the least the taker receives after slippage.
 
 See the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions) for every field.
 
 ## 2. Build, sign, and send a v1 transaction
 
-1. Convert each instruction: `program_id` and each account `pubkey` are 32-byte arrays, and `data` is a byte array. Keep the order.
-2. Create a version 1 transaction message with the taker as fee payer, a recent blockhash, and the instructions.
+1. Convert the instructions to your library's format, keeping their order. Addresses and data are byte arrays.
+2. Create a version 1 transaction message with the taker as fee payer.
 3. Set the compute unit limit and the loaded accounts data size limit. Simulate the transaction to measure both, and add a margin of about 10%. **A v1 transaction that does not set these limits has limits of zero and fails.**
 4. Optionally set a priority fee. In v1 it is the total fee in lamports, not a price per compute unit.
 5. Have the taker sign, then send.
-
-A v1 transaction has no address lookup tables and no `ComputeBudget` instructions: the limits and the priority fee are fields of the message. It can be up to 4,096 bytes with up to 64 accounts, so the API can split a trade across more DEXs than a v0 transaction allows.
 
 The user's wallet and your Solana library must support v1 transactions. Solana Kit 8.5 or later does; `@solana/web3.js` 1.x does not.
 
 ## Tips for landing swaps
 
 - **Request instructions just before the user signs.** Pool prices move every slot. A quote that is several seconds old is more likely to fail on `min_amount_out`.
-- **Simulate before you ask for a signature.** The simulation in step 3 runs the full swap, so it also catches failures such as a taker with too little balance.
-- **Set a priority fee when the network is busy.** Leaders favour transactions that pay more.
-- **Use a reliable RPC provider.** The public endpoints are rate limited.
+- **Set a priority fee when the network is busy.**
 - **Do not resend an expired transaction.** If its blockhash expires before it lands, request new instructions and build a new transaction.
-- **Look up v1 transactions with `maxSupportedTransactionVersion: 1`** in `getTransaction`. A lower value makes the RPC return an error.
 
 ## Adding your own instructions
 
@@ -56,4 +51,4 @@ If you add instructions to the transaction (a transfer, a tip, a memo), set [`re
 
 ## v0 transactions
 
-Set `transaction_version: "v0"` only for a wallet that cannot sign v1 transactions yet. A v0 transaction is limited to 1,232 bytes, so routes use fewer DEXs and large trades get worse prices. The response can include `address_lookup_tables` that you must load before you compile the transaction, and you add `ComputeBudget` instructions yourself. Reserve room for your own instructions with [`reserve_transaction_bytes`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.reserve_transaction_bytes).
+Set `transaction_version: "v0"` only for a wallet that cannot sign v1 transactions yet. v0 transactions are smaller, so large trades get worse prices. Load the returned `address_lookup_tables` when you compile the transaction, and add `ComputeBudget` instructions yourself. Reserve room for your own instructions with [`reserve_transaction_bytes`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.reserve_transaction_bytes).
