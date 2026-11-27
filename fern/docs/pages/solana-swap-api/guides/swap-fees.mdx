@@ -12,7 +12,7 @@ Add these fields to your [`/solana/swap-instructions` request](/api-reference/so
 ```json
 {
   "swap_fee_ppm": "10000",
-  "swap_fee_recipient": { "associatedTokenAccount": { "owner": "<fee wallet>" } },
+  "swap_fee_recipient": [{ "associatedTokenAccount": { "owner": "<fee wallet>" } }],
   "swap_fee_side": "buy"
 }
 ```
@@ -33,7 +33,7 @@ Fees on the same side apply one after another, each on what is left after the pr
 
 ## Fee recipients
 
-Each recipient is one of:
+`swap_fee_recipient` is either a comma-separated string of addresses or a JSON array with one entry per fee. Each entry is one of:
 
 - **An address.** A wallet for a native SOL fee, or an existing token account for a token fee. If the token account does not exist, the transaction fails.
 - **An owner.** `{"associatedTokenAccount": {"owner": "<wallet>"}}`. The instructions create the owner's associated token account if it does not exist; the taker (or the `sponsor`, if set) pays its rent.
