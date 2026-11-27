@@ -9,6 +9,19 @@ The 0x Solana Swap API finds the best price for a swap across Solana DEXs and re
 
 [Get an API key](https://dashboard.0x.org/create-account) from the 0x Dashboard, then send it in the `0x-api-key` header of every request. Call the API from your backend so that the key is not exposed in browser or mobile code.
 
+<llms-only>
+Endpoint: `POST https://api.0x.org/solana/swap-instructions` with JSON body `token_in`, `token_out` (base58 mints; native SOL is `So11111111111111111111111111111111111111111`, the wSOL mint is `So11111111111111111111111111111111111111112`), `amount_in` (base units), `taker`, and `transaction_version: "v1"`. The only required header is `0x-api-key`; Solana does not use `0x-version`.
+
+- Request and response fields: https://docs.0x.org/api-reference/solana-swap-ap-is/swap/instructions.md
+- OpenAPI spec: https://docs.0x.org/openapi/solana-swap-apis.yaml
+- Building and sending a v1 transaction: https://docs.0x.org/solana/guides/get-started.md
+- Swap fees: https://docs.0x.org/solana/guides/swap-fees.md
+- Errors and common questions: https://docs.0x.org/solana/need-help/faq.md
+- Runnable example: https://github.com/0xProject/0x-examples/tree/main/solana-example
+- Agent skill: `npx skills add 0xProject/0x-ai` (skill `0x-solana-api`)
+</llms-only>
+
+<llms-ignore>
 <CardGroup cols={2}>
 
 <Card title="Get Started" href="/solana/guides/get-started">
@@ -36,3 +49,4 @@ The 0x Solana Swap API finds the best price for a swap across Solana DEXs and re
 </Card>
 
 </CardGroup>
+</llms-ignore>
