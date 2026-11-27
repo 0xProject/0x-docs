@@ -1,0 +1,63 @@
+---
+title: Sponsored Swaps
+description: Let your app pay the network fee and account rent so users can swap without holding SOL.
+---
+
+Set `sponsor` in your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions#request.body.sponsor) to a wallet your app controls. That wallet pays the transaction fee and the rent for every account the swap creates. The taker still signs the transaction and keeps full control of their tokens; the sponsor never holds them.
+
+```json
+{
+  "token_in": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "token_out": "So11111111111111111111111111111111111111111",
+  "amount_in": 5000000,
+  "taker": "<user wallet>",
+  "sponsor": "<your wallet>"
+}
+```
+
+When you build the transaction, make the sponsor the fee payer and collect signatures from both the sponsor and the taker. The response echoes `sponsor` to confirm the request was sponsored.
+
+If the API cannot build a swap that the sponsor fully pays for, it returns an error. It never falls back to a transaction where the taker pays.
+
+## What the sponsor pays
+
+Some costs come back to the sponsor in the same transaction. The rest are spent.
+
+**Returned in the same transaction**
+
+| Cost | How it returns |
+| --- | --- |
+| Temporary token accounts the route uses between DEXs | Closed back to the sponsor at the end of the swap. If one cannot be closed, the whole swap fails. |
+| The temporary wrapped SOL account for native SOL output | Closed when the SOL is unwrapped; its rent goes back to the sponsor. |
+| Accounts a DEX creates for the trader and closes again in the swap | Lent to the taker and repaid to the sponsor at the end of the swap. |
+
+**Spent**
+
+| Cost | Typical amount | Can it be recovered? |
+| --- | --- | --- |
+| Transaction fee (two signatures) and any priority fee you set | 0.00001 SOL plus your priority fee | No |
+| The taker's output token account, if it does not exist yet | 0.00204 SOL | Yes, later: the sponsor becomes its close authority and can close it once the taker has emptied it |
+| Fee and recipient token accounts created from an `{"associatedTokenAccount": {"owner": ...}}` destination | 0.00204 SOL each | No: the owner controls them |
+| One-time accounts some DEXs create for a new trader | Varies | No |
+
+Token-2022 accounts cost more rent when the mint has extensions.
+
+## Protection against rent farming
+
+A sponsor that pays rent for accounts someone else can close is open to abuse: a user could close the account and keep the rent, again and again. The API and the settlement program prevent this:
+
+- The taker's new output token account gets the sponsor as its close authority, so only the sponsor can reclaim its rent.
+- Wrapped SOL output is not allowed with a sponsor, because a wrapped SOL account cannot safely be given a close authority. Request native SOL output instead.
+- A wrapped SOL fee recipient must be an existing token account; the sponsor will not create one.
+- Temporary accounts must be closed in the same transaction, or the swap fails.
+- The swap fails if the sponsor ends up paying more than the costs listed above.
+
+## Requirements
+
+The API rejects a sponsored request when:
+
+- `sponsor` is the taker, or any address in the request that receives native SOL.
+- The output is wrapped SOL.
+- A token account given as a plain address for the output or a fee does not exist, or holds a different token.
+- A native SOL fee or surplus recipient does not already hold the rent-exempt minimum (0.00089 SOL for an empty wallet).
+- For native SOL output, the destination's balance plus `min_amount_out` would stay below that minimum.

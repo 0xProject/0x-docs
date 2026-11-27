@@ -312,6 +312,9 @@ navigation:
           - page: Swap Fees
             slug: swap-fees
             path: docs/pages/solana-swap-api/guides/swap-fees.mdx
+          - page: Sponsored Swaps
+            slug: sponsored-swaps
+            path: docs/pages/solana-swap-api/guides/sponsored-swaps.mdx
 
       - section: Need Help?
         slug: need-help
