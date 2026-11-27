@@ -3,7 +3,7 @@
   "info": {
     "title": "Solana API",
     "description": "API for generating Solana swap instructions across aggregated DEX liquidity.",
-    "version": "0.3.18"
+    "version": "0.3.51"
   },
   "servers": [
     {
@@ -404,11 +404,15 @@
                 "type": "null"
               },
               {
-                "$ref": "#/components/schemas/TransactionVersion",
-                "description": "Transaction format to target.\n`v0` (default) budgets routing by transaction bytes and the response may include address lookup tables.\n`v1` budgets routing by static account count (max 64) and never returns address lookup tables."
+                "type": "string",
+                "enum": [
+                  "v0",
+                  "v1"
+                ]
               }
             ],
-            "default": "v0"
+            "description": "Transaction format to target.\n`v0` budgets routing by transaction bytes and the response may include address lookup tables.\n`v1` (default) budgets routing by static account count (max 64) and never returns address lookup tables.",
+            "default": "v1"
           }
         },
         "example": {
@@ -526,7 +530,6 @@
       },
       "TransactionVersion": {
         "type": "string",
-        "description": "Transaction format the client will compile the instructions into.",
         "enum": [
           "v0",
           "v1"
