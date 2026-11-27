@@ -1,0 +1,49 @@
+---
+title: Swap Fees
+description: Charge a fee on the swaps your users make with the 0x Solana Swap API.
+---
+
+Add these fields to your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions) to charge a fee on a swap:
+
+- [`swap_fee_ppm`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_ppm): the fee in **parts per million**. `10000` is 1%.
+- [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient): where the fee goes.
+- [`swap_fee_side`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_side) (optional): `buy` takes the fee from the output token and `sell` takes it from the input token. The default is `buy`.
+
+```json
+{
+  "swap_fee_ppm": "10000",
+  "swap_fee_recipient": "<fee wallet>",
+  "swap_fee_side": "buy"
+}
+```
+
+## Several fees
+
+Each field takes a comma-separated list, and each position is one fee:
+
+```json
+{
+  "swap_fee_ppm": "50000,25000,10000",
+  "swap_fee_recipient": "recipient1,recipient2,recipient3",
+  "swap_fee_side": "buy,buy,sell"
+}
+```
+
+Fees on the same side apply one after another, each on what is left after the previous ones. Two buy-side fees of `50000` and `25000` take 7.375%, not 7.5%. Each fee amount is rounded up to the next base unit.
+
+## Fee recipients
+
+Each recipient is one of:
+
+- **An address.** A wallet for a native SOL fee, or an existing token account for a token fee. If the token account does not exist, the transaction fails.
+- **An owner.** `{"associatedTokenAccount": {"owner": "<wallet>"}}`. The instructions create the owner's associated token account if it does not exist; the taker (or the `sponsor`, if set) pays its rent.
+
+A fee whose recipient is the taker's own account for that token is dropped.
+
+## Showing fees to users
+
+The fee is exactly what you request, so show it from your request values. The returned `amount_out` is already net of buy-side fees. Sell-side fees are taken before the swap is routed.
+
+## Limits
+
+Each fee entry can be at most `100000` ppm (10%) by default. The limit applies to each entry, not to the total. [Contact us](/solana/need-help/contact-support) if you need a higher limit.

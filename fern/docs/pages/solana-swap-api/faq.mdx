@@ -1,0 +1,88 @@
+---
+title: FAQ
+description: Common questions about the 0x Solana Swap API.
+---
+
+## General
+
+<AccordionGroup>
+  <Accordion title="Does 0x hold user funds?">
+    No. The API returns instructions. The user's wallet signs the transaction, and tokens move directly between the user's accounts and the DEXs in that one transaction.
+  </Accordion>
+
+  <Accordion title="Which wallets can I use?">
+    Any wallet that can sign v1 transactions. For a wallet that cannot yet, request a v0 transaction; see [v0 transactions](/solana/guides/get-started#v0-transactions).
+  </Accordion>
+
+  <Accordion title="Which DEXs does the API use?">
+    [`GET /solana/enabled-sources`](/api-reference/solana-swap-ap-is/sources/enabled-sources) lists them. To exclude some from a swap, pass their names in `disabled_sources`.
+  </Accordion>
+
+  <Accordion title="Can I call the API from a browser?">
+    No. Call it from your backend so that your API key stays private, and pass the instructions to your frontend.
+  </Accordion>
+</AccordionGroup>
+
+## Tokens
+
+<AccordionGroup>
+  <Accordion title="Which tokens can I swap?">
+    SPL tokens and Token-2022 tokens, including tokens that are still on a pump.fun bonding curve. Token-2022 tokens with a transfer fee are supported, and the quote is net of the fee. The API refuses a Token-2022 token that has an active transfer hook, has the non-transferable extension, or is paused, with the error `TOKEN_HAS_UNSUPPORTED_EXTENSIONS`.
+  </Accordion>
+
+  <Accordion title="How do I swap native SOL?">
+    Use `So11111111111111111111111111111111111111111` as `token_in` or `token_out`. The instructions wrap and unwrap SOL for you. `So11111111111111111111111111111111111111112` is the wSOL mint: use it only to send or receive wSOL in a token account.
+  </Accordion>
+
+  <Accordion title="Can I use token symbols such as USDC?">
+    No. Use mint addresses, and give `amount_in` in base units: 5 USDC is `5000000`.
+  </Accordion>
+</AccordionGroup>
+
+## Accounts and fees
+
+<AccordionGroup>
+  <Accordion title="Can someone other than the user pay the transaction fee?">
+    Yes. Set `sponsor` to the wallet that pays the transaction fee and the rent for any accounts the instructions create. The taker still signs the transaction.
+  </Accordion>
+
+  <Accordion title="Can the output go to another wallet?">
+    Yes. Set `recipient` to a wallet (for native SOL), a token account, or `{"associatedTokenAccount": {"owner": "<wallet>"}}`.
+  </Accordion>
+
+  <Accordion title="Does 0x create the user's token accounts?">
+    Yes. The instructions create the taker's associated token accounts when they do not exist, so the taker needs enough SOL for their rent.
+  </Accordion>
+
+  <Accordion title="How do I charge a fee?">
+    See [Swap Fees](/solana/guides/swap-fees).
+  </Accordion>
+</AccordionGroup>
+
+## Errors
+
+<AccordionGroup>
+  <Accordion title="I get NO_POOLS_FOUND or ROUTING_FAILED.">
+    The API found no route for the pair at that size. Check that both mint addresses are correct and that `amount_in` is in base units, then try a smaller amount.
+  </Accordion>
+
+  <Accordion title="My v1 transaction fails on compute units or loaded accounts data size.">
+    A v1 transaction that does not set the compute unit limit and the loaded accounts data size limit has limits of zero. Simulate the transaction and set both; see [Get Started](/solana/guides/get-started#2-build-sign-and-send-a-v1-transaction).
+  </Accordion>
+
+  <Accordion title="My transaction is too large after I add my own instructions.">
+    Set `reserve_transaction_accounts` to the number of accounts your instructions add. See [Adding your own instructions](/solana/guides/get-started#adding-your-own-instructions).
+  </Accordion>
+
+  <Accordion title="The swap fails because it received less than min_amount_out.">
+    The price moved between the quote and execution by more than `slippage_bps` allows. Request instructions closer to when the user signs, or allow more slippage.
+  </Accordion>
+
+  <Accordion title="My transaction expired or was dropped.">
+    Its blockhash expired before it landed. Request new instructions and build a new transaction, and add a priority fee when the network is busy.
+  </Accordion>
+
+  <Accordion title="getTransaction returns an error for my swap.">
+    Pass `maxSupportedTransactionVersion: 1`. With a lower value, the RPC returns an error for v1 transactions.
+  </Accordion>
+</AccordionGroup>

@@ -1,322 +1,59 @@
 ---
 title: "Get Started"
-description: "Learn how to use the 0x Solana Swap API endpoint to get a quote, build swap instructions, and send a swap transaction."
+description: "Request swap instructions, build a v1 transaction, and land it on Solana."
 ---
 
-<Note>
-  The 0x Solana Swap API is in **open beta** — [get an API key](https://dashboard.0x.org/create-account) to start building. Interfaces may still change; share feedback in [Discord](https://discord.com/invite/official0x).
-</Note>
+The [example code](https://github.com/0xProject/0x-examples/tree/main/solana-example) does everything on this page in one TypeScript file with [Solana Kit](https://github.com/anza-xyz/kit). Read it alongside this page.
 
-<Tip>
-  Quick link for example code:
-  [link](https://github.com/0xProject/0x-solana-example)
-</Tip>
+## 1. Request swap instructions
 
-## About 0x Solana Swap API
+Send a POST request to `/solana/swap-instructions`. Always set `transaction_version` to `"v1"`.
 
-The 0x Solana Swap API is a fast, flexible API that lets developers programmatically access the best token prices across Solana's top DEXs, enabling seamless swap functionality in any app or wallet.
-
-Whether you're building a Solana-native experience or expanding an EVM-first product, the API helps you integrate token swaps with minimal overhead and maximum performance.
-
-## Steps to Swap Token
-
-This guide will walk you through using the `/swap-instructions` endpoint on 0x’s Solana API to:
-
-1. Fetch a quote
-2. Build the swap instructions
-3. Sign and send a `VersionedTransaction` on Solana mainnet
-
-## 0. Prerequisites
-
-Make sure you have:
-
-- [0x API key](/docs/introduction/quickstart/getting-started)
-- A funded Solana keypair (see details below)
-- A RPC Connection (see details below)
-
-<AccordionGroup>
-  <Accordion title="Setup a keypair">
-    To sign and send transactions on Solana, you’ll need a valid keypair that has funds to swap (e.g. SOL). This represents the "taker" account executing the swap.
-For testing purposes, you can generate a new keypair locally or use an existing one by loading the private key from an environment variable.
-
-```js
-import { Keypair } from "@solana/web3.js";
-import bs58 from "bs58";
-
-const takerKeypair = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
-```
-
-<Warning>**Security note:** Avoid hardcoding or pasting private keys directly into source files. In production, always use secure key management tools or wallet adapters (e.g. Phantom, Backpack, Ledger, etc.).</Warning>
-  </Accordion>
-  <Accordion title="Setup an RPC Connection">
-    Solana provides a [default public RPC endpoint](https://solana.com/pl/docs/references/clusters), but for production use, it's strongly recommended to run your own or use a third-party provider like [Helius](https://www.helius.dev/).
-
-    ```js
-    import { Connection } from "@solana/web3.js";
-
-// You can replace this with your own or a third-party RPC URL
-const connection = new Connection("https://api.mainnet-beta.solana.com");
-
-    ```
-
-  </Accordion>
-</AccordionGroup>
-
-## 1. Fetch a Quote
-
-Start by sending a POST request to the 0x `/swap-instructions` endpoint to get swap instructions for a specific token pair and input amount.
-
-This endpoint returns everything needed to construct and execute a swap transaction.
-
-### Example request
-
-```js
-const quoteResponse = await fetch("https://api.0x.org/solana/swap-instructions", {
+```ts
+const response = await fetch("https://api.0x.org/solana/swap-instructions", {
   method: "POST",
-  headers: {
-    "0x-api-key": process.env.ZEROEX_API_KEY!,
-    "Content-Type": "application/json",
-  },
+  headers: { "0x-api-key": API_KEY, "Content-Type": "application/json" },
   body: JSON.stringify({
-    token_out: "So11111111111111111111111111111111111111112", // SOL
-    token_in: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC
-    amount_in: 100000000, // Amount of token_in in base units (e.g. 100 USDC)
-    taker: takerKeypair.publicKey.toBase58(), // Public key of wallet executing the swap
-    slippage_bps: 50,     // default is 50 if omitted
+    token_in: "So11111111111111111111111111111111111111111", // native SOL
+    token_out: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC
+    amount_in: 1_000_000, // 0.001 SOL, in lamports
+    taker: takerAddress, // the wallet that signs the swap
+    slippage_bps: 50,
+    transaction_version: "v1",
   }),
 });
-
-const quote = await quoteResponse.json();
 ```
 
-### Required Request Parameters
+- Tokens are mint addresses and amounts are in base units. `So11111111111111111111111111111111111111111` is native SOL; `So11111111111111111111111111111111111111112` is the wSOL mint.
+- The response contains the `instructions` to execute, in order, the expected `amount_out`, and `min_amount_out`, the least the taker receives after slippage. If the swap cannot deliver `min_amount_out`, the transaction fails and no tokens move.
 
-For the complete list of required request parameters, see the [API Reference](/api-reference/api-overview).
+See the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions) for every field.
 
-### Example Response
+## 2. Build, sign, and send a v1 transaction
 
-For a sample response, complete schema, and detailed field descriptions, see the [API Reference](/api-reference/api-overview).
+1. Convert each instruction: `program_id` and each account `pubkey` are 32-byte arrays, and `data` is a byte array. Keep the order.
+2. Create a version 1 transaction message with the taker as fee payer, a recent blockhash, and the instructions.
+3. Set the compute unit limit and the loaded accounts data size limit. Simulate the transaction to measure both, and add a margin of about 10%. **A v1 transaction that does not set these limits has limits of zero and fails.**
+4. Optionally set a priority fee. In v1 it is the total fee in lamports, not a price per compute unit.
+5. Have the taker sign, then send.
 
-## 2. Build Swap Instructions
+A v1 transaction has no address lookup tables and no `ComputeBudget` instructions: the limits and the priority fee are fields of the message. It can be up to 4,096 bytes with up to 64 accounts, so the API can split a trade across more DEXs than a v0 transaction allows.
 
-Once you have the quote, the response will include a list of serialized Solana instructions. These need to be deserialized into `TransactionInstruction` objects before you can add them to a transaction.
+The user's wallet and your Solana library must support v1 transactions. Solana Kit 8.5 or later does; `@solana/web3.js` 1.x does not.
 
-Each instruction includes:
+## Tips for landing swaps
 
-- A list of accounts (with signer/writable metadata)
-- A program ID
-- Raw instruction data
+- **Request instructions just before the user signs.** Pool prices move every slot. A quote that is several seconds old is more likely to fail on `min_amount_out`.
+- **Simulate before you ask for a signature.** The simulation in step 3 runs the full swap, so it also catches failures such as a taker with too little balance.
+- **Set a priority fee when the network is busy.** Leaders favour transactions that pay more.
+- **Use a reliable RPC provider.** The public endpoints are rate limited.
+- **Do not resend an expired transaction.** If its blockhash expires before it lands, request new instructions and build a new transaction.
+- **Look up v1 transactions with `maxSupportedTransactionVersion: 1`** in `getTransaction`. A lower value makes the RPC return an error.
 
-Here’s how to decode them using `@solana/web3.js`:
+## Adding your own instructions
 
-```js
-import { TransactionInstruction, PublicKey } from "@solana/web3.js";
+If you add instructions to the transaction (a transfer, a tip, a memo), set [`reserve_transaction_accounts`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.reserve_transaction_accounts) to the number of accounts they add that the swap does not already use. Keep it as small as you can: every reserved account is one the route cannot use. Check the size of the final transaction before you send it.
 
-function decodePubkey(bytes: number[]): PublicKey {
-  return new PublicKey(Uint8Array.from(bytes));
-}
+## v0 transactions
 
-function buildInstructions(instructionsData: any[]): TransactionInstruction[] {
-  return instructionsData.map((ix) => {
-    const keys = ix.accounts.map((acc: any) => ({
-      pubkey: decodePubkey(acc.pubkey),
-      isSigner: acc.is_signer,
-      isWritable: acc.is_writable,
-    }));
-
-    const programId = decodePubkey(ix.program_id);
-    const data = Buffer.from(ix.data);
-
-    return new TransactionInstruction({ keys, programId, data });
-  });
-}
-
-const instructions = buildInstructions(quote.instructions);
-
-```
-
-### What this does
-
-- Decodes each `pubkey` from byte array to a `PublicKey`
-- Reconstructs all `TransactionInstruction` objects needed to build your Solana transaction
-
-## 3. Resolve Address Lookup Tables
-
-Before you compile and sign a **v0 (VersionedTransaction)**, you need to resolve any **Address Lookup Tables (ALTs)** returned by the 0x `/swap-instructions` endpoint.
-
-ALTs let Solana v0 transactions reference more accounts than can fit in the static account list by “looking up” additional addresses on-chain. If the quote response includes `address_lookup_tables`, you must:
-
-1. Fetch each lookup table account from RPC
-2. Deserialize it into an `AddressLookupTableAccount`
-3. Pass the resulting accounts into `compileToV0Message(...)`
-
-```js
-import {
-  AddressLookupTableAccount,
-  PublicKey,
-} from "@solana/web3.js";
-
-// Fetch & deserialize Address Lookup Table accounts for v0 tx compilation
-async function resolveAddressLookupTables(
-  connection: any,
-  keys: string[]
-): Promise<AddressLookupTableAccount[]> {
-  const accountInfos = await connection.getMultipleAccountsInfo(
-    keys.map((key) => new PublicKey(key))
-  );
-
-  const accounts: AddressLookupTableAccount[] = [];
-  for (let i = 0; i < keys.length; i++) {
-    const accountInfo = accountInfos[i];
-    if (!accountInfo) {
-      throw new Error(`Failed to resolve address lookup table: ${keys[i]}`);
-    }
-
-    accounts.push(
-      new AddressLookupTableAccount({
-        key: new PublicKey(keys[i]),
-        state: AddressLookupTableAccount.deserialize(accountInfo.data),
-      })
-    );
-  }
-
-  return accounts;
-}
-```
-
-## 4. Sign and Send the Transaction
-
-With your instructions ready, the final step is to wrap them in a `VersionedTransaction`, sign it with your wallet, and send it to the Solana network.
-
-The 0x Solana API returns instructions that are compatible with the latest `v0` transaction format, which supports address deduplication and future extensions.
-
-```js
-import {
-  Connection,
-  Keypair,
-  VersionedTransaction,
-  TransactionMessage,
-} from "@solana/web3.js";
-
-const latestBlockhash = await connection.getLatestBlockhash();
-
-const instructions = buildInstructions(quote.instructions);
-const [addressLookupTableAccounts, latestBlockhash] = await Promise.all([
-  resolveAddressLookupTables(quote.address_lookup_tables ?? []),
-  config.connection.getLatestBlockhash(),
-]);
-
-const messageV0 = new TransactionMessage({
-  payerKey: takerKeypair.publicKey,
-  recentBlockhash: latestBlockhash.blockhash,
-  instructions,
-}).compileToV0Message(addressLookupTableAccounts);
-
-const versionedTx = new VersionedTransaction(messageV0);
-versionedTx.sign([takerKeypair]);
-
-const signature = await connection.sendTransaction(versionedTx, {
-  skipPreflight: true,
-});
-
-const confirmation = await connection.confirmTransaction(
-  {
-    signature,
-    blockhash: latestBlockhash.blockhash,
-    lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
-  },
-  "finalized",
-);
-
-console.log(`✅ Swap complete: https://solscan.io/tx/${signature}`);
-```
-
-### Notes
-
-- The transaction must be signed by the **taker** (payer of the swap)
-- You’ll need a **funded wallet** that can cover gas (SOL)
-- If you add **extra instructions** (compute budget, unwrap/cleanup, transfers, etc.), be mindful of the **v0 transaction** 1232-byte limit and use the [Integrator Byte Costs guide](/solana/solana-swap-api/guides/integrator-byte-costs) to reserve bytes appropriately.
-
-## sendTransaction Options
-
-When [sending the signed transaction to the Solana network](https://solana.com/pl/developers/guides/advanced/retry#an-in-depth-look-at-sendtransaction), there are a couple of important options you can configure to control how the RPC node handles it. These options can impact performance, reliability, and UX depending on your use case.
-
-```js
-const signature = await connection.sendTransaction(versionedTx, {
-  maxRetries: 3,
-  skipPreflight: false,
-});
-```
-
-<table>
-  <thead>
-    <tr>
-      <th>Option</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        [maxRetries](https://solana.com/pl/developers/guides/advanced/retry)
-      </td>
-      <td>
-        Maximum number of times the RPC node will retry sending the transaction
-        to the leader. If omitted, it retries until finalized or blockhash
-        expires.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        [skipPreflight](https://solana.com/pl/developers/guides/advanced/retry#the-cost-of-skipping-preflight)
-      </td>
-      <td>
-        If `true`, skips the preflight checks before sending (default is
-        `false`), specifically:
-        <ul>
-          <li>Verify that all signatures are valid</li>
-          <li>
-            Check that the referenced blockhash is within the last 150 blocks
-          </li>
-          <li>
-            Simulate the transaction against the block slot specified by the
-            `preflightCommitment`
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-For example, if your use case is a payment solution where reliability is more important than speed, you might set a higher `maxRetries` to ensure the transaction has multiple attempts. For a fast-moving trading bot, you might prefer to set `skipPreflight=true` to reduce latency.
-
-### Transaction Confirmation
-
-In addition, after sending the transaction, it is always best practice to check the transaction confirmation state. If the transaction fails, you should log the error for debugging or communicate it clearly with your users on your interface.
-
-You can confirm the transaction using the `confirmTransaction` method with your chosen level of commitment - `"finalized"` , `"confirmed"`, or `"processed"`. Learn more about [configuring state commitment levels](https://solana.com/pl/docs/rpc#configuring-state-commitment) to choose the right option for your use case.
-
-```typescript
-const confirmation = await connection.confirmTransaction(
-  {
-    signature,
-    blockhash: latestBlockhash.blockhash,
-    lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
-  },
-  "confirmed",
-);
-
-if (confirmation.value.err) {
-  throw new Error(
-    `Transaction failed: ${JSON.stringify(confirmation.value.err)}\nhttps://solscan.io/tx/${signature}/`,
-  );
-} else {
-  console.log(`Transaction successful: https://solscan.io/tx/${signature}/`);
-}
-```
-
-For additional best practices on confirming transactions and handling errors, see the [transaction confirmation tips guide](https://solana.com/pl/developers/guides/advanced/confirmation#transaction-confirmation-tips).
-
-## Important Integration Notes
-
-Coming from another swap provider? Make sure to review the [Important Integration Notes](/solana/solana-swap-api/guides/important-integration-notes)
+Set `transaction_version: "v0"` only for a wallet that cannot sign v1 transactions yet. A v0 transaction is limited to 1,232 bytes, so routes use fewer DEXs and large trades get worse prices. The response can include `address_lookup_tables` that you must load before you compile the transaction, and you add `ComputeBudget` instructions yourself. Reserve room for your own instructions with [`reserve_transaction_bytes`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.reserve_transaction_bytes).
