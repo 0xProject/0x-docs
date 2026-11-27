@@ -337,7 +337,7 @@
           },
           "swap_fee_ppm": {
             "type": "string",
-            "description": "Your fees, as a comma-separated list in parts per million of the trade. 10000 is 1%.\nEach fee is at most 100000 (10%) unless your app has a different limit.\nRequires swap_fee_recipient with one entry per fee.\nFees on the same side apply one after another, each to what is left after the earlier ones. Each fee rounds up to a whole base unit."
+            "description": "Fees to charge on the swap, as a comma-separated list in parts per million of the trade. 10000 is 1%.\nEach fee is at most 10% unless your app has a different limit.\nRequires swap_fee_recipient with one entry per fee.\nFees on the same side apply one after another, each to what is left after the earlier ones. Each fee rounds up to a whole base unit."
           },
           "swap_fee_recipient": {
             "$ref": "#/components/schemas/FeeRecipients",
