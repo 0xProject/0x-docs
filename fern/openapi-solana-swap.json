@@ -314,14 +314,14 @@
           "reserve_transaction_accounts": {
             "type": "integer",
             "format": "int64",
-            "description": "Minimum static account keys to reserve in the transaction for composing with additional instructions.\nOnly applies to `v1` transactions; ignored when `transaction_version` is `v0`.",
+            "description": "Accounts to leave free in a `v1` transaction for instructions you add: count the accounts they use that the swap does not. Ignored for `v0`.\nKeep it as small as you can: reserved accounts are accounts the route cannot use.",
             "default": 0,
             "minimum": 0
           },
           "reserve_transaction_bytes": {
             "type": "integer",
             "format": "int64",
-            "description": "Minimum bytes to reserve in the transaction for composing with additional instructions.\nOnly applies to `v0` transactions; ignored when `transaction_version` is `v1`.",
+            "description": "Bytes to leave free in a `v0` transaction for instructions you add. Ignored for `v1`.\nKeep it as small as you can: reserved bytes are bytes the route cannot use.",
             "default": 0,
             "minimum": 0
           },

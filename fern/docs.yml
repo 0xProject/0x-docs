@@ -296,32 +296,25 @@ navigation:
           - page: Introduction
             slug: introduction
             path: docs/pages/solana-swap-api/introduction.mdx
-          - section: Guides
-            slug: guides
-            contents:
-              - page: Get Started
-                slug: get-started-with-solana-swap-api
-                path: docs/pages/solana-swap-api/guides/get-started.mdx
-              - page: Monetize Your App
-                slug: monetize-your-app
-                path: docs/pages/solana-swap-api/guides/monetize-your-app.mdx
-              - page: Important Integration Notes
-                slug: important-integration-notes
-                path: docs/pages/solana-swap-api/guides/important-integration-notes.mdx
-              - page: Integrator Byte Costs
-                slug: integrator-byte-costs
-                path: docs/pages/solana-swap-api/guides/integrator-byte-costs.mdx
-              - page: Add Solana to EVM Projects
-                slug: evm-to-solana
-                path: docs/pages/solana-swap-api/reference/evm-to-solana.mdx
           - link: Example Code
-            href: https://github.com/0xProject/0x-examples#solana-swap-api
+            href: https://github.com/0xProject/0x-examples/tree/main/solana-example
             target: _blank
           - link: API Reference
-            href: /api-reference/solana-swap-ap-is/swap/instructions
-          - page: Troubleshooting
-            slug: troubleshooting
-            path: docs/pages/solana-swap-api/reference/troubleshooting.mdx
+            href: /api-reference/solana-swap-api/swap/instructions
+
+      - section: Guides
+        slug: guides
+        icon: fa-regular fa-book
+        contents:
+          - page: Get Started
+            slug: get-started
+            path: docs/pages/solana-swap-api/guides/get-started.mdx
+          - page: Swap Fees
+            slug: swap-fees
+            path: docs/pages/solana-swap-api/guides/swap-fees.mdx
+          - page: Sponsored Swaps
+            slug: sponsored-swaps
+            path: docs/pages/solana-swap-api/guides/sponsored-swaps.mdx
 
       - section: Need Help?
         slug: need-help
@@ -329,16 +322,10 @@ navigation:
         contents:
           - page: FAQ
             slug: faq
-            path: docs/pages/introduction/faq.mdx
-          - page: API Issues & Error Codes
-            slug: api-issues
-            path: docs/pages/introduction/api-issues.mdx
+            path: docs/pages/solana-swap-api/faq.mdx
           - page: Contact Support
             slug: contact-support
-            path: docs/pages/need-help/contact-support.mdx
-          - link: Contact Sales
-            href: https://0x.org/contact
-            target: _blank
+            path: docs/pages/solana-swap-api/contact-support.mdx
 
   - tab: cross-chain
     layout:
@@ -469,6 +456,7 @@ navigation:
         api-name: evm
       - api: Solana Swap APIs
         api-name: solana
+        slug: solana-swap-api
       - api: Cross-Chain APIs
         api-name: cross-chain
 
@@ -573,20 +561,36 @@ redirects:
   - source: /svm/solana-swap-api/introduction
     destination: /solana/solana-swap-api/introduction
   - source: /svm/solana-swap-api/guides/get-started-with-solana-swap-api
-    destination: /solana/solana-swap-api/guides/get-started-with-solana-swap-api
+    destination: /solana/guides/get-started
   - source: /svm/solana-swap-api/guides/monetize-your-app
-    destination: /solana/solana-swap-api/guides/monetize-your-app
+    destination: /solana/guides/swap-fees
   - source: /svm/solana-swap-api/guides/important-integration-notes
-    destination: /solana/solana-swap-api/guides/important-integration-notes
+    destination: /solana/guides/get-started
   - source: /svm/solana-swap-api/guides/integrator-byte-costs
-    destination: /solana/solana-swap-api/guides/integrator-byte-costs
+    destination: /solana/guides/get-started
   - source: /svm/solana-swap-api/guides/evm-to-solana
-    destination: /solana/solana-swap-api/guides/evm-to-solana
+    destination: /solana/solana-swap-api/introduction
   - source: /svm/solana-swap-api/troubleshooting
-    destination: /solana/solana-swap-api/troubleshooting
+    destination: /solana/need-help/faq
   - source: /svm/need-help/faq
     destination: /solana/need-help/faq
   - source: /svm/need-help/api-issues
-    destination: /solana/need-help/api-issues
+    destination: /solana/need-help/faq
   - source: /svm/need-help/contact-support
     destination: /solana/need-help/contact-support
+  - source: /solana/solana-swap-api/guides/get-started-with-solana-swap-api
+    destination: /solana/guides/get-started
+  - source: /solana/solana-swap-api/guides/monetize-your-app
+    destination: /solana/guides/swap-fees
+  - source: /solana/solana-swap-api/guides/important-integration-notes
+    destination: /solana/guides/get-started
+  - source: /solana/solana-swap-api/guides/integrator-byte-costs
+    destination: /solana/guides/get-started
+  - source: /solana/solana-swap-api/guides/evm-to-solana
+    destination: /solana/solana-swap-api/introduction
+  - source: /solana/solana-swap-api/troubleshooting
+    destination: /solana/need-help/faq
+  - source: /solana/need-help/api-issues
+    destination: /solana/need-help/faq
+  - source: /api-reference/solana-swap-ap-is/:path*
+    destination: /api-reference/solana-swap-api/:path*
