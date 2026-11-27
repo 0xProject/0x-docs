@@ -309,14 +309,14 @@
           "reserve_transaction_accounts": {
             "type": "integer",
             "format": "int64",
-            "description": "Accounts to leave free in a v1 transaction for instructions you add.\nCount each account, including each program, that your instructions use and the swap does not.\nIgnored for v0.",
+            "description": "Accounts to leave free in a v1 transaction for your own instructions. Ignored for v0.",
             "default": 0,
             "minimum": 0
           },
           "reserve_transaction_bytes": {
             "type": "integer",
             "format": "int64",
-            "description": "Bytes to leave free in a v0 transaction for instructions you add, such as compute budget instructions.\nIgnored for v1. See [Integrator Byte Costs](/solana/solana-swap-api/guides/integrator-byte-costs).",
+            "description": "Bytes to leave free in a v0 transaction for your own instructions. Ignored for v1.",
             "default": 0,
             "minimum": 0
           },
@@ -356,14 +356,14 @@
           },
           "token_in": {
             "type": "string",
-            "description": "Mint address of the token to sell. For native SOL, use So11111111111111111111111111111111111111111; for wrapped SOL, use So11111111111111111111111111111111111111112.",
+            "description": "Mint address of the token to sell. For native SOL instead of wrapped SOL, use So11111111111111111111111111111111111111111.",
             "examples": [
               "So11111111111111111111111111111111111111112"
             ]
           },
           "token_out": {
             "type": "string",
-            "description": "Mint address of the token to buy. For native SOL, use So11111111111111111111111111111111111111111; for wrapped SOL, use So11111111111111111111111111111111111111112.",
+            "description": "Mint address of the token to buy. For native SOL instead of wrapped SOL, use So11111111111111111111111111111111111111111.",
             "examples": [
               "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
             ]
@@ -371,13 +371,13 @@
           "trade_surplus_cap_ppm": {
             "type": "integer",
             "format": "int32",
-            "description": "Most trade surplus to collect, in parts per million of the trade. Trade surplus is any output above amount_out.\nRequires trade_surplus_recipient. 0 turns collection off.\nIgnored for apps where 0x collects the trade surplus.",
+            "description": "Most trade surplus to collect, in parts per million of the trade. Trade surplus is any output above amount_out.\nOnly used by apps that 0x has set up to collect their own trade surplus; for every other app,\n0x collects it and this field is ignored. Requires trade_surplus_recipient.",
             "maximum": 1000000,
             "minimum": 0
           },
           "trade_surplus_recipient": {
             "$ref": "#/components/schemas/Destination",
-            "description": "Where the trade surplus goes. Requires trade_surplus_cap_ppm.\nIgnored for apps where 0x collects the trade surplus."
+            "description": "Where the trade surplus goes. Only used by apps that 0x has set up to collect their own trade surplus.\nRequires trade_surplus_cap_ppm."
           },
           "transaction_version": {
             "type": "string",
