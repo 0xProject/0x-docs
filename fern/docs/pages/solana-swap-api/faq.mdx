@@ -18,20 +18,20 @@ description: Common questions about the 0x Solana Swap API.
 ## Swaps
 
 <AccordionGroup>
-  <Accordion title="Do I need a token approval, as on EVM chains?">
-    No. The taker signs the swap transaction itself, so there is no approval step.
-  </Accordion>
-
   <Accordion title="Which DEXs does the API use?">
     [`GET /solana/enabled-sources`](/api-reference/solana-swap-ap-is/sources/enabled-sources) lists them. To exclude some from a swap, pass their names in `disabled_sources`.
+  </Accordion>
+
+  <Accordion title="Which wallets can I use?">
+    Any wallet that can sign v1 transactions. For a wallet that cannot yet, request a v0 transaction; see [v0 transactions](/solana/guides/get-started#v0-transactions).
   </Accordion>
 
   <Accordion title="Can someone other than the user pay the transaction fee?">
     Yes. Set `sponsor` to the wallet that pays the transaction fee and the rent for any accounts the instructions create. The taker still signs the transaction.
   </Accordion>
 
-  <Accordion title="Can the output go to another wallet?">
-    Yes. Set `recipient` to a wallet (for native SOL), a token account, or `{"associatedTokenAccount": {"owner": "<wallet>"}}`.
+  <Accordion title="Does 0x create the user's token accounts?">
+    Yes. The instructions create the taker's token accounts when they do not exist. The taker, or the `sponsor` if set, pays their rent, so the taker needs some SOL.
   </Accordion>
 </AccordionGroup>
 
@@ -48,5 +48,13 @@ description: Common questions about the 0x Solana Swap API.
 
   <Accordion title="My transaction is too large after I add my own instructions.">
     Set `reserve_transaction_accounts` to the number of accounts your instructions add. See [Adding your own instructions](/solana/guides/get-started#adding-your-own-instructions).
+  </Accordion>
+
+  <Accordion title="The swap failed because it received less than min_amount_out.">
+    The price moved between the quote and execution by more than `slippage_bps` allows. Request instructions closer to when the user signs, or allow more slippage.
+  </Accordion>
+
+  <Accordion title="My transaction expired or was dropped.">
+    Its blockhash expired before it landed. Request new instructions and build a new transaction, and add a priority fee when the network is busy.
   </Accordion>
 </AccordionGroup>
