@@ -10,9 +10,6 @@ description: Common questions about the 0x Solana Swap API.
     SPL tokens and Token-2022 tokens. A Token-2022 token is not routed if it has an active transfer hook, has the non-transferable extension, or is paused.
   </Accordion>
 
-  <Accordion title="Can I swap launchpad tokens?">
-    Yes, while they are still on a pump.fun, Meteora Dynamic Bonding Curve, or Raydium LaunchLab curve, and after they move to a regular pool. Not supported: pump.fun cashback coins, and buys larger than what is left on the curve. For a short time after a token leaves its curve, it cannot be swapped until its new pool is available.
-  </Accordion>
 
   <Accordion title="How do I swap native SOL?">
     Use `So11111111111111111111111111111111111111111` as `token_in` or `token_out`. The instructions wrap and unwrap SOL for you. `So11111111111111111111111111111111111111112` is the wSOL mint: use it only to send or receive wSOL in a token account.
