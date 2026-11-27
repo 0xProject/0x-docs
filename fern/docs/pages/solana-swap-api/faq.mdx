@@ -11,7 +11,7 @@ description: Common questions about the 0x Solana Swap API.
   </Accordion>
 
   <Accordion title="How do I swap native SOL?">
-    Use `So11111111111111111111111111111111111111111` as `token_in` or `token_out`. The instructions wrap and unwrap SOL for you. `So11111111111111111111111111111111111111112` is the wSOL mint: use it only to send or receive wSOL in a token account.
+    Use `So11111111111111111111111111111111111111111` as `token_in` or `token_out`. To swap wrapped SOL (wSOL) instead, use `So11111111111111111111111111111111111111112`.
   </Accordion>
 </AccordionGroup>
 
@@ -31,7 +31,7 @@ description: Common questions about the 0x Solana Swap API.
   </Accordion>
 
   <Accordion title="Does 0x create the user's token accounts?">
-    Yes. The instructions create the taker's token accounts when they do not exist. The taker, or the `sponsor` if set, pays their rent, so the taker needs some SOL.
+    Yes. The instructions create the taker's token accounts when they do not exist. The taker pays their rent, so needs some SOL. If you set `sponsor`, the sponsor pays it instead and the taker needs no SOL.
   </Accordion>
 </AccordionGroup>
 
