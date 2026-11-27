@@ -28,7 +28,7 @@ const response = await fetch("https://api.0x.org/solana/swap-instructions", {
 - Tokens are mint addresses and amounts are in base units. `So11111111111111111111111111111111111111111` is native SOL; `So11111111111111111111111111111111111111112` is the wSOL mint.
 - The response contains the `instructions` to execute, in order, the expected `amount_out`, and `min_amount_out`, the least the taker receives after slippage.
 
-See the [API Reference](/api-reference/solana-swap-ap-is/swap/instructions) for every field.
+See the [API Reference](/api-reference/solana-swap-api/swap/instructions) for every field.
 
 ## 2. Build, sign, and send the transaction
 
@@ -49,8 +49,8 @@ These steps build a version 1 transaction, which the user's wallet and your Sola
 
 ## Adding your own instructions
 
-If you add instructions to the transaction (a transfer, a tip, a memo), set [`reserve_transaction_accounts`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.reserve_transaction_accounts) to the number of accounts they add that the swap does not already use. Keep it as small as you can: every reserved account is one the route cannot use. Check the size of the final transaction before you send it.
+If you add instructions to the transaction (a transfer, a tip, a memo), set [`reserve_transaction_accounts`](/api-reference/solana-swap-api/swap/instructions#request.body.reserve_transaction_accounts) to the number of accounts they add that the swap does not already use. Keep it as small as you can: every reserved account is one the route cannot use. Check the size of the final transaction before you send it.
 
 ## v0 transactions
 
-Set `transaction_version: "v0"` only for a wallet that cannot sign v1 transactions yet. v0 transactions are smaller, so large trades get worse prices. Load the returned `address_lookup_tables` when you compile the transaction, and add `ComputeBudget` instructions yourself. Reserve room for your own instructions with [`reserve_transaction_bytes`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.reserve_transaction_bytes).
+Set `transaction_version: "v0"` only for a wallet that cannot sign v1 transactions yet. v0 transactions are smaller, so large trades get worse prices. Load the returned `address_lookup_tables` when you compile the transaction, and add `ComputeBudget` instructions yourself. Reserve room for your own instructions with [`reserve_transaction_bytes`](/api-reference/solana-swap-api/swap/instructions#request.body.reserve_transaction_bytes).

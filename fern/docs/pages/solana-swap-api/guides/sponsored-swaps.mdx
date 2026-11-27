@@ -3,7 +3,7 @@ title: Sponsored Swaps
 description: Let your app pay the network fee and account rent so users can swap without holding SOL.
 ---
 
-Set `sponsor` in your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions#request.body.sponsor) to a wallet your app controls. That wallet pays the transaction fee and the rent for every account the swap creates. The taker still signs the transaction and keeps full control of their tokens; the sponsor never holds them.
+Set `sponsor` in your [`/solana/swap-instructions` request](/api-reference/solana-swap-api/swap/instructions#request.body.sponsor) to a wallet your app controls. That wallet pays the transaction fee and the rent for every account the swap creates. The taker still signs the transaction and keeps full control of their tokens; the sponsor never holds them.
 
 ```json
 {

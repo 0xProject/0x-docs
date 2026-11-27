@@ -12,7 +12,7 @@ The 0x Solana Swap API finds the best price for a swap across Solana DEXs and re
 <llms-only>
 Endpoint: `POST https://api.0x.org/solana/swap-instructions` with JSON body `token_in`, `token_out` (base58 mints; native SOL is `So11111111111111111111111111111111111111111`, the wSOL mint is `So11111111111111111111111111111111111111112`), `amount_in` (base units), `taker`, and `transaction_version: "v1"`. The only required header is `0x-api-key`; Solana does not use `0x-version`.
 
-- Request and response fields: https://docs.0x.org/api-reference/solana-swap-ap-is/swap/instructions.md
+- Request and response fields: https://docs.0x.org/api-reference/solana-swap-api/swap/instructions.md
 - OpenAPI spec: https://docs.0x.org/openapi/solana-swap-apis.yaml
 - Building and sending the transaction: https://docs.0x.org/solana/guides/get-started.md
 - Swap fees: https://docs.0x.org/solana/guides/swap-fees.md
@@ -33,7 +33,7 @@ Endpoint: `POST https://api.0x.org/solana/swap-instructions` with JSON body `tok
   A TypeScript script that swaps SOL for USDC.
 </Card>
 
-<Card title="API Reference" href="/api-reference/solana-swap-ap-is/swap/instructions">
+<Card title="API Reference" href="/api-reference/solana-swap-api/swap/instructions">
   Every request and response field.
 </Card>
 

@@ -300,7 +300,7 @@ navigation:
             href: https://github.com/0xProject/0x-examples/tree/main/solana-example
             target: _blank
           - link: API Reference
-            href: /api-reference/solana-swap-ap-is/swap/instructions
+            href: /api-reference/solana-swap-api/swap/instructions
 
       - section: Guides
         slug: guides
@@ -456,6 +456,7 @@ navigation:
         api-name: evm
       - api: Solana Swap APIs
         api-name: solana
+        slug: solana-swap-api
       - api: Cross-Chain APIs
         api-name: cross-chain
 
@@ -591,3 +592,5 @@ redirects:
     destination: /solana/need-help/faq
   - source: /solana/need-help/api-issues
     destination: /solana/need-help/faq
+  - source: /api-reference/solana-swap-ap-is/:path*
+    destination: /api-reference/solana-swap-api/:path*

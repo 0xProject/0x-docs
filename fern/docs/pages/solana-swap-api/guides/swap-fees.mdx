@@ -3,11 +3,11 @@ title: Swap Fees
 description: Charge a fee on the swaps your users make with the 0x Solana Swap API.
 ---
 
-Add these fields to your [`/solana/swap-instructions` request](/api-reference/solana-swap-ap-is/swap/instructions) to charge a fee on a swap:
+Add these fields to your [`/solana/swap-instructions` request](/api-reference/solana-swap-api/swap/instructions) to charge a fee on a swap:
 
-- [`swap_fee_ppm`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_ppm): the fee in **parts per million**. `10000` is 1%.
-- [`swap_fee_recipient`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_recipient): where the fee goes.
-- [`swap_fee_side`](/api-reference/solana-swap-ap-is/swap/instructions#request.body.swap_fee_side) (optional): `buy` takes the fee from the output token and `sell` takes it from the input token. The default is `buy`.
+- [`swap_fee_ppm`](/api-reference/solana-swap-api/swap/instructions#request.body.swap_fee_ppm): the fee in **parts per million**. `10000` is 1%.
+- [`swap_fee_recipient`](/api-reference/solana-swap-api/swap/instructions#request.body.swap_fee_recipient): where the fee goes.
+- [`swap_fee_side`](/api-reference/solana-swap-api/swap/instructions#request.body.swap_fee_side) (optional): `buy` takes the fee from the output token and `sell` takes it from the input token. The default is `buy`.
 
 ```json
 {
