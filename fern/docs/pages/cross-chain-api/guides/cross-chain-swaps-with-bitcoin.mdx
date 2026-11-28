@@ -139,6 +139,19 @@ The BTC is at `destinationAddress` when `status` is `bridge_filled`.
 
 ## Sell BTC for a token on another chain
 
+0x funds the payment from confirmed coins at one mainnet Bitcoin address. Pass that address in `originAddress`.
+The coins must cover the sell amount and the miner fee.
+
+| Origin address type | Quote requirements |
+| --- | --- |
+| Native SegWit (P2WPKH, 42 characters starting with `bc1q`) | Pass `originAddress`. |
+| Legacy (P2PKH, starts with `1`) | Pass `originAddress` for a wallet that uses a compressed public key. |
+| Wrapped SegWit (P2SH-P2WPKH, starts with `3`) | Pass `originAddress` and its matching `bitcoinOriginPublicKey`. |
+
+For wrapped SegWit, send the wallet's 33-byte compressed public key as hex without a `0x` prefix.
+0x derives the redeem script from the key and checks that it matches `originAddress`.
+Other P2SH scripts, including multisig, are unsupported for Bitcoin funding.
+
 ### 1. Fetch a quote
 
 Set `originChain` to `bitcoin` and `sellToken` to the native BTC token.
